@@ -1,163 +1,105 @@
-const path = require("path");
-const HtmlWebPackPlugin = require("html-webpack-plugin");
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const UglifyJSPlugin = require("uglifyjs-webpack-plugin");
-const CopyWebpackPlugin = require("copy-webpack-plugin");
+const path = require('path');
+const HTMLWebpackPlugin = require('html-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
-const ENV = process.env.npm_lifecycle_event;
-const isDev = ENV === "dev";
-const isProd = ENV === "build";
-
-function setDevTool() {
-  if (isDev) {
-    return "cheap-module-eval-source-map";
-  } else {
-    return "none";
-  }
-}
-
-function setDMode() {
-  if (isProd) {
-    return "production";
-  } else {
-    return "development";
-  }
-}
-
-const config = {
-  target: "web",
-  entry: { index: "./src/js/index.js" },
-  output: {
-    path: path.resolve(__dirname, "dist"),
-    filename: "[name].js",
+module.exports = {
+  context: path.resolve(__dirname, 'src'),
+  mode: 'development',
+  entry: {
+    promo: ['./components/promo/promo.app.js'],
+    app: ['./app.js'], 
   },
-  mode: setDMode(),
-  devtool: setDevTool(),
+  output: {
+    filename: './js/[name].bundle.js',
+    path: path.resolve(__dirname, 'dist'),
+  },
+  plugins: [
+    new HTMLWebpackPlugin({
+      inject: false,
+      template: './components/promo/promo.index.html',
+      filename: './index.html'
+    }),
+    new HTMLWebpackPlugin({
+      inject: false,
+      template: './components/main/main.index.html',
+      filename: './main.index.html'
+    }),
+    new CleanWebpackPlugin(),
+    new CopyWebpackPlugin([
+      {
+        from: './assets/favicon/',
+        to: './assets/favicon/',
+      },
+    ]), 
+  ],
   module: {
     rules: [
       {
-        test: /\.html$/,
+        test: /\.css$/i,
+        loader: 'style-loader!css-loader',
+      },
+      {
+        test: /\.scss$/i,
+        use: [
+          // Creates `style` nodes from JS strings
+          'style-loader',
+          // Translates CSS into CommonJS
+          'css-loader',
+          // Compiles Sass to CSS
+          'sass-loader',
+        ],
+      },
+      {
+        test: /\.(mp3|wav)$/,
+        use: [{
+          loader: 'file-loader',
+          options: {
+            outputPath: './assets/audio/',
+          },
+        }],
+      },  
+      {
+        test: /\.(jpg|png|svg|gif)$/,
         use: [
           {
-            loader: "html-loader",
+            loader: 'file-loader',
             options: {
-              minimize: false,
+              outputPath: './assets/img/',
+            },
+          },
+          {
+            loader: 'image-webpack-loader',
+            options: {
+              mozjpeg: {
+                processive: true,
+                quality: 98,
+              },
             },
           },
         ],
+      },
+      {
+        test: /\.(ttf|woff|wooff2|eot)$/,
+        use: {
+          loader: 'file-loader',
+          options: {
+            outputPath: './assets/fonts',
+          },
+        },
       },
       {
         test: /\.js$/,
-        use: ["babel-loader"],
-        exclude: [/node_modules/],
-      },
-      {
-        test: /\.css$/,
-        use: [
-          "style-loader",
-          MiniCssExtractPlugin.loader,
-          {
-            loader: "css-loader",
-            options: {
-              sourceMap: true,
-            },
-          },
-          {
-            loader: "postcss-loader",
-            options: {
-              sourceMap: true,
-              config: { path: "./postcss.config.js" },
-            },
-          },
-        ],
-      },
-      {
-        test: /\.scss$/,
-        use: [
-          "style-loader",
-          MiniCssExtractPlugin.loader,
-          {
-            loader: "css-loader",
-            options: {
-              sourceMap: true,
-            },
-          },
-          {
-            loader: "postcss-loader",
-            options: {
-              sourceMap: true,
-              config: { path: "./postcss.config.js" },
-            },
-          },
-          {
-            loader: "sass-loader",
-            options: {
-              sourceMap: true,
-            },
-          },
-        ],
-      },
-      {
-        test: /\.(jpe?g|png|svg|gif)$/,
-        use: [
-          {
-            loader: "file-loader",
-            options: {
-              outputPath: "img",
-              name: "[name].[ext]",
-            },
-          },
-        ],
-      },
-
-      {test: /\.(woff|woff2|ttf|otf|eot)$/,
-        use: [
-          {loader: "file-loader",
-            options: {
-              outputPath: "fonts",
-            },
-          },
-        ],
-      },
-
-      {test: /\.(mp3)$/i,
-        use: [
-          {loader: "file-loader",
-            options: {
-              outputPath: "audio", 
-            },
-          },
-        ],
+        enforce: 'pre',
+        use: ['source-map-loader'],
       },
     ],
   },
-  plugins: [
-    new MiniCssExtractPlugin({
-      filename: "style.css",
-    }),
-    new HtmlWebPackPlugin({
-      // favicon: "./src/img/rotate.svg",
-      template: "./src/index.html",
-      filename: "./index.html",
-    }),
-    new CopyWebpackPlugin([
-      { from: "./src/img", to: "./img/" },
-      { from: "./src/audio", to: "./audio/" },
-    ]),
-  ],
-
   devServer: {
-    contentBase: path.join(__dirname, "dist"),
+    contentBase: path.join(__dirname, 'dist'),
     compress: true,
     port: 3000,
-    overlay: true,
-    stats: "errors-only",
-    clientLogLevel: "none",
-  },
+    stats: 'errors-only',
+    clientLogLevel: 'none'
+  }
 };
-
-if (isProd) {
-  config.plugins.push(new UglifyJSPlugin());
-}
-
-module.exports = config;

@@ -2,11 +2,8 @@ module.exports = {
   env: {
     browser: true,
     es6: true,
-    jest: true,
   },
-  extends: [
-    'eslint-config-airbnb-base',
-  ],
+  extends: ['prettier', 'airbnb-base'],
   globals: {
     Atomics: 'readonly',
     SharedArrayBuffer: 'readonly',
@@ -17,4 +14,10 @@ module.exports = {
   },
   rules: {
   },
+  // settings: {
+  //   'import/extensions': [
+  //     '.js', '.jsx', '.ts', '.tsx',
+  //   ],
+  // },
+  root: true,
 };

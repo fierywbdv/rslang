@@ -1,6 +1,5 @@
-<<<<<<< HEAD
 # RS-Lang
-=======
+
 Project - https://github.com/GoldenkovVitali/rslang/projects/1
 ## Workflow:
 
@@ -40,4 +39,4 @@ Project - https://github.com/GoldenkovVitali/rslang/projects/1
 9) An issue should be closed if everything is ok or bug is fixed.
 
    **Also, don't forget to move cards on the project board**
->>>>>>> 8a93c4c31582951d77db7069c97babb4b09a4829
+

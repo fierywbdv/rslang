@@ -4,7 +4,7 @@ Project - https://github.com/GoldenkovVitali/rslang/projects/1
 1) Create an issue and **don't forget to point the project in issue settings** (skip this step if the issue is already created)
 2) Pull changes from `develop`. Create a branch and work in there.
 
-   **Naming for branches: feat/fix(#\<issue-number>)-<issue-name(shortened)>**
+   **Naming for branches: feat/fix(#\<issue-number>)-<issue-name or bug description(shortened)>**
 
    Examples: 
    
@@ -28,8 +28,12 @@ Project - https://github.com/GoldenkovVitali/rslang/projects/1
 
 5) All PRs should be reviewed(and approved if everything is ok) by at least two team members. 
 
-6) The final check and merging of PR should be performed by the curator ([uniorunr](https://github.com/uniorunr)). An issue should be closed after merging.
+6) The final check and merging of PR should be performed by the curator ([uniorunr](https://github.com/uniorunr)).
 
-7) Then team-leader ([GoldenkovVitali]( https://github.com/GoldenkovVitali)) should perform testing of merged changes in `develop` branch. If something works incorrectly he should create new 'fix' issue.
+7) Then team-leader ([GoldenkovVitali]( https://github.com/GoldenkovVitali)) should perform testing of merged changes in `develop` branch.
+
+8) If something works incorrectly, the team-leader should point this in the issue comments. In that case, the issue assignee should create a new 'fix' branch from `develop` and fix problems.
+
+9) An issue should be closed if everything is ok or bug is fixed.
 
    **Also, don't forget to move cards on the project board**

@@ -1,6 +1,5 @@
-HEAD
 # RS-Lang
-=======
+
 Project - https://github.com/GoldenkovVitali/rslang/projects/1
 ## Workflow:
 

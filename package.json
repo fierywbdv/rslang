@@ -33,7 +33,7 @@
   },
   "scripts": {
     "dev": "webpack-dev-server --history-api-fallback --inline --open",
-    "build": "npm run clear -s && webpack --progress",
+    "build": "webpack --mode production",
     "lint:fix": "eslint ./src --fix",
     "lint": "eslint ./src",
     "watch": "webpack --mode development --watch",

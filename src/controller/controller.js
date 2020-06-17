@@ -79,7 +79,6 @@ const controller = {
   sayHello(text) {
     const hello = document.createElement('h1');
     hello.textContent = text;
-
     document.querySelector('body').append(hello);
   },
 };

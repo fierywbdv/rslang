@@ -7,7 +7,7 @@ module.exports = {
   context: path.resolve(__dirname, 'src'),
   mode: 'development',
   entry: {
-    promo: ['./components/promo/promo.app.js'],
+    promo: ['./pages/promo/promo.app.js'],
     app: ['./app.js'], 
   },
   output: {
@@ -17,12 +17,12 @@ module.exports = {
   plugins: [
     new HTMLWebpackPlugin({
       inject: false,
-      template: './components/promo/promo.index.html',
+      template: './pages/promo/promo.index.html',
       filename: './index.html'
     }),
     new HTMLWebpackPlugin({
       inject: false,
-      template: './components/main/main.index.html',
+      template: './pages/main/main.index.html',
       filename: './main.index.html'
     }),
     new CleanWebpackPlugin(),

@@ -1,10 +1,10 @@
-import main from './components/main/main.app';
-import speakit from './components/speakit/speakit.app';
-import audiocall from './components/audiocall/audiocall.app';
-import englishPuzzle from './components/english-puzzle/english-puzzle.app';
-import ourgame from './components/ourgame/ourgame.app';
-import savanna from './components/savanna/savanna.app';
-import sprint from './components/sprint/sprint.app';
+import main from './pages/main/main.app';
+import speakit from './pages/speakit/speakit.app';
+import audiocall from './pages/audiocall/audiocall.app';
+import englishPuzzle from './pages/english-puzzle/english-puzzle.app';
+import ourgame from './pages/ourgame/ourgame.app';
+import savanna from './pages/savanna/savanna.app';
+import sprint from './pages/sprint/sprint.app';
 
 import { APP_GREETINGS } from './common/common.constants';
 

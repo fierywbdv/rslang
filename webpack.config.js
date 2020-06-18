@@ -44,8 +44,8 @@ module.exports = {
         to: './assets/audio/',
       },
       {
-        from: './pages/promo/assets/',
-        to: './assets/promo/',
+        from: './pages/promo/assets/img/',
+        to: './assets/promo/img/',
       },
       {
         from: './pages/main/components/some_component/assets/',

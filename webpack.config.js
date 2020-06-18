@@ -8,7 +8,7 @@ module.exports = {
   mode: 'development',
   entry: {
     promo: ['./pages/promo/promo.app.js'],
-    app: ['./app.js'], 
+    app: ['./app.js'],
   },
   output: {
     filename: './js/[name].bundle.js',
@@ -31,7 +31,27 @@ module.exports = {
         from: './assets/favicon/',
         to: './assets/favicon/',
       },
-    ]), 
+      {
+        from: './assets/fonts/',
+        to: './assets/fonts/',
+      },
+      {
+        from: './assets/img/',
+        to: './assets/img/',
+      },
+      {
+        from: './assets/audio/',
+        to: './assets/audio/',
+      },
+      {
+        from: './pages/promo/assets/',
+        to: './assets/promo/',
+      },
+      {
+        from: './pages/main/components/some_component/assets/',
+        to: './assets/main/',
+      },
+    ]),
   ],
   module: {
     rules: [
@@ -58,7 +78,7 @@ module.exports = {
             outputPath: './assets/audio/',
           },
         }],
-      },  
+      },
       {
         test: /\.(jpg|png|svg|gif)$/,
         use: [

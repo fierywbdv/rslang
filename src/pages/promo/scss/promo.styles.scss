@@ -83,7 +83,7 @@
 }
 
 .about-team {
-  background-color: #f8f9fa;
+  background-color: #EEF5F9;
   padding-top: 80px;
   padding-bottom: 80px;
 
@@ -115,13 +115,50 @@
       width: 270px;
       height: 270px;
       object-fit: cover;
-      margin-bottom: 40px;
+      margin-bottom: 20px;
       box-shadow: 0 7px 9px 0 #adb5bd;
+      user-select: none;
       @include transition;
 
       &:hover {
         box-shadow: 0 7px 9px 0 #70767b;
       }
     }
+  }
+}
+
+.video {
+  padding-top: 80px;
+  padding-bottom: 80px;
+
+  &__container {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 991px) {
+  .advantages__container {
+    flex-direction: column;
+    align-items: center;
+
+    .advantage:not(:last-child) {
+      margin-bottom: 40px;
+    }
+  }
+
+  .about-team {
+    &__representation {
+      flex-direction: column;
+    }
+
+    .team-member:not(:last-child) {
+      margin-bottom: 40px;
+    }
+  }
+}
+
+@media (max-width: 575px) {
+  .container {
+    padding: 0 20px;
   }
 }

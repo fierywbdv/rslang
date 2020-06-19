@@ -28,5 +28,6 @@ window.onload = () => {
   // sprint.sayHello();
   main.toggleBtnHandler();
 };
+router.run();
 
 router.run();

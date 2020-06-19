@@ -26,6 +26,8 @@ window.onload = () => {
   // ourgame.sayHello();
   // savanna.sayHello();
   // sprint.sayHello();
+  main.toggleBtnHandler();
 };
+router.run();
 
 router.run();

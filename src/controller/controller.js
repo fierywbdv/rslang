@@ -5,6 +5,8 @@ import englishPuzzle from '../pages/english-puzzle/english-puzzle.app';
 import ourgame from '../pages/ourgame/ourgame.app';
 import savanna from '../pages/savanna/savanna.app';
 import sprint from '../pages/sprint/sprint.app';
+import helper from '../pages/audiocall/common/audiocall.helper';
+import startScreenComponent from '../pages/audiocall/components/start-screen';
 
 const controller = {
 
@@ -55,8 +57,8 @@ const controller = {
   },
 
   actionAudioCall() {
-    controller.sayHello('Audio Call');
-    audiocall.sayHello();
+    helper.render('#root', startScreenComponent());
+    audiocall.init();
   },
   actionOurGame() {
     controller.sayHello('Our Game');

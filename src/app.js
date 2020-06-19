@@ -14,18 +14,10 @@ console.log(APP_GREETINGS);
 window.onload = () => {
   main.init();
   speakit.init();
-  audiocall.init();
   englishPuzzle.init();
   ourgame.init();
   savanna.init();
   sprint.init();
-  // main.sayHello();
-  // speakit.sayHello();
-  // audiocall.sayHello();
-  // englishPuzzle.sayHello();
-  // ourgame.sayHello();
-  // savanna.sayHello();
-  // sprint.sayHello();
 };
 
 router.run();

@@ -1,5 +1,6 @@
 @import "../../../scss/normalize.scss";
 @import "../../../scss/mixins.scss";
+@import "../../../scss/variables.scss";
 
 .container {
   max-width: 1140px;
@@ -11,14 +12,39 @@
 .header__container {
   justify-content: space-between;
   align-items: center;
+  padding-top: 15px;
+  padding-bottom: 15px;
+
+  .navbar-brand {
+    display: inline-block;
+    font-size: 1.25rem;
+  }
+
+  span {
+    display: inline-block;
+    text-decoration: none;
+    -webkit-transition: all 0.3s;
+    transition: all 0.3s;
+  }
+
+  .brand-text {
+    font-family: Tenor-Sans, tahoma, sans-serif;
+    color: $main-pretty-text-color;
+    font-weight: 800;
+
+    .colored {
+      color: $main-pink-color;
+      font-weight: 400;
+    }
+  }
 }
 
 .hero {
   position: relative;
   background: url(../assets/img/bg.jpg) no-repeat center bottom;
   background-size: cover;
-  padding-top: 8.5rem;
-  padding-bottom: 8.5rem;
+  padding-top: 140px;
+  padding-bottom: 140px;
   color: #fff;
   text-align: center;
 
@@ -64,7 +90,7 @@
   }
 
   i {
-    color: #007bff;
+    color: $main-blue-color;
     margin-bottom: 15px;
     @include transition;
 
@@ -83,7 +109,7 @@
 }
 
 .about-team {
-  background-color: #EEF5F9;
+  background-color: $main-bg-color;
   padding-top: 80px;
   padding-bottom: 80px;
 
@@ -159,6 +185,11 @@
 
 @media (max-width: 575px) {
   .container {
-    padding: 0 20px;
+    padding: 15px 20px;
+  }
+
+  .hero {
+    padding-top: 80px;
+    padding-bottom: 80px;
   }
 }

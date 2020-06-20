@@ -7,8 +7,8 @@ module.exports = {
   context: path.resolve(__dirname, 'src'),
   mode: 'development',
   entry: {
-    promo: ['./components/promo/promo.app.js'],
-    app: ['./app.js'], 
+    promo: ['./pages/promo/promo.app.js'],
+    app: ['./app.js'],
   },
   output: {
     filename: './js/[name].bundle.js',
@@ -17,12 +17,12 @@ module.exports = {
   plugins: [
     new HTMLWebpackPlugin({
       inject: false,
-      template: './components/promo/promo.index.html',
+      template: './pages/promo/promo.index.html',
       filename: './index.html'
     }),
     new HTMLWebpackPlugin({
       inject: false,
-      template: './components/main/main.index.html',
+      template: './pages/main/main.index.html',
       filename: './main.index.html'
     }),
     new CleanWebpackPlugin(),
@@ -30,6 +30,26 @@ module.exports = {
       {
         from: './assets/favicon/',
         to: './assets/favicon/',
+      },
+      {
+        from: './assets/fonts/',
+        to: './assets/fonts/',
+      },
+      {
+        from: './assets/img/',
+        to: './assets/img/',
+      },
+      {
+        from: './assets/audio/',
+        to: './assets/audio/',
+      },
+      {
+        from: './pages/promo/assets/',
+        to: './assets/promo/',
+      },
+      {
+        from: './pages/main/components/some_component/assets/',
+        to: './assets/main/',
       },
     ]), 
   ],
@@ -58,7 +78,7 @@ module.exports = {
             outputPath: './assets/audio/',
           },
         }],
-      },  
+      },
       {
         test: /\.(jpg|png|svg|gif)$/,
         use: [
@@ -85,6 +105,7 @@ module.exports = {
           loader: 'file-loader',
           options: {
             outputPath: './assets/fonts',
+            name: '[name].[ext]',
           },
         },
       },

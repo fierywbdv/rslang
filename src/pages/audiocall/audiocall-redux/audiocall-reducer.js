@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 import {
-  TOGGLE_PLAY_GAME, GET_DATA_GAME, SET_DATA_GAME, NEW_QUESTION_GAME, SET_QUESTIONS_GAME
+  TOGGLE_PLAY_GAME, GET_DATA_GAME, SET_DATA_GAME, NEW_QUESTION_GAME, SET_QUESTIONS_GAME, SET_STATISTIC_GAME,
 } from './audiocall-types';
 
 function togglePlayGameReducer(state = false, action) {
@@ -36,6 +36,12 @@ function setQuestionsPlayGameReducer(state = [], action) {
   }
   return state;
 }
+function setStatisticPlayGameReducer(state = {}, action) {
+  if (action.type === SET_STATISTIC_GAME) {
+    return [action.statistic];
+  }
+  return state;
+}
 
 export const audioCallReducer = combineReducers({
   togglePlayGame: togglePlayGameReducer,
@@ -43,4 +49,5 @@ export const audioCallReducer = combineReducers({
   setDataPlayGame: setDataPlayGameReducer,
   questionGame: questionPlayGameReducer,
   question: setQuestionsPlayGameReducer,
+  stats: setStatisticPlayGameReducer,
 });

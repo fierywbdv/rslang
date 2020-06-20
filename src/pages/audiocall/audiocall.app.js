@@ -2,12 +2,13 @@
 // import { SPEAKIT_CLASS_NAMES, SPEAKIT_GREETINGS } from './common/audiocall.constants';
 import { store } from '../../redux/store';
 import {
-  togglePlay, setDataPlay, questionPlay, setQuestionsPlay,
+  togglePlay, setDataPlay, questionPlay, setQuestionsPlay, setStatisticPlay,
 } from './audiocall-redux/audiocall-actions';
 import './scss/audiocall.styles.scss';
 import helper from './common/audiocall.helper';
 import gameScreenComponent from './components/game-screen';
 import startScreenComponent from './components/start-screen';
+import statisticScreenComponent from './components/statistic-screen';
 import mockData from './common/mock-data';
 
 class Audiocall {
@@ -35,13 +36,19 @@ class Audiocall {
     const questions = helper.getAnswers(setDataPlayGame).map((elem) => gameScreenComponent(elem));
     store.dispatch(questionPlay());
     store.dispatch(setQuestionsPlay(questions));
-    if (state.audioCallReducer.questionGame < 19) {
+    if (state.audioCallReducer.questionGame < 19 && state.audioCallReducer.questionGame !== 2) {
       helper.render('#root', questions[state.audioCallReducer.questionGame], 'append', '.screen');
       const words = document.querySelectorAll('.name');
       words.forEach((word) => {
         word.addEventListener('click', (event) => {
-          this.checkAnswer(event.target);
+          this.checkAnswer(event.target, setDataPlayGame);
         });
+      });
+    } else if (state.audioCallReducer.questionGame === 2) {
+      helper.render('#root', statisticScreenComponent(), 'append', '.screen');
+      const restart = document.querySelector('.restart');
+      restart.addEventListener('click', () => {
+        this.stopGame();
       });
     } else {
       store.dispatch(questionPlay(0));
@@ -49,15 +56,21 @@ class Audiocall {
     }
   }
 
-  checkAnswer(answer) {
+  checkAnswer(answer, words) {
     const currentQuestion = document.querySelector('.result-word');
     if (answer.getAttribute('data-id') === currentQuestion.getAttribute('data-word-id')) {
       this.askQuestion();
+      this.setStatistic(answer, words);
     }
   }
 
+  setStatistic(data, words) {
+    console.log('setStatistic', data, words);
+    store.dispatch(setStatisticPlay([data]));
+  }
+
   stopGame() {
-    helper.render('#root', startScreenComponent(), 'append', '#play-screen');
+    helper.render('#root', startScreenComponent(), 'append', '.container');
     this.newGame();
   }
 

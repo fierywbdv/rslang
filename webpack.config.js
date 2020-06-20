@@ -8,7 +8,7 @@ module.exports = {
   mode: 'development',
   entry: {
     promo: ['./pages/promo/promo.app.js'],
-    app: ['./app.js'], 
+    app: ['./app.js'],
   },
   output: {
     filename: './js/[name].bundle.js',
@@ -78,7 +78,7 @@ module.exports = {
             outputPath: './assets/audio/',
           },
         }],
-      },  
+      },
       {
         test: /\.(jpg|png|svg|gif)$/,
         use: [

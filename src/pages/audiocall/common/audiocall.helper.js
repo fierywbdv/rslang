@@ -21,6 +21,32 @@ const helper = {
         break;
     }
   },
+
+  getAnswers: (data) => {
+    const newData = data.map((item, index, array) => {
+      const newArr = array.filter((elem) => elem.id !== item.id);
+      const answers = [];
+      answers.push(item);
+      for (let i = 4; i !== 0; i--) {
+        answers.push(helper.shuffle(newArr).pop());
+      }
+      const shuffleAnswers = helper.shuffle(answers);
+      return {
+        ...item,
+        answer: shuffleAnswers,
+      };
+    });
+    return newData;
+  },
+
+  randomInteger: (min, max) => {
+    const rand = min + Math.random() * (max + 1 - min);
+    return Math.floor(rand);
+  },
+
+  shuffle: (array) => {
+    return array.sort(() => Math.random() - 0.5);
+  },
 };
 
 export default helper;

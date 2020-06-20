@@ -1,4 +1,4 @@
-import { TOGGLE_PLAY_GAME, GET_DATA_GAME } from './audiocall-types';
+import { TOGGLE_PLAY_GAME, GET_DATA_GAME, SET_DATA_GAME, NEW_QUESTION_GAME, SET_QUESTIONS_GAME } from './audiocall-types';
 
 export function togglePlay() {
   return {
@@ -6,9 +6,21 @@ export function togglePlay() {
   };
 }
 
-export function getDataPlay() {
+export function setQuestionsPlay(questions = []) {
   return {
-    type: GET_DATA_GAME,
+    type: SET_QUESTIONS_GAME,
+    questions,
+  };
+}
+export function setDataPlay(data = []) {
+  return {
+    type: SET_DATA_GAME,
+    data,
+  };
+}
+export function questionPlay() {
+  return {
+    type: NEW_QUESTION_GAME,
   };
 }
 

@@ -1,11 +1,14 @@
 // import { CLASS_NAMES } from '../../common/common.constants';
 // import { SPEAKIT_CLASS_NAMES, SPEAKIT_GREETINGS } from './common/audiocall.constants';
 import { store } from '../../redux/store';
-import { togglePlay, getDataPlay } from './audiocall-redux/audiocall-actions';
+import {
+  togglePlay, setDataPlay, questionPlay, setQuestionsPlay,
+} from './audiocall-redux/audiocall-actions';
 import './scss/audiocall.styles.scss';
 import helper from './common/audiocall.helper';
 import gameScreenComponent from './components/game-screen';
 import startScreenComponent from './components/start-screen';
+import mockData from './common/mock-data';
 
 class Audiocall {
   constructor() {
@@ -14,38 +17,42 @@ class Audiocall {
 
   newGame() {
     const startButton = document.querySelector('#center-div');
+    store.dispatch(setDataPlay(mockData));
     startButton.addEventListener('click', () => {
       store.dispatch(togglePlay());
     });
   }
 
-  async playGame(state) {
+  playGame(state) {
     if (state.togglePlayGame) {
-      // const ques = await WordsAPIService.getWords(1, 2);
-      // console.log(ques)
-      this.question()
+      this.askQuestion();
     }
   }
 
-  question(){
-    helper.render('#root', gameScreenComponent(), 'append', '#center-div');
-    const words = document.querySelectorAll('.name');
-    words.forEach((word) => {
-      word.addEventListener('click', (event) => {
-        this.answer(event.target);
+  askQuestion() {
+    const state = store.getState();
+    const { setDataPlayGame } = state.audioCallReducer;
+    const questions = helper.getAnswers(setDataPlayGame).map((elem) => gameScreenComponent(elem));
+    store.dispatch(questionPlay());
+    store.dispatch(setQuestionsPlay(questions));
+    if (state.audioCallReducer.questionGame < 19) {
+      helper.render('#root', questions[state.audioCallReducer.questionGame], 'append', '.screen');
+      const words = document.querySelectorAll('.name');
+      words.forEach((word) => {
+        word.addEventListener('click', (event) => {
+          this.checkAnswer(event.target);
+        });
       });
-    });
-  }
-
-  answer(value) {
-    console.log('answer', value);
-    this.checkAnswer(value);
+    } else {
+      store.dispatch(questionPlay(0));
+      this.stopGame();
+    }
   }
 
   checkAnswer(answer) {
-    if (answer.innerText === 'Beni Smith 5') {
-      store.dispatch(togglePlay());
-      this.stopGame();
+    const currentQuestion = document.querySelector('.result-word');
+    if (answer.getAttribute('data-id') === currentQuestion.getAttribute('data-word-id')) {
+      this.askQuestion();
     }
   }
 
@@ -58,8 +65,9 @@ class Audiocall {
     this.newGame();
     store.subscribe(() => {
       const state = store.getState();
-      this.playGame(state.audioCallReducer);
-      getDataPlay()
+      if (state.audioCallReducer.questionGame === 0) {
+        this.playGame(state.audioCallReducer);
+      }
     });
     store.dispatch({ type: 'INIT_AUDIO_CALL' });
   }

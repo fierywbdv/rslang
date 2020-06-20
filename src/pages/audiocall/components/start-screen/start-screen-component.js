@@ -5,6 +5,7 @@ const startScreenComponent = () => {
   const startScreen = document.createElement('div');
   startScreen.setAttribute('id', 'center-div');
   startScreen.innerHTML = template;
+  startScreen.className = 'screen';
   return startScreen;
 };
 

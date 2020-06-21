@@ -1,5 +1,3 @@
-// import { CLASS_NAMES } from '../../common/common.constants';
-// import { SPEAKIT_CLASS_NAMES, SPEAKIT_GREETINGS } from './common/audiocall.constants';
 import { store } from '../../redux/store';
 import {
   togglePlay, setDataPlay, questionPlay, setQuestionsPlay, setStatisticPlay,

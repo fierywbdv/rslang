@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux';
 import {
-  TOGGLE_PLAY_GAME, GET_DATA_GAME, SET_DATA_GAME, NEW_QUESTION_GAME, SET_QUESTIONS_GAME, SET_STATISTIC_GAME,
+  TOGGLE_PLAY_GAME, GET_DATA_GAME, SET_DATA_GAME,
+  NEW_QUESTION_GAME, SET_QUESTIONS_GAME, SET_STATISTIC_GAME,
 } from './audiocall-types';
 
 function togglePlayGameReducer(state = false, action) {

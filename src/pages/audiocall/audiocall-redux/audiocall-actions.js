@@ -1,4 +1,6 @@
-import { TOGGLE_PLAY_GAME, SET_DATA_GAME, NEW_QUESTION_GAME, SET_QUESTIONS_GAME, SET_STATISTIC_GAME } from './audiocall-types';
+import {
+  TOGGLE_PLAY_GAME, SET_DATA_GAME, NEW_QUESTION_GAME, SET_QUESTIONS_GAME, SET_STATISTIC_GAME,
+} from './audiocall-types';
 
 export function togglePlay() {
   return {
@@ -29,4 +31,3 @@ export function setStatisticPlay(statistic) {
     statistic,
   };
 }
-

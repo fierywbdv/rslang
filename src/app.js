@@ -18,6 +18,6 @@ window.onload = () => {
   ourgame.init();
   savanna.init();
   sprint.init();
+  main.toggleBtnHandler();
 };
-
 router.run();

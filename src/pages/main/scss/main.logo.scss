@@ -1,3 +1,9 @@
+@font-face {
+  font-family: Tenor-Sans;
+  // src: url('./assets/fonts/TenorSans-Regular.ttf');
+}
+
 .main__logo {
-  color: lightcoral;
+  color: blue;
+  font-family: Tenor-Sans, tahoma, sans-serif;
 }

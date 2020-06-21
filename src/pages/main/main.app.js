@@ -21,6 +21,17 @@ class Main {
     this.logoElement = document.querySelector(`.${CLASS_NAMES.MAIN.LOGO}`);
     this.logoContent = MAIN_GREETINGS;
   }
+
+  toggleBtnHandler() {
+    this.toggleBTN = document.querySelector('#toggle-btn');
+    this.sidebar = document.querySelector('.side-navbar');
+
+    this.toggleBTN.addEventListener('click', (e) => {
+      e.preventDefault();
+      this.toggleBTN.classList.toggle('active');
+      this.sidebar.classList.toggle('shrinked');
+    });
+  }
 }
 
 export default new Main();

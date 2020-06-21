@@ -1,5 +1,5 @@
 import {
-  TOGGLE_PLAY_GAME, SET_DATA_GAME, NEW_QUESTION_GAME, SET_QUESTIONS_GAME, SET_STATISTIC_GAME,
+  TOGGLE_PLAY_GAME, ANSWER_GAME, ASK_QUESTION, SET_STATISTIC_GAME, SET_QUESTIONS_GAME,
 } from './audiocall-types';
 
 export function togglePlay() {
@@ -8,26 +8,29 @@ export function togglePlay() {
   };
 }
 
-export function setQuestionsPlay(questions = []) {
+export function setQuestions(questions = []) {
   return {
     type: SET_QUESTIONS_GAME,
     questions,
   };
 }
-export function setDataPlay(data = []) {
+
+export function askQuestion(questionInfo = {}) {
   return {
-    type: SET_DATA_GAME,
-    data,
+    type: ASK_QUESTION,
+    questionInfo,
   };
 }
-export function questionPlay() {
-  return {
-    type: NEW_QUESTION_GAME,
-  };
-}
-export function setStatisticPlay(statistic) {
+
+export function setStatistic(statistic) {
   return {
     type: SET_STATISTIC_GAME,
+    statistic,
+  };
+}
+export function answerPlay(statistic) {
+  return {
+    type: ANSWER_GAME,
     statistic,
   };
 }

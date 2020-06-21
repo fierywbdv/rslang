@@ -20,4 +20,5 @@ window.onload = () => {
   sprint.init();
   main.toggleBtnHandler();
 };
+
 router.run();

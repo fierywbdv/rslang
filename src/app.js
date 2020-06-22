@@ -1,5 +1,4 @@
 import main from './pages/main/main.app';
-import speakit from './pages/speakit/speakit.app';
 import audiocall from './pages/audiocall/audiocall.app';
 import englishPuzzle from './pages/english-puzzle/english-puzzle.app';
 import ourgame from './pages/ourgame/ourgame.app';
@@ -13,7 +12,6 @@ console.log(APP_GREETINGS);
 
 window.onload = () => {
   main.init();
-  speakit.init();
   audiocall.init();
   englishPuzzle.init();
   ourgame.init();
@@ -28,6 +26,6 @@ window.onload = () => {
   // sprint.sayHello();
   main.toggleBtnHandler();
 };
-router.run();
+// router.run();
 
 router.run();

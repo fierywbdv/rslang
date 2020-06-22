@@ -50,8 +50,7 @@ const controller = {
   },
 
   actionSpeakIt: () => {
-    controller.sayHello('SpeakIt');
-    speakit.sayHello();
+    speakit();
   },
 
   actionAudioCall() {

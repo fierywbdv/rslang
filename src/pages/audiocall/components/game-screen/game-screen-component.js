@@ -1,7 +1,9 @@
 import answerline from '../answers';
 
 const gameScreenComponent = (data) => {
-  const { id, word, image, answer } = data;
+  const {
+    id, word, image, answer, audio,
+  } = data;
   const generateAnswerLines = (answers = []) => {
     const answerElements = [];
     answers.forEach((item) => {
@@ -13,7 +15,7 @@ const gameScreenComponent = (data) => {
                           <img src="https://raw.githubusercontent.com/irinainina/rslang-data/master/${image}" class="profile">
                       </div>
                       <div class="answers-group" >
-                        <div class="name result-word" data-word-id="${id}"><span></span>${word}</div>
+                        <div class="name result-word" data-audio="${audio}" data-word-id="${id}"><span></span>${word}</div>
                         <div class="result-translate">${word}</div>
                       </div>`;
   const buttonsTemplate = `<button class="next btn btn-success">Next</button>

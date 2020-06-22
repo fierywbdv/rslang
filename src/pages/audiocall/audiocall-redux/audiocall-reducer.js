@@ -28,14 +28,11 @@ function setQuestionsReducer(state = [], action) {
 
 function setStatisticReducer(state = [], action) {
   if (action.type === SET_STATISTIC_GAME) {
-    if (!state.length) {
-      return [...state, action.statistic];
-    }
     if (state.some((item) => item.id === action.statistic.id)) {
       const stat = {};
       const newState = [];
       state.forEach((item, i) => {
-        if (item.id === action.statistic.id && item.type !== 'startGame') {
+        if (item.id === action.statistic.id) {
           stat.type = item.type;
           stat.id = item.id;
           stat.mistakes = action.statistic.error ? item.mistakes += 1 : item.mistakes += 0;

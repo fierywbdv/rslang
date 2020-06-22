@@ -1,6 +1,4 @@
-import someComponent from './components/some_component/some_component';
-import { setSidebarItem } from '../../common/common.utils';
-// import Router from '../../router/Router';
+import { setSidebarItem } from './common/main.utils';
 
 import { CLASS_NAMES } from '../../common/common.constants';
 import MAIN_GREETINGS from './common/main.constants';
@@ -16,8 +14,6 @@ class Main {
 
   sayHello() {
     console.log(this.logoContent);
-
-    this.logoElement.textContent = this.logoContent;
   }
 
   init() {

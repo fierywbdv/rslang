@@ -1,4 +1,6 @@
 import someComponent from './components/some_component/some_component';
+import { setSidebarItem } from '../../common/common.utils';
+// import Router from '../../router/Router';
 
 import { CLASS_NAMES } from '../../common/common.constants';
 import MAIN_GREETINGS from './common/main.constants';
@@ -9,6 +11,7 @@ class Main {
   constructor() {
     this.logoContent = null;
     this.logoElement = null;
+    this.setSidebarItem = setSidebarItem;
   }
 
   sayHello() {
@@ -30,6 +33,13 @@ class Main {
       e.preventDefault();
       this.toggleBTN.classList.toggle('active');
       this.sidebar.classList.toggle('shrinked');
+    });
+  }
+
+  menuHandler() {
+    this.setSidebarItem();
+    window.addEventListener('hashchange', () => {
+      this.setSidebarItem();
     });
   }
 }

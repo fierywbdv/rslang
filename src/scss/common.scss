@@ -280,6 +280,11 @@ nav.side-navbar {
     vertical-align: middle;
   }
 }
+& ul li.active > a {
+  background: $main-blue-color;
+  border-left: 4px solid $main-darkblue-color;
+  color: $main-light-color;
+}
 }
 
 nav.side-navbar a[data-toggle="collapse"]::before {
@@ -365,7 +370,7 @@ nav.side-navbar.shrinked .sidebar-header .title {
 }
 
 
-@media (max-width: 1199px) {
+@media (max-width: 575px) {
   nav.side-navbar {
     margin-left: -90px;
     min-width: 90px;
@@ -472,5 +477,8 @@ nav.side-navbar.shrinked .sidebar-header .title {
   nav.navbar .menu-btn.active span:last-of-type {
     -webkit-transform: none;
     transform: none;
+  }
+  .menu-btn {
+    margin-right: 10px;
   }
 }

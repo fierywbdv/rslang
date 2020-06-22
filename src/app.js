@@ -6,10 +6,7 @@ import ourgame from './pages/ourgame/ourgame.app';
 import savanna from './pages/savanna/savanna.app';
 import sprint from './pages/sprint/sprint.app';
 
-import { APP_GREETINGS } from './common/common.constants';
 import router from './router/Router';
-
-console.log(APP_GREETINGS);
 
 window.onload = () => {
   main.init();
@@ -19,15 +16,7 @@ window.onload = () => {
   ourgame.init();
   savanna.init();
   sprint.init();
-  // main.sayHello();
-  // speakit.sayHello();
-  // audiocall.sayHello();
-  // englishPuzzle.sayHello();
-  // ourgame.sayHello();
-  // savanna.sayHello();
-  // sprint.sayHello();
   main.toggleBtnHandler();
+  main.menuHandler();
 };
-router.run();
-
 router.run();

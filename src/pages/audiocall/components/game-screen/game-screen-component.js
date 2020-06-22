@@ -16,8 +16,8 @@ const gameScreenComponent = (data) => {
                         <div class="name result-word" data-word-id="${id}"><span></span>${word}</div>
                         <div class="result-translate">${word}</div>
                       </div>`;
-  const buttonsTemplate = `<button class="next">Next</button>
-                           <button class="forget">Forget</button>`;
+  const buttonsTemplate = `<button class="next btn btn-success">Next</button>
+                           <button class="forget btn btn-success">Forget</button>`;
   const startScreen = document.createElement('div');
   startScreen.setAttribute('id', 'play-screen');
   startScreen.className = 'container screen';

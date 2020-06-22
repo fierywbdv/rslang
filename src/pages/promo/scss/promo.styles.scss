@@ -1,10 +1,6 @@
-// @import '../../../normalize.scss';
 @import "../../../scss/normalize.scss";
-
-.header__container {
-  justify-content: space-between;
-  align-items: center;
-}
+@import "../../../scss/mixins.scss";
+@import "../../../scss/variables.scss";
 
 .container {
   max-width: 1140px;
@@ -13,12 +9,42 @@
   display: flex;
 }
 
+.header__container {
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 15px;
+  padding-bottom: 15px;
+
+  .navbar-brand {
+    display: inline-block;
+    font-size: 1.25rem;
+  }
+
+  span {
+    display: inline-block;
+    text-decoration: none;
+    -webkit-transition: all 0.3s;
+    transition: all 0.3s;
+  }
+
+  .brand-text {
+    font-family: Tenor-Sans, tahoma, sans-serif;
+    color: $main-pretty-text-color;
+    font-weight: 800;
+
+    .colored {
+      color: $main-pink-color;
+      font-weight: 400;
+    }
+  }
+}
+
 .hero {
   position: relative;
-  background: url(../../../assets/img/banner.jpg) no-repeat center bottom;
+  background: url(../assets/img/bg.jpg) no-repeat center bottom;
   background-size: cover;
-  padding-top: 8.5rem;
-  padding-bottom: 8.5rem;
+  padding-top: 140px;
+  padding-bottom: 140px;
   color: #fff;
   text-align: center;
 
@@ -64,8 +90,13 @@
   }
 
   i {
-    color: #007bff;
+    color: $main-blue-color;
     margin-bottom: 15px;
+    @include transition;
+
+    &:hover {
+      transform: scale(1.1);
+    }
   }
 
   h3 {
@@ -78,7 +109,7 @@
 }
 
 .about-team {
-  background-color: #f8f9fa;
+  background-color: $main-bg-color;
   padding-top: 80px;
   padding-bottom: 80px;
 
@@ -89,18 +120,76 @@
 
   h2 {
     font-weight: 700;
+    margin-bottom: 40px;
   }
 
   &__representation {
     display: flex;
     justify-content: space-around;
+    flex-wrap: wrap;
   }
 
   .team-member {
-    img {
-      background-color: blue($color: #000000)
+    text-align: center;
+    max-width: 270px;
+
+    &:nth-child(-n+3) {
+      margin-bottom: 40px;
     }
 
+    img {
+      width: 270px;
+      height: 270px;
+      object-fit: cover;
+      margin-bottom: 20px;
+      box-shadow: 0 7px 9px 0 #adb5bd;
+      user-select: none;
+      @include transition;
 
+      &:hover {
+        box-shadow: 0 7px 9px 0 #70767b;
+      }
+    }
+  }
+}
+
+.video {
+  padding-top: 80px;
+  padding-bottom: 80px;
+
+  &__container {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 991px) {
+  .advantages__container {
+    flex-direction: column;
+    align-items: center;
+
+    .advantage:not(:last-child) {
+      margin-bottom: 40px;
+    }
+  }
+
+  .about-team {
+    &__representation {
+      flex-direction: column;
+    }
+
+    .team-member:not(:last-child) {
+      margin-bottom: 40px;
+    }
+  }
+}
+
+@media (max-width: 575px) {
+  .container {
+    padding: 15px 20px;
+  }
+
+  .hero {
+    padding-top: 80px;
+    padding-bottom: 80px;
   }
 }

@@ -14,8 +14,10 @@
 }
 
 .hero {
+  /* position: relative;
+  background: url(../../../assets/img/banner.jpg) no-repeat center bottom; */
   position: relative;
-  background: url(../../../assets/img/banner.jpg) no-repeat center bottom;
+  background: url(/assets/promo/img/banner.jpg) no-repeat center bottom;
   background-size: cover;
   padding-top: 8.5rem;
   padding-bottom: 8.5rem;

@@ -6,7 +6,7 @@ import englishPuzzle from '../pages/english-puzzle/english-puzzle.app';
 import ourgame from '../pages/ourgame/ourgame.app';
 import savanna from '../pages/savanna/savanna.app';
 import sprint from '../pages/sprint/sprint.app';
-import { startScreenComponent } from '../pages/sprint/components/start-screen-component';
+// import { startScreenComponent } from '../pages/sprint/components/start-screen-component';
 
 const controller = {
 
@@ -31,6 +31,7 @@ const controller = {
         controller.actionSavanna();
         break;
       case 'sprint':
+        console.log('contr');
         controller.actionSprint();
         break;
       case 'promo':
@@ -70,7 +71,7 @@ const controller = {
   },
   actionSprint() {
     document.getElementById('root').classList.add('bg');
-    document.getElementById('root').innerHTML = startScreenComponent();
+    sprint.init();
   },
 
   actionPromo() {

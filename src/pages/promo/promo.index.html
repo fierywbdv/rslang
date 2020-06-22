@@ -3,14 +3,97 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
   <link rel="shortcut icon" type="image/png" href="./assets/favicon/favicon.png">
+  <script src="https://use.fontawesome.com/241cc2827a.js"></script>
   <title>Promo page</title>
 </head>
-<body class="promo__page">
-  <h1 class="promo__logo logo">Promo <span class="logo__word">page<span></h1>
-  <a class="promo__link link" href="main.index.html">
-    Main Application
-  </a>
+<body>
+  <header class="header">
+    <div class="container header__container">
+      <a href="#" class="navbar-brand d-inline-block">
+        <img src="./assets/img/logo_light.png" width="30" height="30" alt="logo" loading="lazy">
+        <div class="brand-text d-inline-block">
+          <span>RS</span><span class="colored">Lang</span>
+        </div>
+      </a>
+      <button class="header__button btn btn-primary" type="submit">Начать</button>
+    </div>
+  </header>
+  <main>
+    <section class="hero">   
+      <div class="overlay"></div>
+        <div class="container hero__container">
+          <h1 class="hero__title">Учите английский с RS&nbsp;Lang</h1>
+          <p class="hero__subtitle">RS Lang – приложение для изучения иностранных слов с методикой интервального повторения, отслеживанием индивидуального прогресса и мини-играми.</p>
+        </div>
+    </section>
+    <section class="advantages">
+      <div class="container advantages__container">
+        <div class="advantage">
+          <i class="fa fa-gamepad fa-5x"></i>
+          <h3>Мини-игры</h3>
+          <p>Изучайте новые слова с помощью увлекательных мини-игр.</p>
+        </div>
+        <div class="advantage">
+          <i class="fa fa-bar-chart fa-5x"></i>
+          <h3>Статистика</h3>
+          <p>Отслеживайте Ваш прогресс с помощью краткосрочной и долгосрочной статистики.</p>
+        </div>
+        <div class="advantage">
+          <i class="fa fa-book fa-5x"></i>
+          <h3>Словарь</h3>
+          <p>Сохраняйте сложные слова в словарь и изучайте их отдельно.</p>
+        </div>
+      </div>
+    </section>
+    <section class="about-team">
+     <div class="container about-team__container">
+       <h2>Наша команда</h2>
+        <div class="about-team__representation">
+          <div class="team-member">
+            <img class="img-fluid rounded-circle" src="./assets/promo/img/photo_vitali.jpg" width="300" height="300">
+            <h3>Виталий</h3>
+            <p>Тимлид. Разработал игру «Speakit».</p>
+          </div>
+          <div class="team-member">
+            <img class="img-fluid rounded-circle" src="./assets/promo/img/photo_yauheni.jpg" width="300" height="300">
+            <h3>Евгений</h3>
+            <p>Создал меню регистрации, логику главной страницы приложения, страницу статистики, словарь.
+              </p>
+          </div>
+          <div class="team-member">
+            <img class="img-fluid rounded-circle" src="./assets/promo/img/photo_vladimir.jpg" width="300" height="300">
+            <h3>Владимир</h3>
+            <p>Разработал игру «Аудиовызов» и «Свою игру».</p>
+          </div>
+          <div class="team-member">
+            <img class="img-fluid rounded-circle" src="./assets/promo/img/photo_dasha.jpg" width="300" height="300">
+            <h3>Дарья</h3>
+            <p>Разработала дизайн и разметку промо-страницы и игру "Спринт".</p>
+          </div>
+          <div class="team-member">
+            <img class="img-fluid rounded-circle" src="./assets/promo/img/photo_dmitriy.png" width="300" height="300">
+            <h3>Дмитрий</h3>
+            <p>Разработал дизайн, разметку и логику главной страницы приложения.</p>
+          </div>
+          <div class="team-member">
+            <img class="img-fluid rounded-circle" src="./assets/promo/img/photo_kanstantin.jpg" width="300" height="300">
+            <h3>Константин</h3>
+            <p>Разработал игру «Саванна».</p>
+          </div>
+        </div>
+     </div>
+    </section>
+    <section class="video">
+      <div class="container video__container">
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/YdYyYMFPa44?controls=0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </div>
+    </section>
+    <section class="rules">
+      <div class="container rules__container"></div>
+    </section>
+  </main>
   <script src="./js/promo.bundle.js"></script>
 </body>
 </html>

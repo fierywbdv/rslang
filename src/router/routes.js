@@ -39,6 +39,11 @@ const routes = [
     name: 'Promo page',
     url: 'promo',
   },
+  {
+    id: 9,
+    name: 'Login page',
+    url: 'login',
+  },
 ];
 
 export default routes;

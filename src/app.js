@@ -5,6 +5,8 @@ import englishPuzzle from './pages/english-puzzle/english-puzzle.app';
 import ourgame from './pages/ourgame/ourgame.app';
 import savanna from './pages/savanna/savanna.app';
 import sprint from './pages/sprint/sprint.app';
+import login from './pages/login/login.app';
+import register from './pages/login/register.app';
 
 import { APP_GREETINGS } from './common/common.constants';
 import router from './router/Router';
@@ -19,6 +21,8 @@ window.onload = () => {
   ourgame.init();
   savanna.init();
   sprint.init();
+  login.init();
+  register.init();
   // main.sayHello();
   // speakit.sayHello();
   // audiocall.sayHello();
@@ -26,8 +30,8 @@ window.onload = () => {
   // ourgame.sayHello();
   // savanna.sayHello();
   // sprint.sayHello();
-  main.toggleBtnHandler();
+  // main.toggleBtnHandler();
 };
 router.run();
 
-router.run();
+// router.run();

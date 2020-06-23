@@ -1,0 +1,93 @@
+@import './login.logo.scss';
+@import '../../../scss/normalize.scss';
+@import '../../../scss/mixins.scss';
+@import '../../../scss/variables.scss';
+@import '../../../scss/common.scss';
+
+
+.login {
+    position: relative;
+    height: 100vh;
+    background: url('../../promo/assets/img/bg.jpg') no-repeat center bottom;
+    background-size: cover;
+    font-family: Poppins, sans-serif;
+
+    .overlay {
+        position: absolute;
+        background-color: #212529;
+        height: 100%;
+        width: 100%;
+        top: 0;
+        left: 0;
+        opacity: 0.8;
+        background: #007bffd9;
+    }
+}
+.login .card {
+    margin-top: 20vh;
+    max-width: 550px;
+}
+.login__logo {
+    padding-left: 20px;
+    position: absolute;
+    left: 0;
+}
+.login .card-header {
+    padding-top: 20px;
+    color: $main-eng-text-color;
+}
+
+.form-group-material {
+    position: relative;
+    margin-bottom: 30px;
+    i {
+        margin-right: 10px;
+    }
+}
+input.input-material {
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid #eee;
+    padding: 10px 0;
+    color: $main-text-color;
+}
+
+input.input-material.is-invalid {
+    border-color: #dc3545 !important;
+}
+
+input.input-material:focus {
+    border-color: #796AEE;
+}
+
+input.input-material ~ label {
+    color: #aaa;
+    position: absolute;
+    top: 14px;
+    left: 0;    
+    cursor: text;
+    -webkit-transition: all 0.2s;
+    transition: all 0.2s;
+    font-weight: 300;
+}
+
+input.input-material ~ label.active {
+    font-size: 0.8rem;
+    top: -10px;
+    color: #796AEE;
+}
+
+input.input-material.is-invalid ~ label {
+    color: #dc3545; 
+}
+
+#register-form button,  #login-form button{
+    background-color: $main-pink-color;
+    border-color: $main-pink-color;
+    border-radius: 15px;
+    margin-bottom: 20px;
+}
+
+.row.login-row {
+    margin: 0;
+}

@@ -5,6 +5,7 @@ import englishPuzzle from '../pages/english-puzzle/english-puzzle.app';
 import ourgame from '../pages/ourgame/ourgame.app';
 import savanna from '../pages/savanna/savanna.app';
 import sprint from '../pages/sprint/sprint.app';
+import login from '../pages/login/login.app';
 
 const controller = {
 
@@ -34,13 +35,16 @@ const controller = {
       case 'promo':
         controller.actionPromo();
         break;
+      case 'login':
+        controller.actionLogin();
+        break;
       default:
         break;
     }
   },
 
   actionMain: () => {
-    controller.sayHello('Main');
+    // controller.sayHello('Main');
     main.sayHello();
   },
 
@@ -74,6 +78,10 @@ const controller = {
   actionPromo() {
     controller.sayHello('Promo');
     console.log('actionPromo');
+  },
+  actionLogin: () => {
+    // controller.sayHello('Login');
+    // login.sayHello();
   },
 
   sayHello(text) {

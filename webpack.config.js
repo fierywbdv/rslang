@@ -25,6 +25,16 @@ module.exports = {
       template: './pages/main/main.index.html',
       filename: './main.index.html'
     }),
+    new HTMLWebpackPlugin({
+      inject: false,
+      template: './pages/login/login.index.html',
+      filename: './login.index.html'
+    }),
+    new HTMLWebpackPlugin({
+      inject: false,
+      template: './pages/login/register.index.html',
+      filename: './register.index.html'
+    }),
     new CleanWebpackPlugin(),
     new CopyWebpackPlugin([
       {
@@ -51,7 +61,7 @@ module.exports = {
         from: './pages/main/components/some_component/assets/',
         to: './assets/main/',
       },
-    ]), 
+    ]),
   ],
   module: {
     rules: [
@@ -88,15 +98,15 @@ module.exports = {
               outputPath: './assets/img/',
             },
           },
-          {
-            loader: 'image-webpack-loader',
-            options: {
-              mozjpeg: {
-                processive: true,
-                quality: 98,
-              },
-            },
-          },
+          // {
+          //   loader: 'image-webpack-loader',
+          //   options: {
+          //     mozjpeg: {
+          //       processive: true,
+          //       quality: 98,
+          //     },
+          //   },
+          // },
         ],
       },
       {

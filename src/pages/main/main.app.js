@@ -14,12 +14,12 @@ class Main {
   sayHello() {
     console.log(this.logoContent);
 
-    this.logoElement.textContent = this.logoContent;
+    // this.logoElement.textContent = this.logoContent;
   }
 
   init() {
-    this.logoElement = document.querySelector(`.${CLASS_NAMES.MAIN.LOGO}`);
-    this.logoContent = MAIN_GREETINGS;
+    // this.logoElement = document.querySelector(`.${CLASS_NAMES.MAIN.LOGO}`);
+    // this.logoContent = MAIN_GREETINGS;
   }
 
   toggleBtnHandler() {

@@ -1,6 +1,11 @@
+import { timeChartComponent } from './time-chart-component';
+
 export const gameScreenComponent = () => {
   const gameScreen = `<div class="game-screen">
                             <div class="game-screen__content">
+                                <div class="current-state">
+                                    <span class="points">100</span>${timeChartComponent()}
+                                </div>
                                 <div class="card">
                                     <div class="card__header">
                                         <div class="card__circles">
@@ -21,7 +26,11 @@ export const gameScreenComponent = () => {
                                         <button type="button" class="btn btn-success">Верно</button>
                                     </div>
                                 </div>
+                                <div class="arrows">
+                                    <div class="arrow"><i class="fas fa-long-arrow-alt-left"></i></div>
+                                    <div class="arrow"><i class="fas fa-long-arrow-alt-right"></i></div>
+                                </div>
                             </div>
-                        </div>`;
+                    </div>`;
   return gameScreen;
 };

@@ -12,87 +12,131 @@
     &__content {
         margin: 0 auto;
         padding: 0 40px;
-    }
 
-    .card {
-        width: 500px;
-        height: 350px;
-        border: none;
-
-        &__header {
-            padding: 20px 20px 0;
-            color: #ffffff;
-            background-color: #7b3378;
-            border-radius: 0.25rem 0.25rem 0 0;
-
-            .card__circles {
-                display: flex;
-                justify-content: space-around;
-                width: 60px;
-                margin: 0 auto;
-
-                .circle {
-                    width: 15px;
-                    height: 15px;
-                    background-color: #D5DBDE;
-                    border-radius: 50%;
-                }
-            }
-
-            .points-increase {
-                margin: 0;
-                padding: 15px 0;
-            }
-        }
-
-        &__main {
-            height: 203px;
-            color: #686a76;
-            font-size: 1.5rem;
-            padding: 45px 20px;
+        .current-state {
             display: flex;
-            flex-direction: column;
             align-items: center;
+            justify-content: space-around;
 
-            p {
-                margin: 0;
+            .points {
+                font-size: 36px;
+                color: #ffffff;
+                margin-bottom: 13px;
+            }
+        }
+
+        .card {
+            width: 450px;
+            height: 350px;
+            border: none;
+
+            &.correct {
+                box-shadow: inset 0px 0px 4px 2px rgb(40, 167, 69);
             }
 
-            .card__result {
-                width: 30px;
-                height: 30px;
-                background-color: grey;
-                margin-top: 107px;
-                position: absolute;
-                border-radius: 50%;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                
-                i {
-                    color: white;
-                    font-size: 16px;
+            &.wrong {
+                box-shadow: inset 0px 0px 4px 2px rgb(220, 53, 69);
+            }
+
+            &__header {
+                padding: 20px 20px 0;
+                color: #ffffff;
+                background-color: #7b3378;
+                border-radius: 0.25rem 0.25rem 0 0;
+
+                .card__circles {
+                    display: flex;
+                    justify-content: space-around;
+                    width: 60px;
+                    margin: 0 auto;
+
+                    .circle {
+                        width: 15px;
+                        height: 15px;
+                        background-color: #D5DBDE;
+                        border-radius: 50%;
+                    }
+                }
+
+                .points-increase {
+                    margin: 0;
+                    padding: 15px 0;
                 }
             }
 
-            hr {
-                margin: 56px 0 20px;
-                border-top: 1px solid #d5dbde;
-                width: 460px;
+            &__main {
+                height: 203px;
+                color: #686a76;
+                font-size: 1.5rem;
+                padding: 45px 20px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+
+                p {
+                    margin: 0;
+                }
+
+                .card__result {
+                    width: 30px;
+                    height: 30px;
+                    background-color: #28a74580;
+                    margin-top: 113px;
+                    position: absolute;
+                    border-radius: 50%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    
+                    i {
+                        color: white;
+                        font-size: 16px;
+                    }
+                }
+
+                hr {
+                    margin: 56px 0 20px;
+                    border-top: 1px solid #d5dbde;
+                    width: 410px;
+                }
+            }
+
+            &__footer {
+                padding: 0 20px 20px;
+                    
+                button {
+                    width: 95px;
+                }
+
+                .btn-danger {
+                    margin-right: 10px;
+                }
             }
         }
 
-        &__footer {
-            padding: 0 20px 20px;
-                
-            button {
-                width: 95px;
-            }
+        .arrows {
+            margin-top: 20px;
+            color: #686a76;
+            display: flex;
+            display: flex;
+            justify-content: center;
 
-            .btn-danger {
-                margin-right: 10px;
+            .arrow {
+                width: 25px;
+                height: 25px;
+                border-radius: 0.25rem;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background: #d5dbde;
+                box-shadow: inset -3px -3px 3px 0px rgba(88, 87, 87, 0.8);
+
+                &:first-child {
+                    margin-right: 13px;
+                }
             }
         }
     }
-
 }
+
+  

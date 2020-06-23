@@ -113,3 +113,44 @@ i.fa-youtube {
 i.fa-linkedin {
   color: #0077b5;
 }
+
+.answers-group {
+  display: none;
+}
+
+.answers-group.show {
+  display: block;
+}
+
+.profile {
+  display: none;
+}
+
+.profile.show {
+  display: inline-flex;
+}
+
+.profile.play-audio {
+  display: inline-flex;
+}
+.profile.play-audio.hide {
+  display: none;
+}
+
+.next {
+  display: none;
+}
+.forget.hide {
+  display: none;
+}
+
+.next.show {
+  display: inline-flex;
+}
+
+i.profile.play-audio {
+  height: 115px;
+  width: 115px;
+  font-size: 56px;
+  padding: 27px;
+}

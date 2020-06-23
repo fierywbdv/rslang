@@ -44,9 +44,9 @@ const helper = {
     return Math.floor(rand);
   },
 
-  shuffle: (array) => {
-    return array.sort(() => Math.random() - 0.5);
-  },
+  shuffle: (array) => array.sort(() => Math.random() - 0.5),
+
+  isLastQuestion: (num, points) => points.some((elem) => elem === num),
 };
 
 export default helper;

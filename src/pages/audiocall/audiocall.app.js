@@ -7,6 +7,7 @@ import helper from './common/audiocall.helper';
 import gameScreenComponent from './components/game-screen';
 import startScreenComponent from './components/start-screen';
 import statisticScreenComponent from './components/statistic-screen';
+import { LAST_QUESTION } from './common/audiocall.constants';
 import mockData from './common/mock-data';
 
 class Audiocall {
@@ -50,11 +51,19 @@ class Audiocall {
       const number = askInfo.nextQuestionNum || 0;
       helper.render('#root', questions[number], 'append', '.screen');
       const { audio } = setQuestionsGame[askInfo.nextQuestionNum || 0];
+      const repeatQuestion = document.querySelector('.play-audio');
+      repeatQuestion.addEventListener('click', () => {
+        this.sayQuestion(audio);
+      });
       this.sayQuestion(audio);
       const words = document.querySelectorAll('.name');
       words.forEach((word) => {
         word.addEventListener('click', (event) => {
-          this.checkAnswer(event.target, askInfo.nextQuestionNum);
+          event.stopPropagation();
+          const el = event.target;
+          if (!el.classList.contains('disable')) {
+            this.checkAnswer(event.target, askInfo.nextQuestionNum);
+          }
         });
       });
     }
@@ -78,13 +87,49 @@ class Audiocall {
   checkAnswer(answer, questionNum) {
     const currentQuestion = document.querySelector('.result-word').getAttribute('data-word-id');
     if (answer.getAttribute('data-id') === currentQuestion) {
+      this.markCorrectAnswer(currentQuestion, questionNum);
+    } else {
+      this.markWrongAnswer(answer.getAttribute('data-id'));
+    }
+  }
+
+  stopGame() {
+    helper.render('#root', startScreenComponent(), 'append', '.container');
+    this.startGame();
+  }
+
+  markCorrectAnswer(currentQuestion, questionNum) {
+    const picture = document.querySelector('.prof-img');
+    const playAudio = document.querySelector('.play-audio');
+    const forget = document.querySelector('.forget');
+    const next = document.querySelector('.next');
+    const answersGroup = document.querySelector('.answers-group');
+    const answers = document.querySelectorAll('.icon');
+    const titles = document.querySelectorAll('.name');
+    answers.forEach((item) => {
+      if (item.getAttribute('data-id') === currentQuestion) {
+        item.innerHTML = '<i class="fas fa-check-circle"></i>';
+      }
+    });
+    titles.forEach((item) => {
+      item.classList.add('disable');
+    });
+    picture.classList.add('show');
+    playAudio.classList.add('hide');
+    forget.classList.add('hide');
+    next.classList.add('show');
+    answersGroup.classList.add('show');
+    this.correct.play();
+
+    next.addEventListener('click', () => {
       const state = store.getState();
       const { askInfo } = state.audioCallReducer;
       store.dispatch(askQuestion({
         ...askInfo,
         nextQuestion: !askInfo.nextQuestion,
       }));
-      if (questionNum === 2 || questionNum === 4 || questionNum === 6) {
+
+      if (helper.isLastQuestion(questionNum, LAST_QUESTION.last)) {
         helper.render('#root', statisticScreenComponent(), 'append', '.screen');
         store.dispatch(togglePlay());
         const restart = document.querySelector('.restart');
@@ -96,15 +141,22 @@ class Audiocall {
         this.setGameStatistic({ id: currentQuestion, error: false, type: 'checkAnswer' });
         this.playGameQuestion();
       }
-    } else {
-      this.setGameStatistic({ id: currentQuestion, error: true, type: 'checkAnswer' });
-    }
+    });
   }
 
-  stopGame() {
-    helper.render('#root', startScreenComponent(), 'append', '.container');
-    this.startGame();
-    // this.startGame();
+  markWrongAnswer(currentQuestion) {
+    const answers = document.querySelectorAll('.name');
+    this.mistake.play();
+    answers.forEach((item) => {
+      if (item.getAttribute('data-id') === currentQuestion) {
+        item.classList.add('disable');
+        if (item.hasChildNodes()) {
+          const children = item.firstChild;
+          children.innerHTML = '<i class="fas fa-times-circle"></i>';
+        }
+      }
+    });
+    this.setGameStatistic({ id: currentQuestion, error: true, type: 'checkAnswer' });
   }
 
   init() {

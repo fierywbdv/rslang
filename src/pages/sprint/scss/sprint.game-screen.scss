@@ -139,4 +139,29 @@
     }
 }
 
-  
+.switches {
+    margin-top: 30px;
+
+    label {
+        font-size: 1rem;
+        color: #fff;
+        padding: 0;
+        margin: 0;
+    }
+    
+    input {
+        width: 50px;
+        padding: 0;
+        text-align: center;
+        color: #686a76;
+
+        &:focus {
+            outline: none;
+        }
+    }
+    
+    #level {
+        margin-right: 10px;
+    }
+}
+

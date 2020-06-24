@@ -37,7 +37,7 @@
   },
   "scripts": {
     "dev": "webpack-dev-server --history-api-fallback --inline --open",
-    "build": "webpack --mode production",
+    "build": "webpack",
     "lint:fix": "eslint ./src --fix",
     "lint": "eslint ./src",
     "watch": "webpack --mode development --watch",

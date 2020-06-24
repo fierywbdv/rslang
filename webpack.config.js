@@ -44,14 +44,14 @@ module.exports = {
         to: './assets/audio/',
       },
       {
-        from: './pages/promo/assets/',
-        to: './assets/promo/',
+        from: './pages/promo/assets/img/',
+        to: './assets/promo/img/',
       },
       {
         from: './pages/main/components/some_component/assets/',
         to: './assets/main/',
       },
-    ]), 
+    ]),
   ],
   module: {
     rules: [
@@ -86,15 +86,6 @@ module.exports = {
             loader: 'file-loader',
             options: {
               outputPath: './assets/img/',
-            },
-          },
-          {
-            loader: 'image-webpack-loader',
-            options: {
-              mozjpeg: {
-                processive: true,
-                quality: 98,
-              },
             },
           },
         ],

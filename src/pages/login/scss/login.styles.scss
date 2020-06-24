@@ -22,9 +22,13 @@
         opacity: 0.8;
         background: #007bffd9;
     }
+    small {
+        font-family: tahoma, sans-serif;
+        color: $main-text-color;
+    }
 }
 .login .card {
-    margin-top: 20vh;
+    margin: 20vh auto;
     max-width: 550px;
 }
 .login__logo {
@@ -34,7 +38,7 @@
 }
 .login .card-header {
     padding-top: 20px;
-    color: $main-eng-text-color;
+    color: $main-text-color;
 }
 
 .form-group-material {
@@ -53,11 +57,11 @@ input.input-material {
 }
 
 input.input-material.is-invalid {
-    border-color: #dc3545 !important;
+    border-color: $main-pink-color !important;
 }
 
 input.input-material:focus {
-    border-color: #796AEE;
+    border-color: $main-blue-color;
 }
 
 input.input-material ~ label {
@@ -74,11 +78,15 @@ input.input-material ~ label {
 input.input-material ~ label.active {
     font-size: 0.8rem;
     top: -10px;
-    color: #796AEE;
+    color: $main-blue-color;
 }
 
 input.input-material.is-invalid ~ label {
-    color: #dc3545; 
+    color: $main-pink-color; 
+}
+input.input-material.is-invalid ~ .help {
+    background: url('../../../assets/img/help-incorrect.png');
+    background-size: contain;
 }
 
 #register-form button,  #login-form button{
@@ -90,4 +98,56 @@ input.input-material.is-invalid ~ label {
 
 .row.login-row {
     margin: 0;
+}
+
+#attention-icon {
+    opacity: 1;
+    color: red;
+
+}
+#attention-icon.hidden {
+    opacity: 0;
+}
+.help {
+    position: absolute;
+    top: 15px;
+    right: 0;
+    background: url('../../../assets/img/help.png') no-repeat;
+    background-size: contain;
+    width: 20px;
+    height: 20px;
+    margin-right: 8px;
+    cursor: pointer;
+    outline: none;
+}
+.help:hover {
+    background: url('../../../assets/img/help-active.png');
+    background-size: contain;
+}
+.help:hover~.password-text {
+    display: block;
+} 
+
+.password-text {
+    z-index: 10;
+    position: absolute;
+    bottom: 100%;
+    right: 0;
+    width: 100%;
+    padding: 5px;
+    border: 1px solid #aaa;
+    border-radius: 5px;
+    color: $main-text-color;
+    background-color: $main-light-color;
+    display: none;
+}
+
+@media (max-width: 450px) {
+    .login__logo {
+        top: 15px;
+    }
+    .login__header {
+        padding-top: 30px;
+    }
+
 }

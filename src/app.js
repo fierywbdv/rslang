@@ -11,7 +11,7 @@ import register from './pages/login/register.app';
 import { APP_GREETINGS } from './common/common.constants';
 import router from './router/Router';
 
-console.log(APP_GREETINGS);
+// console.log(APP_GREETINGS);
 
 window.onload = () => {
   main.init();
@@ -23,6 +23,8 @@ window.onload = () => {
   sprint.init();
   login.init();
   register.init();
+
+  // register.formValidation();
   // main.sayHello();
   // speakit.sayHello();
   // audiocall.sayHello();

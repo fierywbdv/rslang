@@ -6,6 +6,7 @@ import ourgame from '../pages/ourgame/ourgame.app';
 import savanna from '../pages/savanna/savanna.app';
 import sprint from '../pages/sprint/sprint.app';
 import login from '../pages/login/login.app';
+import register from '../pages/login/register.app';
 
 const controller = {
 
@@ -37,6 +38,9 @@ const controller = {
         break;
       case 'login':
         controller.actionLogin();
+        break;
+      case 'register':
+        controller.actionRegister();
         break;
       default:
         break;
@@ -81,7 +85,11 @@ const controller = {
   },
   actionLogin: () => {
     // controller.sayHello('Login');
-    // login.sayHello();
+    login.init();
+  },
+  actionRegister: () => {
+    // controller.sayHello('Login');
+    register.init();
   },
 
   sayHello(text) {

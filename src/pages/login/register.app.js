@@ -14,6 +14,7 @@ class Register {
   init() {
     this.registerInputs = Array.from(document.querySelectorAll('#register-form input'));
     console.log(this.registerInputs);
+    console.log('Оно рабоооотает!');
     inputHandler(this.registerInputs);
     this.formValidation(this.registerInputs);
   }

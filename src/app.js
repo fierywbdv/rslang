@@ -21,8 +21,8 @@ window.onload = () => {
   ourgame.init();
   savanna.init();
   sprint.init();
-  login.init();
-  register.init();
+  // login.init();
+  // register.init();
 
   // register.formValidation();
   // main.sayHello();

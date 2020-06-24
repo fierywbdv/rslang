@@ -22,7 +22,7 @@ class Sprint {
   }
 
   init() {
-    this.logo = SPEAKIT_GREETINGS; // ?
+    this.logo = SPEAKIT_GREETINGS;
 
     store.subscribe(() => {
       const newState = store.getState();

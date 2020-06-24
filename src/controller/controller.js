@@ -1,4 +1,4 @@
-// import { doc } from 'prettier';
+import { doc } from 'prettier';
 import main from '../pages/main/main.app';
 import speakit from '../pages/speakit/speakit.app';
 import audiocall from '../pages/audiocall/audiocall.app';
@@ -6,7 +6,6 @@ import englishPuzzle from '../pages/english-puzzle/english-puzzle.app';
 import ourgame from '../pages/ourgame/ourgame.app';
 import savanna from '../pages/savanna/savanna.app';
 import sprint from '../pages/sprint/sprint.app';
-// import { startScreenComponent } from '../pages/sprint/components/start-screen-component';
 
 const controller = {
 
@@ -43,46 +42,29 @@ const controller = {
   },
 
   actionMain: () => {
-    controller.sayHello('Main');
     main.sayHello();
   },
-
   actionPuzzle: () => {
-    controller.sayHello('Puzzle');
     englishPuzzle.sayHello();
   },
-
   actionSpeakIt: () => {
-    controller.sayHello('SpeakIt');
     speakit.sayHello();
   },
-
   actionAudioCall() {
-    controller.sayHello('Audio Call');
     audiocall.sayHello();
   },
   actionOurGame() {
-    controller.sayHello('Our Game');
     ourgame.sayHello();
   },
   actionSavanna() {
-    controller.sayHello('Savanna');
     savanna.sayHello();
   },
   actionSprint() {
     document.getElementById('root').classList.add('bg');
     sprint.init();
   },
-
   actionPromo() {
-    controller.sayHello('Promo');
     console.log('actionPromo');
-  },
-
-  sayHello(text) {
-    const hello = document.createElement('h1');
-    hello.textContent = text;
-    document.querySelector('body').append(hello);
   },
 };
 

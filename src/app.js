@@ -5,10 +5,7 @@ import englishPuzzle from './pages/english-puzzle/english-puzzle.app';
 import ourgame from './pages/ourgame/ourgame.app';
 import savanna from './pages/savanna/savanna.app';
 
-import { APP_GREETINGS } from './common/common.constants';
 import router from './router/Router';
-
-console.log(APP_GREETINGS);
 
 window.onload = () => {
   main.init();
@@ -18,6 +15,7 @@ window.onload = () => {
   ourgame.init();
   savanna.init();
   main.toggleBtnHandler();
+  main.menuHandler();
 };
 
 router.run();

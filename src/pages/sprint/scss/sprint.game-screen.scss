@@ -6,7 +6,6 @@
     margin: 0;
     display: flex;
     justify-content: center;
-    align-items: center;
     text-align: center;
 
     &__content {
@@ -16,7 +15,7 @@
         .current-state {
             display: flex;
             align-items: center;
-            justify-content: space-around;
+            justify-content: space-between;
 
             .points {
                 font-size: 36px;
@@ -25,99 +24,9 @@
             }
         }
 
-        .card {
-            width: 450px;
-            height: 350px;
-            border: none;
-
-            &.correct {
-                box-shadow: inset 0px 0px 4px 2px rgb(40, 167, 69);
-            }
-
-            &.wrong {
-                box-shadow: inset 0px 0px 4px 2px rgb(220, 53, 69);
-            }
-
-            &__header {
-                padding: 20px 20px 0;
-                color: #ffffff;
-                background-color: #7b3378;
-                border-radius: 0.25rem 0.25rem 0 0;
-
-                .card__circles {
-                    display: flex;
-                    justify-content: space-around;
-                    width: 60px;
-                    margin: 0 auto;
-
-                    .circle {
-                        width: 15px;
-                        height: 15px;
-                        background-color: #D5DBDE;
-                        border-radius: 50%;
-                    }
-                }
-
-                .points-increase {
-                    margin: 0;
-                    padding: 15px 0;
-                }
-            }
-
-            &__main {
-                height: 203px;
-                color: #686a76;
-                font-size: 1.5rem;
-                padding: 45px 20px;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-
-                p {
-                    margin: 0;
-                }
-
-                .card__result {
-                    width: 30px;
-                    height: 30px;
-                    background-color: #28a74580;
-                    margin-top: 113px;
-                    position: absolute;
-                    border-radius: 50%;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    
-                    i {
-                        color: white;
-                        font-size: 16px;
-                    }
-                }
-
-                hr {
-                    margin: 56px 0 20px;
-                    border-top: 1px solid #d5dbde;
-                    width: 410px;
-                }
-            }
-
-            &__footer {
-                padding: 0 20px 20px;
-                    
-                button {
-                    width: 95px;
-                }
-
-                .btn-danger {
-                    margin-right: 10px;
-                }
-            }
-        }
-
         .arrows {
             margin-top: 20px;
             color: #686a76;
-            display: flex;
             display: flex;
             justify-content: center;
 
@@ -139,29 +48,80 @@
     }
 }
 
-.switches {
+.choice {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    color: #fff;
     margin-top: 30px;
 
-    label {
-        font-size: 1rem;
-        color: #fff;
-        padding: 0;
-        margin: 0;
-    }
+    .switches {
+        label {
+            font-size: 1rem;
+            padding: 0;
+            margin: 0;
+        }
+        
+        input {
+            width: 50px;
+            padding: 0;
+            text-align: center;
+            color: #686a76;
+            margin-right: 10px;
     
-    input {
-        width: 50px;
-        padding: 0;
-        text-align: center;
-        color: #686a76;
+            &:focus {
+                outline: none;
+            }
+        }
 
-        &:focus {
-            outline: none;
+        input[type=number]::-webkit-inner-spin-button {
+            width: 22px;
+            height: 22px;
         }
     }
-    
-    #level {
-        margin-right: 10px;
+
+    span:hover { 
+        color: #d5dbde;
+        cursor: pointer;
     }
 }
 
+@media (max-width: 991px) {
+    .game-screen {
+            .arrows {
+                display: none;
+            }
+        }
+}
+
+@media (max-width: 767px) {
+    .game-screen {
+        &__content {
+            padding: 0 20px;
+        }
+    }
+}
+
+@media (max-width: 575px) {
+    .game-screen {
+        &__content {
+            .choice {
+                flex-direction: column;
+                align-items: center;
+
+                .switches {
+                    margin-bottom: 10px;
+                }
+            }
+        }
+    }
+}
+
+
+@media (max-width: 374px) {
+    .game-screen {
+        &__content {
+            padding: 0 2px;
+        }
+    }
+}

@@ -47,6 +47,28 @@ const helper = {
   shuffle: (array) => array.sort(() => Math.random() - 0.5),
 
   isLastQuestion: (num, points) => points.some((elem) => elem === num),
+
+  filterStatistic: (correct, mistake, gameNumber) => {
+    const correctAnswers = correct.filter((item) => item.gameNum === gameNumber);
+    const mistakeAnswers = mistake.filter((item) => item.gameNum === gameNumber);
+
+    const sortCorrect = [...correctAnswers];
+    mistakeAnswers.forEach((item) => {
+      correctAnswers.forEach((elem, index) => {
+        if (item.id === elem.id) {
+          sortCorrect.splice(index, 1);
+        }
+      });
+    });
+
+    const uniqueMistake = Array.from(new Set(mistakeAnswers.map((a) => a.id)))
+      .map((id) => mistakeAnswers.find((a) => a.id === id));
+
+    return {
+      cor: sortCorrect,
+      miss: uniqueMistake,
+    };
+  },
 };
 
 export default helper;

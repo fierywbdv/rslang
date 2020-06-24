@@ -130,3 +130,14 @@
   background-color: #ffffff;
   color: #25bcff;
 }
+
+.inner-right {
+  .box {
+    border-bottom: 20px solid #f45329;
+    border-radius: 0 0 10px 10px;
+  }
+
+  .box h2 {
+    background-color: #f45329;
+  }
+}

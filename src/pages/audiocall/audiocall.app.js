@@ -1,6 +1,6 @@
 import { store } from '../../redux/store';
 import {
-  setQuestions, togglePlay, askQuestion, setStatistic,
+  setQuestions, togglePlay, askQuestion, setStatistic, setGlobalStatistic, setGameNumber,
 } from './audiocall-redux/audiocall-actions';
 import './scss/audiocall.styles.scss';
 import helper from './common/audiocall.helper';
@@ -32,6 +32,7 @@ class Audiocall {
       };
       store.dispatch(askQuestion(startAskInfo));
       store.dispatch(togglePlay());
+      store.dispatch(setGameNumber());
       this.playGameQuestion();
     });
   }
@@ -62,9 +63,14 @@ class Audiocall {
           event.stopPropagation();
           const el = event.target;
           if (!el.classList.contains('disable')) {
-            this.checkAnswer(event.target, askInfo.nextQuestionNum);
+            this.checkAnswer(event.target, number);
           }
         });
+      });
+      const forget = document.querySelector('.forget');
+      forget.addEventListener('click', (event) => {
+        event.stopPropagation();
+        this.markForgetAnswer(number);
       });
     }
   }
@@ -89,7 +95,7 @@ class Audiocall {
     if (answer.getAttribute('data-id') === currentQuestion) {
       this.markCorrectAnswer(currentQuestion, questionNum);
     } else {
-      this.markWrongAnswer(answer.getAttribute('data-id'));
+      this.markWrongAnswer(answer.getAttribute('data-id'), questionNum);
     }
   }
 
@@ -123,28 +129,45 @@ class Audiocall {
 
     next.addEventListener('click', () => {
       const state = store.getState();
-      const { askInfo } = state.audioCallReducer;
+      const { askInfo, setQuestionsGame, gameNumber } = state.audioCallReducer;
       store.dispatch(askQuestion({
         ...askInfo,
         nextQuestion: !askInfo.nextQuestion,
       }));
 
       if (helper.isLastQuestion(questionNum, LAST_QUESTION.last)) {
-        helper.render('#root', statisticScreenComponent(), 'append', '.screen');
+        this.setGameStatistic({
+          game: gameNumber,
+          quesNum: questionNum,
+          mistake: false,
+          wordQues: setQuestionsGame[questionNum],
+        });
+        helper.render('#root', statisticScreenComponent(gameNumber), 'append', '.screen');
         store.dispatch(togglePlay());
         const restart = document.querySelector('.restart');
         restart.addEventListener('click', () => {
           this.stopGame();
         });
-        this.setGameStatistic({ id: currentQuestion, error: false, type: 'checkAnswer' });
+        const repeat = document.querySelectorAll('.name');
+        repeat.forEach((item) => {
+          item.addEventListener('click', (event) => {
+            const audio = event.target;
+            this.sayQuestion(audio.getAttribute('data-audio'));
+          });
+        });
       } else {
-        this.setGameStatistic({ id: currentQuestion, error: false, type: 'checkAnswer' });
+        this.setGameStatistic({
+          game: gameNumber,
+          quesNum: questionNum,
+          mistake: false,
+          wordQues: setQuestionsGame[questionNum],
+        });
         this.playGameQuestion();
       }
     });
   }
 
-  markWrongAnswer(currentQuestion) {
+  markWrongAnswer(currentQuestion, questionNum) {
     const answers = document.querySelectorAll('.name');
     this.mistake.play();
     answers.forEach((item) => {
@@ -156,7 +179,67 @@ class Audiocall {
         }
       }
     });
-    this.setGameStatistic({ id: currentQuestion, error: true, type: 'checkAnswer' });
+    const state = store.getState();
+    const { setQuestionsGame, gameNumber } = state.audioCallReducer;
+
+    this.setGameStatistic({
+      game: gameNumber,
+      quesNum: questionNum,
+      mistake: true,
+      wordQues: setQuestionsGame[questionNum],
+    });
+  }
+
+  markForgetAnswer(questionNum) {
+    const answers = document.querySelectorAll('.icon');
+    const next = document.querySelector('.next');
+    const currentQuestion = document.querySelector('.result-word').getAttribute('data-word-id');
+    const forget = document.querySelector('.forget');
+    this.mistake.play();
+    answers.forEach((item) => {
+      item.classList.add('disable');
+      if (item.getAttribute('data-id') === currentQuestion) {
+        item.innerHTML = '<i class="fas fa-check-circle"></i>';
+      }
+    });
+
+    forget.classList.add('hide');
+    next.classList.add('show');
+
+    const state = store.getState();
+    const { setQuestionsGame, askInfo, gameNumber } = state.audioCallReducer;
+
+    this.setGameStatistic({
+      game: gameNumber,
+      quesNum: questionNum,
+      mistake: true,
+      wordQues: setQuestionsGame[questionNum],
+    });
+
+    next.addEventListener('click', () => {
+      store.dispatch(askQuestion({
+        ...askInfo,
+        nextQuestion: !askInfo.nextQuestion,
+      }));
+
+      if (helper.isLastQuestion(questionNum, LAST_QUESTION.last)) {
+        helper.render('#root', statisticScreenComponent(gameNumber), 'append', '.screen');
+        store.dispatch(togglePlay());
+        const repeat = document.querySelectorAll('.name');
+        repeat.forEach((item) => {
+          item.addEventListener('click', (event) => {
+            const audio = event.target;
+            this.sayQuestion(audio.getAttribute('data-audio'));
+          });
+        });
+        const restart = document.querySelector('.restart');
+        restart.addEventListener('click', () => {
+          this.stopGame();
+        });
+      } else {
+        this.playGameQuestion();
+      }
+    });
   }
 
   init() {

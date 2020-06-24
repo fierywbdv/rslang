@@ -5,5 +5,5 @@ export const SPEAKIT_CLASS_NAMES = {
 };
 
 export const LAST_QUESTION = {
-  last: [2, 4, 6],
+  last: [1, 3, 5, 7, 9, 11, 13, 15, 17, 19,],
 };

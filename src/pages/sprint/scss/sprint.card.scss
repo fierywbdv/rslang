@@ -14,8 +14,19 @@
     &__header {
         padding: 20px 20px 0;
         color: #ffffff;
-        background-color: #7b3378;
         border-radius: 0.25rem 0.25rem 0 0;
+
+        &.max-points {
+            background-color: #7b3378;
+        }
+
+        &.medium-points {
+            background-color: #f5709ce3;
+        }
+
+        &.min-points {
+            background-color: #f8939eb8;
+        }
 
         .card__circles {
             display: flex;
@@ -53,7 +64,6 @@
         .card__result {
             width: 30px;
             height: 30px;
-            background-color: #28a74580;
             margin-top: 113px;
             position: absolute;
             border-radius: 50%;
@@ -61,6 +71,15 @@
             align-items: center;
             justify-content: center;
 
+            &.correct {
+                background-color: #28a74580;
+
+            }
+
+            &.wrong {
+                background-color: #dc354580;
+
+            }
             i {
                 color: white;
                 font-size: 16px;
@@ -79,6 +98,10 @@
 
         button {
             width: 95px;
+        }
+
+        button:focus {
+            box-shadow: none;
         }
 
         .btn-danger {

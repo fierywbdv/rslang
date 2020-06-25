@@ -1,5 +1,5 @@
 export const cardComponent = () => {
-  const card = `<div class="card">
+  const card = `<div class="card hidden">
                     <div class="card__header">
                         <div class="card__circles">
                             <div class="circle"></div>
@@ -9,9 +9,9 @@ export const cardComponent = () => {
                         <p class="points-increase">+80 очков за слово</p>
                     </div>
                     <div class="card__main">
-                        <p class="card__word">world</p>
-                        <p class="card__translation">мир</p>
-                        <div class="card__result"><i class="fas fa-check"></i></div>
+                        <p class="card__word"></p>
+                        <p class="card__translation"></p>
+                        <div class="card__result"></div>
                         <hr>
                     </div>
                     <div class="card__footer">

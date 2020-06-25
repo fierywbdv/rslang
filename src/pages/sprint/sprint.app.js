@@ -1,29 +1,153 @@
-import { CLASS_NAMES } from '../../common/common.constants';
-import { SPEAKIT_CLASS_NAMES, SPEAKIT_GREETINGS } from './common/sprint.constants';
 import { store } from '../../redux/store';
 import './scss/sprint.styles.scss';
 import { showGameScreen } from './sprint-redux/sprint-actions';
 import { startScreenComponent } from './components/start-screen-component';
 import { gameScreenComponent } from './components/game-screen-component';
+import { WordsAPIService } from '../../services/wordsAPIService';
+import { shuffle } from './common/sprint.utils';
+import { POINTS_PER_WORD } from './common/sprint.constants';
 
 class Sprint {
   constructor() {
-    this.logo = null;
+    this.level = 0;
+    this.round = 0;
+    this.gameStarted = false;
+    this.secondsRemaining = 60;
+    this.words = [];
+    this.translations = [];
+    this.shuffledWords = [];
+    this.shuffledTranslations = [];
+    this.pairNumber = 0;
+    this.pointsToAdd = 10;
+    this.correctAnswersNumber = 0;
   }
 
-  sayHello() {
-    console.log(this.logo);
+  async startGame() {
+    this.level = document.getElementById('level').value - 1;
+    this.round = document.getElementById('round').value - 1;
 
-    const speakitLogo = document.createElement('h2');
-    speakitLogo.className = SPEAKIT_CLASS_NAMES.LOGO;
-    speakitLogo.textContent = this.logo;
+    document.querySelector('.current-state').classList.remove('hidden');
+    document.querySelector('.card').classList.remove('hidden');
+    document.querySelector('.arrows').classList.remove('hidden');
 
-    document.querySelector(`.${CLASS_NAMES.MAIN.LOGO}`).after(speakitLogo);
+    const wordsList = await WordsAPIService.getWords(this.level, this.round);
+    this.createWordsArray(wordsList);
+    this.createTranslationsArray(wordsList);
+    this.shuffledWords = shuffle(this.words.slice());
+    this.shuffledTranslations = shuffle(this.translations.slice());
+
+    this.startCountdown();
+    this.showPair();
+  }
+
+  startCountdown() {
+    setInterval(() => {
+      this.secondsRemaining = +document.querySelector('.percentage').innerHTML - 1;
+      document.querySelector('.percentage').innerHTML = this.secondsRemaining;
+      document.querySelector('.circle').setAttribute('stroke-dasharray', `${60 - this.secondsRemaining}, 60`);
+    }, 1000);
+  }
+
+  createWordsArray(wordsList) {
+    this.words = wordsList.map((item) => item.word);
+  }
+
+  createTranslationsArray(wordsList) {
+    this.translations = wordsList.map((item) => item.wordTranslate);
+  }
+
+  showPair() {
+    document.querySelector('.card__word').innerHTML = this.shuffledWords[this.pairNumber];
+    document.querySelector('.card__translation').innerHTML = this.shuffledTranslations[this.pairNumber];
+  }
+
+  answerCorrectly() {
+    if (this.checkAnswer()) {
+      this.correctAnswersNumber++;
+      this.showCorrectAnswer();
+      this.addPoints();
+    } else {
+      this.correctAnswersNumber = 0;
+      this.showMistake();
+    }
+    this.pairNumber++;
+    this.showPair();
+  }
+
+  answerWrong() {
+    if (this.checkAnswer()) {
+      this.correctAnswersNumber = 0;
+      this.showMistake();
+    } else {
+      this.correctAnswersNumber++;
+      this.showCorrectAnswer();
+      this.addPoints();
+    }
+    this.pairNumber++;
+    this.showPair();
+  }
+
+  checkAnswer() {
+    const wordIndex = this.words.indexOf(this.shuffledWords[this.pairNumber]);
+    return this.translations[wordIndex] === this.shuffledTranslations[this.pairNumber];
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  showMistake() {
+    document.querySelector('.card').classList.add('wrong');
+    document.querySelector('.card__result').classList.add('wrong');
+    document.querySelector('.card__result').innerHTML = '<i class="fas fa-times"></i>';
+    setTimeout(() => {
+      document.querySelector('.card').classList.remove('wrong');
+      document.querySelector('.card__result').classList.remove('wrong');
+      document.querySelector('.card__result').innerHTML = '';
+    }, 300);
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  showCorrectAnswer() {
+    document.querySelector('.card').classList.add('correct');
+    document.querySelector('.card__result').classList.add('correct');
+    document.querySelector('.card__result').innerHTML = '<i class="fas fa-check"></i>';
+    setTimeout(() => {
+      document.querySelector('.card').classList.remove('correct');
+      document.querySelector('.card__result').classList.remove('correct');
+      document.querySelector('.card__result').innerHTML = '';
+    }, 300);
+  }
+
+  addPoints() {
+    const points = document.querySelector('.points');
+    const header = document.querySelector('.card__header');
+    const message = document.querySelector('.points-increase');
+
+    switch (this.correctAnswersNumber) {
+      case 4:
+        this.pointsToAdd = 20;
+        header.classList.add('min-points');
+        break;
+      case 8:
+        this.pointsToAdd = 40;
+        header.classList.add('medium-points');
+        break;
+      case 12:
+        this.pointsToAdd = 80;
+        header.classList.add('max-points');
+        break;
+      default:
+        break;
+    }
+
+    points.innerHTML = +points.innerHTML + this.pointsToAdd;
+    message.innerHTML = `+${this.pointsToAdd} ${POINTS_PER_WORD}`;
+  }
+
+  subtractPoints() {
+    this.pointsToAdd = 10;
+    this.correctAnswersNumber = 0;
   }
 
   init() {
-    this.logo = SPEAKIT_GREETINGS;
-
     store.subscribe(() => {
       const newState = store.getState();
       if (newState.sprintReducer.screen === 'start-screen') {
@@ -35,8 +159,31 @@ class Sprint {
         });
       }
 
-      if (newState.sprintReducer.screen === 'game-screen') {
+      if (newState.sprintReducer.screen === 'game-screen' && !document.querySelector('.game-screen')) {
         document.getElementById('root').innerHTML = gameScreenComponent();
+
+        const start = document.querySelector('.start-game');
+        start.addEventListener('click', () => {
+          document.querySelector('.start-game').classList.add('hidden');
+          this.startGame();
+
+          document.querySelector('.btn-danger').addEventListener('click', () => {
+            this.answerWrong();
+          });
+
+          document.querySelector('.btn-success').addEventListener('click', () => {
+            this.answerCorrectly();
+          });
+
+          document.addEventListener('keyup', (event) => {
+            if (event.code === 'ArrowLeft') {
+              this.answerWrong();
+            }
+            if (event.code === 'ArrowRight') {
+              this.answerCorrectly();
+            }
+          });
+        });
       }
     });
 

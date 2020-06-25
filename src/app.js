@@ -11,7 +11,6 @@ import router from './router/Router';
 window.onload = () => {
   main.init();
   speakit.init();
-  audiocall.init();
   englishPuzzle.init();
   ourgame.init();
   savanna.init();
@@ -19,4 +18,5 @@ window.onload = () => {
   main.toggleBtnHandler();
   main.menuHandler();
 };
+
 router.run();

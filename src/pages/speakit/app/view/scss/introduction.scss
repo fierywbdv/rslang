@@ -1,26 +1,35 @@
 .introduction {
-  position: fixed;
-
-  width: 100vw;
+  
   height: 100vh;
-
-  background-color: rgba(182, 203, 230, 0.9);
-  background-image: url('/assets/speakit/img/introduction_bg.jpg');
+  background-color: rgb(89, 209, 230);
+  background-image: url('../assets/img/bg.jpg');
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
   background-blend-mode: multiply;
-
-  z-index: 1000;
+  opacity: 0.8;
+  z-index: 10;
+  width: calc(100vw - 200px);
 }
 
 .introduction__container {
   position: relative;
-
   width: 100vw;
   height: 100vh;
+}
 
-  backdrop-filter: opacity(0.8) blur(2px) brightness(1.2);
+
+.actives {
+  width: calc(100vw - 100px);
+}
+
+@media (max-width: 575px) {
+  .introduction {
+    width: 100vw;
+  }
+  .actives {
+    width: calc(100vw - 100px);
+  }
 }
 
 .introduction.hidden {
@@ -28,25 +37,19 @@
 }
 
 .introduction__button {
-  position: absolute;
-  bottom: 100px;
-  left: 100px;
-
-  min-width: 20vw;
+  margin-top:50vh;
+  margin-left:5vw;
+  bottom: 200px;
+  min-width: 15vw;
   min-height: 50px;
-
-  font-size: 30px;
-  background-color: #00bf82;
-
+  font-size: 27px;
+  background-color: rgb(89, 209, 230);
   box-shadow:  5px 10px 0 rgba(0, 0, 0, 0.2), 0px 5px 10px 0 rgba(0, 0, 0, 0.4),
-               0 0 40px 40px #335e97 inset, 0 0 0 0 #00bf82;
+               0 0 40px 40px rgb(89, 209, 230) inset, 0 0 0 0 #00bf82;
   transition: .03s ease-in-out;
-
   &:focus,
   &:hover,
   &:active {
-    box-shadow: 0 5px 15px 0 rgba(0, 0, 0, 0.2), 0px 5px 10px 0 rgba(0, 0, 0, 0.4),
-                0 0 10px 0 #00bf82 inset, 0 0 10px 4px white;
     color: white;
   }
 }

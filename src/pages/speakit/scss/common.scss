@@ -1,15 +1,22 @@
-html {
-  font-size: 16px;
-  font-family: Verdana, Helvetica, sans-serif;
-  font-weight: 400;
+// html {
+//   font-size: 16px;
+//   font-family: Verdana, Helvetica, sans-serif;
+//   font-weight: 400;
 
-  background: #d6eaf8;
+//   background: #d6eaf8;
 
-  user-select: none;
+//   user-select: none;
+// }
+
+.body-speakit {
+  background-image: url('../assets/img/main_bg.jpg');
+  width: calc(100vw - 200px);
 }
 
-.body {
-  background-image: url('/assets/speakit/img/main_bg.png');
+@media (max-width: 575px) {
+  .body-speakit {
+    width: 100vw;
+  }
 }
 
 .centralizer {
@@ -50,15 +57,13 @@ html {
   font-family: Verdana, Helvetica, sans-serif;
   font-weight: 900;
   text-transform: uppercase;
-
   text-decoration: none;
   outline: none;
   display: inline-block;
   padding: 15px 30px;
-  margin: 10px 20px;
-  border-radius: 50px;
+  border-radius: 10px;
   box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.2), 0 8px 10px 0 rgba(0, 0, 0, 0.4),
-              0 0 40px 40px #00bf82 inset, 0 0 0 0 #00bf82;
+              0 0 40px 40px rgb(89, 209, 230) inset, 0 0 0 0 #00bf82;
   font-family: 'Montserrat', sans-serif;
   font-weight: bold;
   letter-spacing: 2px;

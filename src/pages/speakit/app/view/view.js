@@ -106,7 +106,7 @@ export default class View {
     this.currentList.remove();
   }
 
-  renderPicture(imageSrc = 'assets/speakit/img/logo.jpg') {
+  renderPicture(imageSrc = 'assets/speakit/img/logoMain.png') {
     this.picture.src = imageSrc;
   }
 
@@ -193,3 +193,16 @@ export default class View {
     this.statusBar = ELEMENTS.STATUS_BAR;
   }
 }
+const menu = document.querySelector('.side-navbar');
+const introduction = document.querySelector('.introduction');
+const body = document.querySelector('.body-speakit');
+
+document.querySelector('.menu-btn').addEventListener('click', () => {
+  if (menu.className == 'side-navbar shrinked') {
+    introduction.classList.remove('actives');
+    body.classList.remove('actives');
+  } else {
+    introduction.classList.add('actives');
+    body.classList.add('actives');
+  }
+});

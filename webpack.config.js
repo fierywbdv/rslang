@@ -92,15 +92,6 @@ module.exports = {
               outputPath: './assets/img/',
             },
           },
-          {
-            loader: 'image-webpack-loader',
-            options: {
-              mozjpeg: {
-                processive: true,
-                quality: 98,
-              },
-            },
-          },
         ],
       },
       {

@@ -23,8 +23,7 @@
   padding: 5px;
 
   font-size: 16px;
-  box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.2), 0 8px 10px 0 rgba(0, 0, 0, 0.4),
-              0 0 10px 5px #335e97 inset, 0 0 0 0 #335e97;
+  box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.2), 0 8px 10px 0 rgba(0, 0, 0, 0.4);
   color: #335e97;
   transition: .05s ease-in;
 
@@ -61,20 +60,22 @@
 .main-card {
   position: relative;
 
-  margin: 10px auto;
+  // margin: 10px auto;
   display: flex;
   justify-content: space-around;
   align-items: center;
 }
 
 .picture__container {
-  width: 500px;
+  // width: 500px;
+  width: 35vw;
 }
 
 .main-card__picture {
-  max-width: 390px;
+  // max-width: 390px;
   display: block;
-  height: 300px;
+  // height: 300px;
+  height: 35vh;
   margin-bottom: 20px;
   border-radius: 40px;
 

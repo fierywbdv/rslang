@@ -198,7 +198,7 @@ const introduction = document.querySelector('.introduction');
 const body = document.querySelector('.body-speakit');
 
 document.querySelector('.menu-btn').addEventListener('click', () => {
-  if (menu.className == 'side-navbar shrinked') {
+  if (menu.className === 'side-navbar shrinked') {
     introduction.classList.remove('actives');
     body.classList.remove('actives');
   } else {

@@ -1,6 +1,6 @@
 import makePage from '../../components/makePage';
 
-if (window.location.href === 'http://localhost:3000/main.index.html#speakit') {
+if ((window.location.href.split('#'))[1] === 'speakit') {
   makePage();
 }
 

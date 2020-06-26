@@ -78,7 +78,7 @@
   }
 }
 
-.advantages{
+.advantages {
   padding-top: 80px;
   padding-bottom: 80px;
 
@@ -116,8 +116,8 @@
   padding-bottom: 80px;
 
   &__container {
-   flex-direction: column;
-   align-items: center;
+    flex-direction: column;
+    align-items: center;
   }
 
   h2 {
@@ -135,7 +135,7 @@
     text-align: center;
     max-width: 270px;
 
-    &:nth-child(-n+3) {
+    &:nth-child(-n + 3) {
       margin-bottom: 40px;
     }
 
@@ -297,7 +297,7 @@
 }
 
 #register-form {
-  position: relative; 
+  position: relative;
   top: 25px;
   left: 0;
   font-size: 1em;
@@ -319,7 +319,7 @@ form label {
 }
 
 #login-form {
-  position: relative; 
+  position: relative;
   top: -270px;
   left: 0;
   font-size: 1em;
@@ -369,7 +369,7 @@ input.input-material ~ label {
   color: #aaa;
   position: absolute;
   top: 14px;
-  left: 0;    
+  left: 0;
   cursor: text;
   -webkit-transition: all 0.2s;
   transition: all 0.2s;
@@ -383,7 +383,7 @@ input.input-material ~ label.active {
 }
 
 input.input-material.is-invalid ~ label {
-  color: $main-pink-color; 
+  color: $main-pink-color;
 }
 
 input.input-material.is-invalid ~ .help {
@@ -424,7 +424,7 @@ input.input-material.is-invalid ~ .help {
 }
 .help:hover~.password-text {
     display: block;
-} 
+}
 
 .password-text {
     z-index: 10;
@@ -467,6 +467,7 @@ input.input-material.is-invalid ~ .help {
     padding-top: 80px;
     padding-bottom: 80px;
   }
+<<<<<<< HEAD
   .login__logo{
     display: none;
   }
@@ -478,3 +479,6 @@ input.input-material.is-invalid ~ .help {
     font-size: small;
   }
 }
+=======
+}
+>>>>>>> develop

@@ -5,8 +5,6 @@ import englishPuzzle from '../pages/english-puzzle/english-puzzle.app';
 import ourgame from '../pages/ourgame/ourgame.app';
 import savanna from '../pages/savanna/savanna.app';
 import sprint from '../pages/sprint/sprint.app';
-import login from '../pages/login/login.app';
-import register from '../pages/login/register.app';
 
 const controller = {
 
@@ -33,63 +31,31 @@ const controller = {
       case 'sprint':
         controller.actionSprint();
         break;
-      case 'promo':
-        controller.actionPromo();
-        break;
-      case 'login':
-        controller.actionLogin();
-        break;
-      case 'register':
-        controller.actionRegister();
-        break;
       default:
         break;
     }
   },
 
   actionMain: () => {
-    // controller.sayHello('Main');
-    main.sayHello();
-  },
 
+  },
   actionPuzzle: () => {
-    controller.sayHello('Puzzle');
     englishPuzzle.sayHello();
   },
-
   actionSpeakIt: () => {
-    controller.sayHello('SpeakIt');
     speakit.sayHello();
   },
-
   actionAudioCall() {
-    controller.sayHello('Audio Call');
     audiocall.sayHello();
   },
   actionOurGame() {
-    controller.sayHello('Our Game');
     ourgame.sayHello();
   },
   actionSavanna() {
-    controller.sayHello('Savanna');
     savanna.sayHello();
   },
   actionSprint() {
-    controller.sayHello('Sprint');
     sprint.sayHello();
-  },
-
-  actionPromo() {
-    controller.sayHello('Promo');
-    console.log('actionPromo');
-  },
-  actionLogin: () => {
-    // controller.sayHello('Login');
-    login.init();
-  },
-  actionRegister: () => {
-    // controller.sayHello('Login');
-    register.init();
   },
 
   sayHello(text) {

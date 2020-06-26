@@ -1,35 +1,34 @@
 .circular-chart {
-    display: block;
-    max-height: 150px;
-    width: 100px;
-    height: 100px;
-    margin-right: -21px;
+  display: block;
+  max-height: 150px;
+  width: 100px;
+  height: 100px;
+  margin-right: -21px;
 }
-  
+
 .circle {
-    stroke: #ffffff;
-    fill: none;
-    animation: progress 1s ease-out forwards;
+  stroke: #ffffff;
+  fill: none;
+  animation: progress 1s ease-out forwards;
 }
-  
+
 @keyframes progress {
-    0% {
-      stroke-dasharray: 0 100;
-    }
+  0% {
+    stroke-dasharray: 0 100;
+  }
 }
 
 .percentage {
-    fill: #ffffff;
-    font-family: sans-serif;
-    font-size: 0.5em;
-    text-anchor: middle;
+  fill: #ffffff;
+  font-family: sans-serif;
+  font-size: 0.5em;
+  text-anchor: middle;
 }
 
-
 @media (max-width: 374px) {
-    .game-screen {
-        .circular-chart {
-            margin-right: 0;
-        }
+  .game-screen {
+    .circular-chart {
+      margin-right: 0;
     }
+  }
 }

@@ -25,7 +25,7 @@
       .circle {
         width: 15px;
         height: 15px;
-        background-color: #D5DBDE;
+        background-color: #d5dbde;
         border-radius: 50%;
         display: flex;
         align-items: center;
@@ -47,94 +47,93 @@
     }
   }
 
-    &__main {
-      height: 203px;
-      color: #686a76;
-      font-size: 1.5rem;
-      padding: 45px 20px;
+  &__main {
+    height: 203px;
+    color: #686a76;
+    font-size: 1.5rem;
+    padding: 45px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    p {
+      margin: 0;
+    }
+
+    .card__result {
+      width: 30px;
+      height: 30px;
+      margin-top: 113px;
+      position: absolute;
+      border-radius: 50%;
       display: flex;
-      flex-direction: column;
       align-items: center;
+      justify-content: center;
 
-      p {
-        margin: 0;
+      &.correct {
+        background-color: #28a74580;
       }
 
-      .card__result {
-        width: 30px;
-        height: 30px;
-        margin-top: 113px;
-        position: absolute;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-
-        &.correct {
-          background-color: #28a74580;
-        }
-
-        &.wrong {
-          background-color: #dc354580;
-        }
-
-          i {
-            color: white;
-            font-size: 16px;
-          }
+      &.wrong {
+        background-color: #dc354580;
       }
 
-      hr {
-          margin: 56px 0 20px;
-          border-top: 1px solid #d5dbde;
-          width: 410px;
-        }
-    }
-
-    &__footer {
-      padding: 0 20px 20px;
-
-      button {
-        width: 95px;
-      }
-
-      button:focus {
-        box-shadow: none;
-      }
-
-      .btn-danger {
-        margin-right: 10px;
+      i {
+        color: white;
+        font-size: 16px;
       }
     }
+
+    hr {
+      margin: 56px 0 20px;
+      border-top: 1px solid #d5dbde;
+      width: 410px;
+    }
+  }
+
+  &__footer {
+    padding: 0 20px 20px;
+
+    button {
+      width: 95px;
+    }
+
+    button:focus {
+      box-shadow: none;
+    }
+
+    .btn-danger {
+      margin-right: 10px;
+    }
+  }
 }
 
-
 @media (max-width: 991px) {
-    .game-screen {
-        margin-bottom: 30px;
-    }
+  .game-screen {
+    margin-bottom: 30px;
+  }
 }
 
 @media (max-width: 575px) {
-    .game-screen {
-        .card {
-            width: 320px;
+  .game-screen {
+    .card {
+      width: 320px;
 
-            hr {
-                width: 280px;
-            }
-        }
+      hr {
+        width: 280px;
+      }
     }
+  }
 }
 
 @media (max-width: 374px) {
-    .game-screen {
-        .card {
-            width: 290px;
+  .game-screen {
+    .card {
+      width: 290px;
 
-            hr {
-                width: 250px;
-            }
-        }
+      hr {
+        width: 250px;
+      }
     }
+  }
 }

@@ -6,7 +6,10 @@ import { gameScreenComponent } from './components/game-screen-component';
 import { WordsAPIService } from '../../services/wordsAPIService';
 import { shuffle, toggleCirclesNumber, cleanCircles } from './common/sprint.utils';
 import {
-  POINTS_PER_WORD, BACKGROUND_MAX_POINTS, BACKGROUND_MEDIUM_POINTS, BACKGROUND_MIN_POINTS,
+  POINTS_PER_WORD,
+  BACKGROUND_MAX_POINTS,
+  BACKGROUND_MEDIUM_POINTS,
+  BACKGROUND_MIN_POINTS,
 } from './common/sprint.constants';
 
 class Sprint {

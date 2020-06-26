@@ -7,7 +7,6 @@ import savanna from '../pages/savanna/savanna.app';
 import sprint from '../pages/sprint/sprint.app';
 
 const controller = {
-
   callAction: (url) => {
     switch (url) {
       case '/':

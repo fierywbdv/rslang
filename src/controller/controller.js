@@ -9,7 +9,6 @@ import helper from '../pages/audiocall/common/audiocall.helper';
 import startScreenComponent from '../pages/audiocall/components/start-screen';
 
 const controller = {
-
   callAction: (url) => {
     switch (url) {
       case '/':
@@ -61,7 +60,8 @@ const controller = {
     savanna.sayHello();
   },
   actionSprint() {
-    sprint.sayHello();
+    document.getElementById('root').classList.add('bg');
+    sprint.init();
   },
   actionPromo() {
     console.log('actionPromo');

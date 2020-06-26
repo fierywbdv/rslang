@@ -10,7 +10,11 @@ import {
   BACKGROUND_MAX_POINTS,
   BACKGROUND_MEDIUM_POINTS,
   BACKGROUND_MIN_POINTS,
+  CORRECT_SOUND,
+  ERROR_SOUND,
+  SUCCESS_SOUND,
 } from './common/sprint.constants';
+require.context('./assets/audio', true);
 
 class Sprint {
   constructor() {
@@ -25,6 +29,7 @@ class Sprint {
     this.pairNumber = 0;
     this.pointsToAdd = 10;
     this.correctAnswersNumber = 0;
+    this.audio = new Audio();
   }
 
   async startGame() {
@@ -102,6 +107,9 @@ class Sprint {
   }
 
   showMistake() {
+    this.audio = new Audio(ERROR_SOUND);
+    this.audio.play();
+
     if (this.pointsToAdd === 80) {
       toggleCirclesNumber();
       cleanCircles();
@@ -117,6 +125,10 @@ class Sprint {
   }
 
   showCorrectAnswer() {
+    this.audio = new Audio(CORRECT_SOUND);
+    this.audio.play();
+    // CORRECT_SOUND.play();
+
     document.querySelector('.card').classList.add('correct');
     document.querySelector('.card__result').classList.add('correct');
     document.querySelector('.card__result').innerHTML = '<i class="fas fa-check"></i>';
@@ -150,16 +162,21 @@ class Sprint {
     switch (this.correctAnswersNumber) {
       case 4:
         this.pointsToAdd = 20;
+        // this.audio = new Audio(SUCCESS_SOUND);
+        // this.audio.play();
+        this.playAudio(SUCCESS_SOUND);
         header.style.backgroundColor = BACKGROUND_MIN_POINTS;
         cleanCircles();
         break;
       case 8:
         this.pointsToAdd = 40;
+        this.playAudio(SUCCESS_SOUND);
         header.style.backgroundColor = BACKGROUND_MEDIUM_POINTS;
         cleanCircles();
         break;
       case 12:
         this.pointsToAdd = 80;
+        this.playAudio(SUCCESS_SOUND);
         header.style.backgroundColor = BACKGROUND_MAX_POINTS;
         toggleCirclesNumber();
         break;
@@ -175,6 +192,11 @@ class Sprint {
     this.pointsToAdd = 10;
     this.correctAnswersNumber = 0;
     document.querySelector('.card__header').style.backgroundColor = '';
+  }
+
+  playAudio(path) {
+    this.audio = new Audio(path);
+    this.audio.play();
   }
 
   init() {

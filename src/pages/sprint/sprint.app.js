@@ -4,8 +4,10 @@ import { showGameScreen } from './sprint-redux/sprint-actions';
 import { startScreenComponent } from './components/start-screen-component';
 import { gameScreenComponent } from './components/game-screen-component';
 import { WordsAPIService } from '../../services/wordsAPIService';
-import { shuffle } from './common/sprint.utils';
-import { POINTS_PER_WORD } from './common/sprint.constants';
+import { shuffle, toggleCirclesNumber, cleanCircles } from './common/sprint.utils';
+import {
+  POINTS_PER_WORD, BACKGROUND_MAX_POINTS, BACKGROUND_MEDIUM_POINTS, BACKGROUND_MIN_POINTS,
+} from './common/sprint.constants';
 
 class Sprint {
   constructor() {
@@ -69,6 +71,8 @@ class Sprint {
     } else {
       this.correctAnswersNumber = 0;
       this.showMistake();
+      this.subtractPoints();
+      cleanCircles();
     }
     this.pairNumber++;
     this.showPair();
@@ -78,6 +82,8 @@ class Sprint {
     if (this.checkAnswer()) {
       this.correctAnswersNumber = 0;
       this.showMistake();
+      this.subtractPoints();
+      cleanCircles();
     } else {
       this.correctAnswersNumber++;
       this.showCorrectAnswer();
@@ -92,8 +98,11 @@ class Sprint {
     return this.translations[wordIndex] === this.shuffledTranslations[this.pairNumber];
   }
 
-  // eslint-disable-next-line class-methods-use-this
   showMistake() {
+    if (this.pointsToAdd === 80) {
+      toggleCirclesNumber();
+      cleanCircles();
+    }
     document.querySelector('.card').classList.add('wrong');
     document.querySelector('.card__result').classList.add('wrong');
     document.querySelector('.card__result').innerHTML = '<i class="fas fa-times"></i>';
@@ -104,7 +113,6 @@ class Sprint {
     }, 300);
   }
 
-  // eslint-disable-next-line class-methods-use-this
   showCorrectAnswer() {
     document.querySelector('.card').classList.add('correct');
     document.querySelector('.card__result').classList.add('correct');
@@ -114,6 +122,21 @@ class Sprint {
       document.querySelector('.card__result').classList.remove('correct');
       document.querySelector('.card__result').innerHTML = '';
     }, 300);
+    if (this.pointsToAdd !== 80) {
+      if ((this.correctAnswersNumber - 1) % 4 === 0) {
+        const circle = document.querySelector('.card__circles').firstElementChild;
+        circle.classList.add('correct');
+        circle.innerHTML = '<i class="fas fa-check"></i>';
+      } else if ((this.correctAnswersNumber - 2) % 4 === 0) {
+        const circle = document.querySelector('.card__circles').children[1];
+        circle.classList.add('correct');
+        circle.innerHTML = '<i class="fas fa-check"></i>';
+      } else if ((this.correctAnswersNumber - 3) % 4 === 0) {
+        const circle = document.querySelector('.card__circles').lastElementChild;
+        circle.classList.add('correct');
+        circle.innerHTML = '<i class="fas fa-check"></i>';
+      }
+    }
   }
 
   addPoints() {
@@ -124,15 +147,18 @@ class Sprint {
     switch (this.correctAnswersNumber) {
       case 4:
         this.pointsToAdd = 20;
-        header.classList.add('min-points');
+        header.style.backgroundColor = BACKGROUND_MIN_POINTS;
+        cleanCircles();
         break;
       case 8:
         this.pointsToAdd = 40;
-        header.classList.add('medium-points');
+        header.style.backgroundColor = BACKGROUND_MEDIUM_POINTS;
+        cleanCircles();
         break;
       case 12:
         this.pointsToAdd = 80;
-        header.classList.add('max-points');
+        header.style.backgroundColor = BACKGROUND_MAX_POINTS;
+        toggleCirclesNumber();
         break;
       default:
         break;
@@ -145,6 +171,7 @@ class Sprint {
   subtractPoints() {
     this.pointsToAdd = 10;
     this.correctAnswersNumber = 0;
+    document.querySelector('.card__header').style.backgroundColor = '';
   }
 
   init() {

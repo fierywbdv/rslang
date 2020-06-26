@@ -1,4 +1,3 @@
-// import { doc } from 'prettier';
 import main from '../pages/main/main.app';
 import speakit from '../pages/speakit/speakit.app';
 import audiocall from '../pages/audiocall/audiocall.app';

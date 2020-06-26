@@ -1,8 +1,11 @@
 import Toastify from 'toastify-js';
 import 'toastify-js/src/toastify.css';
 
-export class LearnWordsAPIService {
-  static errorHandler(error) {
+class LearnWordsAPIService {
+  constructor(url) {
+    this.url = url;
+  }
+  errorHandler(error) {
     Toastify({
       text: error.message,
       backgroundColor: 'linear-gradient(to right, #CD5C5C, #F08080)',
@@ -14,9 +17,9 @@ export class LearnWordsAPIService {
     console.error(error);
   }
 
-  static async getWordsByPageAndGroup(page, group) {
+  async getWordsByPageAndGroup(page, group) {
     try {
-      const response = await fetch(`https://afternoon-falls-25894.herokuapp.com/words?page=${page}&group=${group}`);
+      const response = await fetch(`${this.url}words?page=${page}&group=${group}`);
 
       if (response.status !== 200) {
         throw new Error('Failed to get the word set!');
@@ -30,9 +33,9 @@ export class LearnWordsAPIService {
     }
   }
 
-  static async getWordById(id) {
+  async getWordById(id) {
     try {
-      const response = await fetch(`https://afternoon-falls-25894.herokuapp.com/words/${id}`);
+      const response = await fetch(`${this.url}words/${id}`);
 
       if (response.status !== 200) {
         throw new Error('Failed to get the word!');
@@ -46,9 +49,9 @@ export class LearnWordsAPIService {
     }
   }
 
-  static async createUser(email, password) {
+  async createUser(email, password) {
     try {
-      const response = await fetch('https://afternoon-falls-25894.herokuapp.com/users', {
+      const response = await fetch('${this.url}users', {
         method: 'POST',
         headers: {
           Accept: 'application/json',
@@ -76,9 +79,9 @@ export class LearnWordsAPIService {
     }
   }
 
-  static async getUser(id, token) {
+  async getUser(id, token) {
     try {
-      const response = await fetch(`https://afternoon-falls-25894.herokuapp.com/users/${id}`, { headers: { Authorization: `Bearer ${token}` } });
+      const response = await fetch(`${this.url}users/${id}`, { headers: { Authorization: `Bearer ${token}` } });
 
       if (response.status === 401) {
         throw new Error('Access token is missing or invalid!');
@@ -96,9 +99,9 @@ export class LearnWordsAPIService {
     }
   }
 
-  static async updateUser(id, token, email, password) {
+  async updateUser(id, token, email, password) {
     try {
-      const response = await fetch(`https://afternoon-falls-25894.herokuapp.com/users/${id}`, {
+      const response = await fetch(`${this.url}users/${id}`, {
         method: 'PUT',
         headers: {
           Authorization: `Bearer ${token}`,
@@ -125,9 +128,9 @@ export class LearnWordsAPIService {
     }
   }
 
-  static async deleteUser(id, token) {
+  async deleteUser(id, token) {
     try {
-      const response = await fetch(`https://afternoon-falls-25894.herokuapp.com/users/${id}`, {
+      const response = await fetch(`${this.url}users/${id}`, {
         method: 'DELETE',
         headers: {
           Accept: '*/*',
@@ -145,9 +148,9 @@ export class LearnWordsAPIService {
     }
   }
 
-  static async getAllUserWords(id, token) {
+  async getAllUserWords(id, token) {
     try {
-      const response = await fetch(`https://afternoon-falls-25894.herokuapp.com/users/${id}/words`, {
+      const response = await fetch(`${this.url}users/${id}/words`, {
         headers: {
           Authorization: `Bearer ${token}`,
           Accept: 'application/json',
@@ -168,9 +171,9 @@ export class LearnWordsAPIService {
     }
   }
 
-  static async getUserWordById(userId, wordId, token) {
+  async getUserWordById(userId, wordId, token) {
     try {
-      const response = await fetch(`https://afternoon-falls-25894.herokuapp.com/users/${userId}/words/${wordId}`, {
+      const response = await fetch(`${this.url}users/${userId}/words/${wordId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
           Accept: 'application/json',
@@ -193,9 +196,9 @@ export class LearnWordsAPIService {
     }
   }
 
-  static async updateUserWord(userId, wordId, token, wordDifficulty, optionalObject) {
+  async updateUserWord(userId, wordId, token, wordDifficulty, optionalObject) {
     try {
-      const response = await fetch(`https://afternoon-falls-25894.herokuapp.com/users/${userId}/words/${wordId}`, {
+      const response = await fetch(`${this.url}users/${userId}/words/${wordId}`, {
         method: 'PUT',
         headers: {
           Authorization: `Bearer ${token}`,
@@ -222,9 +225,9 @@ export class LearnWordsAPIService {
     }
   }
 
-  static async createUserWord(userId, wordId, token, wordDifficulty, optional) {
+  async createUserWord(userId, wordId, token, wordDifficulty, optional) {
     try {
-      const response = await fetch(`https://afternoon-falls-25894.herokuapp.com/users/${userId}/words/${wordId}`, {
+      const response = await fetch(`${this.url}users/${userId}/words/${wordId}`, {
         method: 'POST',
         headers: {
           Authorization: `Bearer ${token}`,
@@ -251,9 +254,9 @@ export class LearnWordsAPIService {
     }
   }
 
-  static async deleteUserWord(userId, wordId, token) {
+  async deleteUserWord(userId, wordId, token) {
     try {
-      const response = await fetch(`https://afternoon-falls-25894.herokuapp.com/users/${userId}/words/${wordId}`, {
+      const response = await fetch(`${this.url}users/${userId}/words/${wordId}`, {
         method: 'DELETE',
         headers: {
           Authorization: `Bearer ${token}`,
@@ -271,9 +274,9 @@ export class LearnWordsAPIService {
     }
   }
 
-  static async getUserSettings(id, token) {
+  async getUserSettings(id, token) {
     try {
-      const response = await fetch(`https://afternoon-falls-25894.herokuapp.com/users/${id}/settings`, {
+      const response = await fetch(`${this.url}users/${id}/settings`, {
         headers: {
           Authorization: `Bearer ${token}`,
           Accept: 'application/json',
@@ -296,9 +299,9 @@ export class LearnWordsAPIService {
     }
   }
 
-  static async setUserSettings(id, token, wordsPerDay, optional) {
+  async setUserSettings(id, token, wordsPerDay, optional) {
     try {
-      const response = await fetch(`https://afternoon-falls-25894.herokuapp.com/users/${id}/settings`, {
+      const response = await fetch(`${this.url}users/${id}/settings`, {
         method: 'PUT',
         headers: {
           Authorization: `Bearer ${token}`,
@@ -321,9 +324,9 @@ export class LearnWordsAPIService {
     }
   }
 
-  static async getUserStatistic(id, token) {
+  async getUserStatistic(id, token) {
     try {
-      const response = await fetch(`https://afternoon-falls-25894.herokuapp.com/users/${id}/statistics`, {
+      const response = await fetch(`${this.url}users/${id}/statistics`, {
         headers: {
           Authorization: `Bearer ${token}`,
           Accept: 'application/json',
@@ -346,9 +349,9 @@ export class LearnWordsAPIService {
     }
   }
 
-  static async setUserStatistic(id, token, learnedWords, optional) {
+  async setUserStatistic(id, token, learnedWords, optional) {
     try {
-      const response = await fetch(`https://afternoon-falls-25894.herokuapp.com/users/${id}/statistics`, {
+      const response = await fetch(`${this.url}users/${id}/statistics`, {
         method: 'PUT',
         headers: {
           Authorization: `Bearer ${token}`,
@@ -371,9 +374,9 @@ export class LearnWordsAPIService {
     }
   }
 
-  static async signIn(email, password) {
+  async signIn(email, password) {
     try {
-      const response = await fetch('https://afternoon-falls-25894.herokuapp.com/signin', {
+      const response = await fetch(`${this.url}signin`, {
         method: 'POST',
         headers: {
           Accept: 'application/json',
@@ -399,3 +402,7 @@ export class LearnWordsAPIService {
     }
   }
 }
+
+const urlAPI = 'https://afternoon-falls-25894.herokuapp.com/';
+
+export const learnWordsAPIService = new LearnWordsAPIService(urlAPI);

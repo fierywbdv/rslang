@@ -1,0 +1,156 @@
+/*плавная загрузка страниц*/
+@-webkit-keyframes fade-in {
+  0% {
+    opacity: 0.1;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@-moz-keyframes fade-in {
+  0% {
+    opacity: 0.1;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@-o-keyframes fade-in {
+  0% {
+    opacity: 0.1;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0.1;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.container {
+  -webkit-animation: fade-in 1.5s linear; /* Safari 4+ */
+  -moz-animation: fade-in 1.5s linear; /* Fx 5+ */
+  -o-animation: fade-in 1.5s linear; /* Opera 12+ */
+  animation: fade-in 1.5s linear; /* IE 10+, Fx 29+ */
+}
+
+.container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 470px;
+  width: 350px;
+  text-align: center;
+  border-radius: 5px;
+}
+.front-face {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: #ebf8f9;
+  border-radius: 5px;
+  backface-visibility: hidden;
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.2);
+  transition: 0.4s linear;
+}
+.cover {
+  background: linear-gradient(75deg, #8e44ad, #2980b9);
+  height: 115px;
+  width: 100%;
+  border-radius: 5px 5px 0 0;
+  margin-bottom: 50px;
+}
+.profile {
+  height: 115px;
+  width: 115px;
+  border-radius: 50%;
+  padding: 5px;
+  background: #fff;
+  margin-top: 40px;
+}
+.name {
+  font-size: 20px;
+  padding-top: 7px;
+}
+.tag {
+  padding: 5px 0;
+}
+.about {
+  margin-top: 10px;
+  padding-top: 35px;
+  font-size: 15px;
+}
+h1 {
+  color: #0d0d0d;
+}
+i {
+  font-size: 30px;
+  padding-left: 20px;
+  cursor: pointer;
+}
+i.fa-facebook-square {
+  padding-left: 0;
+  color: #4267b2;
+}
+i.fa-twitter-square {
+  color: #1da1f2;
+}
+i.fa-instagram {
+  color: #e1306c;
+}
+i.fa-youtube {
+  color: #ff0000;
+}
+i.fa-linkedin {
+  color: #0077b5;
+}
+
+.answers-group {
+  display: none;
+}
+
+.answers-group.show {
+  display: block;
+}
+
+.profile {
+  display: none;
+}
+
+.profile.show {
+  display: inline-flex;
+}
+
+.profile.play-audio {
+  display: inline-flex;
+}
+.profile.play-audio.hide {
+  display: none;
+}
+
+.next {
+  display: none;
+}
+.forget.hide {
+  display: none;
+}
+
+.next.show {
+  display: inline-flex;
+}
+
+i.profile.play-audio {
+  height: 115px;
+  width: 115px;
+  font-size: 56px;
+  padding: 27px;
+}

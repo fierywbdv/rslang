@@ -13,6 +13,8 @@ import {
   CORRECT_SOUND,
   ERROR_SOUND,
   SUCCESS_SOUND,
+  LAST_LEVEL,
+  LAST_ROUND,
 } from './common/sprint.constants';
 require.context('./assets/audio', true);
 
@@ -40,7 +42,7 @@ class Sprint {
     document.querySelector('.card').classList.remove('hidden');
     document.querySelector('.arrows').classList.remove('hidden');
 
-    const wordsList = await WordsAPIService.getWords(this.level, this.round);
+    const wordsList = await WordsAPIService.getWords(this.round, this.level);
     this.createWordsArray(wordsList);
     this.createTranslationsArray(wordsList);
     this.shuffledWords = shuffle(this.words.slice());
@@ -71,6 +73,31 @@ class Sprint {
     document.querySelector('.card__translation').innerHTML = this.shuffledTranslations[this.pairNumber];
   }
 
+  async addWords() {
+    if (this.round === LAST_ROUND) {
+      if (this.level === LAST_LEVEL) {
+        this.round = 0;
+        this.level = 0;
+      }
+      else {
+        this.round = 0;
+        this.level++;
+      }
+    }
+    else {
+      this.round++;
+    }
+
+    const wordsList = await WordsAPIService.getWords(this.round, this.level);
+    console.log(wordsList);
+    const newWords = wordsList.map((item) => item.word);
+    this.words.push(...newWords);
+    const newTranslations = wordsList.map((item) => item.wordTranslate);
+    this.translations.push(...newTranslations);
+    this.shuffledWords.push(...shuffle(newWords.slice()));
+    this.shuffledTranslations.push(...shuffle(newTranslations.slice()));
+  }
+
   answerCorrectly() {
     if (this.checkAnswer()) {
       this.correctAnswersNumber++;
@@ -84,6 +111,9 @@ class Sprint {
     }
     this.pairNumber++;
     this.showPair();
+    if (this.pairNumber * 2 === this.words.length) {
+      this.addWords();
+    }
   }
 
   answerWrong() {
@@ -99,6 +129,9 @@ class Sprint {
     }
     this.pairNumber++;
     this.showPair();
+    if (this.pairNumber * 2 === this.words.length) {
+      this.addWords();
+    }
   }
 
   checkAnswer() {
@@ -107,13 +140,13 @@ class Sprint {
   }
 
   showMistake() {
-    this.audio = new Audio(ERROR_SOUND);
-    this.audio.play();
+    this.playAudio(ERROR_SOUND);
 
     if (this.pointsToAdd === 80) {
       toggleCirclesNumber();
       cleanCircles();
     }
+
     document.querySelector('.card').classList.add('wrong');
     document.querySelector('.card__result').classList.add('wrong');
     document.querySelector('.card__result').innerHTML = '<i class="fas fa-times"></i>';
@@ -125,9 +158,7 @@ class Sprint {
   }
 
   showCorrectAnswer() {
-    this.audio = new Audio(CORRECT_SOUND);
-    this.audio.play();
-    // CORRECT_SOUND.play();
+    this.playAudio(CORRECT_SOUND);
 
     document.querySelector('.card').classList.add('correct');
     document.querySelector('.card__result').classList.add('correct');
@@ -162,8 +193,6 @@ class Sprint {
     switch (this.correctAnswersNumber) {
       case 4:
         this.pointsToAdd = 20;
-        // this.audio = new Audio(SUCCESS_SOUND);
-        // this.audio.play();
         this.playAudio(SUCCESS_SOUND);
         header.style.backgroundColor = BACKGROUND_MIN_POINTS;
         cleanCircles();

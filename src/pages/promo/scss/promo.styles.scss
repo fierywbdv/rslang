@@ -1,6 +1,6 @@
-@import "../../../scss/normalize.scss";
-@import "../../../scss/mixins.scss";
-@import "../../../scss/variables.scss";
+@import '../../../scss/normalize.scss';
+@import '../../../scss/mixins.scss';
+@import '../../../scss/variables.scss';
 
 .container {
   max-width: 1140px;
@@ -76,7 +76,7 @@
   }
 }
 
-.advantages{
+.advantages {
   padding-top: 80px;
   padding-bottom: 80px;
 
@@ -114,8 +114,8 @@
   padding-bottom: 80px;
 
   &__container {
-   flex-direction: column;
-   align-items: center;
+    flex-direction: column;
+    align-items: center;
   }
 
   h2 {
@@ -133,7 +133,7 @@
     text-align: center;
     max-width: 270px;
 
-    &:nth-child(-n+3) {
+    &:nth-child(-n + 3) {
       margin-bottom: 40px;
     }
 

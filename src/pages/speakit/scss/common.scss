@@ -1,13 +1,3 @@
-// html {
-//   font-size: 16px;
-//   font-family: Verdana, Helvetica, sans-serif;
-//   font-weight: 400;
-
-//   background: #d6eaf8;
-
-//   user-select: none;
-// }
-
 .body-speakit {
   background-image: url('../assets/img/main_bg.jpg');
   background-size: cover;
@@ -41,7 +31,11 @@
 }
 
 .overflow-hidden {
-  overflow: hidden;
+  overflow: auto !important;
+}
+
+.color {
+background-color: white;
 }
 
 .active {

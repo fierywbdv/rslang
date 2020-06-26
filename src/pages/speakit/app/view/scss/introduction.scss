@@ -10,6 +10,7 @@
   opacity: 0.8;
   z-index: 10;
   width: calc(100vw - 200px);
+  overflow: hidden;
 }
 
 .introduction__container {
@@ -18,6 +19,9 @@
   height: 100vh;
 }
 
+.width {
+  width: 100vw;
+}
 
 .actives {
   width: calc(100vw - 100px);

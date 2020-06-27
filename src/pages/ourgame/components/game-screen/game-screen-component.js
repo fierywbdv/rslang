@@ -57,9 +57,16 @@ const gameScreenComponent = (gameNumber) => {
     innerBoxRight.append(noMis);
   }
 
+  const button = document.createElement('button');
+  button.innerText = 'Stop Game';
+  button.className = 'restart  btn btn-success';
+
+
   containerInnerRight.append(innerBoxRight);
   containerInner.append(containerInnerRight);
+
   gameScreen.append(containerInner);
+  containerInner.after(button);
 
   return gameScreen;
 };

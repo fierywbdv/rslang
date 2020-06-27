@@ -4,6 +4,7 @@ import {
   SET_GAME_NUMBER_OURGAME,
   SET_QUESTION_NUMBER_OURGAME,
   SET_STATISTIC_OURGAME,
+  SET_LISTEN_ANSWER_OURGAME,
 } from './ourgame-types';
 
 export function togglePlay() {
@@ -34,5 +35,12 @@ export function setStatistic(statistic) {
   return {
     type: SET_STATISTIC_OURGAME,
     statistic,
+  };
+}
+
+export function setListenAnswer(settings) {
+  return {
+    type: SET_LISTEN_ANSWER_OURGAME,
+    settings,
   };
 }

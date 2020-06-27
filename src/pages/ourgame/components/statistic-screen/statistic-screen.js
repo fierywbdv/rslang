@@ -4,8 +4,7 @@ import statisticLine from '../statistic-line';
 
 const statisticScreenComponent = (gameNumber) => {
   const state = store.getState();
-  const { correct, mistake } = state.audioCallReducer.stat;
-
+  const { correct, mistake } = state.ourGameReducer.setStatistic;
   const { cor, miss } = helper.filterStatistic(correct, mistake, gameNumber);
 
   const corMurkUp = cor.map((item) => statisticLine(item));

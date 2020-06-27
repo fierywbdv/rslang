@@ -2,16 +2,20 @@ import './scss/ourgame.styles.scss';
 import { store } from '../../redux/store';
 import { WordsAPIService } from '../../services/wordsAPIService';
 import {
-  setGameNumber, setQuestions, togglePlay, setQuestionNumber, setStatistic
+  setGameNumber, setQuestions, togglePlay, setQuestionNumber, setStatistic, setListenAnswer,
 } from './ourgame-redux/ourgame-actions';
 import helper from './common/ourgame.helper';
 import gameScreenComponent from './components/game-screen';
 import startScreenComponent from '../audiocall/components/start-screen';
+import statisticScreenComponent from './components/statistic-screen';
 
 class Ourgame {
   constructor() {
     this.words = null;
     this.timeOut = null;
+    this.page = 0;
+    this.group = 1;
+    this.isFirstGame = false;
     this.correct = new Audio('./assets/audio/correct.mp3');
     this.mistake = new Audio('./assets/audio/error.mp3');
     this.failure = new Audio('./assets/audio/failure.mp3');
@@ -28,87 +32,37 @@ class Ourgame {
     });
   }
 
-  async setWords() {
-    const page = 0;
-    const group = 1;
-    this.words = await WordsAPIService.getWords(page, group);
-    store.dispatch(setQuestions(this.words));
-    this.startGame();
-  }
-
   playGame() {
     const state = store.getState();
     const { setQuestionsGame } = state.ourGameReducer;
-    helper.render('#root', gameScreenComponent(setQuestionsGame.splice(0, 10)), 'append', '.screen');
+    helper.render('#root', gameScreenComponent(setQuestionsGame), 'append', '.screen');
     const questions = document.querySelectorAll('.inner-left .name');
-
     questions.forEach((item) => {
       item.addEventListener('click', (e) => {
         this.askQuestion(e.target);
-        const answers = document.querySelectorAll('.inner-right .name');
-        answers.forEach((elem) => {
-          if (elem.classList.contains('disabled')) {
-            elem.classList.remove('disabled');
-          }
-        });
       });
     });
+    this.listenAnswer();
+    this.setRestart();
   }
 
-  checkAnswer(elem) {
-    const id = elem.getAttribute('data-id');
-    const currentQuestion = Ourgame.getCurrentQuestion();
-    const audio = elem.getAttribute('data-audio');
-    const infoWord = document.getElementById('info-word');
-    const state = store.getState();
-    const { setQuestionNum, setGameNum, setQuestionsGame } = state.ourGameReducer;
-
-    window.clearTimeout(this.timeOut);
-
-    if (id === currentQuestion.getAttribute('data-id')) {
-      this.correct.play();
-      currentQuestion.classList.add('hide');
-      elem.classList.add('hide');
-      infoWord.innerText = `${currentQuestion.innerText} = ${elem.innerText}`;
-      this.timeOut = setTimeout(() => {
-        this.sayWord(audio);
-      }, 300);
-      const answers = document.querySelectorAll('.inner-right .name');
-      answers.forEach((item) => {
-        item.classList.add('disabled');
+  listenAnswer() {
+    const answers = document.querySelectorAll('.inner-right .name');
+    answers.forEach((item) => {
+      item.addEventListener('click', (e) => {
+        const state = store.getState();
+        const { isListenAnswer } = state.ourGameReducer;
+        if (isListenAnswer.nextQuestion) {
+          this.checkAnswer(e.target);
+        }
       });
-
-      this.setGameStatistic({
-        game: setGameNum,
-        quesNum: setQuestionsGame,
-        mistake: false,
-        wordQues: this.getQuestion(currentQuestion.getAttribute('data-id')),
-      });
-      if (setQuestionNum === 9 || setQuestionNum === 19) {
-        helper.render('#root', '<h1>hi</h1>', 'append', '.screen');
-      }
-      store.dispatch(setQuestionNumber());
-      store.dispatch(togglePlay());
-      // const restart = document.querySelector('.restart');
-      // restart.addEventListener('click', () => {
-      //   this.stopGame();
-      // });
-    } else {
-      this.mistake.play();
-      elem.classList.toggle('answered');
-      this.setGameStatistic({
-        game: setGameNum,
-        quesNum: setQuestionsGame,
-        mistake: true,
-        wordQues: this.getQuestion(currentQuestion.getAttribute('data-id')),
-      });
-    }
+    });
   }
 
   askQuestion(elem) {
     const questions = document.querySelectorAll('.inner-left .name');
     const infoWord = document.getElementById('info-word');
-    const answers = document.querySelectorAll('.inner-right .name');
+    store.dispatch(setListenAnswer({ isListen: true, nextQuestion: true, answered: true }));
     questions.forEach((item) => {
       if (item.classList.contains('checked')) {
         item.classList.remove('checked');
@@ -119,13 +73,54 @@ class Ourgame {
     const audio = elem.getAttribute('data-audio');
     infoWord.innerText = transcription;
     this.sayWord(audio);
-    answers.forEach((item) => {
-      item.addEventListener('click', (e) => {
-        if (!item.classList.contains('disabled')) {
-          this.checkAnswer(e.target);
-        }
+  }
+
+  checkAnswer(elem) {
+    const id = elem.getAttribute('data-id');
+    const currentQuestion = Ourgame.getCurrentQuestion();
+    const audio = elem.getAttribute('data-audio');
+    const infoWord = document.getElementById('info-word');
+    const state = store.getState();
+    const {
+      setQuestionNum, setGameNum, setQuestionsGame,
+    } = state.ourGameReducer;
+    store.dispatch(setListenAnswer({ isListen: true, nextQuestion: false, answered: true }));
+
+    window.clearTimeout(this.timeOut);
+
+    if (id === currentQuestion.getAttribute('data-id')) {
+      store.dispatch(setListenAnswer({ isListen: true, nextQuestion: false, answered: true }));
+      this.correct.play();
+      currentQuestion.classList.add('hide');
+      elem.classList.add('hide');
+      infoWord.innerText = `${currentQuestion.innerText} = ${elem.innerText}`;
+      this.timeOut = setTimeout(() => {
+        this.sayWord(audio);
+      }, 300);
+      this.setGameStatistic({
+        game: setGameNum,
+        quesNum: setQuestionsGame,
+        mistake: false,
+        wordQues: this.getQuestion(currentQuestion.getAttribute('data-id')),
       });
-    });
+      store.dispatch(setQuestionNumber());
+      if (setQuestionNum === 9 || setQuestionNum === 19) {
+        helper.render('#root', statisticScreenComponent(setGameNum), 'append', '.screen');
+        store.dispatch(togglePlay());
+        this.setRestart();
+        this.setRepeat();
+      }
+    } else {
+      store.dispatch(setListenAnswer({ isListen: true, nextQuestion: true, answered: true }));
+      this.mistake.play();
+      elem.classList.toggle('answered');
+      this.setGameStatistic({
+        game: setGameNum,
+        quesNum: setQuestionsGame,
+        mistake: true,
+        wordQues: this.getQuestion(currentQuestion.getAttribute('data-id')),
+      });
+    }
   }
 
   sayWord(audio) {
@@ -146,7 +141,7 @@ class Ourgame {
 
   stopGame() {
     helper.render('#root', startScreenComponent(), 'append', '.container');
-    this.startGame();
+    this.setWords(this.page, this.group);
   }
 
   setGameStatistic(info = {}) {
@@ -160,8 +155,36 @@ class Ourgame {
     return result[0];
   }
 
+  async setWords(page = 0, group = 1) {
+    this.words = await WordsAPIService.getWords(page, group);
+    if (this.isFirstGame) {
+      store.dispatch(setQuestions(this.words.slice(0, 10)));
+    } else {
+      store.dispatch(setQuestions(this.words.slice(10, 20)));
+    }
+    this.startGame();
+  }
+
+  setRestart() {
+    const restart = document.querySelector('.restart');
+    restart.addEventListener('click', () => {
+      store.dispatch(togglePlay());
+      this.stopGame();
+    });
+  }
+
+  setRepeat() {
+    const repeat = document.querySelectorAll('.name');
+    repeat.forEach((item) => {
+      item.addEventListener('click', (event) => {
+        const audio = event.target;
+        this.sayWord(audio.getAttribute('data-audio'));
+      });
+    });
+  }
+
   init() {
-    this.setWords();
+    this.setWords(this.page, this.group);
   }
 }
 

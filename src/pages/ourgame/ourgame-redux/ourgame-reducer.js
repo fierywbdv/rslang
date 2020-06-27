@@ -5,11 +5,19 @@ import {
   SET_GAME_NUMBER_OURGAME,
   SET_QUESTION_NUMBER_OURGAME,
   SET_STATISTIC_OURGAME,
+  SET_LISTEN_ANSWER_OURGAME,
 } from './ourgame-types';
 
 function togglePlayReducer(state = false, action) {
   if (action.type === TOGGLE_PLAY_OURGAME) {
     return !state;
+  }
+  return state;
+}
+
+function setListenAnswerReducer(state = { isListen: true, nextQuestion: true, answered: false }, action) {
+  if (action.type === SET_LISTEN_ANSWER_OURGAME) {
+    return { ...action.settings };
   }
   return state;
 }
@@ -61,4 +69,5 @@ export const ourGameReducer = combineReducers({
   setGameNum: setGameNumberReducer,
   setQuestionNum: setQuestionNumberReducer,
   setStatistic: setStatisticReducer,
+  isListenAnswer: setListenAnswerReducer,
 });

@@ -51,16 +51,8 @@ const helper = {
   filterStatistic: (correct, mistake, gameNumber) => {
     const correctAnswers = correct.filter((item) => item.gameNum === gameNumber);
     const mistakeAnswers = mistake.filter((item) => item.gameNum === gameNumber);
-
-    const sortCorrect = [...correctAnswers];
-    mistakeAnswers.forEach((item) => {
-      correctAnswers.forEach((elem, index) => {
-        if (item.id === elem.id) {
-          sortCorrect.splice(index, 1);
-        }
-      });
-    });
-
+    const sortCorrect = correctAnswers.filter((item) => mistakeAnswers
+      .every((elem) => item.id !== elem.id));
     const uniqueMistake = Array.from(new Set(mistakeAnswers.map((a) => a.id)))
       .map((id) => mistakeAnswers.find((a) => a.id === id));
 

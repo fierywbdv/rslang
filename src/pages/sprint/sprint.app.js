@@ -16,7 +16,6 @@ import {
   LAST_LEVEL,
   LAST_ROUND,
 } from './common/sprint.constants';
-require.context('./assets/audio', true);
 
 class Sprint {
   constructor() {
@@ -78,13 +77,11 @@ class Sprint {
       if (this.level === LAST_LEVEL) {
         this.round = 0;
         this.level = 0;
-      }
-      else {
+      } else {
         this.round = 0;
         this.level++;
       }
-    }
-    else {
+    } else {
       this.round++;
     }
 

@@ -25,6 +25,7 @@
 
     .arrows {
       margin-top: 20px;
+      margin-bottom: 20px;
       color: #686a76;
       display: flex;
       justify-content: center;
@@ -92,7 +93,6 @@
 .start-game {
   position: absolute;
   top: 50%;
-  left: 50%;
   margin-right: -50%;
   transform: translate(-50%, -50%);
   color: #ffffff;

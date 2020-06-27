@@ -1,0 +1,67 @@
+import { store } from '../../../../redux/store';
+import helper from '../../common/ourgame.helper';
+import gameLine from "../geme-line/game-line";
+
+
+const gameScreenComponent = (gameNumber) => {
+  const state = store.getState();
+  const { setQuestionsGame } = state.ourGameReducer;
+  const answersMurkUp = setQuestionsGame.map((item) => gameLine(item));
+  const questionMurkUp = setQuestionsGame.map((item) => gameLine(item, 'question'));
+  const questionUl = document.createElement('ul');
+  const answersUl = document.createElement('ul');
+
+  helper.shuffle(answersMurkUp).forEach((item) => answersUl.append(item));
+  questionMurkUp.forEach((elem) => questionUl.append(elem));
+
+  const title = `<h3>Title</h3>
+                    <h4 id="info-word"></h4>`;
+  const gameScreen = document.createElement('div');
+  gameScreen.setAttribute('id', 'statistic');
+  gameScreen.innerHTML = title;
+  gameScreen.className = 'container screen statistic';
+
+  const containerInner = document.createElement('div');
+  containerInner.className = 'container-inner';
+
+  const containerInnerLeft = document.createElement('div');
+  containerInnerLeft.className = 'inner-left';
+
+  const innerBox = document.createElement('div');
+  innerBox.innerHTML = '<h2>Words</h2>';
+  innerBox.className = 'box';
+
+  if (setQuestionsGame.length) {
+    innerBox.append(questionUl);
+  } else {
+    const noCor = document.createElement('ul');
+    noCor.innerHTML = '<li>Bad! No Correct answers</li>';
+    innerBox.append(noCor);
+  }
+
+  containerInnerLeft.append(innerBox);
+  containerInner.append(containerInnerLeft);
+
+  const containerInnerRight = document.createElement('div');
+  containerInnerRight.className = 'inner-right';
+
+  const innerBoxRight = document.createElement('div');
+  innerBoxRight.innerHTML = '<h2>Translations</h2>';
+  innerBoxRight.className = 'box';
+
+  if (setQuestionsGame.length) {
+    innerBoxRight.append(answersUl);
+  } else {
+    const noMis = document.createElement('ul');
+    noMis.innerHTML = '<li>Great! No Mistakes</li>';
+    innerBoxRight.append(noMis);
+  }
+
+  containerInnerRight.append(innerBoxRight);
+  containerInner.append(containerInnerRight);
+  gameScreen.append(containerInner);
+
+  return gameScreen;
+};
+
+export default gameScreenComponent;

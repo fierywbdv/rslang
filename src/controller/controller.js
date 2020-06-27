@@ -1,4 +1,3 @@
-import main from '../pages/main/main.app';
 import speakit from '../pages/speakit/speakit.app';
 import audiocall from '../pages/audiocall/audiocall.app';
 import englishPuzzle from '../pages/english-puzzle/english-puzzle.app';
@@ -7,6 +6,7 @@ import savanna from '../pages/savanna/savanna.app';
 import sprint from '../pages/sprint/sprint.app';
 import helper from '../pages/audiocall/common/audiocall.helper';
 import startScreenComponent from '../pages/audiocall/components/start-screen';
+import startScreenOurGameComponent from '../pages/ourgame/components/start-screen';
 
 const controller = {
 
@@ -42,7 +42,7 @@ const controller = {
   },
 
   actionMain: () => {
-    main.sayHello();
+    // main.sayHello();
   },
   actionPuzzle: () => {
     englishPuzzle.sayHello();
@@ -55,7 +55,8 @@ const controller = {
     audiocall.init();
   },
   actionOurGame() {
-    ourgame.sayHello();
+    helper.render('#root', startScreenOurGameComponent());
+    ourgame.init();
   },
   actionSavanna() {
     savanna.sayHello();

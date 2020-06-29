@@ -6,7 +6,7 @@ import {
 } from './ourgame-redux/ourgame-actions';
 import helper from './common/ourgame.helper';
 import gameScreenComponent from './components/game-screen';
-import startScreenComponent from '../audiocall/components/start-screen';
+import startScreenOurGameComponent from './components/start-screen';
 import statisticScreenComponent from './components/statistic-screen';
 
 class Ourgame {
@@ -24,7 +24,7 @@ class Ourgame {
   }
 
   startGame() {
-    const startButton = document.getElementById('center-div');
+    const startButton = document.getElementById('ourgame-start-screen');
     startButton.addEventListener('click', () => {
       store.dispatch(togglePlay());
       store.dispatch(setGameNumber());
@@ -104,7 +104,7 @@ class Ourgame {
         wordQues: this.getQuestion(currentQuestion.getAttribute('data-id')),
       });
       store.dispatch(setQuestionNumber());
-      if (setQuestionNum === 9 || setQuestionNum === 19) {
+      if (setQuestionNum === 2 || setQuestionNum === 19) {
         helper.render('#root', statisticScreenComponent(setGameNum), 'append', '.screen');
         store.dispatch(togglePlay());
         this.setRestart();
@@ -140,7 +140,7 @@ class Ourgame {
   }
 
   stopGame() {
-    helper.render('#root', startScreenComponent(), 'append', '.container');
+    helper.render('#root', startScreenOurGameComponent(), 'append', '.container');
     this.setWords(this.page, this.group);
   }
 

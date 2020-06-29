@@ -15,9 +15,9 @@ const gameScreenComponent = (gameNumber) => {
   questionMurkUp.forEach((elem) => questionUl.append(elem));
 
   const title = `<h3>Title</h3>
-                    <h4 id="info-word"></h4>`;
+                    <h4 id="info-word">Could you please match the words</h4>`;
   const gameScreen = document.createElement('div');
-  gameScreen.setAttribute('id', 'statistic');
+  gameScreen.setAttribute('id', 'our-game-play-screen');
   gameScreen.innerHTML = title;
   gameScreen.className = 'container screen statistic';
 

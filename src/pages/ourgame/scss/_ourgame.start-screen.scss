@@ -1,9 +1,9 @@
-#center-div {
+#ourgame-start-screen {
   display: inline-block;
   border-radius: 50%;
   cursor: pointer;
   position: absolute;
-  box-shadow: 0 0 50px #f6f078;
+  box-shadow: 0 0 50px #007944;
   text-align: center;
   top: 50%;
   left: 50%;
@@ -11,7 +11,7 @@
 
   div {
     font-size: 60px;
-    background-color: #730068;
+    background-color: #007944;
     display: inline-block;
     color: #effffb;
     border: 0px;
@@ -25,7 +25,7 @@
   }
 
 }
-#center-div p {
+#ourgame-start-screen p {
   padding-top: 75px;
   line-height: 1.2;
   font-family: verdana;
@@ -34,25 +34,25 @@
 
 @-webkit-keyframes inner-center-div {
   0% {
-    transform: scale(1);
+  transform: scale(1);
   }
   50% {
-    transform: scale(1.1);
+  transform: scale(1.1);
   }
   100% {
-    transform: scale(1);
+  transform: scale(1);
   }
 }
 
 @keyframes inner-center-div {
   0% {
-    transform: scale(1);
+  transform: scale(1);
   }
   50% {
-    transform: scale(1.1);
+  transform: scale(1.1);
   }
   100% {
-    transform: scale(1);
+  transform: scale(1);
   }
 }
 
@@ -74,7 +74,7 @@
   }
 }
 
-#center-div {
+#ourgame-start-screen {
   -webkit-animation: fade-in 1.5s linear; /* Safari 4+ */
   -moz-animation: fade-in 1.5s linear; /* Fx 5+ */
   -o-animation: fade-in 1.5s linear; /* Opera 12+ */

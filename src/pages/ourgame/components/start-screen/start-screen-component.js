@@ -3,7 +3,7 @@ const startScreenOurGameComponent = () => {
                       <p>Start<br>Game</p>
                     </div>`;
   const startScreen = document.createElement('div');
-  startScreen.setAttribute('id', 'center-div');
+  startScreen.setAttribute('id', 'ourgame-start-screen');
   startScreen.innerHTML = template;
   startScreen.className = 'screen';
   return startScreen;

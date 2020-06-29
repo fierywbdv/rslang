@@ -17,7 +17,7 @@ const gameScreenComponent = (data) => {
                           <i class="fas fa-volume-up profile play-audio" data-audio="${audio}" aria-hidden="true"></i>
                       </div>
                       <div class="answers-group" >
-                        <div class="name result-word" data-audio="${audio}" data-word-id="${id}"><span></span>${word}</div>
+                        <div class="name result-word" data-audio="${audio}" data-word-id="${id}"><span>${word}</span></div>
                         <div class="result-translate">${transcription}</div>
                       </div>`;
   const buttonsTemplate = `<button class="next btn btn-success">Next</button>

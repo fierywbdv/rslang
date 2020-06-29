@@ -52,6 +52,7 @@
     display: flex;
     flex-flow: row wrap;
     justify-content: space-between;
+    padding: 20px;
 
     .inner-left,
     .inner-right {
@@ -64,13 +65,13 @@
 }
 
 .box {
-  border-bottom: 20px solid #03a9f4;
-  border-radius: 0 0 10px 10px;
+  border-bottom: 20px solid #5c2a9d;
+  border-radius: inherit;
 }
 
 .box h2 {
-  background-color: #03a9f4;
-  border-radius: 10px 10px 0 0;
+  background-color: #5c2a9d;
+  border-radius: inherit;
   color: #ffffff;
   font-size: 20px;
   font-weight: 700;
@@ -101,8 +102,8 @@
 .box ul li:hover,
 .box ul li:focus,
 .box ul li:active {
-  background-color: #25bcff;
-  color: #ffffff;
+  background-color: #f1ebbb;
+  color: #000;
   cursor: pointer;
   box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
   opacity: 1;
@@ -133,18 +134,18 @@
 
 .inner-right {
   .box {
-    border-bottom: 20px solid #f45329;
-    border-radius: 0 0 10px 10px;
+    border-bottom: 20px solid #b5076b;
+    border-radius: inherit;
   }
 
   .box h2 {
-    background-color: #f45329;
+    background-color: #b5076b;
   }
 }
 
 .box li.checked {
-  background-color: #25bcff;
-  color: #ffffff;
+  background-color: #f1ebbb;
+  color: #000000;
   cursor: pointer;
   box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
   opacity: 1;
@@ -156,3 +157,11 @@
   display: none;
 }
 
+button.restart.btn.btn-success {
+  margin-bottom: 20px !important;
+  border-radius: initial;
+}
+button.restart.btn.btn-success {
+  background-color: #ff4301;
+  border: 1px solid #ff4301;
+}

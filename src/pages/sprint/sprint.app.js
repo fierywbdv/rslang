@@ -3,6 +3,7 @@ import './scss/sprint.styles.scss';
 import { showGameScreen } from './sprint-redux/sprint-actions';
 import { startScreenComponent } from './components/start-screen-component';
 import { gameScreenComponent } from './components/game-screen-component';
+import { resultsScreenComponent } from './components/results-screen-component';
 import { WordsAPIService } from '../../services/wordsAPIService';
 import { shuffle, toggleCirclesNumber, cleanCircles } from './common/sprint.utils';
 import {
@@ -13,6 +14,7 @@ import {
   CORRECT_SOUND,
   ERROR_SOUND,
   SUCCESS_SOUND,
+  TIMER_SOUND,
   LAST_LEVEL,
   LAST_ROUND,
 } from './common/sprint.constants';
@@ -23,6 +25,7 @@ class Sprint {
     this.round = 0;
     this.gameStarted = false;
     this.secondsRemaining = 60;
+    this.wordsList = [];
     this.words = [];
     this.translations = [];
     this.shuffledWords = [];
@@ -31,19 +34,22 @@ class Sprint {
     this.pointsToAdd = 10;
     this.correctAnswersNumber = 0;
     this.audio = new Audio();
+    this.correctAnswers = [];
+    this.wrongAnswers = [];
   }
 
   async startGame() {
     this.level = document.getElementById('level').value - 1;
     this.round = document.getElementById('round').value - 1;
-
+    console.log(this.level, this.round);
     document.querySelector('.current-state').classList.remove('hidden');
     document.querySelector('.card').classList.remove('hidden');
     document.querySelector('.arrows').classList.remove('hidden');
 
-    const wordsList = await WordsAPIService.getWords(this.round, this.level);
-    this.createWordsArray(wordsList);
-    this.createTranslationsArray(wordsList);
+    this.wordsList = await WordsAPIService.getWords(this.round, this.level);
+    console.log(this.wordsList);
+    this.createWordsArray(this.wordsList);
+    this.createTranslationsArray(this.wordsList);
     this.shuffledWords = shuffle(this.words.slice());
     this.shuffledTranslations = shuffle(this.translations.slice());
 
@@ -52,10 +58,22 @@ class Sprint {
   }
 
   startCountdown() {
-    setInterval(() => {
+    const timer = setInterval(() => {
       this.secondsRemaining = +document.querySelector('.percentage').innerHTML - 1;
-      document.querySelector('.percentage').innerHTML = this.secondsRemaining;
-      document.querySelector('.circle').setAttribute('stroke-dasharray', `${60 - this.secondsRemaining}, 60`);
+      if (this.secondsRemaining === -1) {
+        clearInterval(timer);
+        this.audio.pause();
+        const points = document.querySelector('.points').innerHTML;
+        document.getElementById('root').innerHTML = resultsScreenComponent(this.wordsList, this.words, this.correctAnswers, this.wrongAnswers, points);
+        this.playResultsAudio();
+        this.trainAgain();
+      } else {
+        if (this.secondsRemaining === 5) {
+          this.playAudio(TIMER_SOUND);
+        }
+        document.querySelector('.percentage').innerHTML = this.secondsRemaining;
+        document.querySelector('.circle').setAttribute('stroke-dasharray', `${60 - this.secondsRemaining}, 60`);
+      }
     }, 1000);
   }
 
@@ -85,11 +103,12 @@ class Sprint {
       this.round++;
     }
 
-    const wordsList = await WordsAPIService.getWords(this.round, this.level);
-    console.log(wordsList);
-    const newWords = wordsList.map((item) => item.word);
+    const newWordsList = await WordsAPIService.getWords(this.round, this.level);
+    console.log(newWordsList);
+    this.wordsList.push(...newWordsList);
+    const newWords = newWordsList.map((item) => item.word);
     this.words.push(...newWords);
-    const newTranslations = wordsList.map((item) => item.wordTranslate);
+    const newTranslations = newWordsList.map((item) => item.wordTranslate);
     this.translations.push(...newTranslations);
     this.shuffledWords.push(...shuffle(newWords.slice()));
     this.shuffledTranslations.push(...shuffle(newTranslations.slice()));
@@ -97,10 +116,12 @@ class Sprint {
 
   answerCorrectly() {
     if (this.checkAnswer()) {
+      this.correctAnswers.push(this.shuffledWords[this.pairNumber]);
       this.correctAnswersNumber++;
       this.showCorrectAnswer();
       this.addPoints();
     } else {
+      this.wrongAnswers.push(this.shuffledWords[this.pairNumber]);
       this.correctAnswersNumber = 0;
       this.showMistake();
       this.subtractPoints();
@@ -115,11 +136,13 @@ class Sprint {
 
   answerWrong() {
     if (this.checkAnswer()) {
+      this.wrongAnswers.push(this.shuffledWords[this.pairNumber]);
       this.correctAnswersNumber = 0;
       this.showMistake();
       this.subtractPoints();
       cleanCircles();
     } else {
+      this.correctAnswers.push(this.shuffledWords[this.pairNumber]);
       this.correctAnswersNumber++;
       this.showCorrectAnswer();
       this.addPoints();
@@ -225,6 +248,48 @@ class Sprint {
     this.audio.play();
   }
 
+  playResultsAudio() {
+    document.querySelector('.results__list').addEventListener('click', (event) => {
+      if (event.target.tagName === 'I') {
+        const path = event.target.getAttribute('data-audio');
+        this.playAudio(`https://raw.githubusercontent.com/missdasha/rslang-data/master/${path}`);
+      }
+    });
+  }
+
+  trainAgain() {
+    document.querySelector('.train-again').addEventListener('click', () => {
+      document.getElementById('root').innerHTML = gameScreenComponent();
+      console.log('trainAgain');
+      this.renderEvents();
+    });
+  }
+
+  renderEvents() {
+    const start = document.querySelector('.start-game');
+    start.addEventListener('click', () => {
+      document.querySelector('.start-game').classList.add('hidden');
+      this.startGame();
+
+      document.querySelector('.btn-danger').addEventListener('click', () => {
+        this.answerWrong();
+      });
+
+      document.querySelector('.btn-success').addEventListener('click', () => {
+        this.answerCorrectly();
+      });
+
+      document.addEventListener('keyup', (event) => {
+        if (event.code === 'ArrowLeft') {
+          this.answerWrong();
+        }
+        if (event.code === 'ArrowRight') {
+          this.answerCorrectly();
+        }
+      });
+    });
+  }
+
   init() {
     store.subscribe(() => {
       const newState = store.getState();
@@ -239,29 +304,7 @@ class Sprint {
 
       if (newState.sprintReducer.screen === 'game-screen' && !document.querySelector('.game-screen')) {
         document.getElementById('root').innerHTML = gameScreenComponent();
-
-        const start = document.querySelector('.start-game');
-        start.addEventListener('click', () => {
-          document.querySelector('.start-game').classList.add('hidden');
-          this.startGame();
-
-          document.querySelector('.btn-danger').addEventListener('click', () => {
-            this.answerWrong();
-          });
-
-          document.querySelector('.btn-success').addEventListener('click', () => {
-            this.answerCorrectly();
-          });
-
-          document.addEventListener('keyup', (event) => {
-            if (event.code === 'ArrowLeft') {
-              this.answerWrong();
-            }
-            if (event.code === 'ArrowRight') {
-              this.answerCorrectly();
-            }
-          });
-        });
+        this.renderEvents();
       }
     });
 

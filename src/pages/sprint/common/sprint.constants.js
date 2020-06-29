@@ -6,6 +6,6 @@ export const BACKGROUND_MIN_POINTS = '#f8939eb8';
 export const CORRECT_SOUND = './assets/audio/correct.mp3';
 export const ERROR_SOUND = './assets/audio/error.mp3';
 export const SUCCESS_SOUND = './assets/audio/sound.mp3';
+export const TIMER_SOUND = './assets/audio/timer.mp3';
 export const LAST_LEVEL = 5;
 export const LAST_ROUND = 29;
-

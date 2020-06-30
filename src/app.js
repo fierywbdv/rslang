@@ -7,7 +7,6 @@ import savanna from './pages/savanna/savanna.app';
 import router from './router/Router';
 
 window.onload = () => {
-  // main.init();
   speakit.init();
   englishPuzzle.init();
   ourgame.init();

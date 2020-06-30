@@ -25,16 +25,6 @@ module.exports = {
       template: './pages/main/main.index.html',
       filename: './main.index.html'
     }),
-    new HTMLWebpackPlugin({
-      inject: false,
-      template: './pages/login/login.index.html',
-      filename: './login.index.html'
-    }),
-    new HTMLWebpackPlugin({
-      inject: false,
-      template: './pages/login/register.index.html',
-      filename: './register.index.html'
-    }),
     new CleanWebpackPlugin(),
     new CopyWebpackPlugin([
       {

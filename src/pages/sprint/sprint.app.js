@@ -3,7 +3,7 @@ import './scss/sprint.styles.scss';
 import { showGameScreen } from './sprint-redux/sprint-actions';
 import { startScreenComponent } from './components/start-screen-component';
 import { gameScreenComponent } from './components/game-screen-component';
-import { WordsAPIService } from '../../services/wordsAPIService';
+import { learnWordsAPIService } from '../../services/learnWordsAPIService';
 import { shuffle, toggleCirclesNumber, cleanCircles } from './common/sprint.utils';
 import {
   POINTS_PER_WORD,
@@ -35,7 +35,7 @@ class Sprint {
     document.querySelector('.card').classList.remove('hidden');
     document.querySelector('.arrows').classList.remove('hidden');
 
-    const wordsList = await WordsAPIService.getWords(this.level, this.round);
+    const wordsList = await learnWordsAPIService.getWordsByPageAndGroup(this.level, this.round);
     this.createWordsArray(wordsList);
     this.createTranslationsArray(wordsList);
     this.shuffledWords = shuffle(this.words.slice());

@@ -38,7 +38,7 @@ const controller = {
   },
 
   actionMain: () => {
-    // main.sayHello();
+    main.sayHello();
   },
   actionPuzzle: () => {
     englishPuzzle.sayHello();

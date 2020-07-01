@@ -1,6 +1,4 @@
 .introduction {
-  
-  height: 100vh;
   background-color: rgb(89, 209, 230);
   background-image: url('../assets/img/bg.jpg');
   background-position: center;
@@ -16,7 +14,7 @@
 .introduction__container {
   position: relative;
   width: 100vw;
-  height: 100vh;
+  height: calc(100vh - 78px);
 }
 
 .width {

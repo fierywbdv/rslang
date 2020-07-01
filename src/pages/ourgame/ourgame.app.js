@@ -1,6 +1,6 @@
 import './scss/ourgame.styles.scss';
 import { store } from '../../redux/store';
-import { WordsAPIService } from '../../services/wordsAPIService';
+import { learnWordsAPIService } from '../../services/learnWordsAPIService'
 import {
   setGameNumber, setQuestions, togglePlay, setQuestionNumber, setStatistic, setListenAnswer,
 } from './ourgame-redux/ourgame-actions';
@@ -164,7 +164,7 @@ class Ourgame {
   }
 
   async setWords(page = 0, group = 1) {
-    this.words = await WordsAPIService.getWords(page, group);
+    this.words = await learnWordsAPIService.getWordsByPageAndGroup(page, group);
     if (this.isFirstGame) {
       store.dispatch(setQuestions(this.words.slice(0, 10)));
     } else {

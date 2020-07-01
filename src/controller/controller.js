@@ -9,7 +9,6 @@ import startScreenComponent from '../pages/audiocall/components/start-screen';
 import startScreenOurGameComponent from '../pages/ourgame/components/start-screen';
 
 const controller = {
-
   callAction: (url) => {
     switch (url) {
       case '/':
@@ -32,9 +31,6 @@ const controller = {
         break;
       case 'sprint':
         controller.actionSprint();
-        break;
-      case 'promo':
-        controller.actionPromo();
         break;
       default:
         break;
@@ -62,10 +58,14 @@ const controller = {
     savanna.sayHello();
   },
   actionSprint() {
-    sprint.sayHello();
+    document.getElementById('root').classList.add('bg');
+    sprint.init();
   },
-  actionPromo() {
-    console.log('actionPromo');
+
+  sayHello(text) {
+    const hello = document.createElement('h1');
+    hello.textContent = text;
+    document.querySelector('body').append(hello);
   },
 };
 

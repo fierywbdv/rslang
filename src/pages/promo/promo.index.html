@@ -4,11 +4,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-  <link rel="shortcut icon" type="image/png" href="./assets/favicon/favicon.png">
-  <script src="https://use.fontawesome.com/241cc2827a.js"></script>
-  <title>Promo page</title>
+  <link rel="shortcut icon" href="./assets/favicon/favicon.png" type="image/x-icon">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+    integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+  <script src="https://kit.fontawesome.com/51cea3a5c1.js" crossorigin="anonymous"></script>
+  <title>RS Lang</title>
 </head>
+
 <body>
   <header class="header">
     <div class="container header__container">
@@ -18,16 +20,87 @@
           <span>RS</span><span class="colored">Lang</span>
         </div>
       </a>
-      <button class="header__button btn btn-primary" type="submit">Начать</button>
+      <button class="header__button btn btn-primary" type="submit" id="get-started">Начать</button>
+    </div>
+    <div class="overlay_popup"></div>
+    <div class="row login-row justify-content-center">
+      <div class="main-popup col-11 col-sm-10 col-md-8 col-lg-6 col-xl-5">
+        <div id="popup-close-button"><a href="#"></a></div>
+        <div class="popup-header">
+          <div class="login__logo">
+            <img src="./assets/img/logo_light.png" width="30" height="30" alt="logo" loading="lazy">
+            <div class="brand-text promo d-inline-block">
+              <span>RS</span><span class="colored">Lang</span>
+            </div>
+          </div>
+          <ul>
+            <li><a href="#" id="register">Регистрация</a></li>
+            <li><a href="#" id="sign-in">Вход</a></li>
+          </ul>
+        </div>
+        <div class="popup-content col-12">
+          <form action="#" id='register-form'>
+            <div class="col-12">
+              <div class="form-group-material">
+                <input id="register-username" type="text" name="registerUsername" required class="input-material"
+                  autocomplete="off">
+                <label for="register-username" class="label-material"><i class="fas fa-user"></i> Имя</label>
+              </div>
+              <div class="form-group-material">
+                <input id="register-email" type="email" name="registerEmail" required class="input-material"
+                  autocomplete="off">
+                <label for="register-email" class="label-material"><i class="fas fa-envelope"></i> Адрес
+                  эл.почты... </label>
+              </div>
+              <div class="form-group-material">
+                <input id="register-password" type="password" name="registerPassword" required class="input-material">
+                <div class="help"></div>
+                <label for="register-password" class="label-material"><i class="fas fa-unlock-alt"></i>
+                  <span id="label-pass">Пароль...</span>
+                </label>
+                <div class="password-text">Пароль должен содержать не менее 8 символов, как минимум одну прописную
+                  букву, одну заглавную букву, одну цифру и один спецсимвол: "+ - _ @ $ ! % * ? & # . , ; : [ ] { }"
+                </div>
+              </div>
+              <div class="form-group-material">
+                <input id="confirm-register-password" type="password" name="confirmRegisterPassword" required
+                  class="input-material">
+                <label for="confirm-register-password" class="label-material"><i class="fas fa-unlock-alt"></i>
+                  <span id="label-conf-pass">Повторите пароль...</span>
+                </label>
+              </div>
+              <button type="submit" class="btn-primary btn-lg btn-block">Регистрация</button>
+            </div>
+          </form>
+
+          <form action="#" id='login-form'>
+            <div class="col-12">
+              <div class="form-group-material">
+                <input id="login-email" type="email" name="loginEmail" required class="input-material"
+                  autocomplete="off">
+                <label for="login-email" class="label-material"><i class="fas fa-envelope"></i>
+                  Адрес эл.почты... </label>
+              </div>
+              <div class="form-group-material">
+                <input id="login-password" type="password" name="loginPassword" required class="input-material">
+                <label for="login-password" class="label-material"><i class="fas fa-unlock-alt"></i> Пароль...
+                </label>
+              </div>
+              <button type="submit" class="btn-primary btn-lg btn-block">Войти</button>
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
   </header>
   <main>
-    <section class="hero">   
+    <section class="hero">
       <div class="overlay"></div>
-        <div class="container hero__container">
-          <h1 class="hero__title">Учите английский с RS&nbsp;Lang</h1>
-          <p class="hero__subtitle">RS Lang – приложение для изучения иностранных слов с методикой интервального повторения, отслеживанием индивидуального прогресса и мини-играми.</p>
-        </div>
+      <div class="container hero__container">
+        <h1 class="hero__title">Учите английский с RS&nbsp;Lang</h1>
+        <p class="hero__subtitle">RS Lang – приложение для изучения иностранных слов с методикой интервального
+          повторения, отслеживанием индивидуального прогресса и мини-играми.</p>
+      </div>
     </section>
     <section class="advantages">
       <div class="container advantages__container">
@@ -49,8 +122,8 @@
       </div>
     </section>
     <section class="about-team">
-     <div class="container about-team__container">
-       <h2>Наша команда</h2>
+      <div class="container about-team__container">
+        <h2>Наша команда</h2>
         <div class="about-team__representation">
           <div class="team-member">
             <img class="img-fluid rounded-circle" src="./assets/promo/img/photo_vitali.jpg" width="300" height="300">
@@ -61,7 +134,7 @@
             <img class="img-fluid rounded-circle" src="./assets/promo/img/photo_yauheni.jpg" width="300" height="300">
             <h3>Евгений</h3>
             <p>Создал меню регистрации, логику главной страницы приложения, страницу статистики, словарь.
-              </p>
+            </p>
           </div>
           <div class="team-member">
             <img class="img-fluid rounded-circle" src="./assets/promo/img/photo_vladimir.jpg" width="300" height="300">
@@ -79,16 +152,18 @@
             <p>Разработал дизайн, разметку и логику главной страницы приложения.</p>
           </div>
           <div class="team-member">
-            <img class="img-fluid rounded-circle" src="./assets/promo/img/photo_kanstantin.jpg" width="300" height="300">
+            <img class="img-fluid rounded-circle" src="./assets/promo/img/photo_kanstantin.jpg" width="300"
+              height="300">
             <h3>Константин</h3>
             <p>Разработал игру «Саванна».</p>
           </div>
         </div>
-     </div>
+      </div>
     </section>
     <section class="video">
       <div class="container video__container">
-        <iframe width="560" height="315" src="https://www.youtube.com/embed/YdYyYMFPa44?controls=0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/YdYyYMFPa44?controls=0" frameborder="0"
+          allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
       </div>
     </section>
     <section class="rules">
@@ -96,5 +171,15 @@
     </section>
   </main>
   <script src="./js/promo.bundle.js"></script>
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+    integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+    crossorigin="anonymous"></script>
 </body>
+
 </html>

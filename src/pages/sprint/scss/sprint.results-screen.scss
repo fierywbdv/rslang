@@ -54,6 +54,10 @@
 
         i {
           margin-right: 30px;
+
+          &:hover {
+            color: #686a7685;
+          }
         }
 
         .correct-answers, .wrong-answers {

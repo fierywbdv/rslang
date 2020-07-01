@@ -1,4 +1,3 @@
-
 export const renderResultsList = (wordsList, words, answers) => {
   let resultsList = '';
   answers.forEach((answer) => {

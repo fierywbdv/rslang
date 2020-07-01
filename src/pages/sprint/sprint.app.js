@@ -23,7 +23,6 @@ class Sprint {
   constructor() {
     this.level = 0;
     this.round = 0;
-    this.gameStarted = false;
     this.secondsRemaining = 60;
     this.wordsList = [];
     this.words = [];
@@ -50,8 +49,10 @@ class Sprint {
     console.log(this.wordsList);
     this.createWordsArray(this.wordsList);
     this.createTranslationsArray(this.wordsList);
+    console.log(this.words, this.translations);
     this.shuffledWords = shuffle(this.words.slice());
     this.shuffledTranslations = shuffle(this.translations.slice());
+    console.log(this.shuffledWords, this.shuffledTranslations);
 
     this.startCountdown();
     this.showPair();
@@ -188,16 +189,20 @@ class Sprint {
       document.querySelector('.card__result').classList.remove('correct');
       document.querySelector('.card__result').innerHTML = '';
     }, 300);
+    console.log(this.correctAnswersNumber);
     if (this.pointsToAdd !== 80) {
       if ((this.correctAnswersNumber - 1) % 4 === 0) {
+        console.log('1');
         const circle = document.querySelector('.card__circles').firstElementChild;
         circle.classList.add('correct');
         circle.innerHTML = '<i class="fas fa-check"></i>';
       } else if ((this.correctAnswersNumber - 2) % 4 === 0) {
+        console.log(2);
         const circle = document.querySelector('.card__circles').children[1];
         circle.classList.add('correct');
         circle.innerHTML = '<i class="fas fa-check"></i>';
       } else if ((this.correctAnswersNumber - 3) % 4 === 0) {
+        console.log(3);
         const circle = document.querySelector('.card__circles').lastElementChild;
         circle.classList.add('correct');
         circle.innerHTML = '<i class="fas fa-check"></i>';
@@ -259,13 +264,19 @@ class Sprint {
 
   trainAgain() {
     document.querySelector('.train-again').addEventListener('click', () => {
+      this.pairNumber = 0;
+      this.pointsToAdd = 10;
+      this.correctAnswersNumber = 0;
+      this.secondsRemaining = 60;
+      this.correctAnswers = [];
+      this.wrongAnswers = [];
       document.getElementById('root').innerHTML = gameScreenComponent();
       console.log('trainAgain');
-      this.renderEvents();
+      this.renderButtonEvents();
     });
   }
 
-  renderEvents() {
+  renderButtonEvents() {
     const start = document.querySelector('.start-game');
     start.addEventListener('click', () => {
       document.querySelector('.start-game').classList.add('hidden');
@@ -278,15 +289,17 @@ class Sprint {
       document.querySelector('.btn-success').addEventListener('click', () => {
         this.answerCorrectly();
       });
+    });
+  }
 
-      document.addEventListener('keyup', (event) => {
-        if (event.code === 'ArrowLeft') {
-          this.answerWrong();
-        }
-        if (event.code === 'ArrowRight') {
-          this.answerCorrectly();
-        }
-      });
+  renderArrowsEvents() {
+    document.addEventListener('keyup', (event) => {
+      if (event.code === 'ArrowLeft') {
+        this.answerWrong();
+      }
+      if (event.code === 'ArrowRight') {
+        this.answerCorrectly();
+      }
     });
   }
 
@@ -304,7 +317,8 @@ class Sprint {
 
       if (newState.sprintReducer.screen === 'game-screen' && !document.querySelector('.game-screen')) {
         document.getElementById('root').innerHTML = gameScreenComponent();
-        this.renderEvents();
+        this.renderButtonEvents();
+        this.renderArrowsEvents();
       }
     });
 

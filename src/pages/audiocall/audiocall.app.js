@@ -1,6 +1,6 @@
 import { store } from '../../redux/store';
 import {
-  setQuestions, togglePlay, askQuestion, setStatistic, setGlobalStatistic, setGameNumber,
+  setQuestions, togglePlay, askQuestion, setStatistic, setGameNumber,
 } from './audiocall-redux/audiocall-actions';
 import './scss/audiocall.styles.scss';
 import helper from './common/audiocall.helper';
@@ -113,8 +113,10 @@ class Audiocall {
     const answers = document.querySelectorAll('.icon');
     const titles = document.querySelectorAll('.name');
     answers.forEach((item) => {
-      if (item.getAttribute('data-id') === currentQuestion) {
-        item.innerHTML = '<i class="fas fa-check-circle"></i>';
+      const itemId = item.getAttribute('data-id');
+      if (itemId === currentQuestion) {
+        const elem = document.getElementById(itemId);
+        elem.innerHTML = '<i class="fas fa-check-circle"></i>';
       }
     });
     titles.forEach((item) => {
@@ -198,8 +200,10 @@ class Audiocall {
     this.mistake.play();
     answers.forEach((item) => {
       item.classList.add('disable');
-      if (item.getAttribute('data-id') === currentQuestion) {
-        item.innerHTML = '<i class="fas fa-check-circle"></i>';
+      const itemId = item.getAttribute('data-id');
+      if (itemId === currentQuestion) {
+        const elem = document.getElementById(itemId);
+        elem.innerHTML = '<i class="fas fa-check-circle"></i>';
       }
     });
 

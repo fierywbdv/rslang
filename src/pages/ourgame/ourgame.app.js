@@ -25,11 +25,13 @@ class Ourgame {
 
   startGame() {
     const startButton = document.getElementById('ourgame-start-screen');
-    startButton.addEventListener('click', () => {
-      store.dispatch(togglePlay());
-      store.dispatch(setGameNumber());
-      this.playGame();
-    });
+    if (startButton) {
+      startButton.addEventListener('click', () => {
+        store.dispatch(togglePlay());
+        store.dispatch(setGameNumber());
+        this.playGame();
+      });
+    }
   }
 
   playGame() {
@@ -104,9 +106,15 @@ class Ourgame {
         wordQues: this.getQuestion(currentQuestion.getAttribute('data-id')),
       });
       store.dispatch(setQuestionNumber());
-      if (setQuestionNum === 2 || setQuestionNum === 19) {
+      if (setQuestionNum === 9 || setQuestionNum === 19) {
         helper.render('#root', statisticScreenComponent(setGameNum), 'append', '.screen');
+        if (setQuestionNum === 19) {
+          this.page = (this.page === 20) ? 1 : this.page + 1;
+          this.group = (this.page === 20) ? this.group + 1 : this.group;
+          this.setWords(this.group, this.page);
+        }
         store.dispatch(togglePlay());
+        this.isFirstGame = !this.isFirstGame;
         this.setRestart();
         this.setRepeat();
       }

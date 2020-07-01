@@ -40,128 +40,130 @@
   -moz-animation: fade-in 1.5s linear; /* Fx 5+ */
   -o-animation: fade-in 1.5s linear; /* Opera 12+ */
   animation: fade-in 1.5s linear; /* IE 10+, Fx 29+ */
-}
 
-.container.statistic {
-  width: 100%;
-  max-width: 640px;
-  margin: 2rem auto;
-  padding: 1.5rem 1rem;
+  .container.statistic {
+    width: 100%;
+    max-width: 640px;
+    margin: 2rem auto;
+    padding: 1.5rem 1rem;
 
-  .container-inner {
-    display: flex;
-    flex-flow: row wrap;
-    justify-content: space-between;
-    padding: 20px;
+    .container-inner {
+      display: flex;
+      flex-flow: row wrap;
+      justify-content: space-between;
+      padding: 20px;
 
-    .inner-left,
-    .inner-right {
-      width: 100%;
-      max-width: 48%;
+      .inner-left,
+      .inner-right {
+        width: 100%;
+        max-width: 48%;
+      }
+
     }
 
   }
 
-}
-
-.box {
-  border-bottom: 20px solid #5c2a9d;
-  border-radius: inherit;
-}
-
-.box h2 {
-  background-color: #5c2a9d;
-  border-radius: inherit;
-  color: #ffffff;
-  font-size: 20px;
-  font-weight: 700;
-  padding: 10px 20px;
-}
-
-.box ul {
-  background-color: #ffffff;
-  position: relative;
-  padding: 0;
-  margin: 0;
-}
-
-.box ul:hover li,
-.box ul:focus li,
-.box ul:active  li{
-  opacity: 0.2;
-}
-
-.box ul li {
-  background-color: #ffffff;
-  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.1);
-  list-style: none;
-  padding: 10px;
-  transition: transform 0.5s ease;
-}
-
-.box ul li:hover,
-.box ul li:focus,
-.box ul li:active {
-  background-color: #f1ebbb;
-  color: #000;
-  cursor: pointer;
-  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
-  opacity: 1;
-  transform: scale(1.1);
-  z-index: 1;
-}
-
-.box ul li span {
-  background-color: #25bcff;
-  border-radius: 50%;
-  color: #ffffff;
-  display: inline-block;
-  font-size: 12px;
-  font-weight: 600;
-  height: 20px;
-  line-height: 20px;
-  margin-right: 10px;
-  text-align: center;
-  width: 20px;
-}
-
-.box ul li:hover span,
-.box ul li:focus span,
-.box ul li:active span {
-  background-color: #ffffff;
-  color: #25bcff;
-}
-
-.inner-right {
   .box {
-    border-bottom: 20px solid #b5076b;
+    border-bottom: 20px solid #5c2a9d;
     border-radius: inherit;
   }
 
   .box h2 {
-    background-color: #b5076b;
+    background-color: #5c2a9d;
+    border-radius: inherit;
+    color: #ffffff;
+    font-size: 20px;
+    font-weight: 700;
+    padding: 10px 20px;
   }
+
+  .box ul {
+    background-color: #ffffff;
+    position: relative;
+    padding: 0;
+    margin: 0;
+  }
+
+  .box ul:hover li,
+  .box ul:focus li,
+  .box ul:active  li{
+    opacity: 0.2;
+  }
+
+  .box ul li {
+    background-color: #ffffff;
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.1);
+    list-style: none;
+    padding: 10px;
+    transition: transform 0.5s ease;
+  }
+
+  .box ul li:hover,
+  .box ul li:focus,
+  .box ul li:active {
+    background-color: #f1ebbb;
+    color: #000;
+    cursor: pointer;
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+    opacity: 1;
+    transform: scale(1.1);
+    z-index: 1;
+  }
+
+  .box ul li span {
+    background-color: #25bcff;
+    border-radius: 50%;
+    color: #ffffff;
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 600;
+    height: 20px;
+    line-height: 20px;
+    margin-right: 10px;
+    text-align: center;
+    width: 20px;
+  }
+
+  .box ul li:hover span,
+  .box ul li:focus span,
+  .box ul li:active span {
+    background-color: #ffffff;
+    color: #25bcff;
+  }
+
+  .inner-right {
+    .box {
+      border-bottom: 20px solid #b5076b;
+      border-radius: inherit;
+    }
+
+    .box h2 {
+      background-color: #b5076b;
+    }
+  }
+
+  .box li.checked {
+    background-color: #f1ebbb;
+    color: #000000;
+    cursor: pointer;
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+    opacity: 1;
+    transform: scale(1.1);
+    z-index: 1;
+  }
+
+  .box li.hide {
+    display: none;
+  }
+
+  button.restart.btn.btn-success {
+    margin-bottom: 20px !important;
+    border-radius: initial;
+  }
+  button.restart.btn.btn-success {
+    background-color: #ff4301;
+    border: 1px solid #ff4301;
+  }
+
 }
 
-.box li.checked {
-  background-color: #f1ebbb;
-  color: #000000;
-  cursor: pointer;
-  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
-  opacity: 1;
-  transform: scale(1.1);
-  z-index: 1;
-}
-
-.box li.hide {
-  display: none;
-}
-
-button.restart.btn.btn-success {
-  margin-bottom: 20px !important;
-  border-radius: initial;
-}
-button.restart.btn.btn-success {
-  background-color: #ff4301;
-  border: 1px solid #ff4301;
-}

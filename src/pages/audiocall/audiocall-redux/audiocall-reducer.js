@@ -12,7 +12,7 @@ function togglePlayReducer(state = false, action) {
 }
 function setGameNumberReducer(state = 0, action) {
   if (action.type === SET_GAME_NUMBER) {
-    return state += 1;
+    return state + 1;
   }
   return state;
 }

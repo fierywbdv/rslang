@@ -12,7 +12,6 @@
   div {
     font-size: 60px;
     background-color: #730068;
-    display: inline-block;
     color: #effffb;
     border: 0px;
     width: 300px;
@@ -24,11 +23,13 @@
     text-transform: uppercase;
   }
 
-}
-#center-div p {
-  padding-top: 75px;
-  line-height: 1.2;
-  font-family: verdana;
+  p {
+    padding-top: 75px;
+    line-height: 1.2;
+    font-family: verdana;
+  }
+
+
 }
 
 
@@ -74,7 +75,7 @@
   }
 }
 
-#center-div {
+#center-div.screen {
   -webkit-animation: fade-in 1.5s linear; /* Safari 4+ */
   -moz-animation: fade-in 1.5s linear; /* Fx 5+ */
   -o-animation: fade-in 1.5s linear; /* Opera 12+ */

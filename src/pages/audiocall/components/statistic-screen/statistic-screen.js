@@ -5,18 +5,15 @@ import statisticLine from '../statistic-line';
 const statisticScreenComponent = (gameNumber) => {
   const state = store.getState();
   const { correct, mistake } = state.audioCallReducer.stat;
-
   const { cor, miss } = helper.filterStatistic(correct, mistake, gameNumber);
-
   const corMurkUp = cor.map((item) => statisticLine(item));
   const misMurkUp = miss.map((item) => statisticLine(item));
-
   const misUl = document.createElement('ul');
   const corUl = document.createElement('ul');
+
   misMurkUp.forEach((item) => misUl.append(item));
   corMurkUp.forEach((elem) => corUl.append(elem));
-
-  const template = '<h3>Container Title</h3>';
+  const template = '<h3>Result</h3>';
   const startScreen = document.createElement('div');
   startScreen.setAttribute('id', 'statistic');
   startScreen.innerHTML = template;

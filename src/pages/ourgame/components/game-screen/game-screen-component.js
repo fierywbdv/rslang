@@ -1,9 +1,8 @@
 import { store } from '../../../../redux/store';
 import helper from '../../common/ourgame.helper';
-import gameLine from "../geme-line/game-line";
+import gameLine from '../geme-line/game-line';
 
-
-const gameScreenComponent = (gameNumber) => {
+const gameScreenComponent = () => {
   const state = store.getState();
   const { setQuestionsGame } = state.ourGameReducer;
   const answersMurkUp = setQuestionsGame.map((item) => gameLine(item));
@@ -14,8 +13,7 @@ const gameScreenComponent = (gameNumber) => {
   helper.shuffle(answersMurkUp).forEach((item) => answersUl.append(item));
   questionMurkUp.forEach((elem) => questionUl.append(elem));
 
-  const title = `<h3>Title</h3>
-                    <h4 id="info-word">Could you please match the words</h4>`;
+  const title = `<h3 id="info-word">Could you please match the words</h3>`;
   const gameScreen = document.createElement('div');
   gameScreen.setAttribute('id', 'our-game-play-screen');
   gameScreen.innerHTML = title;
@@ -35,7 +33,7 @@ const gameScreenComponent = (gameNumber) => {
     innerBox.append(questionUl);
   } else {
     const noCor = document.createElement('ul');
-    noCor.innerHTML = '<li>Bad! No Correct answers</li>';
+    noCor.innerHTML = '<li>No Words</li>';
     innerBox.append(noCor);
   }
 
@@ -53,7 +51,7 @@ const gameScreenComponent = (gameNumber) => {
     innerBoxRight.append(answersUl);
   } else {
     const noMis = document.createElement('ul');
-    noMis.innerHTML = '<li>Great! No Mistakes</li>';
+    noMis.innerHTML = '<li>No words</li>';
     innerBoxRight.append(noMis);
   }
 

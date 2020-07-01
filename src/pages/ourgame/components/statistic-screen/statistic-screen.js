@@ -15,7 +15,7 @@ const statisticScreenComponent = (gameNumber) => {
   misMurkUp.forEach((item) => misUl.append(item));
   corMurkUp.forEach((elem) => corUl.append(elem));
 
-  const template = '<h3>Container Title</h3>';
+  const template = '<h3>Result</h3>';
   const startScreen = document.createElement('div');
   startScreen.setAttribute('id', 'statistic');
   startScreen.innerHTML = template;

@@ -31,14 +31,14 @@ function setQuestionsReducer(state = [], action) {
 
 function setGameNumberReducer(state = 0, action) {
   if (action.type === SET_GAME_NUMBER_OURGAME) {
-    return state += 1;
+    return state + 1;
   }
   return state;
 }
 
 function setQuestionNumberReducer(state = 0, action) {
   if (action.type === SET_QUESTION_NUMBER_OURGAME) {
-    return state += 1;
+    return (state === 19) ? 0 : state + 1;
   }
   return state;
 }

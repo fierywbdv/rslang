@@ -1,5 +1,7 @@
 import Toastify from 'toastify-js';
 import 'toastify-js/src/toastify.css';
+import { store } from '../redux/store';
+import { logout } from '../pages/promo/common/promo.utils';
 
 class LearnWordsAPIService {
   constructor(url) {
@@ -15,6 +17,13 @@ class LearnWordsAPIService {
     }).showToast();
 
     console.error(error);
+  }
+
+  logout() {
+    localStorage.setItem('userId', null);
+    localStorage.setItem('token', null);
+    localStorage.setItem('authorized', false)
+    store.dispatch(disAutorization());
   }
 
   async getWordsByPageAndGroup(page, group) {
@@ -51,7 +60,7 @@ class LearnWordsAPIService {
 
   async createUser(email, password) {
     try {
-      const response = await fetch('${this.url}users', {
+      const response = await fetch(`${this.url}users`, {
         method: 'POST',
         headers: {
           Accept: 'application/json',
@@ -84,6 +93,7 @@ class LearnWordsAPIService {
       const response = await fetch(`${this.url}users/${id}`, { headers: { Authorization: `Bearer ${token}` } });
 
       if (response.status === 401) {
+        logout();
         throw new Error('Access token is missing or invalid!');
       } else if (response.status === 404) {
         throw new Error('User not found!');
@@ -115,6 +125,7 @@ class LearnWordsAPIService {
       });
 
       if (response.status === 401) {
+        logout();
         throw new Error('Access token is missing or invalid!');
       } else if (response.status !== 200) {
         throw new Error('Some ERROR!');
@@ -139,6 +150,7 @@ class LearnWordsAPIService {
       });
 
       if (response.status === 401) {
+        logout();
         throw new Error('Access token is missing or invalid!');
       } else if (response.status !== 204) {
         throw new Error('Some ERROR!');
@@ -158,6 +170,7 @@ class LearnWordsAPIService {
       });
 
       if (response.status === 401) {
+        logout();
         throw new Error('Access token is missing or invalid!');
       } else if (response.status !== 200) {
         throw new Error('Some ERROR!');
@@ -181,6 +194,7 @@ class LearnWordsAPIService {
       });
 
       if (response.status === 401) {
+        logout();
         throw new Error('Access token is missing or invalid!');
       } else if (response.status === 404) {
         throw new Error('User word not found!');
@@ -212,6 +226,7 @@ class LearnWordsAPIService {
       });
 
       if (response.status === 401) {
+        logout();
         throw new Error('Access token is missing or invalid!');
       } else if (response.status !== 200) {
         throw new Error('Some ERROR!');
@@ -241,6 +256,7 @@ class LearnWordsAPIService {
       });
 
       if (response.status === 401) {
+        logout();
         throw new Error('Access token is missing or invalid!');
       } else if (response.status !== 200) {
         throw new Error('Some ERROR!');
@@ -265,6 +281,7 @@ class LearnWordsAPIService {
       });
 
       if (response.status === 401) {
+        logout();
         throw new Error('Access token is missing or invalid!');
       } else if (response.status !== 204) {
         throw new Error('Some ERROR!');
@@ -284,6 +301,7 @@ class LearnWordsAPIService {
       });
 
       if (response.status === 401) {
+        logout();
         throw new Error('Access token is missing or invalid!');
       } else if (response.status === 404) {
         throw new Error('Settings not found!');
@@ -315,6 +333,7 @@ class LearnWordsAPIService {
       });
 
       if (response.status === 401) {
+        logout();
         throw new Error('Access token is missing or invalid!');
       } else if (response.status !== 200) {
         throw new Error('Some ERROR!');
@@ -334,6 +353,7 @@ class LearnWordsAPIService {
       });
 
       if (response.status === 401) {
+        logout();
         throw new Error('Access token is missing or invalid!');
       } else if (response.status === 404) {
         throw new Error('Statistics not found!');
@@ -365,6 +385,7 @@ class LearnWordsAPIService {
       });
 
       if (response.status === 401) {
+        logout();
         throw new Error('Access token is missing or invalid!');
       } else if (response.status !== 200) {
         throw new Error('Some ERROR!');
@@ -390,6 +411,8 @@ class LearnWordsAPIService {
 
       if (response.status === 403) {
         throw new Error('Incorrect e-mail or password!');
+      } else if(response.status === 404) {
+        throw new Error(`Couldn't find a(an) user with this e-mail!`);
       } else if (response.status !== 200) {
         throw new Error('Some ERROR!');
       }
@@ -403,6 +426,6 @@ class LearnWordsAPIService {
   }
 }
 
-const urlAPI = 'https://afternoon-falls-25894.herokuapp.com/';
+const urlAPI = 'http://pacific-castle-12388.herokuapp.com/';
 
 export const learnWordsAPIService = new LearnWordsAPIService(urlAPI);

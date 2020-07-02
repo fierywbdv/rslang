@@ -5,6 +5,7 @@ import ourgame from './pages/ourgame/ourgame.app';
 import savanna from './pages/savanna/savanna.app';
 
 import router from './router/Router';
+import { logout } from './pages/promo/common/promo.utils';
 
 window.onload = () => {
   speakit.init();
@@ -13,6 +14,7 @@ window.onload = () => {
   savanna.init();
   main.toggleBtnHandler();
   main.menuHandler();
+  logout();
 };
 
 router.run();

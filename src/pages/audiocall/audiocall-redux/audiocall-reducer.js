@@ -39,9 +39,7 @@ function setQuestionsReducer(state = [], action) {
 
 function setStatisticReducer(state = { mistake: [], correct: [] }, action) {
   if (action.type === SET_STATISTIC_GAME) {
-    const {
-      wordQues, mistake, game, quesNum,
-    } = action.statistic;
+    const { wordQues, mistake, game, quesNum } = action.statistic;
     if (mistake) {
       return {
         ...state,

@@ -1,3 +1,4 @@
+import main from '../pages/main/main.app';
 import speakit from '../pages/speakit/speakit.app';
 import audiocall from '../pages/audiocall/audiocall.app';
 import englishPuzzle from '../pages/english-puzzle/english-puzzle.app';
@@ -38,7 +39,7 @@ const controller = {
   },
 
   actionMain: () => {
-    main.sayHello();
+
   },
   actionPuzzle: () => {
     englishPuzzle.sayHello();
@@ -62,11 +63,6 @@ const controller = {
     sprint.init();
   },
 
-  sayHello(text) {
-    const hello = document.createElement('h1');
-    hello.textContent = text;
-    document.querySelector('body').append(hello);
-  },
 };
 
 export default controller;

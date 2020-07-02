@@ -12,9 +12,12 @@ class Main {
     this.setSidebarItem = setSidebarItem;
   }
 
-  sayHello() {}
+  sayHello() {
 
-  init() {}
+  }
+
+  init() {
+  }
 
   toggleBtnHandler() {
     this.toggleBTN = document.querySelector('#toggle-btn');

@@ -5,7 +5,6 @@ class LearnWordsAPIService {
   constructor(url) {
     this.url = url;
   }
-
   errorHandler(error) {
     Toastify({
       text: error.message,

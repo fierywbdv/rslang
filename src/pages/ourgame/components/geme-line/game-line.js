@@ -1,7 +1,5 @@
 const gameLine = (item, type) => {
-  const {
-    id, wordTranslate, word, audio, transcription,
-  } = item;
+  const { id, wordTranslate, word, audio, transcription } = item;
   const templateQuestion = `${word}`;
   const templateAnswer = `${wordTranslate}`;
   const line = document.createElement('li');

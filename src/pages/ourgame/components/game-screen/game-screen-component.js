@@ -13,7 +13,7 @@ const gameScreenComponent = () => {
   helper.shuffle(answersMurkUp).forEach((item) => answersUl.append(item));
   questionMurkUp.forEach((elem) => questionUl.append(elem));
 
-  const title = '<h3 id="info-word">Could you please match the words</h3>';
+  const title = `<h3 id="info-word">Could you please match the words</h3>`;
   const gameScreen = document.createElement('div');
   gameScreen.setAttribute('id', 'our-game-play-screen');
   gameScreen.innerHTML = title;

@@ -52,7 +52,9 @@ const helper = {
     const correctAnswers = correct.filter((item) => item.gameNum === gameNumber);
     const mistakeAnswers = mistake.filter((item) => item.gameNum === gameNumber);
     const sortCorrect = correctAnswers.filter((item) => mistakeAnswers.every((elem) => item.id !== elem.id));
-    const uniqueMistake = Array.from(new Set(mistakeAnswers.map((a) => a.id))).map((id) => mistakeAnswers.find((a) => a.id === id));
+    const uniqueMistake = Array.from(new Set(mistakeAnswers.map((a) => a.id))).map((id) =>
+      mistakeAnswers.find((a) => a.id === id),
+    );
 
     return {
       cor: sortCorrect,

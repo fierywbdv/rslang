@@ -1,9 +1,7 @@
 import answerline from '../answers';
 
 const gameScreenComponent = (data) => {
-  const {
-    id, word, image, answer, audio, transcription,
-  } = data;
+  const { id, word, image, answer, audio, transcription } = data;
   const generateAnswerLines = (answers = []) => {
     const answerElements = [];
     answers.forEach((item) => {

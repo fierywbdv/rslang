@@ -32,16 +32,13 @@ const controller = {
       case 'sprint':
         controller.actionSprint();
         break;
-      case 'promo':
-        controller.actionPromo();
-        break;
       default:
         break;
     }
   },
 
   actionMain: () => {
-    main.sayHello();
+
   },
   actionPuzzle: () => {
     englishPuzzle.sayHello();
@@ -62,8 +59,11 @@ const controller = {
   actionSprint() {
     sprint.init();
   },
-  actionPromo() {
-    console.log('actionPromo');
+
+  sayHello(text) {
+    const hello = document.createElement('h1');
+    hello.textContent = text;
+    document.querySelector('body').append(hello);
   },
 };
 

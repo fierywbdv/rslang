@@ -34,6 +34,9 @@ class Main {
 
   menuHandler() {
     this.setSidebarItem();
+    if ((window.location.href.split('#'))[1] === 'sprint') {
+      document.getElementById('root').classList.add('root');
+    }
     window.addEventListener('hashchange', () => {
       this.setSidebarItem();
     });

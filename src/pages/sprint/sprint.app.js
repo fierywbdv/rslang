@@ -40,19 +40,15 @@ class Sprint {
   async startGame() {
     this.level = document.getElementById('level').value - 1;
     this.round = document.getElementById('round').value - 1;
-    console.log(this.level, this.round);
     document.querySelector('.current-state').classList.remove('hidden');
     document.querySelector('.card').classList.remove('hidden');
     document.querySelector('.arrows').classList.remove('hidden');
 
     this.wordsList = await WordsAPIService.getWords(this.round, this.level);
-    console.log(this.wordsList);
     this.createWordsArray(this.wordsList);
     this.createTranslationsArray(this.wordsList);
-    console.log(this.words, this.translations);
     this.shuffledWords = shuffle(this.words.slice());
     this.shuffledTranslations = shuffle(this.translations.slice());
-    console.log(this.shuffledWords, this.shuffledTranslations);
 
     this.startCountdown();
     this.showPair();
@@ -105,7 +101,6 @@ class Sprint {
     }
 
     const newWordsList = await WordsAPIService.getWords(this.round, this.level);
-    console.log(newWordsList);
     this.wordsList.push(...newWordsList);
     const newWords = newWordsList.map((item) => item.word);
     this.words.push(...newWords);
@@ -189,20 +184,16 @@ class Sprint {
       document.querySelector('.card__result').classList.remove('correct');
       document.querySelector('.card__result').innerHTML = '';
     }, 300);
-    console.log(this.correctAnswersNumber);
     if (this.pointsToAdd !== 80) {
       if ((this.correctAnswersNumber - 1) % 4 === 0) {
-        console.log('1');
         const circle = document.querySelector('.card__circles').firstElementChild;
         circle.classList.add('correct');
         circle.innerHTML = '<i class="fas fa-check"></i>';
       } else if ((this.correctAnswersNumber - 2) % 4 === 0) {
-        console.log(2);
         const circle = document.querySelector('.card__circles').children[1];
         circle.classList.add('correct');
         circle.innerHTML = '<i class="fas fa-check"></i>';
       } else if ((this.correctAnswersNumber - 3) % 4 === 0) {
-        console.log(3);
         const circle = document.querySelector('.card__circles').lastElementChild;
         circle.classList.add('correct');
         circle.innerHTML = '<i class="fas fa-check"></i>';
@@ -271,7 +262,6 @@ class Sprint {
       this.correctAnswers = [];
       this.wrongAnswers = [];
       document.getElementById('root').innerHTML = gameScreenComponent();
-      console.log('trainAgain');
       this.renderButtonEvents();
     });
   }

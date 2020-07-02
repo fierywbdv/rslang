@@ -1,5 +1,5 @@
 export const startScreenComponent = () => {
-  const startScreen = `<div class="sprint-wrapper">
+  const startScreen = `<div class="sprint-wrapper bg">
                           <div class="start-screen">
                             <div class="start-screen__content">
                                 <h1>Спринт</h1>

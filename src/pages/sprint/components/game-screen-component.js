@@ -2,7 +2,7 @@ import { timeChartComponent } from './time-chart-component';
 import { cardComponent } from './card-component';
 
 export const gameScreenComponent = () => {
-  const gameScreen = `<div class="sprint-wrapper">
+  const gameScreen = `<div class="sprint-wrapper bg">
                         <div class="game-screen">
                             <div class="game-screen__content">
                                 <div class="choice">

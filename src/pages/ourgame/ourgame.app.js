@@ -1,8 +1,13 @@
 import './scss/ourgame.styles.scss';
 import { store } from '../../redux/store';
-import { learnWordsAPIService } from '../../services/learnWordsAPIService'
+import { learnWordsAPIService } from '../../services/learnWordsAPIService';
 import {
-  setGameNumber, setQuestions, togglePlay, setQuestionNumber, setStatistic, setListenAnswer,
+  setGameNumber,
+  setQuestions,
+  togglePlay,
+  setQuestionNumber,
+  setStatistic,
+  setListenAnswer,
 } from './ourgame-redux/ourgame-actions';
 import helper from './common/ourgame.helper';
 import gameScreenComponent from './components/game-screen';
@@ -24,9 +29,31 @@ class Ourgame {
   }
 
   startGame() {
-    const startButton = document.getElementById('ourgame-start-screen');
+    const startButton = document.getElementById('start-play');
+    const root = document.getElementById('root');
+    const level = document.getElementById('level');
+    const group = document.getElementById('group');
+    const customStart = document.getElementById('custom-start');
+    const body = document.querySelector('body');
+    body.className = 'our-game-body';
+    root.classList.add('our-game-root');
+    helper.rangeSlider();
+
     if (startButton) {
       startButton.addEventListener('click', () => {
+        store.dispatch(togglePlay());
+        store.dispatch(setGameNumber());
+        this.playGame();
+      });
+    }
+
+    if (customStart) {
+      customStart.addEventListener('click', async () => {
+        this.page = level.value;
+        this.group = group.value;
+        await this.setWords(this.page, this.group);
+        console.log('level', level.value);
+        console.log('group', group.value);
         store.dispatch(togglePlay());
         store.dispatch(setGameNumber());
         this.playGame();
@@ -83,9 +110,7 @@ class Ourgame {
     const audio = elem.getAttribute('data-audio');
     const infoWord = document.getElementById('info-word');
     const state = store.getState();
-    const {
-      setQuestionNum, setGameNum, setQuestionsGame,
-    } = state.ourGameReducer;
+    const { setQuestionNum, setGameNum, setQuestionsGame } = state.ourGameReducer;
     store.dispatch(setListenAnswer({ isListen: true, nextQuestion: false, answered: true }));
 
     window.clearTimeout(this.timeOut);
@@ -95,6 +120,7 @@ class Ourgame {
       this.correct.play();
       currentQuestion.classList.add('hide');
       elem.classList.add('hide');
+      helper.setOpacity(setQuestionNum);
       infoWord.innerText = `${currentQuestion.innerText} = ${elem.innerText}`;
       this.timeOut = setTimeout(() => {
         this.sayWord(audio);
@@ -109,8 +135,8 @@ class Ourgame {
       if (setQuestionNum === 9 || setQuestionNum === 19) {
         helper.render('#root', statisticScreenComponent(setGameNum), 'append', '.screen');
         if (setQuestionNum === 19) {
-          this.page = (this.page === 20) ? 1 : this.page + 1;
-          this.group = (this.page === 20) ? this.group + 1 : this.group;
+          this.page = this.page === 20 ? 1 : this.page + 1;
+          this.group = this.page === 20 ? this.group + 1 : this.group;
           this.setWords(this.group, this.page);
         }
         store.dispatch(togglePlay());

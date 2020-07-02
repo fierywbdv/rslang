@@ -1,7 +1,11 @@
 import { combineReducers } from 'redux';
 import {
-  TOGGLE_PLAY_GAME, ASK_QUESTION, ANSWER_GAME, SET_STATISTIC_GAME,
-  SET_QUESTIONS_GAME, SET_GAME_NUMBER,
+  TOGGLE_PLAY_GAME,
+  ASK_QUESTION,
+  ANSWER_GAME,
+  SET_STATISTIC_GAME,
+  SET_QUESTIONS_GAME,
+  SET_GAME_NUMBER,
 } from './audiocall-types';
 
 function togglePlayReducer(state = false, action) {
@@ -42,7 +46,6 @@ function setStatisticReducer(state = { mistake: [], correct: [] }, action) {
       return {
         ...state,
         mistake: [...state.mistake, { ...wordQues, gameNum: game, ques: quesNum }],
-
       };
     }
     return {

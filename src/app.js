@@ -4,7 +4,6 @@ import englishPuzzle from './pages/english-puzzle/english-puzzle.app';
 import savanna from './pages/savanna/savanna.app';
 import sprint from './pages/sprint/sprint.app';
 
-
 import router from './router/Router';
 
 window.onload = () => {

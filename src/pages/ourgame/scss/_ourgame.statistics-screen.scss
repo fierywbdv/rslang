@@ -1,27 +1,30 @@
-#statistic {
+#root.our-game-root {
+    position: unset;
 
+    #statistic {
+        i.fas.fa-volume-up {
+            padding-right: 10px;
+            font-size: 17px;
+        }
 
-  i.fas.fa-volume-up {
-    padding-right: 10px;
-    font-size: 17px;
-  }
-  .box ul li {
-    text-align: left;
-  }
+        .box ul li {
+            text-align: left;
+        }
 
-  .box h2 {
-    background-color: #21bf73;
-  }
+        .box h2 {
+            background-color: #21bf73;
+        }
 
-  .inner-right .box h2 {
-    background-color: #fd5e53;
-  }
-  .inner-left .box {
-  border-bottom: 20px solid #21bf73;
-  }
+        .inner-right .box h2 {
+            background-color: #fd5e53;
+        }
 
-  .inner-right .box {
-    border-bottom: 20px solid #fd5e53;
-  }
+        .inner-left .box {
+            border-bottom: 20px solid #21bf73;
+        }
 
+        .inner-right .box {
+            border-bottom: 20px solid #fd5e53;
+        }
+    }
 }

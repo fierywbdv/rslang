@@ -38,7 +38,7 @@ function setGameNumberReducer(state = 0, action) {
 
 function setQuestionNumberReducer(state = 0, action) {
   if (action.type === SET_QUESTION_NUMBER_OURGAME) {
-    return (state === 19) ? 0 : state + 1;
+    return state === 19 ? 0 : state + 1;
   }
   return state;
 }
@@ -52,7 +52,6 @@ function setStatisticReducer(state = { mistake: [], correct: [] }, action) {
       return {
         ...state,
         mistake: [...state.mistake, { ...wordQues, gameNum: game, ques: quesNum }],
-
       };
     }
     return {

@@ -34,7 +34,6 @@ const routes = [
     name: 'Sprint',
     url: 'sprint',
   },
-
 ];
 
 export default routes;

@@ -1,143 +1,145 @@
-/*плавная загрузка страниц*/
+/* плавная загрузка страниц */
 @-webkit-keyframes fade-in {
-  0% {
-    opacity: 0.1;
-  }
-  100% {
-    opacity: 1;
-  }
+    0% {
+        opacity: .1;
+    }
+
+    100% {
+        opacity: 1;
+    }
 }
 
 @-moz-keyframes fade-in {
-  0% {
-    opacity: 0.1;
-  }
-  100% {
-    opacity: 1;
-  }
+    0% {
+        opacity: .1;
+    }
+
+    100% {
+        opacity: 1;
+    }
 }
 
 @-o-keyframes fade-in {
-  0% {
-    opacity: 0.1;
-  }
-  100% {
-    opacity: 1;
-  }
+    0% {
+        opacity: .1;
+    }
+
+    100% {
+        opacity: 1;
+    }
 }
 
 @keyframes fade-in {
-  0% {
-    opacity: 0.1;
-  }
-  100% {
-    opacity: 1;
-  }
-}
+    0% {
+        opacity: .1;
+    }
 
-.container.statistic  {
-  -webkit-animation: fade-in 1.5s linear; /* Safari 4+ */
-  -moz-animation: fade-in 1.5s linear; /* Fx 5+ */
-  -o-animation: fade-in 1.5s linear; /* Opera 12+ */
-  animation: fade-in 1.5s linear; /* IE 10+, Fx 29+ */
+    100% {
+        opacity: 1;
+    }
 }
 
 .container.statistic {
-  width: 100%;
-  max-width: 640px;
-  margin: 2rem auto;
-  padding: 1.5rem 1rem;
+    -webkit-animation: fade-in 1.5s linear; /* Safari 4+ */
+    -moz-animation: fade-in 1.5s linear; /* Fx 5+ */
+    -o-animation: fade-in 1.5s linear; /* Opera 12+ */
+    animation: fade-in 1.5s linear; /* IE 10+, Fx 29+ */
+}
 
-  .container-inner {
-    display: flex;
-    flex-flow: row wrap;
-    justify-content: space-between;
+.container.statistic {
+    width: 100%;
+    max-width: 640px;
+    margin: 2rem auto;
+    padding: 1.5rem 1rem;
 
-    .inner-left,
-    .inner-right {
-      width: 100%;
-      max-width: 48%;
+    .container-inner {
+        display: flex;
+        flex-flow: row wrap;
+        justify-content: space-between;
+
+        .inner-left,
+        .inner-right {
+            width: 100%;
+            max-width: 48%;
+        }
     }
-
-  }
-
 }
 
 .box {
-  border-bottom: 20px solid #03a9f4;
-  border-radius: 0 0 10px 10px;
+    border-bottom: 20px solid #03a9f4;
+    border-radius: 0 0 10px 10px;
 }
 
 .box h2 {
-  background-color: #03a9f4;
-  border-radius: 10px 10px 0 0;
-  color: #ffffff;
-  font-size: 20px;
-  font-weight: 700;
-  padding: 10px 20px;
+    background-color: #03a9f4;
+    border-radius: 10px 10px 0 0;
+    color: #fff;
+    font-size: 20px;
+    font-weight: 700;
+    padding: 10px 20px;
 }
 
 .box ul {
-  background-color: #ffffff;
-  position: relative;
-  padding: 0;
-  margin: 0;
+    background-color: #fff;
+    position: relative;
+    padding: 0;
+    margin: 0;
 }
 
 .box ul:hover li,
 .box ul:focus li,
-.box ul:active  li{
-  opacity: 0.2;
+.box ul:active li {
+    opacity: .2;
 }
 
 .box ul li {
-  background-color: #ffffff;
-  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.1);
-  list-style: none;
-  padding: 10px;
-  transition: transform 0.5s ease;
+    background-color: #fff;
+    box-shadow: 0 5px 25px rgba(0, 0, 0, .1);
+    list-style: none;
+    padding: 10px;
+    transition: transform .5s ease;
 }
 
 .box ul li:hover,
 .box ul li:focus,
 .box ul li:active {
-  background-color: #25bcff;
-  color: #ffffff;
-  cursor: pointer;
-  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
-  opacity: 1;
-  transform: scale(1.1);
-  z-index: 1;
+    background-color: #25bcff;
+    color: #fff;
+    cursor: pointer;
+    box-shadow: 0 5px 25px rgba(0, 0, 0, .2);
+    opacity: 1;
+    transform: scale(1.1);
+    z-index: 1;
 }
 
 .box ul li span {
-  background-color: #25bcff;
-  border-radius: 50%;
-  color: #ffffff;
-  display: inline-block;
-  font-size: 12px;
-  font-weight: 600;
-  height: 20px;
-  line-height: 20px;
-  margin-right: 10px;
-  text-align: center;
-  width: 20px;
+    background-color: #25bcff;
+    border-radius: 50%;
+    color: #fff;
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 600;
+    height: 20px;
+    line-height: 20px;
+    margin-right: 10px;
+    text-align: center;
+    width: 20px;
 }
 
 .box ul li:hover span,
 .box ul li:focus span,
 .box ul li:active span {
-  background-color: #ffffff;
-  color: #25bcff;
+    background-color: #fff;
+    color: #25bcff;
 }
 
 .inner-right {
-  .box {
-    border-bottom: 20px solid #f45329;
-    border-radius: 0 0 10px 10px;
-  }
+    .box {
+        border-bottom: 20px solid #f45329;
+        border-radius: 0 0 10px 10px;
+    }
 
-  .box h2 {
-    background-color: #f45329;
-  }
+    .box h2 {
+        background-color: #f45329;
+    }
 }

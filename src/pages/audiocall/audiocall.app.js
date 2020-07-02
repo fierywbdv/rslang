@@ -1,6 +1,10 @@
 import { store } from '../../redux/store';
 import {
-  setQuestions, togglePlay, askQuestion, setStatistic, setGameNumber,
+  setQuestions,
+  togglePlay,
+  askQuestion,
+  setStatistic,
+  setGameNumber,
 } from './audiocall-redux/audiocall-actions';
 import './scss/audiocall.styles.scss';
 import helper from './common/audiocall.helper';
@@ -21,13 +25,18 @@ class Audiocall {
 
   startGame() {
     const startButton = document.getElementById('center-div');
+    const root = document.getElementById('root');
+    const body = document.querySelector('body');
+    root.className = 'audio-call-root';
+    body.classList.add('audio-call-body');
+    console.log('body', body);
     store.dispatch(setQuestions(mockData));
     startButton.addEventListener('click', () => {
       const state = store.getState();
       const { askInfo } = state.audioCallReducer;
       const startAskInfo = {
-        nextQuestion: (askInfo.nextQuestion === undefined) ? false : askInfo.nextQuestion,
-        nextQuestionNum: (askInfo.nextQuestionNum === undefined) ? 0 : askInfo.nextQuestionNum,
+        nextQuestion: askInfo.nextQuestion === undefined ? false : askInfo.nextQuestion,
+        nextQuestionNum: askInfo.nextQuestionNum === undefined ? 0 : askInfo.nextQuestionNum,
         firstQuestion: true,
       };
       store.dispatch(askQuestion(startAskInfo));
@@ -43,11 +52,13 @@ class Audiocall {
     const questions = this.getQuestionWithAnswers();
     if (state.audioCallReducer.togglePlay) {
       if (askInfo.nextQuestion) {
-        store.dispatch(askQuestion({
-          nextQuestion: false,
-          nextQuestionNum: askInfo.nextQuestionNum += 1,
-          firstQuestion: false,
-        }));
+        store.dispatch(
+          askQuestion({
+            nextQuestion: false,
+            nextQuestionNum: (askInfo.nextQuestionNum += 1),
+            firstQuestion: false,
+          }),
+        );
       }
       const number = askInfo.nextQuestionNum || 0;
       helper.render('#root', questions[number], 'append', '.screen');
@@ -128,14 +139,17 @@ class Audiocall {
     next.classList.add('show');
     answersGroup.classList.add('show');
     this.correct.play();
+    helper.setOpacity(questionNum);
 
     next.addEventListener('click', () => {
       const state = store.getState();
       const { askInfo, setQuestionsGame, gameNumber } = state.audioCallReducer;
-      store.dispatch(askQuestion({
-        ...askInfo,
-        nextQuestion: !askInfo.nextQuestion,
-      }));
+      store.dispatch(
+        askQuestion({
+          ...askInfo,
+          nextQuestion: !askInfo.nextQuestion,
+        }),
+      );
 
       if (helper.isLastQuestion(questionNum, LAST_QUESTION.last)) {
         this.setGameStatistic({
@@ -194,6 +208,7 @@ class Audiocall {
 
   markForgetAnswer(questionNum) {
     const answers = document.querySelectorAll('.icon');
+    const answersAll = document.querySelectorAll('.name');
     const next = document.querySelector('.next');
     const currentQuestion = document.querySelector('.result-word').getAttribute('data-word-id');
     const forget = document.querySelector('.forget');
@@ -203,8 +218,13 @@ class Audiocall {
       const itemId = item.getAttribute('data-id');
       if (itemId === currentQuestion) {
         const elem = document.getElementById(itemId);
+        elem.classList.add('disable');
         elem.innerHTML = '<i class="fas fa-check-circle"></i>';
       }
+    });
+
+    answersAll.forEach((item) => {
+      item.classList.add('disable');
     });
 
     forget.classList.add('hide');
@@ -220,11 +240,15 @@ class Audiocall {
       wordQues: setQuestionsGame[questionNum],
     });
 
+    helper.setOpacity(questionNum);
+
     next.addEventListener('click', () => {
-      store.dispatch(askQuestion({
-        ...askInfo,
-        nextQuestion: !askInfo.nextQuestion,
-      }));
+      store.dispatch(
+        askQuestion({
+          ...askInfo,
+          nextQuestion: !askInfo.nextQuestion,
+        }),
+      );
 
       if (helper.isLastQuestion(questionNum, LAST_QUESTION.last)) {
         helper.render('#root', statisticScreenComponent(gameNumber), 'append', '.screen');

@@ -18,9 +18,10 @@ import mockData from '../audiocall/common/mock-data';
 class Ourgame {
   constructor() {
     this.words = null;
+    this.userWords = null;
     this.timeOut = null;
-    this.page = 0;
-    this.group = 1;
+    this.page = null;
+    this.group = null;
     this.isFirstGame = false;
     this.questionsGame = null;
     this.info = null;
@@ -43,7 +44,8 @@ class Ourgame {
     helper.rangeSlider();
 
     if (startButton) {
-      startButton.addEventListener('click', () => {
+      startButton.addEventListener('click', async () => {
+        await this.setWords(this.page, this.group);
         store.dispatch(togglePlay());
         store.dispatch(setGameNumber());
         this.playGame();
@@ -54,9 +56,8 @@ class Ourgame {
       customStart.addEventListener('click', async () => {
         this.page = level.value;
         this.group = group.value;
-        await this.setWords(this.page, this.group);
-        console.log('level', level.value);
-        console.log('group', group.value);
+        await this.setWords(this.group, this.page);
+
         store.dispatch(togglePlay());
         store.dispatch(setGameNumber());
         this.playGame();
@@ -193,14 +194,42 @@ class Ourgame {
     return this.questionsGame[0];
   }
 
-  async setWords(page = 0, group = 1) {
-    this.words = await learnWordsAPIService.getWordsByPageAndGroup(page, group);
-    if (this.isFirstGame) {
-      store.dispatch(setQuestions(this.words.slice(0, 10)));
+  async setWords(page, group) {
+    console.log('page, group', page, group);
+    if (page !== null || group !== null) {
+      this.page = null;
+      this.group = null;
+      this.words = await learnWordsAPIService.getWordsByPageAndGroup(page, group);
+      console.log('this.words', this.words);
+      if (this.isFirstGame) {
+        store.dispatch(setQuestions(this.words.slice(0, 10)));
+      } else {
+        store.dispatch(setQuestions(this.words.slice(10, 20)));
+      }
+      this.startGame();
     } else {
-      store.dispatch(setQuestions(this.words.slice(10, 20)));
+      const { id, token } = helper.getUserData();
+      this.userWords = await learnWordsAPIService.getAllUserWords(id, token);
+      console.log('this.userWords', this.userWords);
+      if (this.userWords.length) {
+        const newWords = this.userWords.map((item) => ({ ...item.optional }));
+        if (!this.isFirstGame) {
+          console.log('1', newWords);
+          store.dispatch(setQuestions(newWords.slice(0, 10)));
+          this.startGame();
+        } else {
+          console.log('2', newWords);
+          store.dispatch(setQuestions(newWords.slice(10, 20)));
+          this.startGame();
+        }
+      } else {
+        const startButton = document.getElementById('start-play');
+        const emptyWords = document.getElementById('empty-words');
+        startButton.classList.add('hide');
+        emptyWords.classList.remove('hide');
+        console.log(this.userWords.length);
+      }
     }
-    this.startGame();
   }
 
   setRestart() {
@@ -222,9 +251,8 @@ class Ourgame {
   }
 
   init() {
-    this.setWords(this.page, this.group);
-
-
+    this.startGame();
+    // baban666@tut.by  asdf_Ghjk1
   }
 }
 

@@ -138,6 +138,11 @@ const helper = {
       gravity: 'top',
     }).showToast();
   },
+
+  getUserData: () => ({
+    id: localStorage.getItem('userId'),
+    token: localStorage.getItem('token'),
+  }),
 };
 
 export default helper;

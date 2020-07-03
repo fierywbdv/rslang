@@ -7,6 +7,7 @@ class LearnWordsAPIService {
   constructor(url) {
     this.url = url;
   }
+
   errorHandler(error) {
     Toastify({
       text: error.message,
@@ -22,7 +23,7 @@ class LearnWordsAPIService {
   logout() {
     localStorage.setItem('userId', null);
     localStorage.setItem('token', null);
-    localStorage.setItem('authorized', false)
+    localStorage.setItem('authorized', false);
     store.dispatch(disAutorization());
   }
 
@@ -241,6 +242,7 @@ class LearnWordsAPIService {
   }
 
   async createUserWord(userId, wordId, token, wordDifficulty, optional) {
+    console.log(`${this.url}users/${userId}/words/${wordId}`)
     try {
       const response = await fetch(`${this.url}users/${userId}/words/${wordId}`, {
         method: 'POST',
@@ -263,6 +265,7 @@ class LearnWordsAPIService {
       }
 
       const addWord = await response.json();
+
 
       return addWord;
     } catch (error) {
@@ -411,8 +414,8 @@ class LearnWordsAPIService {
 
       if (response.status === 403) {
         throw new Error('Incorrect e-mail or password!');
-      } else if(response.status === 404) {
-        throw new Error(`Couldn't find a(an) user with this e-mail!`);
+      } else if (response.status === 404) {
+        throw new Error('Couldn\'t find a(an) user with this e-mail!');
       } else if (response.status !== 200) {
         throw new Error('Some ERROR!');
       }
@@ -426,6 +429,6 @@ class LearnWordsAPIService {
   }
 }
 
-const urlAPI = 'http://pacific-castle-12388.herokuapp.com/';
+const urlAPI = 'https://afternoon-falls-25894.herokuapp.com/';
 
 export const learnWordsAPIService = new LearnWordsAPIService(urlAPI);

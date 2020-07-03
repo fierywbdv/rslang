@@ -1,5 +1,5 @@
 const startScreenOurGameComponent = () => {
-  const template = `<h3>2 Columns</h3>
+  const template = `<h3>Our Game</h3>
                     <div class="container">
                         <div class="row">
                             <div class="col-xs-12 col-sm-6">
@@ -10,6 +10,10 @@ const startScreenOurGameComponent = () => {
                                   <div class="card-body">
                                     <div id="start-play" class="card-button two">
                                       <button>Play</button>
+                                    </div>
+                                    <div id="empty-words" class="message-empty-words hide">
+                                    <p>You dont have any learned word</p>
+                                    <p>You you can go to learn new words or play with random words</p>
                                     </div>
                                   </div>
                               </div>
@@ -35,7 +39,7 @@ const startScreenOurGameComponent = () => {
                                         <label class="form-item__label">Round</label>
                                         <div class="form-item__control"><small><strong><span class="slider__value">1</span><span>&nbsp;Round</span></strong></small></div>
                                         <div class="slider">
-                                          <input id="group" class="slider__input" type="range" value="0" min="0" max="19"/>
+                                          <input id="group" class="slider__input" type="range" value="0" min="0" max="29"/>
                                           <div class="slider__positive" style="width: 0%;"></div>
                                         </div>
                                       </div>

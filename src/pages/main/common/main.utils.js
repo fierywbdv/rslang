@@ -1,4 +1,5 @@
 import Router from '../../../router/Router';
+import { learnWordsAPIService } from '../../../services/learnWordsAPIService';
 
 export const setSidebarItem = () => {
   const sideMenuItems = document.querySelectorAll('.side-navbar ul li a');
@@ -11,3 +12,10 @@ export const setSidebarItem = () => {
     }
   });
 };
+
+export async function greeting() {
+  const response = await learnWordsAPIService.getUserSettings(localStorage.getItem('userId'), localStorage.getItem('token'));
+
+  const greetingForUser = document.querySelector('.greeting-for-user');
+  greetingForUser.innerHTML = `Привет, ${response.optional.name}`;
+}

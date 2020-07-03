@@ -4,7 +4,7 @@ import englishPuzzle from './pages/english-puzzle/english-puzzle.app';
 import savanna from './pages/savanna/savanna.app';
 
 import router from './router/Router';
-import { learnWordsAPIService } from './services/learnWordsAPIService';
+import { logout } from './pages/promo/common/promo.utils';
 
 window.onload = () => {
   speakit.init();
@@ -12,6 +12,7 @@ window.onload = () => {
   savanna.init();
   main.toggleBtnHandler();
   main.menuHandler();
+  logout();
 };
 
 router.run();

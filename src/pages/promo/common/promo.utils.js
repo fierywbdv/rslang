@@ -1,3 +1,9 @@
+import { learnWordsAPIService } from "../../../services/learnWordsAPIService";
+import Toastify from 'toastify-js';
+import 'toastify-js/src/toastify.css';
+import { store } from "../../../redux/store";
+import { autorization, disAutorization } from "../promo-redux/promo-actions";
+
 const startBTN = document.querySelector('#get-started');
 const overlayPopup = document.querySelector('.overlay_popup');
 const mainPopup = document.querySelector('.main-popup');
@@ -58,13 +64,38 @@ export const resetAlarm = (element) => {
 };
 
 export const formValidation = () => {
-  formRegister.addEventListener('submit', (e) => {
+
+  formRegister.addEventListener('submit', async (e) => {
     e.preventDefault();
+
+    const userEmail = document.querySelector('#register-email').value;
+    const userPassword = document.querySelector('#register-password').value;
+    const userName = document.querySelector('#register-username').value;
+
     if (passwordIsValid(password.value)) {
       resetAlarm(password);
       if (password.value === passwordConfirm.value) {
         passwordConfirm.classList.remove('is-invalid');
-        formRegister.submit();
+        
+        const createUser = await learnWordsAPIService.createUser(userEmail, userPassword);
+        
+        if(createUser !== undefined) {
+          Toastify({
+            text: 'Registration completed successfully',
+            backgroundColor: 'linear-gradient(to right, #036615, #03ab22)',
+            className: 'info',
+            position: 'right',
+            gravity: 'top',
+          }).showToast();
+          document.querySelector('#register-form').reset();
+
+          document.querySelectorAll('.label-material').forEach((el) => {
+            el.classList.remove('active')
+          })
+
+          const response = await learnWordsAPIService.signIn(userEmail, userPassword);
+          learnWordsAPIService.setUserSettings(response.userId, response.token, '10', {name: userName});
+        }
       } else {
         setAlarm(passwordConfirm, 'mismatched');
       }
@@ -73,6 +104,32 @@ export const formValidation = () => {
     }
   });
 };
+
+export const loginForm = () => {
+  formLogin.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const userEmail = document.querySelector('#login-email').value;
+    const userPassword = document.querySelector('#login-password').value;
+
+    const login = await learnWordsAPIService.signIn(userEmail, userPassword);
+
+    if(login !== undefined){
+      localStorage.setItem('userId', login.userId);
+      localStorage.setItem('token', login.token);
+      store.dispatch(autorization());
+    }
+  })
+}
+
+export const logout = () => {
+  document.querySelector('.logout').addEventListener('click', () => {
+    localStorage.setItem('userId', null);
+    localStorage.setItem('token', null);
+    localStorage.setItem('authorized', false)
+    store.dispatch(disAutorization());
+  })
+}
 
 export const startButtonHandler = () => {
   startBTN.addEventListener('click', (e) => {

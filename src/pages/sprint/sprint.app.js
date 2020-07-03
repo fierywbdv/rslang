@@ -5,7 +5,9 @@ import { startScreenComponent } from './components/start-screen-component';
 import { gameScreenComponent } from './components/game-screen-component';
 import { resultsScreenComponent } from './components/results-screen-component';
 import { WordsAPIService } from '../../services/wordsAPIService';
-import { shuffle, toggleCirclesNumber, cleanCircles } from './common/sprint.utils';
+import {
+  shuffle, toggleCirclesNumber, cleanCircles, renderBackground, playAudio, playResultsAudio,
+} from './common/sprint.utils';
 import {
   POINTS_PER_WORD,
   BACKGROUND_MAX_POINTS,
@@ -33,6 +35,7 @@ class Sprint {
     this.pointsToAdd = 10;
     this.correctAnswersNumber = 0;
     this.audio = new Audio();
+    this.playPromise = null;
     this.correctAnswers = [];
     this.wrongAnswers = [];
   }
@@ -57,16 +60,20 @@ class Sprint {
   startCountdown() {
     const timer = setInterval(() => {
       this.secondsRemaining = +document.querySelector('.percentage').innerHTML - 1;
-      if (this.secondsRemaining === -1) {
+      if (this.secondsRemaining === 0) {
         clearInterval(timer);
         this.audio.pause();
         const points = document.querySelector('.points').innerHTML;
-        document.getElementById('root').innerHTML = resultsScreenComponent(this.wordsList, this.words, this.correctAnswers, this.wrongAnswers, points);
-        this.playResultsAudio();
-        this.trainAgain();
+        setTimeout(() => {
+          document.querySelector('.sprint-wrapper').innerHTML = resultsScreenComponent(this.wordsList, this.words, this.correctAnswers, this.wrongAnswers, points);
+          renderBackground();
+          playResultsAudio();
+          this.trainAgain();
+        }, 1000);
       } else {
         if (this.secondsRemaining === 5) {
-          this.playAudio(TIMER_SOUND);
+          this.audio = new Audio(TIMER_SOUND);
+          this.audio.play();
         }
         document.querySelector('.percentage').innerHTML = this.secondsRemaining;
         document.querySelector('.circle').setAttribute('stroke-dasharray', `${60 - this.secondsRemaining}, 60`);
@@ -156,7 +163,7 @@ class Sprint {
   }
 
   showMistake() {
-    this.playAudio(ERROR_SOUND);
+    playAudio(ERROR_SOUND);
 
     if (this.pointsToAdd === 80) {
       toggleCirclesNumber();
@@ -174,7 +181,7 @@ class Sprint {
   }
 
   showCorrectAnswer() {
-    this.playAudio(CORRECT_SOUND);
+    playAudio(CORRECT_SOUND);
 
     document.querySelector('.card').classList.add('correct');
     document.querySelector('.card__result').classList.add('correct');
@@ -209,19 +216,19 @@ class Sprint {
     switch (this.correctAnswersNumber) {
       case 4:
         this.pointsToAdd = 20;
-        this.playAudio(SUCCESS_SOUND);
+        playAudio(SUCCESS_SOUND);
         header.style.backgroundColor = BACKGROUND_MIN_POINTS;
         cleanCircles();
         break;
       case 8:
         this.pointsToAdd = 40;
-        this.playAudio(SUCCESS_SOUND);
+        playAudio(SUCCESS_SOUND);
         header.style.backgroundColor = BACKGROUND_MEDIUM_POINTS;
         cleanCircles();
         break;
       case 12:
         this.pointsToAdd = 80;
-        this.playAudio(SUCCESS_SOUND);
+        playAudio(SUCCESS_SOUND);
         header.style.backgroundColor = BACKGROUND_MAX_POINTS;
         toggleCirclesNumber();
         break;
@@ -239,20 +246,6 @@ class Sprint {
     document.querySelector('.card__header').style.backgroundColor = '';
   }
 
-  playAudio(path) {
-    this.audio = new Audio(path);
-    this.audio.play();
-  }
-
-  playResultsAudio() {
-    document.querySelector('.results__list').addEventListener('click', (event) => {
-      if (event.target.tagName === 'I') {
-        const path = event.target.getAttribute('data-audio');
-        this.playAudio(`https://raw.githubusercontent.com/missdasha/rslang-data/master/${path}`);
-      }
-    });
-  }
-
   trainAgain() {
     document.querySelector('.train-again').addEventListener('click', () => {
       this.pairNumber = 0;
@@ -261,7 +254,8 @@ class Sprint {
       this.secondsRemaining = 60;
       this.correctAnswers = [];
       this.wrongAnswers = [];
-      document.getElementById('root').innerHTML = gameScreenComponent();
+      document.querySelector('.sprint-wrapper').innerHTML = gameScreenComponent();
+      renderBackground();
       this.renderButtonEvents();
     });
   }
@@ -300,7 +294,7 @@ class Sprint {
       const newState = store.getState();
       if (newState.sprintReducer.screen === 'start-screen') {
         document.getElementById('root').innerHTML = startScreenComponent();
-
+        renderBackground();
         const buttonStart = document.querySelector('.button-start');
         buttonStart.addEventListener('click', () => {
           store.dispatch(showGameScreen());
@@ -308,7 +302,9 @@ class Sprint {
       }
 
       if (newState.sprintReducer.screen === 'game-screen' && !document.querySelector('.game-screen')) {
-        document.getElementById('root').innerHTML = gameScreenComponent();
+        document.querySelector('.sprint-wrapper').innerHTML = gameScreenComponent();
+        renderBackground();
+
         this.renderButtonEvents();
         this.renderArrowsEvents();
       }

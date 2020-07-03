@@ -12,3 +12,30 @@ export const cleanCircles = () => {
     circle.classList.remove('correct');
   });
 };
+
+export const renderBackground = () => {
+  const path = './assets/sprint/img/bg-sprint.png';
+  const bgImage = new Image();
+  bgImage.onload = () => {
+    document.querySelector('.sprint-wrapper').style.backgroundImage = `url(${path})`;
+    bgImage.remove();
+  };
+  bgImage.onerror = () => {
+    document.querySelector('.sprint-wrapper').style.backgroundColor = 'rgb(159, 59, 130)';
+  };
+  bgImage.src = path;
+};
+
+export const playAudio = (path) => {
+  const audio = new Audio(path);
+  audio.play();
+};
+
+export const playResultsAudio = () => {
+  document.querySelector('.results__list').addEventListener('click', (event) => {
+    if (event.target.tagName === 'I') {
+      const path = event.target.getAttribute('data-audio');
+      playAudio(`https://raw.githubusercontent.com/missdasha/rslang-data/master/${path}`);
+    }
+  });
+};

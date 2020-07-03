@@ -55,6 +55,10 @@ module.exports = {
         from: './pages/sprint/assets/audio/',
         to: './assets/audio/',
       },
+      {
+        from: './pages/sprint/assets/img/',
+        to: './assets/sprint/img/',
+      },
     ]),
   ],
   module: {

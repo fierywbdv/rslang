@@ -124,13 +124,7 @@
   .game-screen {
     &__content {
       padding: 0 20px;
-    }
-  }
-}
 
-@media (max-width: 575px) {
-  .game-screen {
-    &__content {
       .choice {
         flex-direction: column;
         align-items: center;

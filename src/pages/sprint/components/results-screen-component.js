@@ -8,8 +8,7 @@ export const renderResultsList = (wordsList, words, answers) => {
 };
 
 export const resultsScreenComponent = (wordsList, words, correctAnswers, wrongAnswers, points) => {
-  const resultsScreen = `<div class="sprint-wrapper bg">
-                        <div class="results-screen">
+  const resultsScreen = `<div class="results-screen">
                             <div class="results-screen__content">
                               <div class="results">
                                 <h1>${points} очков</h1>
@@ -31,7 +30,6 @@ export const resultsScreenComponent = (wordsList, words, correctAnswers, wrongAn
                                 </div>
                               </div>
                             </div>
-                      </div>
-                    </div>`;
+                      </div>`;
   return resultsScreen;
 };

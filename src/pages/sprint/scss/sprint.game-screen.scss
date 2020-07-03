@@ -112,6 +112,18 @@
   }
 }
 
+.start-timer {
+  position: absolute;
+  top: 50%;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+  left: 50%;
+
+  svg {
+    margin-right: 0;
+  }
+}
+
 @media (max-width: 991px) {
   .game-screen {
     .arrows {

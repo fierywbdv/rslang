@@ -43,15 +43,10 @@ class Sprint {
   async startGame() {
     this.level = document.getElementById('level').value - 1;
     this.round = document.getElementById('round').value - 1;
+
     document.querySelector('.current-state').classList.remove('hidden');
     document.querySelector('.card').classList.remove('hidden');
     document.querySelector('.arrows').classList.remove('hidden');
-
-    this.wordsList = await WordsAPIService.getWords(this.round, this.level);
-    this.createWordsArray(this.wordsList);
-    this.createTranslationsArray(this.wordsList);
-    this.shuffledWords = shuffle(this.words.slice());
-    this.shuffledTranslations = shuffle(this.translations.slice());
 
     this.startCountdown();
     this.showPair();
@@ -92,6 +87,14 @@ class Sprint {
   showPair() {
     document.querySelector('.card__word').innerHTML = this.shuffledWords[this.pairNumber];
     document.querySelector('.card__translation').innerHTML = this.shuffledTranslations[this.pairNumber];
+  }
+
+  async getWords() {
+    this.wordsList = await WordsAPIService.getWords(this.round, this.level);
+    this.createWordsArray(this.wordsList);
+    this.createTranslationsArray(this.wordsList);
+    this.shuffledWords = shuffle(this.words.slice());
+    this.shuffledTranslations = shuffle(this.translations.slice());
   }
 
   async addWords() {
@@ -228,9 +231,9 @@ class Sprint {
         break;
       case 12:
         this.pointsToAdd = 80;
+        toggleCirclesNumber();
         playAudio(SUCCESS_SOUND);
         header.style.backgroundColor = BACKGROUND_MAX_POINTS;
-        toggleCirclesNumber();
         break;
       default:
         break;
@@ -260,11 +263,30 @@ class Sprint {
     });
   }
 
+  showStartTimer() {
+    const timer = setInterval(() => {
+      this.secondsRemaining = +document.querySelector('.start-timer text').innerHTML - 1;
+      if (this.secondsRemaining === -1) {
+        clearInterval(timer);
+        this.audio.pause();
+        document.querySelector('.start-timer').classList.add('hidden');
+        this.startGame();
+      } else {
+        document.querySelector('.start-timer text').innerHTML = this.secondsRemaining;
+        document.querySelector('.start-timer path').setAttribute('stroke-dasharray', `${60 - (60 * this.secondsRemaining) / 5}, 60`);
+      }
+    }, 1000);
+  }
+
   renderButtonEvents() {
     const start = document.querySelector('.start-game');
     start.addEventListener('click', () => {
+      this.getWords();
       document.querySelector('.start-game').classList.add('hidden');
-      this.startGame();
+      document.querySelector('.start-timer').classList.remove('hidden');
+      this.showStartTimer();
+      this.audio = new Audio(TIMER_SOUND);
+      this.audio.play();
 
       document.querySelector('.btn-danger').addEventListener('click', () => {
         this.answerWrong();

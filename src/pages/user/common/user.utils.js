@@ -124,9 +124,10 @@ const inputHandler = (element) => {
   });
 };
 
-const settingsFormValidation = (userPassword, userMail) => {
+const settingsFormValidation = (userName, userPassword, userMail) => {
   let password = false;
   let mail = false;
+  let name = false;
 
   if (passwordIsValid(userPassword.value)) {
     resetAlarm(userPassword);
@@ -141,13 +142,20 @@ const settingsFormValidation = (userPassword, userMail) => {
   } else {
     setAlarm(userMail);
   }
-  return password && mail;
+
+  if (userName.value.length > 0) {
+    resetAlarm(userName);
+    name = true;
+  } else {
+    setAlarm(userName);
+  }
+  return password && mail && name;
 };
 
 export const saveSettingsHandler = () => {
   const saveButton = document.querySelector('#save-settings');
   saveButton.addEventListener('click', () => {
-    const userName = document.querySelector('#edit-user-name').value;
+    const userName = document.querySelector('#edit-user-name');
     const userMail = document.querySelector('#edit-user-mail');
     const userPassword = document.querySelector('#edit-user-pass');
     const userWordsCount = document.querySelector('#set-user-words-count').value;
@@ -160,10 +168,11 @@ export const saveSettingsHandler = () => {
 
     inputHandler(userMail);
     inputHandler(userPassword);
+    inputHandler(userName);
 
-    if (settingsFormValidation(userPassword, userMail) && checkboxHandler()) {
+    if (settingsFormValidation(userName, userPassword, userMail) && checkboxHandler()) {
       const userSettings = {
-        userName,
+        userName: userName.value,
         userMail: userMail.value,
         userPassword: userPassword.value,
         userWordsCount,
@@ -176,6 +185,7 @@ export const saveSettingsHandler = () => {
       };
       return userSettings;
     }
+    return true;
   });
 };
 

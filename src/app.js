@@ -13,6 +13,7 @@ window.onload = () => {
   savanna.init();
   main.toggleBtnHandler();
   main.menuHandler();
+  main.setSidebarHeight();
 };
 
 router.run();

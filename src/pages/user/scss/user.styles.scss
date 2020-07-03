@@ -1,0 +1,162 @@
+@import "../../../scss/normalize.scss";
+@import "../../../scss/mixins.scss";
+@import "../../../scss/variables.scss";
+@import '../../../scss/common.scss';
+
+.user-card {
+  // position: absolute;
+  // top: 50%;
+  // left: 50%;
+  // transform: translate(-50%, -50%);
+  padding-top: 50px;
+  // width: 500px;
+  // height: 500px;
+  // background-color: blue;
+  margin-right: auto;
+  // margin-left: 50%;
+}
+.settings-card {
+  margin-top: 30px;
+  margin-bottom: 30px;
+  padding-left: 0;
+  padding-right: 0;
+  height: auto;
+  max-width: 800px;
+}
+.card-header-area {
+  padding-top: 10px;
+  color: $main-eng-text-color;
+  display: flex;
+  justify-content: center;
+  & i {
+    position: absolute;
+    left: 20px;
+  }
+}
+.row .row-btn {
+  justify-content: center;
+  & button {
+    margin: 20px 0 10px 0;
+    & i {
+      padding-left: 10px;
+      padding-right: 10px;
+      font-size: 1.2em;
+    }
+  }
+}
+
+#edit-user-name-form,  #edit-user-mail-form, #edit-user-pass-form  {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  font-size: 1em;
+  & .form-group {
+    padding-left: 0;
+    & input {
+      border: none;
+      border-radius: 0;
+      border-bottom: 1px solid #eee;
+      padding: 10px 10px;
+      color: $main-text-color;
+      &.is-invalid {
+        color: $main-pink-color;
+        border-color: $main-pink-color !important;
+        &:focus {
+          color: $main-text-color;
+          border-color: $main-blue-color !important;
+        }
+      }
+      &:focus {
+        border-color: $main-blue-color;
+      }
+    }
+    & label {
+      padding-left: 0;
+      color: $main-text-color;
+    }
+  }
+}
+.user-i {
+  font-size: 1.5em;
+}
+
+#user-words-count, #user-cards-count {
+  justify-content: center;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+#user-words-count > i, #user-cards-count > i {
+  padding-left: 0;
+  padding-right: 12px;
+  color: $main-text-color;
+}
+#user-cards-count > i {
+  padding-right: 5px;
+}
+
+#edit-user-pass-form, #user-cards-count {
+  padding-bottom: 30px;
+  border-bottom: 1px dashed #eee;
+}
+#show-words-count, #show-cards-count {
+  padding-left: 10px;
+  padding-right: 5px;
+  color: $main-blue-color;
+  font-weight: bold;
+  font-size: 1.5em;
+}
+.card-settings {
+  display: flex;
+  justify-content: center;
+  margin: 0 auto;
+  padding: 20px 0 0 0;
+  & label.form-control-label {
+    color: $main-text-color;
+    & i {
+      padding-left: 0;
+      padding-right: 20px;
+    }
+  }
+  & label.form-check-label {
+    margin-left: 10px;
+    margin-top: 2px;
+  }
+}
+.card-settings input {
+  width: 20px;
+  height: 20px;
+}
+.label-div {
+  display: flex;
+}
+.card-footer-area {
+  display: flex;
+  justify-content: center;
+  padding: 10px 0;
+  & button i {
+    padding: 0;
+    font-size: .9em;
+  }
+}
+
+@media (max-width: 1200px) {
+  .label-div {
+    flex-direction: column !important;
+  }
+}
+
+@media (max-width: 450px) {
+  #card-boby {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+  #edit-user-name-form i,  #edit-user-mail-form i, #edit-user-pass-form i, .card-header-area i {
+    padding-left: 0;
+  }
+}
+
+@media (max-width: 330px) {
+  .card-header-area i {
+    display: none;
+  }
+}

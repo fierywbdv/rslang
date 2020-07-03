@@ -22,7 +22,13 @@ const getCardBody = (user) => {
   buttonArea.className = 'row row-btn';
   buttonArea.append(submitButton);
 
-  userCardBody.append(userNameForm, userMailForm, userPasswordForm, userWordCount, userCardsCount, userCardSettings, buttonArea);
+  userCardBody.append(userNameForm,
+    userMailForm,
+    userPasswordForm,
+    userWordCount,
+    userCardsCount,
+    userCardSettings,
+    buttonArea);
 
   return userCardBody;
 };

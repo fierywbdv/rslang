@@ -2,15 +2,19 @@ import getCardHeader from './user.cardHeader';
 import getCardFooter from './user.cardFooter';
 import getCardBody from './user.cardBody';
 
-const getUserCard = () => {
-  const userCard = document.createElement('div');
-  userCard.className = 'card settings-card col-xl-7 col-sm-8 col-lg-8 col-md-8 col-11';
-
+const getUser = () => {
   const user = {
     userName: 'User',
     userMail: 'example@mail.com',
     userPassword: 'cwewWRWQ12313@#@#',
   };
+  return user;
+};
+
+const getUserCard = () => {
+  const user = getUser();
+  const userCard = document.createElement('div');
+  userCard.className = 'card settings-card col-xl-7 col-sm-8 col-lg-8 col-md-8 col-11';
 
   const userCardHeader = getCardHeader();
   const userCardBody = getCardBody(user);

@@ -15,7 +15,6 @@ export const getUserWordsCount = () => {
   input.addEventListener('change', (event) => {
     const wordCount = document.querySelector('#show-words-count');
     wordCount.textContent = event.target.value;
-    console.log(event.target.value);
   });
 };
 
@@ -25,7 +24,6 @@ export const getUserCardsCount = () => {
   input.addEventListener('change', (event) => {
     const wordCount = document.querySelector('#show-cards-count');
     wordCount.textContent = event.target.value;
-    console.log(event.target.value);
   });
 };
 
@@ -143,7 +141,6 @@ const settingsFormValidation = (userPassword, userMail) => {
   } else {
     setAlarm(userMail);
   }
-  console.log('password', password, 'mail', mail);
   return password && mail;
 };
 
@@ -163,7 +160,6 @@ export const saveSettingsHandler = () => {
 
     inputHandler(userMail);
     inputHandler(userPassword);
-    console.log(checkboxHandler());
 
     if (settingsFormValidation(userPassword, userMail) && checkboxHandler()) {
       const userSettings = {
@@ -178,7 +174,6 @@ export const saveSettingsHandler = () => {
         userSetTranscription,
         userSetImage,
       };
-      console.log(userSettings);
       return userSettings;
     }
   });

@@ -16,6 +16,8 @@ export const setSidebarHeight = () => {
     document.querySelector('#root').offsetHeight,
     document.querySelector('#root').clientHeight,
   );
+  console.log('rootHeight', rootHeight);
   const sidebar = document.querySelector('nav.side-navbar');
   sidebar.style.height = `${rootHeight}px`;
+  console.log('sidebar', sidebar.style.height);
 };

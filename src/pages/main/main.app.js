@@ -1,4 +1,4 @@
-import { setSidebarItem, setSidebarHeight } from './common/main.utils';
+import { setSidebarItem } from './common/main.utils';
 import './scss/main.styles.scss';
 
 class Main {
@@ -6,7 +6,6 @@ class Main {
     this.logoContent = null;
     this.logoElement = null;
     this.setSidebarItem = setSidebarItem;
-    this.setSidebarHeight = setSidebarHeight;
   }
 
   sayHello() {
@@ -29,15 +28,9 @@ class Main {
 
   menuHandler() {
     this.setSidebarItem();
-    setSidebarHeight();
     window.addEventListener('hashchange', () => {
       this.setSidebarItem();
-      setSidebarHeight();
     });
-  }
-
-  setSidebarHeight() {
-    this.setSidebarHeight();
   }
 }
 

@@ -5,7 +5,6 @@ import {
   saveSettingsHandler,
   deleteProfileHandler,
   clearRoot,
-  setSidebarHeight,
 } from './common/user.utils';
 import './scss/user.styles.scss';
 
@@ -17,7 +16,6 @@ class UserPage {
     this.saveSettingsHandler = saveSettingsHandler;
     this.deleteProfileHandler = deleteProfileHandler;
     this.clearRoot = clearRoot;
-    this.setSidebarHeight = setSidebarHeight;
   }
 
   init() {

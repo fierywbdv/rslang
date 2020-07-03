@@ -53,3 +53,12 @@
     }
   }
 }
+
+
+@media (max-width: 767px) {
+  .start-screen__content {
+    p {
+      max-width: 350px;
+    }
+  }
+}

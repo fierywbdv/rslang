@@ -7,9 +7,11 @@
   justify-content: center;
   text-align: center;
   align-items: center;
+
   &__content {
     margin: 0 auto;
     padding: 30px 40px;
+
     .results {
       background-color: #ffffff;
       color: #686a76;
@@ -18,26 +20,33 @@
       height: 500px;
       padding: 20px;
       border-radius: 0.25rem;
+
       h1 {
         color: #686a76;
       }
+
       p {
         margin: 10px 0;
       }
+
       &__list {
         text-align: left;
+
         .heading {
           margin-right: 10px;
         }
+
         .mark {
           color: #ffffff;
           text-align: center;
           border-radius: 50%;
           width: 33px;
           height: 33px;
+
           &.wrong {
             background-color: #dc3545;
           }
+
           &.correct {
             background-color: #28a745;
           }
@@ -60,11 +69,31 @@
         display: flex;
         justify-content: space-between;
         margin-top: 23px;
+
         button {
           color: #ffffff;
           background-color: #652c71;
         }
       }
     }
+  }
+}
+
+@media (max-width: 767px) {
+  .results-screen__content .results {
+    width: 350px;
+  }
+}
+
+@media (max-width: 575px) {
+  .results-screen .results-screen__content {
+    padding: 30px 10px;
+  }
+}
+
+@media (max-width: 374px) {
+  .results-screen__content .results {
+    padding: 20px 10px;
+    width: 300px;
   }
 }

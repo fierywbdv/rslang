@@ -294,6 +294,8 @@ class Sprint {
   }
 
   init() {
+    document.getElementById('root').classList.add('root');
+
     store.subscribe(() => {
       const newState = store.getState();
       if (newState.sprintReducer.screen === 'start-screen') {

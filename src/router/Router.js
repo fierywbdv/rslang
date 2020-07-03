@@ -7,6 +7,7 @@ class Router {
       Router.router = this;
     }
     this.routes = [];
+    this.url = null;
     this.addRoute(routes);
     return Router.router;
   }
@@ -30,8 +31,8 @@ class Router {
   }
 
   getUrl() {
-    const url = window.location.hash.slice(1) || '/';
-    return url;
+    this.url = window.location.hash.slice(1) || '/';
+    return this.url;
   }
 
   run() {
@@ -41,5 +42,5 @@ class Router {
 }
 
 const router = new Router();
-Object.freeze(router);
+
 export default router;

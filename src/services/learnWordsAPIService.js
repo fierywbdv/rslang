@@ -51,7 +51,7 @@ class LearnWordsAPIService {
 
   async createUser(email, password) {
     try {
-      const response = await fetch('${this.url}users', {
+      const response = await fetch(`${this.url}users`, {
         method: 'POST',
         headers: {
           Accept: 'application/json',

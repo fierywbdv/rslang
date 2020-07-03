@@ -1,3 +1,5 @@
+import Toastify from 'toastify-js';
+
 const helper = {
   render: (elementDOM, renderElement, renderPlace, removeItem) => {
     if (removeItem && document.querySelector(removeItem)) {
@@ -51,10 +53,10 @@ const helper = {
   filterStatistic: (correct, mistake, gameNumber) => {
     const correctAnswers = correct.filter((item) => item.gameNum === gameNumber);
     const mistakeAnswers = mistake.filter((item) => item.gameNum === gameNumber);
-    const sortCorrect = correctAnswers.filter((item) => mistakeAnswers.every((elem) => item.id !== elem.id));
-    const uniqueMistake = Array.from(new Set(mistakeAnswers.map((a) => a.id))).map((id) =>
-      mistakeAnswers.find((a) => a.id === id),
-    );
+    const sortCorrect = correctAnswers.filter((item) => mistakeAnswers
+      .every((elem) => item.id !== elem.id));
+    const uniqueMistake = Array.from(new Set(mistakeAnswers.map((a) => a.id)))
+      .map((id) => mistakeAnswers.find((a) => a.id === id));
 
     return {
       cor: sortCorrect,
@@ -123,6 +125,18 @@ const helper = {
         valueContainer.innerHTML = +sliderValue + 1;
       });
     }
+  },
+
+  message: (msg, type) => {
+    Toastify({
+      text: msg,
+      backgroundColor: type === 'error'
+        ? 'linear-gradient(to right, #CD5C5C, #F08080)'
+        : 'linear-gradient(to right, #21BF73, #5DBF2D)',
+      className: 'info',
+      position: 'right',
+      gravity: 'top',
+    }).showToast();
   },
 };
 

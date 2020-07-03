@@ -13,6 +13,7 @@ import helper from './common/ourgame.helper';
 import gameScreenComponent from './components/game-screen';
 import startScreenOurGameComponent from './components/start-screen';
 import statisticScreenComponent from './components/statistic-screen';
+import mockData from '../audiocall/common/mock-data';
 
 class Ourgame {
   constructor() {
@@ -21,6 +22,8 @@ class Ourgame {
     this.page = 0;
     this.group = 1;
     this.isFirstGame = false;
+    this.questionsGame = null;
+    this.info = null;
     this.correct = new Audio('./assets/audio/correct.mp3');
     this.mistake = new Audio('./assets/audio/error.mp3');
     this.failure = new Audio('./assets/audio/failure.mp3');
@@ -179,14 +182,15 @@ class Ourgame {
   }
 
   setGameStatistic(info = {}) {
-    store.dispatch(setStatistic(info));
+    this.info = { ...info };
+    store.dispatch(setStatistic(this.info));
   }
 
   getQuestion(id) {
     const state = store.getState();
     const { setQuestionsGame } = state.ourGameReducer;
-    const result = setQuestionsGame.filter((item) => item.id === id);
-    return result[0];
+    this.questionsGame = setQuestionsGame.filter((item) => item.id === id);
+    return this.questionsGame[0];
   }
 
   async setWords(page = 0, group = 1) {
@@ -219,6 +223,8 @@ class Ourgame {
 
   init() {
     this.setWords(this.page, this.group);
+
+
   }
 }
 

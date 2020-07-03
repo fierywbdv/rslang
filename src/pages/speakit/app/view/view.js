@@ -196,22 +196,15 @@ export default class View {
 const menu = document.querySelector('.side-navbar');
 const introduction = document.querySelector('.introduction');
 const body = document.querySelector('.body-speakit');
-const colorChange = document.querySelector('.align-items-stretch');
-const navbar = document.querySelector('.navbar');
-
-document.addEventListener('click', () => {
-  if ((window.location.href.split('#'))[1] === 'speakit') {
-    colorChange.classList.add('color');
-    navbar.classList.add('width');
-  }
-});
 
 document.querySelector('.menu-btn').addEventListener('click', () => {
-  if (menu.className === 'side-navbar shrinked') {
-    introduction.classList.remove('actives');
-    body.classList.remove('actives');
-  } else {
-    introduction.classList.add('actives');
-    body.classList.add('actives');
+  if ((window.location.href.split('#'))[1] === 'speakit') {
+    if (menu.className === 'side-navbar shrinked') {
+      introduction.classList.remove('actives');
+      body.classList.remove('actives');
+    } else {
+      introduction.classList.add('actives');
+      body.classList.add('actives');
+    }
   }
 });

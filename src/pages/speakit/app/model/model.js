@@ -4,7 +4,6 @@ import { shuffleArray, translateWord } from '../data/utils';
 export default class Model {
   constructor() {
     this.cardsData = null;
-
     this.controller = null;
     this.pageData = null;
     this.translationsMap = null;
@@ -54,7 +53,6 @@ export default class Model {
     };
 
     this.results.push(currentResult);
-
     localStorage.setItem(CLASS_NAMES.RESULT.PAGE, JSON.stringify(this.results));
   }
 
@@ -63,3 +61,6 @@ export default class Model {
     this.loadResults();
   }
 }
+
+console.log(`В игру Speakit играли: ${JSON.parse(localStorage.getItem(CLASS_NAMES.RESULT.PAGE)).length} раза`);
+console.log(JSON.parse(localStorage.getItem(CLASS_NAMES.RESULT.PAGE)) || []);

@@ -57,7 +57,6 @@ const controller = {
     savanna.sayHello();
   },
   actionSprint() {
-    document.getElementById('root').classList.add('bg');
     sprint.init();
   },
 

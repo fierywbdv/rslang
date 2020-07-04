@@ -69,6 +69,7 @@
   &__title {
     z-index: 1;
     font-size: 2.5rem;
+    margin: 0.67em 0;
   }
 
   &__subtitle {
@@ -79,6 +80,7 @@
 }
 
 .advantages {
+  background-color: #fff;
   padding-top: 80px;
   padding-bottom: 80px;
 
@@ -156,6 +158,7 @@
 }
 
 .video {
+  background-color: #fff;
   padding-top: 80px;
   padding-bottom: 80px;
 

@@ -4,16 +4,16 @@ import gameLine from '../geme-line/game-line';
 
 const gameScreenComponent = () => {
   const state = store.getState();
-  const { setQuestionsGame } = state.ourGameReducer;
+  const { setQuestionsGame, kind } = state.ourGameReducer;
   const answersMurkUp = setQuestionsGame.map((item) => gameLine(item));
-  const questionMurkUp = setQuestionsGame.map((item) => gameLine(item, 'question'));
+  const questionMurkUp = setQuestionsGame.map((item) => gameLine(item, 'question', kind));
   const questionUl = document.createElement('ul');
   const answersUl = document.createElement('ul');
 
   helper.shuffle(answersMurkUp).forEach((item) => answersUl.append(item));
   questionMurkUp.forEach((elem) => questionUl.append(elem));
 
-  const title = `<h3 id="info-word">Could you please match the words</h3>`;
+  const title = '<h3 id="info-word">Could you please match the words</h3>';
   const gameScreen = document.createElement('div');
   gameScreen.setAttribute('id', 'our-game-play-screen');
   gameScreen.innerHTML = title;

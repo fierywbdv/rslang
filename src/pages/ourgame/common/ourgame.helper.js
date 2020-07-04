@@ -1,4 +1,6 @@
 import Toastify from 'toastify-js';
+import { learnWordsAPIService } from '../../../services/learnWordsAPIService';
+import { GAME_BREAKPOINT } from './ourgame.constants';
 
 const helper = {
   render: (elementDOM, renderElement, renderPlace, removeItem) => {
@@ -143,6 +145,40 @@ const helper = {
     id: localStorage.getItem('userId'),
     token: localStorage.getItem('token'),
   }),
+
+  removeWords: (arr, userId, token) => {
+    arr.forEach(async (item) => {
+      await learnWordsAPIService.deleteUserWord(userId, item.id, token);
+    });
+  },
+
+  showStartButton: async (value) => {
+    const remove = (num) => {
+      if (num !== 0) {
+        const startButton = document.getElementById('start-play');
+        if (startButton && startButton.classList.contains('hide')) {
+          startButton.classList.remove('hide');
+        }
+      } else {
+        const emptyWords = document.getElementById('empty-words');
+        if (emptyWords && emptyWords.classList.contains('hide')) {
+          emptyWords.classList.remove('hide');
+        }
+      }
+    };
+
+    if (value && value.length) {
+      remove(value.length);
+    } else {
+      const { id, token } = helper.getUserData();
+      const userWords = await learnWordsAPIService.getAllUserWords(id, token);
+      remove(userWords.length);
+    }
+  },
+
+  isBreakpoint: (num) => {
+    return GAME_BREAKPOINT.includes(num);
+  },
 };
 
 export default helper;

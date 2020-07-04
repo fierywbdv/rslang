@@ -1,6 +1,8 @@
-const gameLine = (item, type) => {
-  const { id, wordTranslate, word, audio, transcription } = item;
-  const templateQuestion = `${word}`;
+const gameLine = (item, type, kind) => {
+  const {
+    id, wordTranslate, word, audio, transcription,
+  } = item;
+  const templateQuestion = `${word} ${(kind === 'withUserWords') ? `<i data-id="${id}" class="far fa-trash-alt remove-word"></i>` : `<i data-id="${id}" class="fas fa-plus add"></i>`}`;
   const templateAnswer = `${wordTranslate}`;
   const line = document.createElement('li');
   line.className = 'name';

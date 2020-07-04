@@ -242,7 +242,6 @@ class LearnWordsAPIService {
   }
 
   async createUserWord(userId, wordId, token, wordDifficulty, optional) {
-    console.log(`${this.url}users/${userId}/words/${wordId}`)
     try {
       const response = await fetch(`${this.url}users/${userId}/words/${wordId}`, {
         method: 'POST',

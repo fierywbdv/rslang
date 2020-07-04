@@ -8,7 +8,7 @@ const startScreenOurGameComponent = () => {
                                     <h4>Play with learned words</h4>
                                   </div>
                                   <div class="card-body">
-                                    <div id="start-play" class="card-button two">
+                                    <div id="start-play" class="card-button two hide">
                                       <button>Play</button>
                                     </div>
                                     <div id="empty-words" class="message-empty-words hide">
@@ -28,7 +28,7 @@ const startScreenOurGameComponent = () => {
                                     <li class="birthday-item">
                                     <div class="form-item">
                                         <label class="form-item__label">Level</label>
-                                        <div class="form-item__control"><small><strong><span class="slider__value">1</span><span>&nbsp;Level</span></strong></small></div>
+                                        <div class="form-item__control"><small><strong><span class="slider__value level">1</span><span>&nbsp;Level</span></strong></small></div>
                                         <div class="slider">
                                           <input id="level" class="slider__input" type="range" value="0" min="0" max="5"/>
                                           <div class="slider__positive" style="width: 0%;"></div>
@@ -37,7 +37,7 @@ const startScreenOurGameComponent = () => {
                                     </li>
                                     <div class="form-item">
                                         <label class="form-item__label">Round</label>
-                                        <div class="form-item__control"><small><strong><span class="slider__value">1</span><span>&nbsp;Round</span></strong></small></div>
+                                        <div class="form-item__control"><small><strong><span class="slider__value round">1</span><span>&nbsp;Round</span></strong></small></div>
                                         <div class="slider">
                                           <input id="group" class="slider__input" type="range" value="0" min="0" max="29"/>
                                           <div class="slider__positive" style="width: 0%;"></div>

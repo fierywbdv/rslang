@@ -39,3 +39,16 @@ export const playResultsAudio = () => {
     }
   });
 };
+
+export const saveStatistics = (points) => {
+  const statistics = JSON.parse(localStorage.getItem('statistics')) || [];
+  console.log(statistics);
+  statistics.push({ date: new Date().toLocaleString(), points });
+  console.log(statistics);
+  localStorage.setItem('statistics', JSON.stringify(statistics));
+}
+
+export const searchBestResult = () => {
+  const statistics = JSON.parse(localStorage.getItem('statistics')) || [];
+  return Math.max(...statistics.map((data) => data.points));
+};

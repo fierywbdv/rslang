@@ -4,9 +4,16 @@ import { showGameScreen } from './sprint-redux/sprint-actions';
 import { startScreenComponent } from './components/start-screen-component';
 import { gameScreenComponent } from './components/game-screen-component';
 import { resultsScreenComponent } from './components/results-screen-component';
+import { statisticsScreenComponent } from './components/statistics-screen-component';
 import { WordsAPIService } from '../../services/wordsAPIService';
 import {
-  shuffle, toggleCirclesNumber, cleanCircles, renderBackground, playAudio, playResultsAudio,
+  shuffle,
+  toggleCirclesNumber,
+  cleanCircles,
+  renderBackground,
+  playAudio,
+  playResultsAudio,
+  saveStatistics,
 } from './common/sprint.utils';
 import {
   POINTS_PER_WORD,
@@ -59,11 +66,13 @@ class Sprint {
         clearInterval(timer);
         this.audio.pause();
         const points = document.querySelector('.points').innerHTML;
+        saveStatistics(points);
         setTimeout(() => {
           document.querySelector('.sprint-wrapper').innerHTML = resultsScreenComponent(this.wordsList, this.words, this.correctAnswers, this.wrongAnswers, points);
-          renderBackground();
           playResultsAudio();
+          // document.querySelector('.train-again').addEventListener('click', this.trainAgain);
           this.trainAgain();
+          this.showStatistics();
         }, 1000);
       } else {
         if (this.secondsRemaining === 5) {
@@ -258,8 +267,25 @@ class Sprint {
       this.correctAnswers = [];
       this.wrongAnswers = [];
       document.querySelector('.sprint-wrapper').innerHTML = gameScreenComponent();
-      renderBackground();
       this.renderButtonEvents();
+    });
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  showStatistics() {
+    document.querySelector('.statistics').addEventListener('click', () => {
+      const statistics = JSON.parse(localStorage.getItem('statistics'));
+      document.querySelector('.sprint-wrapper').innerHTML = statisticsScreenComponent(statistics);
+      document.querySelector('.statistics__buttons .train-again').addEventListener('click', () => {
+        this.pairNumber = 0;
+        this.pointsToAdd = 10;
+        this.correctAnswersNumber = 0;
+        this.secondsRemaining = 60;
+        this.correctAnswers = [];
+        this.wrongAnswers = [];
+        document.querySelector('.sprint-wrapper').innerHTML = gameScreenComponent();
+        this.renderButtonEvents();
+      });
     });
   }
 
@@ -327,7 +353,6 @@ class Sprint {
 
       if (newState.sprintReducer.screen === 'game-screen' && !document.querySelector('.game-screen')) {
         document.querySelector('.sprint-wrapper').innerHTML = gameScreenComponent();
-        renderBackground();
 
         this.renderButtonEvents();
         this.renderArrowsEvents();

@@ -15,26 +15,31 @@
   padding-top: 15px;
   padding-bottom: 15px;
 
-  .navbar-brand {
+  h1 {
     display: inline-block;
-    font-size: 1.25rem;
-  }
+    margin: 0;
 
-  span {
-    display: inline-block;
-    text-decoration: none;
-    -webkit-transition: all 0.3s;
-    transition: all 0.3s;
-  }
+    .navbar-brand {
+      display: inline-block;
+      font-size: 1.25rem;
+    }
 
-  .brand-text {
-    font-family: Tenor-Sans, tahoma, sans-serif;
-    color: $main-pretty-text-color;
-    font-weight: 800;
+    span {
+      display: inline-block;
+      text-decoration: none;
+      -webkit-transition: all 0.3s;
+      transition: all 0.3s;
+    }
 
-    .colored {
-      color: $main-pink-color;
-      font-weight: 400;
+    .brand-text {
+      font-family: Tenor-Sans, tahoma, sans-serif;
+      color: $main-pretty-text-color;
+      font-weight: 800;
+
+      .colored {
+        color: $main-pink-color;
+        font-weight: 400;
+      }
     }
   }
 }
@@ -67,6 +72,7 @@
   &__title {
     z-index: 1;
     font-size: 2.5rem;
+    margin: 0.67em 0;
   }
 
   &__subtitle {

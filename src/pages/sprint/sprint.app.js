@@ -270,6 +270,7 @@ class Sprint {
         clearInterval(timer);
         this.audio.pause();
         document.querySelector('.start-timer').classList.add('hidden');
+        document.querySelector('.get-ready').classList.add('hidden');
         this.startGame();
       } else {
         document.querySelector('.start-timer text').innerHTML = this.secondsRemaining;
@@ -284,6 +285,7 @@ class Sprint {
       this.getWords();
       document.querySelector('.start-game').classList.add('hidden');
       document.querySelector('.start-timer').classList.remove('hidden');
+      document.querySelector('.get-ready').classList.remove('hidden');
       this.showStartTimer();
       this.audio = new Audio(TIMER_SOUND);
       this.audio.play();

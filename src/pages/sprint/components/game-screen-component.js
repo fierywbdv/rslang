@@ -23,6 +23,7 @@ export const gameScreenComponent = () => {
                                 </div>
                                 <button type="button" class="btn btn-lg start-game">Старт</button>
                                 <div class="start-timer hidden">${timeChartComponent(5)}</div>
+                                <p class="get-ready hidden">Приготовьтесь</p>
                             </div>
                       </div>`;
   return gameScreen;

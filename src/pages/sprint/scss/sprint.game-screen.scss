@@ -124,6 +124,14 @@
   }
 }
 
+.get-ready{
+  position: absolute;
+  color: #fff;
+  top: 58%;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+  left: 50%;
+}
 @media (max-width: 991px) {
   .game-screen {
     .arrows {

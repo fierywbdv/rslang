@@ -11,7 +11,7 @@ export const resultsScreenComponent = (wordsList, words, correctAnswers, wrongAn
   const resultsScreen = `<div class="results-screen">
                             <div class="results-screen__content">
                               <div class="results">
-                                <h1>${points} очков</h1>
+                                <h2>${points} очков</h2>
                                 <p>Ваш рекорд: X очков</p>
                                 <div class="results__list">
                                   <span class="heading">Ошибки</span><span class="mark wrong">${wrongAnswers.length}</span>

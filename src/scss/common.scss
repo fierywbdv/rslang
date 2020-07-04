@@ -203,7 +203,7 @@ nav.navbar .menu-btn.active span:last-of-type {
 }
 
 nav.side-navbar {
-  min-height: 100vh;
+  height: calc(100vh - 78px);
   background: $main-light-color;
   min-width: 200px;
   max-width: 200px;

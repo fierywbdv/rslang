@@ -11,8 +11,6 @@ window.onload = () => {
   englishPuzzle.init();
   ourgame.init();
   savanna.init();
-  main.toggleBtnHandler();
-  main.menuHandler();
 };
 
 router.run();

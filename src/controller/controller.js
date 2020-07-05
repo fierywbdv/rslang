@@ -11,7 +11,7 @@ import startScreenComponent from '../pages/audiocall/components/start-screen';
 const controller = {
   callAction: (url) => {
     switch (url) {
-      case '/':
+      case 'main':
         controller.actionMain();
         break;
       case 'puzzle':
@@ -38,7 +38,7 @@ const controller = {
   },
 
   actionMain: () => {
-
+    main.init();
   },
   actionPuzzle: () => {
     englishPuzzle.sayHello();

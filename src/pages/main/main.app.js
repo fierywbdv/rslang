@@ -1,7 +1,5 @@
 import { setSidebarItem } from './common/main.utils';
-
-import { CLASS_NAMES } from '../../common/common.constants';
-import MAIN_GREETINGS from './common/main.constants';
+import renderMainScreen from './components/main-screen/main.screen';
 
 import './scss/main.styles.scss';
 
@@ -10,13 +8,13 @@ class Main {
     this.logoContent = null;
     this.logoElement = null;
     this.setSidebarItem = setSidebarItem;
-  }
-
-  sayHello() {
-
+    this.renderMainScreen = renderMainScreen;
   }
 
   init() {
+    this.renderMainScreen();
+    this.toggleBtnHandler();
+    this.menuHandler();
   }
 
   toggleBtnHandler() {

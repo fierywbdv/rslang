@@ -6,11 +6,11 @@ const getCardHeader = () => {
   headerDiv.className = 'card-header-area';
 
   const headerText = document.createElement('h5');
-  headerText.className = 'user-card-header';
+  headerText.className = 'user-card-header col-10';
   headerText.innerText = 'Настройка профиля';
 
   const headerIcon = document.createElement('i');
-  headerIcon.className = 'fas fa-user-cog';
+  headerIcon.className = 'fas col-1 fa-user-cog';
 
   headerDiv.append(headerIcon, headerText);
   userCardHeader.append(headerDiv);

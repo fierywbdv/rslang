@@ -28,11 +28,15 @@
   display: flex;
   justify-content: center;
   & .user-card-header {
+    padding-left: 0;
+    display: flex;
     margin-bottom: 0;
+    justify-content: center;
   }
   & i {
-    position: absolute;
-    left: 20px;
+    padding-right: 0;
+    display: flex;
+    justify-content: center;
   }
 }
 .row .row-btn {

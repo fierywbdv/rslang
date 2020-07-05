@@ -14,7 +14,7 @@ const getCardSettings = () => {
   labelText.innerText = 'Информация на карточках:';
 
   const labelIcon = document.createElement('i');
-  labelIcon.className = 'fas fa-file-invoice user-i';
+  labelIcon.className = 'fas col-2 fa-file-invoice user-i';
   labelDiv.append(labelIcon, labelText);
 
   cardSettingsLabel.append(labelDiv);

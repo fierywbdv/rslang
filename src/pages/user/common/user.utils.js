@@ -67,7 +67,7 @@ export const getFormUser = (id, inputID, value, inputType, icon) => {
   groupForm.className = 'form-group col-12';
 
   const inputLabel = document.createElement('label');
-  inputLabel.className = 'col-2 col-form-label';
+  inputLabel.className = 'col-1 col-form-label';
   inputLabel.setAttribute('for', inputID);
 
   const inputIcon = document.createElement('i');

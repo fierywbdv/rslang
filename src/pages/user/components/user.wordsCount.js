@@ -7,7 +7,7 @@ const getWordsCount = () => {
   formWordGroup.className = 'form-group col-10';
 
   const formWordIcon = document.createElement('i');
-  formWordIcon.className = 'fas fa-book user-i';
+  formWordIcon.className = 'fas col-1 fa-book user-i';
 
   const formWordLabel = document.createElement('label');
   formWordLabel.setAttribute('for', 'set-user-words-count');

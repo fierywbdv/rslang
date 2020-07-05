@@ -14,12 +14,22 @@
   padding-right: 0;
   height: auto;
   max-width: 800px;
+  border-radius: 2px;
 }
+
+#card-body {
+  padding-top: 10px !important;
+  padding-bottom: 10px !important;
+}
+
 .card-header-area {
-  padding-top: 10px;
+  padding-top: 0;
   color: $main-eng-text-color;
   display: flex;
   justify-content: center;
+  & .user-card-header {
+    margin-bottom: 0;
+  }
   & i {
     position: absolute;
     left: 20px;
@@ -28,21 +38,22 @@
 .row .row-btn {
   justify-content: center;
   & button {
-    margin: 20px 0 10px 0;
+    margin: 15px 0 10px 0;
     & i {
       padding-left: 10px;
       padding-right: 10px;
-      font-size: 1.2em;
+      font-size: 1em;
     }
   }
 }
 
 #edit-user-name-form,  #edit-user-mail-form, #edit-user-pass-form  {
-  padding-top: 10px;
-  padding-bottom: 10px;
+  padding-top: 5px;
+  padding-bottom: 5px;
   font-size: 1em;
   & .form-group {
     padding-left: 0;
+    justify-content: center;
     & input {
       border: none;
       border-radius: 0;
@@ -74,7 +85,18 @@
 #user-words-count, #user-cards-count {
   justify-content: center;
   padding-top: 10px;
-  padding-bottom: 10px;
+  padding-bottom: 0;
+  & .form-group {
+    padding-left: 0;
+  }
+  & i.user-i {
+    display: flex;
+    justify-content: center;
+    padding-right: 0;
+  }
+  & label {
+    color: $main-text-color;
+  }
 }
 
 #user-words-count > i, #user-cards-count > i {
@@ -87,53 +109,58 @@
 }
 
 #edit-user-pass-form, #user-cards-count {
-  padding-bottom: 30px;
+  padding-bottom: 20px;
   border-bottom: 1px dashed #eee;
 }
 #show-words-count, #show-cards-count {
   padding-left: 10px;
   padding-right: 5px;
   color: $main-blue-color;
-  font-weight: bold;
-  font-size: 1.5em;
+  font-size: 1.3em;
 }
 .card-settings {
   display: flex;
   justify-content: center;
   margin: 0 auto;
-  padding: 20px 0 0 0;
+  padding: 10px 0 0 0;
   & label.form-control-label {
     color: $main-text-color;
+    padding-right: 0;
     & i {
+      display: flex;
+      justify-content: center;
       padding-left: 0;
-      padding-right: 20px;
+      padding-right: 0;
     }
   }
   & label.form-check-label {
-    margin-left: 10px;
+    margin-left: 30px;
     margin-top: 2px;
+    color: $main-text-color;
+    font-size: .9em;
   }
 }
-.card-settings input {
+input.form-check-input {
   width: 20px;
   height: 20px;
+  margin-left: 0;
 }
 .label-div {
   display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+  & .label-text {
+    padding-left: .5em;
+    padding-top: .5em;
+  }
 }
 .card-footer-area {
   display: flex;
   justify-content: center;
-  padding: 10px 0;
   & button i {
     padding: 0;
     font-size: .9em;
-  }
-}
-
-@media (max-width: 1200px) {
-  .label-div {
-    flex-direction: column !important;
   }
 }
 

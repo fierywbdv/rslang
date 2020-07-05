@@ -7,7 +7,7 @@ const getCardsCount = () => {
   formCardsGroup.className = 'form-group col-10';
 
   const formCardsIcon = document.createElement('i');
-  formCardsIcon.className = 'fas fa-newspaper user-i';
+  formCardsIcon.className = 'fas col-1 fa-newspaper user-i';
 
   const formCardsLabel = document.createElement('label');
   formCardsLabel.setAttribute('for', 'set-user-cards-count');

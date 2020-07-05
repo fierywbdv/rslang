@@ -34,6 +34,11 @@ const routes = [
     name: 'Sprint',
     url: 'sprint',
   },
+  {
+    id: 8,
+    name: 'User',
+    url: 'user',
+  },
 
 ];
 

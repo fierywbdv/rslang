@@ -185,6 +185,7 @@
 }
 
 .main-popup {
+  display: none;
   position: fixed;
   margin: 0;
   padding: 0;
@@ -196,13 +197,13 @@
   visibility: hidden;
   transform: translateY(-20px);
   transition: all .5s ease;
-}
-
-.main-popup.visible {
-  opacity: 1;
-  visibility: visible;
-  transform: translateY(10px);
-  transition: all .5s ease;
+  &.visible {
+    display: block;
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(10px);
+    transition: all .5s ease;
+  }
 }
 
 .popup-header {
@@ -322,6 +323,7 @@ form label {
 }
 
 #login-form {
+  z-index: -1;
   position: relative;
   top: -270px;
   left: 0;
@@ -333,8 +335,9 @@ form label {
   -o-transition: all .35s;
   transition: all .35s;
     &.move-left {
-    opacity: 1;
-    transform: translateX(0);
+      z-index: 1;
+      opacity: 1;
+      transform: translateX(0);
   }
 }
 
@@ -426,21 +429,25 @@ input.input-material.is-invalid ~ .help {
   }
 }
 .help:hover~.password-text {
-    display: block;
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(10px);
+  transition: all .5s ease;
 }
 
 .password-text {
-    z-index: 10;
-    position: absolute;
-    bottom: 100%;
-    right: 0;
-    width: 100%;
-    padding: 5px;
-    border: 1px solid #aaa;
-    border-radius: 5px;
-    color: $main-text-color;
-    background-color: $main-light-color;
-    display: none;
+  opacity: 0;
+  visibility: hidden;
+  z-index: 10;
+  position: absolute;
+  bottom: 100%;
+  right: 0;
+  width: 100%;
+  padding: 5px;
+  border: 1px solid #aaa;
+  border-radius: 5px;
+  color: $main-text-color;
+  background-color: $main-light-color;
 }
 
 @media (max-width: 991px) {

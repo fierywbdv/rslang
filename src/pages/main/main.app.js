@@ -1,8 +1,4 @@
 import { setSidebarItem } from './common/main.utils';
-
-import { CLASS_NAMES } from '../../common/common.constants';
-import MAIN_GREETINGS from './common/main.constants';
-
 import './scss/main.styles.scss';
 
 class Main {

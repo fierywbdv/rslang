@@ -52,9 +52,12 @@ const helper = {
 
   isLastQuestion: (num, points) => points.some((elem) => elem === num),
 
-  filterStatistic: (correct, mistake, gameNumber) => {
-    const correctAnswers = correct.filter((item) => item.gameNum === gameNumber);
-    const mistakeAnswers = mistake.filter((item) => item.gameNum === gameNumber);
+  filterStatistic: (correct, mistake, gameNumber, kind) => {
+    console.log(correct, mistake, gameNumber, kind)
+    const correctAnswers = correct.filter((elem) => elem.kind === kind)
+      .filter((item) => item.gameNum === gameNumber);
+    const mistakeAnswers = mistake.filter((elem) => elem.kind === kind)
+      .filter((item) => item.gameNum === gameNumber);
     const sortCorrect = correctAnswers.filter((item) => mistakeAnswers
       .every((elem) => item.id !== elem.id));
     const uniqueMistake = Array.from(new Set(mistakeAnswers.map((a) => a.id)))
@@ -176,8 +179,41 @@ const helper = {
     }
   },
 
-  isBreakpoint: (num) => {
-    return GAME_BREAKPOINT.includes(num);
+  isBreakpoint: (num) => GAME_BREAKPOINT.includes(num),
+
+  setRangeSlider: (roundAndLevel) => {
+    const { flag, roundGame, level } = roundAndLevel;
+    const group = document.getElementById('group');
+    const levelGame = document.getElementById('level');
+    const lableGroup = document.querySelector('.round');
+    const lableLevel = document.querySelector('.level');
+    if (+roundGame === 29 && flag === true) {
+      group.setAttribute('value', '0');
+      const maxVal = group.getAttribute('max');
+      const posWidth = group.value / maxVal;
+      group.parentNode.querySelector('.slider__positive').style.width = `${posWidth * 100}%`;
+      lableGroup.innerHTML = '1';
+
+      levelGame.setAttribute('value', level + 1);
+      const maxValue = levelGame.getAttribute('max');
+      const posWidthValue = levelGame.value / maxValue;
+      levelGame.parentNode.querySelector('.slider__positive').style.width = `${posWidthValue * 100}%`;
+      lableLevel.innerHTML = `${+level === 0 ? 2 : +level + 1}`;
+      helper.message('Level Changed');
+    } else if (flag === true && +roundGame !== 29) {
+      group.setAttribute('value', `${+roundGame + 1}`);
+      const maxVal = group.getAttribute('max');
+      const posWidth = group.value / maxVal;
+      group.parentNode.querySelector('.slider__positive').style.width = `${posWidth * 100}%`;
+      lableGroup.innerHTML = `${+level === 0 ? 2 : +roundGame + 1}`;
+      helper.message('Round Changed');
+    } else {
+      group.setAttribute('value', `${+roundGame}`);
+      const maxVal = group.getAttribute('max');
+      const posWidth = group.value / maxVal;
+      group.parentNode.querySelector('.slider__positive').style.width = `${posWidth * 100}%`;
+      lableGroup.innerHTML = `${+roundGame === 0 ? 1 : +roundGame + 1}`;
+    }
   },
 };
 

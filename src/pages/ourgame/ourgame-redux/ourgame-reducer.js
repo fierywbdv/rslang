@@ -8,6 +8,7 @@ import {
   SET_LISTEN_ANSWER_OURGAME,
   SET_KIND_OF_OURGAME,
   SET_RANDOM_GAME_NUMBER_OURGAME,
+  SET_ROUND_AND_LEVEL_OURGAME,
 } from './ourgame-types';
 
 function togglePlayReducer(state = false, action) {
@@ -28,6 +29,21 @@ action) {
   }
   return state;
 }
+function setRoundAndLevelReducer(state = {
+  flag: true,
+  level: 1,
+  roundGame: 1,
+},
+action) {
+  if (action.type === SET_ROUND_AND_LEVEL_OURGAME) {
+    return {
+      flag: !state.flag,
+      level: action.payload.level,
+      roundGame: action.payload.roundGame,
+    };
+  }
+  return state;
+}
 
 function setQuestionsReducer(state = [], action) {
   if (action.type === SET_QUESTIONS_OURGAME) {
@@ -38,13 +54,13 @@ function setQuestionsReducer(state = [], action) {
 
 function setGameNumberReducer(state = 0, action) {
   if (action.type === SET_GAME_NUMBER_OURGAME) {
-    return state + 1;
+    return action.payload !== undefined ? action.payload : state + 1;
   }
   return state;
 }
 function setRandomGameNumberReducer(state = 0, action) {
   if (action.type === SET_RANDOM_GAME_NUMBER_OURGAME) {
-    return state + 1;
+    return action.payload !== undefined ? action.payload : state + 1;
   }
   return state;
 }
@@ -59,17 +75,22 @@ function setQuestionNumberReducer(state = 0, action) {
 function setStatisticReducer(state = { mistake: [], correct: [] }, action) {
   if (action.type === SET_STATISTIC_OURGAME) {
     const {
-      wordQues, mistake, game, quesNum,
+      wordQues, mistake, game, quesNum, kind,
     } = action.statistic;
+    console.log('wordQues, mistake, game, quesNum, kind', wordQues, mistake, game, quesNum, kind);
     if (mistake) {
       return {
         ...state,
-        mistake: [...state.mistake, { ...wordQues, gameNum: game, ques: quesNum }],
+        mistake: [...state.mistake, {
+          ...wordQues, gameNum: game, ques: quesNum, kind,
+        }],
       };
     }
     return {
       ...state,
-      correct: [...state.correct, { ...wordQues, gameNum: game, ques: quesNum }],
+      correct: [...state.correct, {
+        ...wordQues, gameNum: game, ques: quesNum, kind,
+      }],
     };
   }
   return state;
@@ -91,4 +112,5 @@ export const ourGameReducer = combineReducers({
   setStatistic: setStatisticReducer,
   isListenAnswer: setListenAnswerReducer,
   kind: setKindOfGameReducer,
+  roundAndLevel: setRoundAndLevelReducer,
 });

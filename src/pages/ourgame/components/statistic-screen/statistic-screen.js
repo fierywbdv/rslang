@@ -2,10 +2,12 @@ import { store } from '../../../../redux/store';
 import helper from '../../common/ourgame.helper';
 import statisticLine from '../statistic-line';
 
-const statisticScreenComponent = (gameNumber) => {
+const statisticScreenComponent = (kindGame) => {
   const state = store.getState();
   const { correct, mistake } = state.ourGameReducer.setStatistic;
-  const { cor, miss } = helper.filterStatistic(correct, mistake, gameNumber);
+  const { setRandomGameNum, setGameNum } = state.ourGameReducer;
+  const number = kindGame === 'withRandomWords' ? setRandomGameNum : setGameNum;
+  const { cor, miss } = helper.filterStatistic(correct, mistake, number - 1, kindGame);
 
   const corMurkUp = cor.map((item) => statisticLine(item));
   const misMurkUp = miss.map((item) => statisticLine(item));

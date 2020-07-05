@@ -1,4 +1,5 @@
 import './scss/ourgame.styles.scss';
+import Toastify from 'toastify-js';
 import { store } from '../../redux/store';
 import { learnWordsAPIService } from '../../services/learnWordsAPIService';
 import {
@@ -10,6 +11,7 @@ import {
   setListenAnswer,
   setKindOfGame,
   setRandomGameNumber,
+  setRoundAndLevel,
 } from './ourgame-redux/ourgame-actions';
 import helper from './common/ourgame.helper';
 import gameScreenComponent from './components/game-screen';
@@ -63,7 +65,7 @@ class Ourgame {
         store.dispatch(setKindOfGame('withRandomWords'));
         await this.setWords(this.group, this.page, 'withRandomWords');
         store.dispatch(togglePlay());
-        // store.dispatch(setGameNumber());
+        store.dispatch(setRoundAndLevel({ level: this.page, roundGame: this.group }));
       });
     }
   }
@@ -96,7 +98,6 @@ class Ourgame {
         const { isListenAnswer } = state.ourGameReducer;
         if (isListenAnswer.nextQuestion) {
           this.checkAnswerNew(e.target);
-          // this.checkAnswer(e.target);
         }
       });
     });
@@ -123,7 +124,9 @@ class Ourgame {
     const currentQuestion = Ourgame.getCurrentQuestion();
     const audio = target.getAttribute('data-audio');
     const state = store.getState();
-    const { setQuestionNum, setGameNum, setQuestionsGame } = state.ourGameReducer;
+    const {
+      setQuestionNum, setGameNum, setQuestionsGame, kind,
+    } = state.ourGameReducer;
     window.clearTimeout(this.timeOut);
     if (id === currentQuestion.getAttribute('data-id')) {
       console.log('checkAnswerForUserWords correct');
@@ -134,14 +137,20 @@ class Ourgame {
         setQuestionNum,
         setGameNum,
         setQuestionsGame,
+        kind,
       );
     } else {
-      console.log('checkAnswerForUserWords miss');
       this.mistakeAnswer(target, setGameNum, setQuestionsGame, currentQuestion);
     }
   }
 
-  correctAnswer(currentQuestion, target, audio, setQuestionNum, setGameNum, setQuestionsGame) {
+  correctAnswer(currentQuestion,
+    target,
+    audio,
+    setQuestionNum,
+    setGameNum,
+    setQuestionsGame,
+    kind) {
     const infoWord = document.getElementById('info-word');
     store.dispatch(setListenAnswer({ isListen: true, nextQuestion: false, answered: true }));
     this.correct.play();
@@ -151,7 +160,7 @@ class Ourgame {
     infoWord.innerText = `${currentQuestion.innerText} = ${target.innerText}`;
     this.timeOut = setTimeout(() => {
       this.sayWord(audio);
-    }, 1000);
+    }, 100);
     this.setGameStatistic({
       game: setGameNum,
       quesNum: setQuestionsGame,
@@ -160,8 +169,7 @@ class Ourgame {
     });
     store.dispatch(setQuestionNumber());
     if (this.isLastQuestion(setQuestionNum)) {
-      console.log('finish');
-      helper.render('#root', statisticScreenComponent(setGameNum), 'append', '.screen');
+      helper.render('#root', statisticScreenComponent(kind), 'append', '.screen');
       store.dispatch(togglePlay());
       this.isFirstGame = false;
       this.isLast = false;
@@ -188,13 +196,11 @@ class Ourgame {
     const state = store.getState();
     const { kind, setQuestionsGame } = state.ourGameReducer;
     if (kind === 'withUserWords' && setQuestionsGame.length - 1 === setQuestionNum) {
-      console.log('isLastQuestion withUserWords', kind, setQuestionsGame);
       this.isLast = true;
       store.dispatch(setGameNumber());
     }
 
     if (kind === 'withRandomWords' && setQuestionsGame.length - 1 === setQuestionNum) {
-      console.log('isLastQuestion withRandom', kind, setQuestionsGame);
       this.isLast = true;
       store.dispatch(setRandomGameNumber());
     }
@@ -221,26 +227,23 @@ class Ourgame {
   stopGame() {
     helper.render('#root', startScreenOurGameComponent(), 'append', '.container');
     const state = store.getState();
-    const { setRandomGameNum } = state.ourGameReducer;
-    if (helper.isBreakpoint(setRandomGameNum)) {
-      const level = document.getElementById('level');
-      const group = document.getElementById('group');
-      const lableLevel = document.querySelector('.level');
-      const lableGroup = document.querySelector('.round');
-      // this.page = level.value;
-      // this.group = group.value;
-      group.setAttribute('value', `${setRandomGameNum - 1}`);
-      const maxVal = group.getAttribute('max');
-      const posWidth = group.value / maxVal;
-      group.parentNode.querySelector('.slider__positive').style.width = `${posWidth * 100}%`;
-      lableGroup.innerHTML = `${setRandomGameNum}`;
-      console.log('setRandomGameNum > 2', level.value, group.value);
+    const { kind, roundAndLevel } = state.ourGameReducer;
+    if (kind === 'withRandomWords') {
+      helper.setRangeSlider(roundAndLevel);
     }
+
     this.startGame();
   }
 
   setGameStatistic(info = {}) {
-    this.info = { ...info };
+    const state = store.getState();
+    const { kind, setRandomGameNum, setGameNum } = state.ourGameReducer;
+    console.log('kind, setRandomGameNum, setGameNum', kind, setRandomGameNum, setGameNum);
+    this.info = {
+      ...info,
+      game: kind === 'withRandomWords' ? setRandomGameNum : setGameNum,
+      kind,
+    };
     store.dispatch(setStatistic(this.info));
   }
 
@@ -269,23 +272,29 @@ class Ourgame {
       this.userWords = await learnWordsAPIService.getAllUserWords(id, token);
       if (this.userWords.length) {
         const newWords = this.userWords.map((item) => ({ ...item.optional }));
-        if (this.isFirstGame) {
-          console.log('withUser 1 ', setGameNum, newWords, this.isFirstGame);
-          store.dispatch(setQuestions(newWords.slice(0, newWords.length > COUNT_WORDS_PER_GAMES
-            ? COUNT_WORDS_PER_GAMES
-            : newWords.length)));
+        const firstNum = setGameNum * 10;
+        const wordsForGame = newWords.slice(firstNum, firstNum + COUNT_WORDS_PER_GAMES);
+        store.dispatch(setQuestions(wordsForGame));
+        const callBackFinish = () => {
+          console.log('fin');
+          store.dispatch(setGameNumber(0));
+          store.dispatch(togglePlay());
+          this.playGame();
+        };
+        if (!wordsForGame.length) {
+          Toastify({
+            text: 'Words finished. You will start from begin',
+            duration: 3000,
+            close: true,
+            gravity: 'top',
+            position: 'left',
+            backgroundColor: 'linear-gradient(to right, #00b09b, #96c93d)',
+            stopOnFocus: true, // Prevents dismissing of toast on hover
+            callback: callBackFinish,
+          }).showToast();
         } else {
-          console.log('withUser 2 ', setGameNum, newWords, this.isFirstGame);
-          if ((setGameNum + 1) * COUNT_WORDS_PER_GAMES > newWords.length) {
-            store.dispatch(setQuestions(newWords.slice(0, newWords.length > COUNT_WORDS_PER_GAMES
-              ? COUNT_WORDS_PER_GAMES
-              : newWords.length)));
-          } else {
-            store.dispatch(setQuestions(newWords.slice((setGameNum + 1) * COUNT_WORDS_PER_GAMES,
-              (setGameNum + 1) * COUNT_WORDS_PER_GAMES + COUNT_WORDS_PER_GAMES)));
-          }
+          this.playGame();
         }
-        this.playGame();
       }
     }
   }

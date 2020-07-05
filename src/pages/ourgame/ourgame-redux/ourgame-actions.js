@@ -7,6 +7,7 @@ import {
   SET_LISTEN_ANSWER_OURGAME,
   SET_KIND_OF_OURGAME,
   SET_RANDOM_GAME_NUMBER_OURGAME,
+  SET_ROUND_AND_LEVEL_OURGAME,
 } from './ourgame-types';
 
 export function togglePlay() {
@@ -22,19 +23,27 @@ export function setQuestions(questions = []) {
   };
 }
 
-export function setGameNumber() {
+export function setGameNumber(payload) {
   return {
     type: SET_GAME_NUMBER_OURGAME,
+    payload,
   };
 }
-export function setRandomGameNumber() {
+export function setRandomGameNumber(payload) {
   return {
     type: SET_RANDOM_GAME_NUMBER_OURGAME,
+    payload,
   };
 }
 export function setQuestionNumber(payload) {
   return {
     type: SET_QUESTION_NUMBER_OURGAME,
+    payload,
+  };
+}
+export function setRoundAndLevel(payload) {
+  return {
+    type: SET_ROUND_AND_LEVEL_OURGAME,
     payload,
   };
 }

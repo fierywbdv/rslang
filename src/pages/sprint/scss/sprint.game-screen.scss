@@ -23,6 +23,24 @@
       }
     }
 
+    .sounds {
+      color: #ffffff82;
+      margin: 0 auto 10px;
+      width: 60px;
+
+      i {
+        cursor: pointer;
+
+        &:first-child {
+          margin-right: 24px;
+        }
+
+        &.chosen {
+          color: white;
+        }
+      }
+    }
+
     .arrows {
       margin-top: 20px;
       margin-bottom: 20px;

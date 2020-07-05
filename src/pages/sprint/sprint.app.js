@@ -24,6 +24,7 @@ import {
   ERROR_SOUND,
   SUCCESS_SOUND,
   TIMER_SOUND,
+  AUDIO_PATH,
   LAST_LEVEL,
   LAST_ROUND,
 } from './common/sprint.constants';
@@ -45,6 +46,8 @@ class Sprint {
     this.playPromise = null;
     this.correctAnswers = [];
     this.wrongAnswers = [];
+    this.isDynamicActivated = true;
+    this.isSoundActivated = true;
   }
 
   async startGame() {
@@ -70,18 +73,15 @@ class Sprint {
         setTimeout(() => {
           document.querySelector('.sprint-wrapper').innerHTML = resultsScreenComponent(this.wordsList, this.words, this.correctAnswers, this.wrongAnswers, points);
           playResultsAudio();
-          // document.querySelector('.train-again').addEventListener('click', this.trainAgain);
-          this.trainAgain();
+          document.querySelector('.train-again').addEventListener('click', () => this.trainAgain());
           this.showStatistics();
         }, 1000);
-      } else {
-        if (this.secondsRemaining === 5) {
-          this.audio = new Audio(TIMER_SOUND);
-          this.audio.play();
-        }
-        document.querySelector('.percentage').innerHTML = this.secondsRemaining;
-        document.querySelector('.circle').setAttribute('stroke-dasharray', `${60 - this.secondsRemaining}, 60`);
+      } else if (this.secondsRemaining === 5 && this.isSoundActivated) {
+        this.audio = new Audio(TIMER_SOUND);
+        this.audio.play();
       }
+      document.querySelector('.percentage').innerHTML = this.secondsRemaining;
+      document.querySelector('.circle').setAttribute('stroke-dasharray', `${60 - this.secondsRemaining}, 60`);
     }, 1000);
   }
 
@@ -96,6 +96,8 @@ class Sprint {
   showPair() {
     document.querySelector('.card__word').innerHTML = this.shuffledWords[this.pairNumber];
     document.querySelector('.card__translation').innerHTML = this.shuffledTranslations[this.pairNumber];
+    const wordIndex = this.words.indexOf(this.shuffledWords[this.pairNumber]);
+    playAudio(`${AUDIO_PATH}${this.wordsList[wordIndex].audio}`, this.isDynamicActivated);
   }
 
   async getWords() {
@@ -175,7 +177,7 @@ class Sprint {
   }
 
   showMistake() {
-    playAudio(ERROR_SOUND);
+    playAudio(ERROR_SOUND, this.isSoundActivated);
 
     if (this.pointsToAdd === 80) {
       toggleCirclesNumber();
@@ -193,7 +195,7 @@ class Sprint {
   }
 
   showCorrectAnswer() {
-    playAudio(CORRECT_SOUND);
+    playAudio(CORRECT_SOUND, this.isSoundActivated);
 
     document.querySelector('.card').classList.add('correct');
     document.querySelector('.card__result').classList.add('correct');
@@ -228,20 +230,20 @@ class Sprint {
     switch (this.correctAnswersNumber) {
       case 4:
         this.pointsToAdd = 20;
-        playAudio(SUCCESS_SOUND);
+        playAudio(SUCCESS_SOUND, this.isSoundActivated);
         header.style.backgroundColor = BACKGROUND_MIN_POINTS;
         cleanCircles();
         break;
       case 8:
         this.pointsToAdd = 40;
-        playAudio(SUCCESS_SOUND);
+        playAudio(SUCCESS_SOUND, this.isSoundActivated);
         header.style.backgroundColor = BACKGROUND_MEDIUM_POINTS;
         cleanCircles();
         break;
       case 12:
         this.pointsToAdd = 80;
         toggleCirclesNumber();
-        playAudio(SUCCESS_SOUND);
+        playAudio(SUCCESS_SOUND, this.isSoundActivated);
         header.style.backgroundColor = BACKGROUND_MAX_POINTS;
         break;
       default:
@@ -259,32 +261,29 @@ class Sprint {
   }
 
   trainAgain() {
-    document.querySelector('.train-again').addEventListener('click', () => {
-      this.pairNumber = 0;
-      this.pointsToAdd = 10;
-      this.correctAnswersNumber = 0;
-      this.secondsRemaining = 60;
-      this.correctAnswers = [];
-      this.wrongAnswers = [];
-      document.querySelector('.sprint-wrapper').innerHTML = gameScreenComponent();
-      this.renderButtonEvents();
-    });
+    this.pairNumber = 0;
+    this.correctAnswersNumber = 0;
+    this.pointsToAdd = 10;
+    this.correctAnswers = [];
+    this.secondsRemaining = 60;
+    document.querySelector('.sprint-wrapper').innerHTML = gameScreenComponent();
+    if (!this.isSoundActivated) {
+      document.querySelector('.fa-itunes-note').classList.remove('chosen');
+    }
+    if (!this.isDynamicActivated) {
+      document.querySelector('.fa-volume-up').classList.remove('chosen');
+    }
+    this.wrongAnswers = [];
+    this.renderButtonEvents();
+    this.renderSoundsEvents();
   }
 
-  // eslint-disable-next-line class-methods-use-this
   showStatistics() {
     document.querySelector('.statistics').addEventListener('click', () => {
       const statistics = JSON.parse(localStorage.getItem('statistics'));
       document.querySelector('.sprint-wrapper').innerHTML = statisticsScreenComponent(statistics);
       document.querySelector('.statistics__buttons .train-again').addEventListener('click', () => {
-        this.pairNumber = 0;
-        this.pointsToAdd = 10;
-        this.correctAnswersNumber = 0;
-        this.secondsRemaining = 60;
-        this.correctAnswers = [];
-        this.wrongAnswers = [];
-        document.querySelector('.sprint-wrapper').innerHTML = gameScreenComponent();
-        this.renderButtonEvents();
+        this.trainAgain();
       });
     });
   }
@@ -294,7 +293,9 @@ class Sprint {
       this.secondsRemaining = +document.querySelector('.start-timer text').innerHTML - 1;
       if (this.secondsRemaining === -1) {
         clearInterval(timer);
-        this.audio.pause();
+        if (this.isSoundActivated) {
+          this.audio.pause();
+        }
         document.querySelector('.start-timer').classList.add('hidden');
         document.querySelector('.get-ready').classList.add('hidden');
         this.startGame();
@@ -309,20 +310,18 @@ class Sprint {
     const start = document.querySelector('.start-game');
     start.addEventListener('click', () => {
       this.getWords();
+
       document.querySelector('.start-game').classList.add('hidden');
       document.querySelector('.start-timer').classList.remove('hidden');
       document.querySelector('.get-ready').classList.remove('hidden');
       this.showStartTimer();
-      this.audio = new Audio(TIMER_SOUND);
-      this.audio.play();
+      if (this.isSoundActivated) {
+        this.audio = new Audio(TIMER_SOUND);
+        this.audio.play();
+      }
 
-      document.querySelector('.btn-danger').addEventListener('click', () => {
-        this.answerWrong();
-      });
-
-      document.querySelector('.btn-success').addEventListener('click', () => {
-        this.answerCorrectly();
-      });
+      document.querySelector('.btn-danger').addEventListener('click', () => this.answerWrong());
+      document.querySelector('.btn-success').addEventListener('click', () => this.answerCorrectly());
     });
   }
 
@@ -334,6 +333,20 @@ class Sprint {
       if (event.code === 'ArrowRight') {
         this.answerCorrectly();
       }
+    });
+  }
+
+  renderSoundsEvents() {
+    const dynamic = document.querySelector('.fa-volume-up');
+    dynamic.addEventListener('click', () => {
+      dynamic.classList.toggle('chosen');
+      this.isDynamicActivated = !this.isDynamicActivated;
+    });
+
+    const notes = document.querySelector('.fa-itunes-note');
+    notes.addEventListener('click', () => {
+      notes.classList.toggle('chosen');
+      this.isSoundActivated = !this.isSoundActivated;
     });
   }
 
@@ -356,6 +369,7 @@ class Sprint {
 
         this.renderButtonEvents();
         this.renderArrowsEvents();
+        this.renderSoundsEvents();
       }
     });
 

@@ -1,3 +1,5 @@
+import { AUDIO_PATH } from './sprint.constants';
+
 export const shuffle = (array) => array.sort(() => Math.random() - 0.5);
 
 export const toggleCirclesNumber = () => {
@@ -26,16 +28,18 @@ export const renderBackground = () => {
   bgImage.src = path;
 };
 
-export const playAudio = (path) => {
-  const audio = new Audio(path);
-  audio.play();
+export const playAudio = (path, isActivated) => {
+  if (isActivated) {
+    const audio = new Audio(path);
+    audio.play();
+  }
 };
 
 export const playResultsAudio = () => {
   document.querySelector('.results__list').addEventListener('click', (event) => {
     if (event.target.tagName === 'I') {
       const path = event.target.getAttribute('data-audio');
-      playAudio(`https://raw.githubusercontent.com/missdasha/rslang-data/master/${path}`);
+      playAudio(`${AUDIO_PATH}${path}`, true);
     }
   });
 };

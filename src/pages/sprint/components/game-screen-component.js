@@ -16,6 +16,10 @@ export const gameScreenComponent = () => {
                                 <div class="current-state hidden">
                                     <span class="points">0</span>${timeChartComponent(60)}
                                 </div>
+                                <div class="sounds">
+                                  <i class="fas fa-volume-up chosen"></i>
+                                  <i class="fab fa-itunes-note chosen"></i>
+                                </div>
                                 ${cardComponent()}
                                 <div class="arrows hidden">
                                     <div class="arrow"><i class="fas fa-long-arrow-alt-left"></i></div>

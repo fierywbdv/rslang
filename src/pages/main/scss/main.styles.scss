@@ -7,5 +7,9 @@
 
 @import './main.logo.scss';
 
+#root {
+  background-color: $main-bg-color !important;
+}
+
 @import '../components/swiper/_swiper';
 @import '../components/card/main.card';

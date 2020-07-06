@@ -51,7 +51,11 @@ module.exports = {
         from: './pages/main/components/some_component/assets/',
         to: './assets/main/',
       },
-    ]),
+      {
+        from: './pages/speakit/assets/',
+        to: './assets/speakit/',
+      },
+    ]), 
   ],
   module: {
     rules: [

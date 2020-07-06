@@ -2,6 +2,14 @@ import { setSidebarItem } from './common/main.utils';
 import renderMainScreen from './components/main-screen/main.screen';
 
 import './scss/main.styles.scss';
+import { store } from '../../redux/store';
+import { learnWordsAPIService } from '../../services/learnWordsAPIService';
+
+if(store.getState().promoReducer.authorized === 'false') {
+  document.location.href = "/";
+}
+
+greeting();
 
 class Main {
   constructor() {

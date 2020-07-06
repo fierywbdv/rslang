@@ -282,7 +282,7 @@ class Sprint {
     document.querySelector('.statistics').addEventListener('click', () => {
       const statistics = JSON.parse(localStorage.getItem('statistics'));
       document.querySelector('.sprint-wrapper').innerHTML = statisticsScreenComponent(statistics);
-      document.querySelector('.statistics__buttons .train-again').addEventListener('click', () => {
+      document.querySelector('.statistics__button .train-again').addEventListener('click', () => {
         this.trainAgain();
       });
     });

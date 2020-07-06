@@ -19,17 +19,6 @@ class LearnWordsAPIService {
     console.error(error);
   }
 
-  logout() {
-    localStorage.setItem('userId', null);
-    localStorage.setItem('token', null);
-    localStorage.setItem('authorized', false)
-    store.dispatch(disAutorization());
-    setTimeout(() => {
-      document.location.href = "/";
-    }, 3000)
-    
-  }
-
   async getWordsByPageAndGroup(page, group) {
     try {
       const response = await fetch(`${this.url}words?page=${page}&group=${group}`);
@@ -62,7 +51,7 @@ class LearnWordsAPIService {
     }
   }
 
-  async createUser(email, password) {
+  async createUser(name ,email, password) {
     try {
       const response = await fetch(`${this.url}users`, {
         method: 'POST',
@@ -71,8 +60,9 @@ class LearnWordsAPIService {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          email: `${email}`,
-          password: `${password}`,
+          name: name,
+          email: email,
+          password: password,
         }),
       });
 
@@ -97,7 +87,8 @@ class LearnWordsAPIService {
       const response = await fetch(`${this.url}users/${id}`, { headers: { Authorization: `Bearer ${token}` } });
 
       if (response.status === 401) {
-        this.logout();
+        this.refreshToken(id, token);
+        this.getUser(localStorage.getItem('userId'), localStorage.getItem('token'));
         throw new Error('Access token is missing or invalid!');
       } else if (response.status === 404) {
         throw new Error('User not found!');
@@ -129,7 +120,8 @@ class LearnWordsAPIService {
       });
 
       if (response.status === 401) {
-        this.logout();
+        this.refreshToken(id, token);
+        this.updateUser(localStorage.getItem('userId'), localStorage.getItem('token'), email, password);
         throw new Error('Access token is missing or invalid!');
       } else if (response.status !== 200) {
         throw new Error('Some ERROR!');
@@ -154,7 +146,8 @@ class LearnWordsAPIService {
       });
 
       if (response.status === 401) {
-        this.logout();
+        this.refreshToken(id, token);
+        this.deleteUser(localStorage.getItem('userId'), localStorage.getItem('token'));
         throw new Error('Access token is missing or invalid!');
       } else if (response.status !== 204) {
         throw new Error('Some ERROR!');
@@ -174,7 +167,8 @@ class LearnWordsAPIService {
       });
 
       if (response.status === 401) {
-        this.logout();
+        this.refreshToken(id, token);
+        this.getAllUserWords(localStorage.getItem('userId'), localStorage.getItem('token'));
         throw new Error('Access token is missing or invalid!');
       } else if (response.status !== 200) {
         throw new Error('Some ERROR!');
@@ -198,7 +192,8 @@ class LearnWordsAPIService {
       });
 
       if (response.status === 401) {
-        this.logout();
+        this.refreshToken(id, token);
+        this.getUserWordById(localStorage.getItem('userId'), wordId, localStorage.getItem('token'));
         throw new Error('Access token is missing or invalid!');
       } else if (response.status === 404) {
         throw new Error('User word not found!');
@@ -230,7 +225,8 @@ class LearnWordsAPIService {
       });
 
       if (response.status === 401) {
-        this.logout();
+        this.refreshToken(id, token);
+        this.updateUser(localStorage.getItem('userId'), wordId, localStorage.getItem('token'), wordDifficulty, optionalObject)
         throw new Error('Access token is missing or invalid!');
       } else if (response.status !== 200) {
         throw new Error('Some ERROR!');
@@ -260,7 +256,8 @@ class LearnWordsAPIService {
       });
 
       if (response.status === 401) {
-        this.logout();
+        this.refreshToken(id, token);
+        this.createUserWord(localStorage.getItem('userId'), wordId, localStorage.getItem('token'), wordDifficulty, optional);
         throw new Error('Access token is missing or invalid!');
       } else if (response.status !== 200) {
         throw new Error('Some ERROR!');
@@ -285,7 +282,8 @@ class LearnWordsAPIService {
       });
 
       if (response.status === 401) {
-        this.logout();
+        this.refreshToken(id, token);
+        this.deleteUserWord(localStorage.getItem('userId'), wordId, localStorage.getItem('token'));
         throw new Error('Access token is missing or invalid!');
       } else if (response.status !== 204) {
         throw new Error('Some ERROR!');
@@ -305,7 +303,8 @@ class LearnWordsAPIService {
       });
 
       if (response.status === 401) {
-        this.logout();
+        this.refreshToken(id, token);
+        this.getUserSettings(localStorage.getItem('userId'), localStorage.getItem('token'))
         throw new Error('Access token is missing or invalid!');
       } else if (response.status === 404) {
         throw new Error('Settings not found!');
@@ -337,7 +336,8 @@ class LearnWordsAPIService {
       });
 
       if (response.status === 401) {
-        this.logout();
+        this.refreshToken(id, token);
+        this.setUserSettings(localStorage.getItem('userId'), localStorage.getItem('token'), wordsPerDay, optional);
         throw new Error('Access token is missing or invalid!');
       } else if (response.status !== 200) {
         throw new Error('Some ERROR!');
@@ -357,7 +357,8 @@ class LearnWordsAPIService {
       });
 
       if (response.status === 401) {
-        this.logout();
+        this.refreshToken(id, token);
+        this.getUserStatistic(localStorage.getItem('userId'), localStorage.getItem('token'));
         throw new Error('Access token is missing or invalid!');
       } else if (response.status === 404) {
         throw new Error('Statistics not found!');
@@ -389,7 +390,8 @@ class LearnWordsAPIService {
       });
 
       if (response.status === 401) {
-        this.logout();
+        this.refreshToken(id, token);
+        this.setUserStatistic(localStorage.getItem('userId'), localStorage.getItem('token'), learnedWords, optional);
         throw new Error('Access token is missing or invalid!');
       } else if (response.status !== 200) {
         throw new Error('Some ERROR!');
@@ -428,8 +430,31 @@ class LearnWordsAPIService {
       this.errorHandler(error);
     }
   }
+
+  async refreshToken(id, token) {
+    try {
+      const response = await fetch(`${this.url}users/${id}/tokens`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          Accept: 'application/json'
+        }
+      })
+
+      if(response.status === 401) {
+        throw new Error('Unauthorized!');
+      } else if(response.status === 403){
+        throw new Error('Access token is missing, expired or invalid!');
+      }
+
+      const user = await response.json();
+      localStorage.setItem('token', user.refreshToken);
+
+    } catch(error) {
+      this.errorHandler(error);
+    }
+  }
 }
 
-const urlAPI = 'http://pacific-castle-12388.herokuapp.com/';
+const urlAPI = 'https://afternoon-falls-25894.herokuapp.com/';
 
 export const learnWordsAPIService = new LearnWordsAPIService(urlAPI);

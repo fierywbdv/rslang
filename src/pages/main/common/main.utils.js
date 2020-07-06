@@ -14,10 +14,10 @@ export const setSidebarItem = () => {
 };
 
 export async function greeting() {
-  const response = await learnWordsAPIService.getUserSettings(localStorage.getItem('userId'), localStorage.getItem('token'));
+  const response = await learnWordsAPIService.getUser(localStorage.getItem('userId'), localStorage.getItem('token'));
 
   const greetingForUser = document.querySelector('.greeting-for-user');
-  greetingForUser.innerHTML = `Привет, ${response.optional.name}`;
+  greetingForUser.innerHTML = `Привет, ${response.name}`;
 }
 
 export const setSidebarHeight = () => {

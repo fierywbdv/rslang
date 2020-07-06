@@ -48,7 +48,7 @@ const controller = {
     englishPuzzle.sayHello();
   },
   actionSpeakIt: () => {
-    speakit.sayHello();
+    speakit();
   },
   actionAudioCall() {
     helper.render('#root', startScreenComponent());

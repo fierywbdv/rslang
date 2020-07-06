@@ -2,17 +2,22 @@ import { store } from '../../../../redux/store';
 import helper from '../../common/audiocall.helper';
 import statisticLine from '../statistic-line';
 
-const statisticScreenComponent = (gameNumber) => {
+const statisticScreenComponent = (kindGame) => {
   const state = store.getState();
   const { correct, mistake } = state.audioCallReducer.stat;
-  const { cor, miss } = helper.filterStatistic(correct, mistake, gameNumber);
+  console.log('statisticScreenComponent correct, mistake', correct, mistake)
+  const { gameNumber, randomGameNumber } = state.audioCallReducer;
+  const number = kindGame === 'withRandomWords' ? randomGameNumber : gameNumber;
+  const { cor, miss } = helper.filterStatistic(correct, mistake, number - 1, kindGame);
+  console.log('statisticScreenComponent cor, miss', cor, miss)
   const corMurkUp = cor.map((item) => statisticLine(item));
   const misMurkUp = miss.map((item) => statisticLine(item));
+
   const misUl = document.createElement('ul');
   const corUl = document.createElement('ul');
-
   misMurkUp.forEach((item) => misUl.append(item));
   corMurkUp.forEach((elem) => corUl.append(elem));
+
   const template = '<h3>Result</h3>';
   const startScreen = document.createElement('div');
   startScreen.setAttribute('id', 'statistic');

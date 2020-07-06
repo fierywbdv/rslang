@@ -1,21 +1,29 @@
+import Toastify from 'toastify-js';
 import { store } from '../../redux/store';
 import {
-  setQuestions,
-  togglePlay,
-  askQuestion,
+  togglePlayAudioCall,
+  setKindOfGameAudioCall,
+  setRoundAndLevelAudioCall,
+  setGameNumberAudioCall,
+  setQuestionNumberAudioCall,
+  setRandomGameNumberAudioCall,
+  setQuestionsAudioCall,
   setStatistic,
-  setGameNumber,
 } from './audiocall-redux/audiocall-actions';
 import './scss/audiocall.styles.scss';
 import helper from './common/audiocall.helper';
 import gameScreenComponent from './components/game-screen';
 import startScreenComponent from './components/start-screen';
 import statisticScreenComponent from './components/statistic-screen';
-import { LAST_QUESTION } from './common/audiocall.constants';
-import mockData from './common/mock-data';
+import { COUNT_WORDS_PER_GAMES } from './common/audiocall.constants';
+import { learnWordsAPIService } from '../../services/learnWordsAPIService';
 
 class Audiocall {
   constructor() {
+    this.userWords = [];
+    this.words = [];
+    this.isLast = false;
+    this.statisticInfo = null;
     this.correct = new Audio('./assets/audio/correct.mp3');
     this.mistake = new Audio('./assets/audio/error.mp3');
     this.failure = new Audio('./assets/audio/failure.mp3');
@@ -24,66 +32,115 @@ class Audiocall {
   }
 
   startGame() {
-    const startButton = document.getElementById('center-div');
+    const startButton = document.getElementById('start-play');
+    const level = document.getElementById('level');
+    const group = document.getElementById('group');
+    const customStart = document.getElementById('custom-start');
     const root = document.getElementById('root');
     const body = document.querySelector('body');
     root.className = 'audio-call-root';
     body.classList.add('audio-call-body');
-    console.log('body', body);
-    store.dispatch(setQuestions(mockData));
-    startButton.addEventListener('click', () => {
-      const state = store.getState();
-      const { askInfo } = state.audioCallReducer;
-      const startAskInfo = {
-        nextQuestion: askInfo.nextQuestion === undefined ? false : askInfo.nextQuestion,
-        nextQuestionNum: askInfo.nextQuestionNum === undefined ? 0 : askInfo.nextQuestionNum,
-        firstQuestion: true,
-      };
-      store.dispatch(askQuestion(startAskInfo));
-      store.dispatch(togglePlay());
-      store.dispatch(setGameNumber());
+
+    helper.rangeSlider();
+
+    if (startButton) {
+      startButton.addEventListener('click', async () => {
+        store.dispatch(setKindOfGameAudioCall('withUserWords'));
+        await this.setWords(this.group, this.page, 'withUserWords');
+        store.dispatch(togglePlayAudioCall());
+      });
+    }
+
+    if (customStart) {
+      customStart.addEventListener('click', async () => {
+        this.page = level.value;
+        this.group = group.value;
+        store.dispatch(setKindOfGameAudioCall('withRandomWords'));
+        await this.setWords(this.group, this.page, 'withRandomWords');
+        store.dispatch(togglePlayAudioCall());
+        store.dispatch(setRoundAndLevelAudioCall({ level: this.page, roundGame: this.group }));
+      });
+    }
+  }
+
+  async setWords(page, group, kind) {
+    const state = store.getState();
+    const { gameNumber, randomGameNumber } = state.audioCallReducer;
+    console.log('setWords', page, group, kind, gameNumber, randomGameNumber);
+    if (kind === 'withRandomWords') {
+      this.words = await learnWordsAPIService.getWordsByPageAndGroup(page, group);
+      console.log('page, group', page, group);
+      if (randomGameNumber === 0 || randomGameNumber % 2 === 0) {
+        store.dispatch(setQuestionsAudioCall(this.words.slice(0, COUNT_WORDS_PER_GAMES)));
+      } else {
+        store.dispatch(setQuestionsAudioCall(this.words
+          .slice(COUNT_WORDS_PER_GAMES, this.words.length)));
+      }
       this.playGameQuestion();
-    });
+    } else {
+      const { id, token } = helper.getUserData();
+      this.userWords = await learnWordsAPIService.getAllUserWords(id, token);
+      if (this.userWords.length) {
+        const newWords = this.userWords.map((item) => ({ ...item.optional }));
+        const firstNum = gameNumber * 10;
+        const wordsForGame = newWords.slice(firstNum, firstNum + COUNT_WORDS_PER_GAMES);
+        store.dispatch(setQuestionsAudioCall(wordsForGame));
+        const callBackFinish = () => {
+          console.log('fin');
+          store.dispatch(setGameNumberAudioCall(0));
+          store.dispatch(togglePlayAudioCall());
+          const restartWords = this.userWords.map((item) => ({ ...item.optional }));
+          const restartWordsForGame = restartWords.slice(0, COUNT_WORDS_PER_GAMES);
+          store.dispatch(setQuestionsAudioCall(restartWordsForGame));
+          this.playGameQuestion();
+        };
+        if (!wordsForGame.length) {
+          Toastify({
+            text: 'Words finished. You will start from begin',
+            duration: 3000,
+            close: true,
+            gravity: 'top',
+            position: 'left',
+            backgroundColor: 'linear-gradient(to right, #00b09b, #96c93d)',
+            stopOnFocus: true, // Prevents dismissing of toast on hover
+            callback: callBackFinish,
+          }).showToast();
+        } else {
+          this.playGameQuestion();
+        }
+      }
+    }
   }
 
   playGameQuestion() {
     const state = store.getState();
-    const { askInfo, setQuestionsGame } = state.audioCallReducer;
-    const questions = this.getQuestionWithAnswers();
-    if (state.audioCallReducer.togglePlay) {
-      if (askInfo.nextQuestion) {
-        store.dispatch(
-          askQuestion({
-            nextQuestion: false,
-            nextQuestionNum: (askInfo.nextQuestionNum += 1),
-            firstQuestion: false,
-          }),
-        );
-      }
-      const number = askInfo.nextQuestionNum || 0;
-      helper.render('#root', questions[number], 'append', '.screen');
-      const { audio } = setQuestionsGame[askInfo.nextQuestionNum || 0];
-      const repeatQuestion = document.querySelector('.play-audio');
-      repeatQuestion.addEventListener('click', () => {
-        this.sayQuestion(audio);
-      });
+    const { questionsGame, questionNumber } = state.audioCallReducer;
+    const questions = Audiocall.getQuestionWithAnswers(questionsGame);
+    console.log('playGameQuestion', questions);
+    helper.render('#root', questions[questionNumber], 'append', '.screen');
+    const { audio } = questionsGame[questionNumber];
+    const repeatQuestion = document.querySelector('.play-audio');
+    repeatQuestion.addEventListener('click', () => {
       this.sayQuestion(audio);
-      const words = document.querySelectorAll('.name');
-      words.forEach((word) => {
-        word.addEventListener('click', (event) => {
-          event.stopPropagation();
-          const el = event.target;
-          if (!el.classList.contains('disable')) {
-            this.checkAnswer(event.target, number);
-          }
-        });
-      });
-      const forget = document.querySelector('.forget');
-      forget.addEventListener('click', (event) => {
+    });
+    this.sayQuestion(audio);
+    const words = document.querySelectorAll('.name');
+    words.forEach((word) => {
+      word.addEventListener('click', (event) => {
         event.stopPropagation();
-        this.markForgetAnswer(number);
+        const el = event.target;
+        if (!el.classList.contains('disable')) {
+          this.checkAnswer(event.target, questionNumber);
+        }
       });
-    }
+    });
+    const forget = document.querySelector('.forget');
+    forget.addEventListener('click', (event) => {
+      event.stopPropagation();
+      this.markForgetAnswer(questionNumber);
+    });
+
+    this.resetGame();
   }
 
   sayQuestion(audio) {
@@ -91,17 +148,24 @@ class Audiocall {
     audioQuestion.play();
   }
 
-  getQuestionWithAnswers() {
-    const state = store.getState();
-    const { setQuestionsGame } = state.audioCallReducer;
-    return helper.getAnswers(setQuestionsGame).map((elem) => gameScreenComponent(elem));
+  static getQuestionWithAnswers(questionsGame) {
+    return helper.getAnswers(questionsGame).map((elem) => gameScreenComponent(elem));
   }
 
   setGameStatistic(info = {}) {
-    store.dispatch(setStatistic(info));
+    console.log('setGameStatistic', info);
+    const state = store.getState();
+    const { gameNumber, randomGameNumber, kind } = state.audioCallReducer;
+    this.statisticInfo = {
+      ...info,
+      game: kind === 'withRandomWords' ? randomGameNumber : gameNumber,
+      kind,
+    };
+    store.dispatch(setStatistic(this.statisticInfo));
   }
 
   checkAnswer(answer, questionNum) {
+    console.log('checkAnswer', answer, questionNum);
     const currentQuestion = document.querySelector('.result-word').getAttribute('data-word-id');
     if (answer.getAttribute('data-id') === currentQuestion) {
       this.markCorrectAnswer(currentQuestion, questionNum);
@@ -112,10 +176,41 @@ class Audiocall {
 
   stopGame() {
     helper.render('#root', startScreenComponent(), 'append', '.container');
+
+    const state = store.getState();
+    const { kind, roundAndLevel } = state.audioCallReducer;
+    if (kind === 'withRandomWords') {
+      helper.setRangeSlider(roundAndLevel);
+    }
+
     this.startGame();
   }
 
+  setRestart() {
+    const restart = document.querySelector('.restart');
+    restart.addEventListener('click', () => {
+      store.dispatch(togglePlayAudioCall());
+      this.stopGame();
+      helper.showStartButton(this.userWords.length);
+    });
+  }
+
+  resetGame() {
+    const restart = document.querySelector('.reset');
+    restart.addEventListener('click', () => {
+      store.dispatch(togglePlayAudioCall());
+      this.stopGame();
+      helper.showStartButton(this.userWords.length);
+      store.dispatch(setRoundAndLevelAudioCall({
+        flag: false,
+        level: this.page,
+        roundGame: this.group,
+      }));
+    });
+  }
+
   markCorrectAnswer(currentQuestion, questionNum) {
+    console.log('markCorrectAnswer', currentQuestion, questionNum);
     const picture = document.querySelector('.prof-img');
     const playAudio = document.querySelector('.play-audio');
     const forget = document.querySelector('.forget');
@@ -123,6 +218,9 @@ class Audiocall {
     const answersGroup = document.querySelector('.answers-group');
     const answers = document.querySelectorAll('.icon');
     const titles = document.querySelectorAll('.name');
+    const state = store.getState();
+    const { questionsGame, kind } = state.audioCallReducer;
+
     answers.forEach((item) => {
       const itemId = item.getAttribute('data-id');
       if (itemId === currentQuestion) {
@@ -141,50 +239,20 @@ class Audiocall {
     this.correct.play();
     helper.setOpacity(questionNum);
 
-    next.addEventListener('click', () => {
-      const state = store.getState();
-      const { askInfo, setQuestionsGame, gameNumber } = state.audioCallReducer;
-      store.dispatch(
-        askQuestion({
-          ...askInfo,
-          nextQuestion: !askInfo.nextQuestion,
-        }),
-      );
-
-      if (helper.isLastQuestion(questionNum, LAST_QUESTION.last)) {
-        this.setGameStatistic({
-          game: gameNumber,
-          quesNum: questionNum,
-          mistake: false,
-          wordQues: setQuestionsGame[questionNum],
-        });
-        helper.render('#root', statisticScreenComponent(gameNumber), 'append', '.screen');
-        store.dispatch(togglePlay());
-        const restart = document.querySelector('.restart');
-        restart.addEventListener('click', () => {
-          this.stopGame();
-        });
-        const repeat = document.querySelectorAll('.name');
-        repeat.forEach((item) => {
-          item.addEventListener('click', (event) => {
-            const audio = event.target;
-            this.sayQuestion(audio.getAttribute('data-audio'));
-          });
-        });
-      } else {
-        this.setGameStatistic({
-          game: gameNumber,
-          quesNum: questionNum,
-          mistake: false,
-          wordQues: setQuestionsGame[questionNum],
-        });
-        this.playGameQuestion();
-      }
+    this.setGameStatistic({
+      mistake: false,
+      wordQues: questionsGame[questionNum],
     });
+
+    this.nextQuestion(questionNum, kind);
   }
 
   markWrongAnswer(currentQuestion, questionNum) {
+    console.log('markWrongAnswer', currentQuestion, questionNum);
     const answers = document.querySelectorAll('.name');
+    const state = store.getState();
+    const { questionsGame } = state.audioCallReducer;
+
     this.mistake.play();
     answers.forEach((item) => {
       if (item.getAttribute('data-id') === currentQuestion) {
@@ -195,23 +263,23 @@ class Audiocall {
         }
       }
     });
-    const state = store.getState();
-    const { setQuestionsGame, gameNumber } = state.audioCallReducer;
 
     this.setGameStatistic({
-      game: gameNumber,
-      quesNum: questionNum,
       mistake: true,
-      wordQues: setQuestionsGame[questionNum],
+      wordQues: questionsGame[questionNum],
     });
   }
 
   markForgetAnswer(questionNum) {
+    console.log('markForgetAnswer', questionNum);
     const answers = document.querySelectorAll('.icon');
     const answersAll = document.querySelectorAll('.name');
     const next = document.querySelector('.next');
     const currentQuestion = document.querySelector('.result-word').getAttribute('data-word-id');
     const forget = document.querySelector('.forget');
+    const state = store.getState();
+    const { questionsGame, kind } = state.audioCallReducer;
+
     this.mistake.play();
     answers.forEach((item) => {
       item.classList.add('disable');
@@ -230,29 +298,25 @@ class Audiocall {
     forget.classList.add('hide');
     next.classList.add('show');
 
-    const state = store.getState();
-    const { setQuestionsGame, askInfo, gameNumber } = state.audioCallReducer;
-
     this.setGameStatistic({
-      game: gameNumber,
-      quesNum: questionNum,
       mistake: true,
-      wordQues: setQuestionsGame[questionNum],
+      wordQues: questionsGame[questionNum],
     });
 
     helper.setOpacity(questionNum);
 
-    next.addEventListener('click', () => {
-      store.dispatch(
-        askQuestion({
-          ...askInfo,
-          nextQuestion: !askInfo.nextQuestion,
-        }),
-      );
+    this.nextQuestion(questionNum, kind);
+  }
 
-      if (helper.isLastQuestion(questionNum, LAST_QUESTION.last)) {
-        helper.render('#root', statisticScreenComponent(gameNumber), 'append', '.screen');
-        store.dispatch(togglePlay());
+  nextQuestion(questionNum, kind) {
+    const next = document.querySelector('.next');
+
+    next.addEventListener('click', () => {
+      store.dispatch(setQuestionNumberAudioCall());
+      if (this.isLastQuestion(questionNum)) {
+        helper.render('#root', statisticScreenComponent(kind), 'append', '.screen');
+        store.dispatch(togglePlayAudioCall());
+        this.setRestart();
         const repeat = document.querySelectorAll('.name');
         repeat.forEach((item) => {
           item.addEventListener('click', (event) => {
@@ -260,18 +324,44 @@ class Audiocall {
             this.sayQuestion(audio.getAttribute('data-audio'));
           });
         });
-        const restart = document.querySelector('.restart');
-        restart.addEventListener('click', () => {
-          this.stopGame();
-        });
+        this.isLast = false;
+        store.dispatch(setQuestionNumberAudioCall(0));
       } else {
         this.playGameQuestion();
       }
     });
   }
 
+  isLastQuestion(questionNumber) {
+    const state = store.getState();
+    const { kind, questionsGame } = state.audioCallReducer;
+    if (kind === 'withUserWords' && questionsGame.length - 1 === questionNumber) {
+      this.isLast = true;
+      store.dispatch(setGameNumberAudioCall());
+    }
+
+    if (kind === 'withRandomWords' && questionsGame.length - 1 === questionNumber) {
+      this.isLast = true;
+      store.dispatch(setRandomGameNumberAudioCall());
+    }
+    console.log('this.isLast', this.isLast);
+
+    return this.isLast;
+  }
+
   init() {
     this.startGame();
+    // baban666@tut.by  asdf_Ghjk1
+    const { id, token } = helper.getUserData();
+    (async () => {
+      const newWords = await learnWordsAPIService.getAllUserWords(id, token);
+      if (newWords.length) {
+        this.userWords = newWords.map((item) => ({ ...item.optional }));
+        await helper.showStartButton(newWords);
+      } else {
+        await helper.showStartButton();
+      }
+    })();
   }
 }
 

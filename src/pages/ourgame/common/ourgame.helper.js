@@ -194,7 +194,7 @@ const helper = {
       group.parentNode.querySelector('.slider__positive').style.width = `${posWidth * 100}%`;
       lableGroup.innerHTML = '1';
 
-      levelGame.setAttribute('value', level + 1);
+      levelGame.setAttribute('value', +level + 1);
       const maxValue = levelGame.getAttribute('max');
       const posWidthValue = levelGame.value / maxValue;
       levelGame.parentNode.querySelector('.slider__positive').style.width = `${posWidthValue * 100}%`;
@@ -205,7 +205,7 @@ const helper = {
       const maxVal = group.getAttribute('max');
       const posWidth = group.value / maxVal;
       group.parentNode.querySelector('.slider__positive').style.width = `${posWidth * 100}%`;
-      lableGroup.innerHTML = `${+level === 0 ? 2 : +roundGame + 1}`;
+      lableGroup.innerHTML = `${+group.getAttribute('value') + 1}`;
       helper.message('Round Changed');
     } else {
       group.setAttribute('value', `${+roundGame}`);

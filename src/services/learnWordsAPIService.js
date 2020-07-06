@@ -1,7 +1,7 @@
 import Toastify from 'toastify-js';
 import 'toastify-js/src/toastify.css';
 import { store } from '../redux/store';
-import { logout } from '../pages/promo/common/promo.utils';
+import { disAutorization } from '../pages/promo/promo-redux/promo-actions';
 
 class LearnWordsAPIService {
   constructor(url) {
@@ -24,6 +24,10 @@ class LearnWordsAPIService {
     localStorage.setItem('token', null);
     localStorage.setItem('authorized', false)
     store.dispatch(disAutorization());
+    setTimeout(() => {
+      document.location.href = "/";
+    }, 3000)
+    
   }
 
   async getWordsByPageAndGroup(page, group) {
@@ -93,7 +97,7 @@ class LearnWordsAPIService {
       const response = await fetch(`${this.url}users/${id}`, { headers: { Authorization: `Bearer ${token}` } });
 
       if (response.status === 401) {
-        logout();
+        this.logout();
         throw new Error('Access token is missing or invalid!');
       } else if (response.status === 404) {
         throw new Error('User not found!');
@@ -125,7 +129,7 @@ class LearnWordsAPIService {
       });
 
       if (response.status === 401) {
-        logout();
+        this.logout();
         throw new Error('Access token is missing or invalid!');
       } else if (response.status !== 200) {
         throw new Error('Some ERROR!');
@@ -150,7 +154,7 @@ class LearnWordsAPIService {
       });
 
       if (response.status === 401) {
-        logout();
+        this.logout();
         throw new Error('Access token is missing or invalid!');
       } else if (response.status !== 204) {
         throw new Error('Some ERROR!');
@@ -170,7 +174,7 @@ class LearnWordsAPIService {
       });
 
       if (response.status === 401) {
-        logout();
+        this.logout();
         throw new Error('Access token is missing or invalid!');
       } else if (response.status !== 200) {
         throw new Error('Some ERROR!');
@@ -194,7 +198,7 @@ class LearnWordsAPIService {
       });
 
       if (response.status === 401) {
-        logout();
+        this.logout();
         throw new Error('Access token is missing or invalid!');
       } else if (response.status === 404) {
         throw new Error('User word not found!');
@@ -226,7 +230,7 @@ class LearnWordsAPIService {
       });
 
       if (response.status === 401) {
-        logout();
+        this.logout();
         throw new Error('Access token is missing or invalid!');
       } else if (response.status !== 200) {
         throw new Error('Some ERROR!');
@@ -256,7 +260,7 @@ class LearnWordsAPIService {
       });
 
       if (response.status === 401) {
-        logout();
+        this.logout();
         throw new Error('Access token is missing or invalid!');
       } else if (response.status !== 200) {
         throw new Error('Some ERROR!');
@@ -281,7 +285,7 @@ class LearnWordsAPIService {
       });
 
       if (response.status === 401) {
-        logout();
+        this.logout();
         throw new Error('Access token is missing or invalid!');
       } else if (response.status !== 204) {
         throw new Error('Some ERROR!');
@@ -301,7 +305,7 @@ class LearnWordsAPIService {
       });
 
       if (response.status === 401) {
-        logout();
+        this.logout();
         throw new Error('Access token is missing or invalid!');
       } else if (response.status === 404) {
         throw new Error('Settings not found!');
@@ -333,7 +337,7 @@ class LearnWordsAPIService {
       });
 
       if (response.status === 401) {
-        logout();
+        this.logout();
         throw new Error('Access token is missing or invalid!');
       } else if (response.status !== 200) {
         throw new Error('Some ERROR!');
@@ -353,7 +357,7 @@ class LearnWordsAPIService {
       });
 
       if (response.status === 401) {
-        logout();
+        this.logout();
         throw new Error('Access token is missing or invalid!');
       } else if (response.status === 404) {
         throw new Error('Statistics not found!');
@@ -385,7 +389,7 @@ class LearnWordsAPIService {
       });
 
       if (response.status === 401) {
-        logout();
+        this.logout();
         throw new Error('Access token is missing or invalid!');
       } else if (response.status !== 200) {
         throw new Error('Some ERROR!');

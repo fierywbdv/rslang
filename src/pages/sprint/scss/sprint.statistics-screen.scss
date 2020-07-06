@@ -27,12 +27,20 @@
         overflow-y: scroll;
       }
 
-      &__buttons {
+      &__button {
         margin-top: 23px;
 
         button {
           color: #ffffff;
           background-color: #652c71;
+
+          &:hover {
+            background-color: #71327e;
+          }
+
+          &:focus {
+            box-shadow: 0 0 0 0.2rem rgba(101, 44, 113, 0.55);
+          }
         }
       }
     }
@@ -40,20 +48,27 @@
 }
 
 @media (max-width: 767px) {
-  .results-screen__content .results {
+  .statistics-screen__content .statistics {
     width: 350px;
   }
 }
 
 @media (max-width: 575px) {
-  .results-screen .results-screen__content {
+  .statistics-screen .statistics-screen__content {
     padding: 30px 10px;
   }
 }
 
 @media (max-width: 374px) {
-  .results-screen__content .results {
-    padding: 20px 10px;
-    width: 300px;
+  .statistics-screen__content {
+    .statistics {
+      padding: 20px 10px;
+      width: 300px;
+
+      &__list {
+        height: 330px;
+        font-size: 16px;
+      }
+    }
   }
 }

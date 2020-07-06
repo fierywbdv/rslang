@@ -293,9 +293,7 @@ class Sprint {
       this.secondsRemaining = +document.querySelector('.start-timer text').innerHTML - 1;
       if (this.secondsRemaining === -1) {
         clearInterval(timer);
-        if (this.isSoundActivated) {
-          this.audio.pause();
-        }
+        this.audio.pause();
         document.querySelector('.start-timer').classList.add('hidden');
         document.querySelector('.get-ready').classList.add('hidden');
         this.startGame();

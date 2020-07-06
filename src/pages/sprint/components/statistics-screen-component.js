@@ -14,7 +14,7 @@ export const statisticsScreenComponent = (statistics) => {
                                 <div class="statistics__list">
                                   ${statisticsResultsList(statistics)}
                                 </div>
-                                <div class="statistics__buttons">
+                                <div class="statistics__button">
                                   <button type="button" class="btn train-again">Тренироваться ещё</button>
                                 </div>
                               </div>

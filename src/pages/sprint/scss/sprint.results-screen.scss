@@ -74,6 +74,14 @@
         button {
           color: #ffffff;
           background-color: #652c71;
+
+          &:hover {
+            background-color: #71327e;
+          }
+
+          &:focus {
+            box-shadow: 0 0 0 0.2rem rgba(101, 44, 113, 0.55);
+          }
         }
       }
     }

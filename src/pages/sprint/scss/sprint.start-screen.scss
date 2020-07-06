@@ -28,29 +28,29 @@
   &__content {
     margin: 120px auto 0;
     padding: 0 40px;
-  }
 
-  .title {
-    color: #ffffff;
-    font-size: 2.5rem;
-    display: inline-block;
-    margin: 0;
-  }
-
-  p {
-    margin: 32px;
-  }
-
-  .button-start {
-    color: #ffffff;
-    background-color: #652c71;
-
-    &:hover {
-      background-color: #71327e;
+    .title {
+      color: #ffffff;
+      font-size: 2.5rem;
+      display: inline-block;
+      margin: 0;
     }
 
-    &:focus {
-      box-shadow: 0 0 0 0.2rem rgba(101, 44, 113, 0.55);
+    p {
+      margin: 32px;
+    }
+
+    .button-start {
+      color: #ffffff;
+      background-color: #652c71;
+
+      &:hover {
+        background-color: #71327e;
+      }
+
+      &:focus {
+        box-shadow: 0 0 0 0.2rem rgba(101, 44, 113, 0.55);
+      }
     }
   }
 }

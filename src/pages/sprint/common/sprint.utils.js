@@ -50,7 +50,7 @@ export const saveStatistics = (points) => {
   statistics.push({ date: new Date().toLocaleString(), points });
   console.log(statistics);
   localStorage.setItem('statistics', JSON.stringify(statistics));
-}
+};
 
 export const searchBestResult = () => {
   const statistics = JSON.parse(localStorage.getItem('statistics')) || [];

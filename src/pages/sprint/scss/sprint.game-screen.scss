@@ -11,6 +11,44 @@
     margin: 0 auto;
     padding: 0 40px;
 
+    .choice {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      color: #fff;
+      margin-top: 30px;
+
+      .switches {
+        label {
+          font-size: 1rem;
+          padding: 0;
+          margin: 0;
+        }
+
+        input {
+          width: 50px;
+          padding: 0;
+          text-align: center;
+          color: #686a76;
+          margin-right: 10px;
+
+          &:focus {
+            outline: none;
+          }
+        }
+
+        input[type='number']::-webkit-inner-spin-button {
+          width: 22px;
+          height: 22px;
+        }
+      }
+
+      span:hover {
+        color: #d5dbde;
+        cursor: pointer;
+      }
+    }
+
     .current-state {
       display: flex;
       align-items: center;
@@ -67,44 +105,45 @@
         }
       }
     }
-  }
-}
 
-.choice {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  color: #fff;
-  margin-top: 30px;
+    .start-game {
+      position: absolute;
+      top: 300px;
+      margin-right: -50%;
+      transform: translate(-50%, -50%);
+      color: #ffffff;
+      background-color: #652c71;
 
-  .switches {
-    label {
-      font-size: 1rem;
-      padding: 0;
-      margin: 0;
-    }
-
-    input {
-      width: 50px;
-      padding: 0;
-      text-align: center;
-      color: #686a76;
-      margin-right: 10px;
+      &:hover {
+        background-color: #71327e;
+        color: #ffffff;
+      }
 
       &:focus {
-        outline: none;
+        box-shadow: 0 0 0 0.2rem rgba(101, 44, 113, 0.55);
       }
     }
 
-    input[type='number']::-webkit-inner-spin-button {
-      width: 22px;
-      height: 22px;
-    }
-  }
+    .start-timer {
+      position: absolute;
+      top: 300px;
+      margin-right: -50%;
+      transform: translate(-50%, -50%);
+      left: 50%;
 
-  span:hover {
-    color: #d5dbde;
-    cursor: pointer;
+      svg {
+        margin-right: 0;
+      }
+    }
+
+    .get-ready{
+      position: absolute;
+      color: #fff;
+      top: 350px;
+      margin-right: -50%;
+      transform: translate(-50%, -50%);
+      left: 50%;
+    }
   }
 }
 
@@ -112,44 +151,6 @@
   visibility: hidden;
 }
 
-.start-game {
-  position: absolute;
-  top: 50%;
-  margin-right: -50%;
-  transform: translate(-50%, -50%);
-  color: #ffffff;
-  background-color: #652c71;
-
-  &:hover {
-    background-color: #71327e;
-    color: #ffffff;
-  }
-
-  &:focus {
-    box-shadow: 0 0 0 0.2rem rgba(101, 44, 113, 0.55);
-  }
-}
-
-.start-timer {
-  position: absolute;
-  top: 50%;
-  margin-right: -50%;
-  transform: translate(-50%, -50%);
-  left: 50%;
-
-  svg {
-    margin-right: 0;
-  }
-}
-
-.get-ready{
-  position: absolute;
-  color: #fff;
-  top: 58%;
-  margin-right: -50%;
-  transform: translate(-50%, -50%);
-  left: 50%;
-}
 @media (max-width: 991px) {
   .game-screen {
     .arrows {

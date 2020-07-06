@@ -5,7 +5,7 @@ import { startScreenComponent } from './components/start-screen-component';
 import { gameScreenComponent } from './components/game-screen-component';
 import { resultsScreenComponent } from './components/results-screen-component';
 import { statisticsScreenComponent } from './components/statistics-screen-component';
-import { WordsAPIService } from '../../services/wordsAPIService';
+import { learnWordsAPIService } from '../../services/learnWordsAPIService';
 import {
   shuffle,
   toggleCirclesNumber,
@@ -101,7 +101,7 @@ class Sprint {
   }
 
   async getWords() {
-    this.wordsList = await WordsAPIService.getWords(this.round, this.level);
+    this.wordsList = await learnWordsAPIService.getWordsByPageAndGroup(this.round, this.level);
     this.createWordsArray(this.wordsList);
     this.createTranslationsArray(this.wordsList);
     this.shuffledWords = shuffle(this.words.slice());
@@ -121,7 +121,7 @@ class Sprint {
       this.round++;
     }
 
-    const newWordsList = await WordsAPIService.getWords(this.round, this.level);
+    const newWordsList = await learnWordsAPIService.getWordsByPageAndGroup(this.round, this.level);
     this.wordsList.push(...newWordsList);
     const newWords = newWordsList.map((item) => item.word);
     this.words.push(...newWords);

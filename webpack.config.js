@@ -59,6 +59,10 @@ module.exports = {
         from: './pages/sprint/assets/img/',
         to: './assets/sprint/img/',
       },
+      {
+        from: './pages/speakit/assets/',
+        to: './assets/speakit/',
+      },
     ]),
   ],
   module: {

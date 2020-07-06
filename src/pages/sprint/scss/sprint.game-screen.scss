@@ -96,6 +96,10 @@
         background: #d5dbde;
         box-shadow: inset -3px -3px 3px 0px rgba(88, 87, 87, 0.8);
 
+        i {
+          font-size: 16px;
+        }
+
         &:first-child {
           margin-right: 13px;
         }
@@ -153,6 +157,8 @@
 
 @media (max-width: 991px) {
   .game-screen {
+    padding-bottom: 30px;
+
     .arrows {
       display: none;
     }

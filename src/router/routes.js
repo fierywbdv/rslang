@@ -2,7 +2,7 @@ const routes = [
   {
     id: 1,
     name: 'Main page',
-    url: '/',
+    url: 'main',
   },
   {
     id: 2,
@@ -36,9 +36,10 @@ const routes = [
   },
   {
     id: 8,
-    name: 'Promo page',
-    url: 'promo',
+    name: 'User',
+    url: 'user',
   },
+
 ];
 
 export default routes;

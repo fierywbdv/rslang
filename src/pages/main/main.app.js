@@ -1,15 +1,15 @@
-import { setSidebarItem } from './common/main.utils';
+import { setSidebarItem, speakerHandler, checkAnswer } from './common/main.utils';
 import renderMainScreen from './components/main-screen/main.screen';
 
 import './scss/main.styles.scss';
 import { store } from '../../redux/store';
 import { learnWordsAPIService } from '../../services/learnWordsAPIService';
 
-if(store.getState().promoReducer.authorized === 'false') {
-  document.location.href = "/";
+if (store.getState().promoReducer.authorized === 'false') {
+  document.location.href = '/';
 }
 
-greeting();
+// greeting();
 
 class Main {
   constructor() {
@@ -17,12 +17,15 @@ class Main {
     this.logoElement = null;
     this.setSidebarItem = setSidebarItem;
     this.renderMainScreen = renderMainScreen;
+    this.speakerHandler = speakerHandler;
   }
 
-  init() {
-    this.renderMainScreen();
+  async init() {
     this.toggleBtnHandler();
     this.menuHandler();
+    await this.renderMainScreen();
+    // this.speakerHandler();
+    checkAnswer();
   }
 
   toggleBtnHandler() {

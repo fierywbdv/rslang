@@ -1,4 +1,4 @@
-import Router from '../../../router/Router';
+// import Router from '../../../router/Router';
 import { learnWordsAPIService } from '../../../services/learnWordsAPIService';
 
 export const setSidebarItem = () => {
@@ -23,15 +23,49 @@ export const getUserSettings = () => ({
   userSetImage: true,
 });
 
-export const getPhrase = (size) => `Don't forget to take
-a little <input class="to-write"size = ${size} autofocus></input>
+export const getPhrase = (iterator, size, word) => `Don't forget to take
+a little <input id = "to-write-${iterator}" class="to-write"size = ${size}
+autofocus placeholder = ${word} spellcheck = "false"></input>
 after your long journey!`;
+
+const speakerHandler = (iterator) => {
+  const speaker = document.querySelector(`#main-speaker-${iterator}`);
+  const currentInput = document.querySelector(`#to-write-${iterator}`);
+
+  speaker.addEventListener('click', () => {
+    currentInput.classList.add('show');
+  });
+};
+
+export const inputHandler = (iterator) => {
+  // const speaker = document.querySelector(`#main-speaker-${iterator}`);
+  const currentInput = document.querySelector(`#to-write-${iterator}`);
+
+  currentInput.addEventListener('keydown', (e) => {
+    if (e.keyCode === 13) {
+      console.log(currentInput.value);
+      if (currentInput.value === currentInput.placeholder) {
+        currentInput.style.color = '#34c716';
+        currentInput.blur();
+      } else {
+        currentInput.classList.add('incorrect');
+        setTimeout(() => {
+          currentInput.value = '';
+          currentInput.classList.remove('incorrect');
+        }, 1500);
+      }
+    }
+  });
+};
 
 export const moveCardHandler = () => {
   const prevBTN = document.querySelector('#main-button-prev');
   const nextBTN = document.querySelector('#main-button-next');
   const slidesArr = Array.from(document.querySelectorAll('.main-swiper .swiper-slide'));
   let currentSlide = 0;
+
+  speakerHandler(currentSlide);
+  inputHandler(currentSlide);
 
   nextBTN.addEventListener('click', () => {
     const isNotLastSlide = currentSlide < slidesArr.length - 1;
@@ -46,6 +80,8 @@ export const moveCardHandler = () => {
         slide.style.right = `${+current + 100}%`;
       });
     } else { nextBTN.classList.add('main-btn-disable'); }
+    speakerHandler(currentSlide);
+    inputHandler(currentSlide);
   });
 
   prevBTN.addEventListener('click', () => {
@@ -62,6 +98,8 @@ export const moveCardHandler = () => {
       });
     }
     if (currentSlide === 0) { prevBTN.classList.add('main-btn-disable'); }
+    speakerHandler(currentSlide);
+    inputHandler(currentSlide);
   });
 };
 
@@ -82,4 +120,9 @@ export const setSidebarHeight = () => {
   const sidebar = document.querySelector('nav.side-navbar');
   sidebar.style.height = `${rootHeight}px`;
   console.log('sidebar', sidebar.style.height);
+};
+
+export const checkAnswer = () => {
+  const inputsArr = Array.from(document.querySelectorAll('.main-screen-card .to-write'));
+  console.log('inputsArr', inputsArr);
 };

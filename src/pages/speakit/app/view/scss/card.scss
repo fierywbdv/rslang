@@ -40,7 +40,7 @@
 
 .active.card__link {
   color: white;
-  background-color: lightcoral;
+  // background-color: lightcoral;
   box-shadow:  0 5px 10px 0 rgba(0, 0, 0, 0.2), 0 8px 10px 0 rgba(0, 0, 0, 0.4),
                0 0 10px 0 lightcoral inset, 0 0 10px 4px lightcoral;
 }
@@ -53,11 +53,11 @@
 }
 
 .main-card {
-  position: relative;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  flex-wrap: wrap;
+  // position: relative;
+  // display: flex;
+  // justify-content: space-around;
+  // align-items: center;
+  // flex-wrap: wrap;
 }
 
 .main-card__picture {

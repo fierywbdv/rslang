@@ -10,8 +10,8 @@ window.onload = () => {
   englishPuzzle.init();
   ourgame.init();
   savanna.init();
-  main.toggleBtnHandler();
-  main.menuHandler();
+  // main.toggleBtnHandler();
+  // main.menuHandler();
   logout();
 };
 

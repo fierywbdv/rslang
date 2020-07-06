@@ -145,6 +145,9 @@ nav.navbar .menu-btn {
   font-size: 1.2em;
   -webkit-transition: all 0.7s;
   transition: all 0.7s;
+  &.active {
+    background-color: transparent;
+  }
 }
 
 nav.navbar .menu-btn span {
@@ -420,7 +423,6 @@ nav.side-navbar.shrinked .sidebar-header .title {
   .content-inner.active {
     width: calc(100% - 90px);
   }
-
   nav.navbar .menu-btn {
     margin-right: 10px;
     font-size: 1.2em;

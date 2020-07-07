@@ -93,12 +93,11 @@
       width: 100%;
       padding: 10px;
       color: #fff;
-      background-image: linear-gradient(135deg, #c51162, #ff4081);
+      background-color: #ffa41b;
       border: none;
       font-size: 14px;
       font-family: 'Poppins', sans-serif;
       border-radius: 4px;
-      box-shadow: 0 4px 5px 0 #f06292;
       cursor: pointer;
       transition: box-shadow .125s ease-in-out;
 
@@ -121,7 +120,7 @@
 
     button {
       font-size: 60px;
-      background-color: #007944;
+      background-color: #ffa41b;
       display: inline-block;
       color: #effffb;
       border: 0;
@@ -196,7 +195,9 @@
   }
 
   h3 {
-    margin: 4rem 0 3rem;
+    margin: 3rem 0 2rem;
+    font-size: 40px;
+    text-transform: uppercase;
   }
 
   p {
@@ -206,8 +207,7 @@
   .card {
     display: block;
     width: 100%;
-    background: #acb6e5; /* fallback for old browsers */
-    background: linear-gradient(to right, #86fde8, #acb6e5);
+    background: #000839;
     margin: auto;
     max-width: 100%;
     color: white;
@@ -456,5 +456,17 @@
     display: none;
   }
 
+  @media (min-width: 320px) and (max-width: 768px) {
 
+    h4 {
+      font-size: 22px;
+    }
+    .card-body {
+      padding: 10px 5px;
+    }
+    .card {
+      margin-bottom: 20px;
+    }
+  }
 }
+

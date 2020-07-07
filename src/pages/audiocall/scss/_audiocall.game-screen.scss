@@ -131,16 +131,20 @@ body.audio-call-body.op-10 {
     animation: fade-in 1.5s linear; /* IE 10+, Fx 29+ */
 }
 
-.container.screen {
+#play-screen.container.screen {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    height: 520px;
-    width: 350px;
+    height: 465px;
+    width: 300px;
     text-align: center;
     border-radius: 5px;
-    margin-top: 50px;
+    padding-right: 0;
+    padding-left: 0;
+    margin-right: 0;
+    margin-left: 0;
+
 
     .front-face {
         position: absolute;
@@ -154,7 +158,7 @@ body.audio-call-body.op-10 {
     }
 
     .cover {
-        background: linear-gradient(75deg, #8e44ad, #2980b9);
+        background: #000839;
         height: 115px;
         width: 100%;
         border-radius: 5px 5px 0 0;
@@ -180,6 +184,9 @@ body.audio-call-body.op-10 {
             cursor: pointer;
             background: none;
             border: none;
+            text-align: left;
+            padding-left: 55px;
+          position: relative;
 
             &:focus {
                 border: none;
@@ -261,7 +268,7 @@ body.audio-call-body.op-10 {
         width: 115px;
         font-size: 56px;
         padding: 27px;
-        color: #b5076b;
+        color: #005082;
     }
 
     .btn-success {
@@ -273,17 +280,26 @@ body.audio-call-body.op-10 {
         color: #fe346e;
         font-size: 21px;
         padding-right: 5px;
+        position: absolute;
+        left: 10px;
+        top: 10px;
     }
 
     i.fas.fa-check-circle {
         color: #00bdaa;
         font-size: 21px;
         padding-right: 5px;
+        position: absolute;
+        left: 10px;
+        top: 10px;
     }
 
-    .buttons {
-        margin-top: 20px;
-    }
+  .buttons {
+    position: relative;
+    bottom: 0;
+    right: 0;
+    margin-top: 0.5rem;
+  }
 
     .name.result-word.disable span {
         color: #b5076b;
@@ -296,10 +312,18 @@ body.audio-call-body.op-10 {
     }
 
     .btn-success {
-        background-color: #ff4301;
-        border: 1px solid #ff4301;
         box-shadow: none;
     }
+
+  button.reset.btn.btn-success {
+    background-color: #e84a5f;
+    border-color: #e84a5f;
+  }
+
+  button.forget.btn.btn-success, button.next.btn.btn-success.show {
+    background: #ffa41b;
+    border-color: #ffa41b;
+  }
 
     .btn-success:hover,
     .btn-success:focus,

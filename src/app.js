@@ -5,6 +5,7 @@ import savanna from './pages/savanna/savanna.app';
 
 import router from './router/Router';
 import { logout } from './pages/promo/common/promo.utils';
+import { learnWordsAPIService } from './services/learnWordsAPIService';
 
 window.onload = () => {
   englishPuzzle.init();
@@ -16,3 +17,5 @@ window.onload = () => {
 };
 
 router.run();
+
+//learnWordsAPIService.getUserSettings(localStorage.getItem('userId'), 'dsasdf');

@@ -51,6 +51,18 @@ module.exports = {
         from: './pages/main/components/some_component/assets/',
         to: './assets/main/',
       },
+      {
+        from: './pages/sprint/assets/audio/',
+        to: './assets/audio/',
+      },
+      {
+        from: './pages/sprint/assets/img/',
+        to: './assets/sprint/img/',
+      },
+      {
+        from: './pages/speakit/assets/',
+        to: './assets/speakit/',
+      },
     ]),
   ],
   module: {

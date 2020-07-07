@@ -16,26 +16,29 @@
   padding-top: 15px;
   padding-bottom: 15px;
 
-  .navbar-brand {
+  h1 {
     display: inline-block;
+    margin: 0;
     font-size: 1.25rem;
-  }
-  span {
-    display: inline-block;
-    text-decoration: none;
-    -webkit-transition: all 0.3s;
-    transition: all 0.3s;
-  }
 
-}
-.brand-text.promo {
-  font-family: Tenor-Sans, tahoma, sans-serif;
-  color: $main-pretty-text-color;
-  font-weight: 800;
-  font-size: 1.2em;
-  .colored {
-    color: $main-pink-color;
-    font-weight: 400;
+    span {
+      display: inline-block;
+      text-decoration: none;
+      -webkit-transition: all 0.3s;
+      transition: all 0.3s;
+    }
+
+    .brand-text {
+      font-family: Tenor-Sans, tahoma, sans-serif;
+      color: $main-pretty-text-color;
+      font-weight: 800;
+      font-size: 1.2em;
+
+      .colored {
+        color: $main-pink-color;
+        font-weight: 400;
+      }
+    }
   }
 }
 
@@ -69,6 +72,7 @@
   &__title {
     z-index: 1;
     font-size: 2.5rem;
+    margin: 0.67em 0;
   }
 
   &__subtitle {
@@ -79,6 +83,7 @@
 }
 
 .advantages {
+  background-color: #fff;
   padding-top: 80px;
   padding-bottom: 80px;
 
@@ -156,6 +161,7 @@
 }
 
 .video {
+  background-color: #fff;
   padding-top: 80px;
   padding-bottom: 80px;
 
@@ -182,6 +188,7 @@
 }
 
 .main-popup {
+  display: none;
   position: fixed;
   margin: 0;
   padding: 0;
@@ -193,13 +200,13 @@
   visibility: hidden;
   transform: translateY(-20px);
   transition: all .5s ease;
-}
-
-.main-popup.visible {
-  opacity: 1;
-  visibility: visible;
-  transform: translateY(10px);
-  transition: all .5s ease;
+  &.visible {
+    display: block;
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(10px);
+    transition: all .5s ease;
+  }
 }
 
 .popup-header {
@@ -319,6 +326,7 @@ form label {
 }
 
 #login-form {
+  z-index: -1;
   position: relative;
   top: -270px;
   left: 0;
@@ -330,8 +338,9 @@ form label {
   -o-transition: all .35s;
   transition: all .35s;
     &.move-left {
-    opacity: 1;
-    transform: translateX(0);
+      z-index: 1;
+      opacity: 1;
+      transform: translateX(0);
   }
 }
 
@@ -423,21 +432,25 @@ input.input-material.is-invalid ~ .help {
   }
 }
 .help:hover~.password-text {
-    display: block;
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(10px);
+  transition: all .5s ease;
 }
 
 .password-text {
-    z-index: 10;
-    position: absolute;
-    bottom: 100%;
-    right: 0;
-    width: 100%;
-    padding: 5px;
-    border: 1px solid #aaa;
-    border-radius: 5px;
-    color: $main-text-color;
-    background-color: $main-light-color;
-    display: none;
+  opacity: 0;
+  visibility: hidden;
+  z-index: 10;
+  position: absolute;
+  bottom: 100%;
+  right: 0;
+  width: 100%;
+  padding: 5px;
+  border: 1px solid #aaa;
+  border-radius: 5px;
+  color: $main-text-color;
+  background-color: $main-light-color;
 }
 
 @media (max-width: 991px) {

@@ -77,7 +77,7 @@ export const formValidation = () => {
       if (password.value === passwordConfirm.value) {
         passwordConfirm.classList.remove('is-invalid');
         
-        const createUser = await learnWordsAPIService.createUser(userEmail, userPassword);
+        const createUser = await learnWordsAPIService.createUser(userName, userEmail, userPassword);
         
         if(createUser !== undefined) {
           Toastify({
@@ -94,7 +94,7 @@ export const formValidation = () => {
           })
 
           const response = await learnWordsAPIService.signIn(userEmail, userPassword);
-          learnWordsAPIService.setUserSettings(response.userId, response.token, '10', {name: userName});
+          learnWordsAPIService.setUserSettings(response.userId, response.token, '10', {});
         }
       } else {
         setAlarm(passwordConfirm, 'mismatched');
@@ -128,6 +128,7 @@ export const logout = () => {
     localStorage.setItem('token', null);
     localStorage.setItem('authorized', false)
     store.dispatch(disAutorization());
+    document.location.href = "/";
   })
 }
 

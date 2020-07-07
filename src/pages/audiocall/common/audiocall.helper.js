@@ -53,7 +53,7 @@ const helper = {
   isLastQuestion: (num, points) => points.some((elem) => elem === num),
 
   filterStatistic: (correct, mistake, gameNumber, kind) => {
-    console.log(correct, mistake, gameNumber, kind)
+    console.log(correct, mistake, gameNumber, kind);
     const correctAnswers = correct.filter((elem) => elem.kind === kind)
       .filter((item) => item.gameNum === gameNumber);
     const mistakeAnswers = mistake.filter((elem) => elem.kind === kind)
@@ -213,6 +213,12 @@ const helper = {
       const posWidth = group.value / maxVal;
       group.parentNode.querySelector('.slider__positive').style.width = `${posWidth * 100}%`;
       lableGroup.innerHTML = `${+roundGame === 0 ? 1 : +roundGame + 1}`;
+
+      levelGame.setAttribute('value', `${+level}`);
+      const maxValue = levelGame.getAttribute('max');
+      const posWidthValue = levelGame.value / maxValue;
+      levelGame.parentNode.querySelector('.slider__positive').style.width = `${posWidthValue * 100}%`;
+      lableLevel.innerHTML = `${+level + 1}`;
     }
   },
 };

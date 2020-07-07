@@ -23,6 +23,9 @@ class Audiocall {
     this.userWords = [];
     this.words = [];
     this.isLast = false;
+    this.keyCode = null;
+    this.element = null;
+    this.answerNumber = null;
     this.statisticInfo = null;
     this.correct = new Audio('./assets/audio/correct.mp3');
     this.mistake = new Audio('./assets/audio/error.mp3');
@@ -66,10 +69,8 @@ class Audiocall {
   async setWords(page, group, kind) {
     const state = store.getState();
     const { gameNumber, randomGameNumber } = state.audioCallReducer;
-    console.log('setWords', page, group, kind, gameNumber, randomGameNumber);
     if (kind === 'withRandomWords') {
       this.words = await learnWordsAPIService.getWordsByPageAndGroup(page, group);
-      console.log('page, group', page, group);
       if (randomGameNumber === 0 || randomGameNumber % 2 === 0) {
         store.dispatch(setQuestionsAudioCall(this.words.slice(0, COUNT_WORDS_PER_GAMES)));
       } else {
@@ -86,7 +87,6 @@ class Audiocall {
         const wordsForGame = newWords.slice(firstNum, firstNum + COUNT_WORDS_PER_GAMES);
         store.dispatch(setQuestionsAudioCall(wordsForGame));
         const callBackFinish = () => {
-          console.log('fin');
           store.dispatch(setGameNumberAudioCall(0));
           store.dispatch(togglePlayAudioCall());
           const restartWords = this.userWords.map((item) => ({ ...item.optional }));
@@ -116,7 +116,6 @@ class Audiocall {
     const state = store.getState();
     const { questionsGame, questionNumber } = state.audioCallReducer;
     const questions = Audiocall.getQuestionWithAnswers(questionsGame);
-    console.log('playGameQuestion', questions);
     helper.render('#root', questions[questionNumber], 'append', '.screen');
     const { audio } = questionsGame[questionNumber];
     const repeatQuestion = document.querySelector('.play-audio');
@@ -130,10 +129,13 @@ class Audiocall {
         event.stopPropagation();
         const el = event.target;
         if (!el.classList.contains('disable')) {
-          this.checkAnswer(event.target, questionNumber);
+          this.checkAnswer(el.getAttribute('data-id'), questionNumber);
         }
       });
     });
+
+    this.keyBoardListener(questionNumber);
+
     const forget = document.querySelector('.forget');
     forget.addEventListener('click', (event) => {
       event.stopPropagation();
@@ -153,7 +155,6 @@ class Audiocall {
   }
 
   setGameStatistic(info = {}) {
-    console.log('setGameStatistic', info);
     const state = store.getState();
     const { gameNumber, randomGameNumber, kind } = state.audioCallReducer;
     this.statisticInfo = {
@@ -164,13 +165,12 @@ class Audiocall {
     store.dispatch(setStatistic(this.statisticInfo));
   }
 
-  checkAnswer(answer, questionNum) {
-    console.log('checkAnswer', answer, questionNum);
+  checkAnswer(id, questionNum) {
     const currentQuestion = document.querySelector('.result-word').getAttribute('data-word-id');
-    if (answer.getAttribute('data-id') === currentQuestion) {
+    if (id === currentQuestion) {
       this.markCorrectAnswer(currentQuestion, questionNum);
     } else {
-      this.markWrongAnswer(answer.getAttribute('data-id'), questionNum);
+      this.markWrongAnswer(id, questionNum);
     }
   }
 
@@ -202,7 +202,7 @@ class Audiocall {
       this.stopGame();
       helper.showStartButton(this.userWords.length);
       store.dispatch(setRoundAndLevelAudioCall({
-        flag: false,
+        flag: true,
         level: this.page,
         roundGame: this.group,
       }));
@@ -210,7 +210,6 @@ class Audiocall {
   }
 
   markCorrectAnswer(currentQuestion, questionNum) {
-    console.log('markCorrectAnswer', currentQuestion, questionNum);
     const picture = document.querySelector('.prof-img');
     const playAudio = document.querySelector('.play-audio');
     const forget = document.querySelector('.forget');
@@ -248,7 +247,6 @@ class Audiocall {
   }
 
   markWrongAnswer(currentQuestion, questionNum) {
-    console.log('markWrongAnswer', currentQuestion, questionNum);
     const answers = document.querySelectorAll('.name');
     const state = store.getState();
     const { questionsGame } = state.audioCallReducer;
@@ -271,7 +269,6 @@ class Audiocall {
   }
 
   markForgetAnswer(questionNum) {
-    console.log('markForgetAnswer', questionNum);
     const answers = document.querySelectorAll('.icon');
     const answersAll = document.querySelectorAll('.name');
     const next = document.querySelector('.next');
@@ -344,9 +341,62 @@ class Audiocall {
       this.isLast = true;
       store.dispatch(setRandomGameNumberAudioCall());
     }
-    console.log('this.isLast', this.isLast);
 
     return this.isLast;
+  }
+
+  keyBoardListener(questionNumber) {
+    const forget = document.querySelector('.forget');
+    const next = document.querySelector('.next');
+    document.addEventListener('keydown', (e) => {
+      this.keyCode = e.which || e.keyCode;
+      switch (this.keyCode) {
+        case 49:
+          this.answerNumber = document.querySelector('.answer-number-1');
+          this.element = this.answerNumber.closest('.name');
+          if (!this.element.classList.contains('disable')) {
+            this.checkAnswer(this.answerNumber.getAttribute('data-id'), questionNumber);
+          }
+          break;
+        case 50:
+          this.answerNumber = document.querySelector('.answer-number-2');
+          this.element = this.answerNumber.closest('.name');
+          if (!this.element.classList.contains('disable')) {
+            this.checkAnswer(this.answerNumber.getAttribute('data-id'), questionNumber);
+          }
+          break;
+        case 51:
+          this.answerNumber = document.querySelector('.answer-number-3');
+          this.element = this.answerNumber.closest('.name');
+          if (!this.element.classList.contains('disable')) {
+            this.checkAnswer(this.answerNumber.getAttribute('data-id'), questionNumber);
+          }
+          break;
+        case 52:
+          this.answerNumber = document.querySelector('.answer-number-4');
+          this.element = this.answerNumber.closest('.name');
+          if (!this.element.classList.contains('disable')) {
+            this.checkAnswer(this.answerNumber.getAttribute('data-id'), questionNumber);
+          }
+          break;
+        case 53:
+          this.answerNumber = document.querySelector('.answer-number-5');
+          this.element = this.answerNumber.closest('.name');
+          if (!this.element.classList.contains('disable')) {
+            this.checkAnswer(this.answerNumber.getAttribute('data-id'), questionNumber);
+          }
+          break;
+        case 13:
+          if (!forget.classList.contains('hide')) {
+            this.markForgetAnswer(questionNumber);
+          } else {
+            next.focus();
+          }
+          break;
+        default:
+          break;
+      }
+    });
   }
 
   init() {

@@ -1,5 +1,11 @@
 const startScreenOurGameComponent = () => {
-  const template = `<h3>Our Game</h3>
+  const template = `<div class="container">
+                        <div class="row">
+                            <div class="col-12">
+                                <h3 class="text-center">Our Game</h3>
+                            </div>
+                        </div>
+                    </div>
                     <div class="container">
                         <div class="row">
                             <div class="col-xs-12 col-sm-6">

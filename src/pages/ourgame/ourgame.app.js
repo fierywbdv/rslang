@@ -129,7 +129,6 @@ class Ourgame {
     } = state.ourGameReducer;
     window.clearTimeout(this.timeOut);
     if (id === currentQuestion.getAttribute('data-id')) {
-      console.log('checkAnswerForUserWords correct');
       this.correctAnswer(
         currentQuestion,
         target,
@@ -180,7 +179,6 @@ class Ourgame {
   }
 
   mistakeAnswer(target, setGameNum, setQuestionsGame, currentQuestion) {
-    console.log('misstake');
     store.dispatch(setListenAnswer({ isListen: true, nextQuestion: true, answered: true }));
     this.mistake.play();
     target.classList.toggle('answered');
@@ -238,7 +236,6 @@ class Ourgame {
   setGameStatistic(info = {}) {
     const state = store.getState();
     const { kind, setRandomGameNum, setGameNum } = state.ourGameReducer;
-    console.log('kind, setRandomGameNum, setGameNum', kind, setRandomGameNum, setGameNum);
     this.info = {
       ...info,
       game: kind === 'withRandomWords' ? setRandomGameNum : setGameNum,
@@ -259,13 +256,11 @@ class Ourgame {
     const { setGameNum, setRandomGameNum } = state.ourGameReducer;
     if (kind === 'withRandomWords') {
       this.words = await learnWordsAPIService.getWordsByPageAndGroup(page, group);
-      console.log('page, group', page, group);
       if (setRandomGameNum === 0 || setRandomGameNum % 2 === 0) {
         store.dispatch(setQuestions(this.words.slice(0, COUNT_WORDS_PER_GAMES)));
       } else {
         store.dispatch(setQuestions(this.words.slice(COUNT_WORDS_PER_GAMES, this.words.length)));
       }
-      console.log('withRandomWords', this.isFirstGame);
       this.playGame();
     } else {
       const { id, token } = helper.getUserData();
@@ -276,9 +271,11 @@ class Ourgame {
         const wordsForGame = newWords.slice(firstNum, firstNum + COUNT_WORDS_PER_GAMES);
         store.dispatch(setQuestions(wordsForGame));
         const callBackFinish = () => {
-          console.log('fin');
           store.dispatch(setGameNumber(0));
           store.dispatch(togglePlay());
+          const restartWords = this.userWords.map((item) => ({ ...item.optional }));
+          const restartWordsForGame = restartWords.slice(0, COUNT_WORDS_PER_GAMES);
+          store.dispatch(setQuestions(restartWordsForGame));
           this.playGame();
         };
         if (!wordsForGame.length) {

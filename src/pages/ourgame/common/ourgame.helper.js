@@ -213,6 +213,12 @@ const helper = {
       const posWidth = group.value / maxVal;
       group.parentNode.querySelector('.slider__positive').style.width = `${posWidth * 100}%`;
       lableGroup.innerHTML = `${+roundGame === 0 ? 1 : +roundGame + 1}`;
+
+      levelGame.setAttribute('value', `${+level}`);
+      const maxValue = levelGame.getAttribute('max');
+      const posWidthValue = levelGame.value / maxValue;
+      levelGame.parentNode.querySelector('.slider__positive').style.width = `${posWidthValue * 100}%`;
+      lableLevel.innerHTML = `${+level + 1}`;
     }
   },
 };

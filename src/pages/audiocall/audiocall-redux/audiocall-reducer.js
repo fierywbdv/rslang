@@ -32,7 +32,7 @@ function setRoundAndLevelAudioCallReducer(state = {
 action) {
   if (action.type === SET_ROUND_AND_LEVEL_GAME_AUDIO_CALL) {
     return {
-      flag: action.payload.level !== undefined ? action.payload.level : !state.flag,
+      flag: action.payload.flag !== undefined ? action.payload.flag : !state.flag,
       level: action.payload.level,
       roundGame: action.payload.roundGame,
     };

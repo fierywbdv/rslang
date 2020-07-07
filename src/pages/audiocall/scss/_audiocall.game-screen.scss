@@ -46,15 +46,18 @@ body.audio-call-body {
     position: relative;
 
     &:after {
-        content: '';
-        background: url('../assets/img/a_c_bg.jpg');
-        opacity: 0;
-        top: 0;
-        left: 0;
-        bottom: 0;
-        right: 0;
-        position: absolute;
-        z-index: -1;
+      content: '';
+      background: url('../assets/img/a_c_bg.jpg');
+      opacity: 0;
+      display: block;
+      background-size: cover;
+      background-repeat: no-repeat;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      position: absolute;
+      z-index: -1;
     }
 }
 

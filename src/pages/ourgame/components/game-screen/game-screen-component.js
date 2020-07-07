@@ -17,7 +17,7 @@ const gameScreenComponent = () => {
   const gameScreen = document.createElement('div');
   gameScreen.setAttribute('id', 'our-game-play-screen');
   gameScreen.innerHTML = title;
-  gameScreen.className = 'container screen statistic';
+  gameScreen.className = 'container screen our-game';
 
   const containerInner = document.createElement('div');
   containerInner.className = 'container-inner';

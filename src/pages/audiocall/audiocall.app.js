@@ -346,8 +346,10 @@ class Audiocall {
   }
 
   keyBoardListener(questionNumber) {
-    const forget = document.querySelector('.forget');
-    const next = document.querySelector('.next');
+    // const forget = document.querySelector('.forget');
+    // const state = store.getState();
+    // const { kind } = state.audioCallReducer;
+    // const next = document.querySelector('.next');
     document.addEventListener('keydown', (e) => {
       this.keyCode = e.which || e.keyCode;
       switch (this.keyCode) {
@@ -384,13 +386,6 @@ class Audiocall {
           this.element = this.answerNumber.closest('.name');
           if (!this.element.classList.contains('disable')) {
             this.checkAnswer(this.answerNumber.getAttribute('data-id'), questionNumber);
-          }
-          break;
-        case 13:
-          if (!forget.classList.contains('hide')) {
-            this.markForgetAnswer(questionNumber);
-          } else {
-            next.focus();
           }
           break;
         default:

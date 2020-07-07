@@ -22,14 +22,12 @@ import { COUNT_WORDS_PER_GAMES } from './common/ourgame.constants';
 class Ourgame {
   constructor() {
     this.words = null;
-    this.wordsPerGame = COUNT_WORDS_PER_GAMES;
     this.userWords = [];
     this.timeOut = null;
     this.page = null;
     this.group = null;
     this.isLast = false;
     this.removeWord = null;
-    this.isFirstGame = true;
     this.questionsGame = null;
     this.info = null;
     this.correct = new Audio('./assets/audio/correct.mp3');
@@ -358,7 +356,6 @@ class Ourgame {
       } else {
         await helper.showStartButton();
       }
-      // await helper.removeWords(this.userWords, id, token)
     })();
   }
 }

@@ -5,11 +5,11 @@ import statisticLine from '../statistic-line';
 const statisticScreenComponent = (kindGame) => {
   const state = store.getState();
   const { correct, mistake } = state.audioCallReducer.stat;
-  console.log('statisticScreenComponent correct, mistake', correct, mistake)
+  console.log('statisticScreenComponent correct, mistake', correct, mistake);
   const { gameNumber, randomGameNumber } = state.audioCallReducer;
   const number = kindGame === 'withRandomWords' ? randomGameNumber : gameNumber;
   const { cor, miss } = helper.filterStatistic(correct, mistake, number - 1, kindGame);
-  console.log('statisticScreenComponent cor, miss', cor, miss)
+  console.log('statisticScreenComponent cor, miss', cor, miss);
   const corMurkUp = cor.map((item) => statisticLine(item));
   const misMurkUp = miss.map((item) => statisticLine(item));
 
@@ -20,9 +20,9 @@ const statisticScreenComponent = (kindGame) => {
 
   const template = '<h3>Result</h3>';
   const startScreen = document.createElement('div');
-  startScreen.setAttribute('id', 'statistic');
+  startScreen.setAttribute('id', 'audio-call-statistic');
   startScreen.innerHTML = template;
-  startScreen.className = 'container screen statistic';
+  startScreen.className = 'container screen audio-call-statistic';
 
   const containerInner = document.createElement('div');
   containerInner.className = 'container-inner';

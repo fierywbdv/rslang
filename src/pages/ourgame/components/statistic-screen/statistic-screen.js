@@ -19,9 +19,9 @@ const statisticScreenComponent = (kindGame) => {
 
   const template = '<h3>Result</h3>';
   const startScreen = document.createElement('div');
-  startScreen.setAttribute('id', 'statistic');
+  startScreen.setAttribute('id', 'our-game-statistic');
   startScreen.innerHTML = template;
-  startScreen.className = 'container screen statistic';
+  startScreen.className = 'container our-game-statistic';
 
   const containerInner = document.createElement('div');
   containerInner.className = 'container-inner';

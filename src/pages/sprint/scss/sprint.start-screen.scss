@@ -5,7 +5,7 @@
 }
 
 .bg {
-  background-image: url(../assets/img/bg-sprint.png);
+  background-color: rgb(159, 59, 130);
   background-size: cover;
   background-position: center;
   min-height: 100%;
@@ -30,8 +30,8 @@
     padding: 0 40px;
 
     .title {
-      font-size: 2.5rem;
       color: #ffffff;
+      font-size: 2.5rem;
       display: inline-block;
       margin: 0;
     }
@@ -51,6 +51,15 @@
       &:focus {
         box-shadow: 0 0 0 0.2rem rgba(101, 44, 113, 0.55);
       }
+    }
+  }
+}
+
+
+@media (max-width: 767px) {
+  .start-screen__content {
+    p {
+      max-width: 350px;
     }
   }
 }

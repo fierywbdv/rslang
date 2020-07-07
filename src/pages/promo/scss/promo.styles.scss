@@ -16,26 +16,29 @@
   padding-top: 15px;
   padding-bottom: 15px;
 
-  .navbar-brand {
+  h1 {
     display: inline-block;
+    margin: 0;
     font-size: 1.25rem;
-  }
-  span {
-    display: inline-block;
-    text-decoration: none;
-    -webkit-transition: all 0.3s;
-    transition: all 0.3s;
-  }
 
-}
-.brand-text.promo {
-  font-family: Tenor-Sans, tahoma, sans-serif;
-  color: $main-pretty-text-color;
-  font-weight: 800;
-  font-size: 1.2em;
-  .colored {
-    color: $main-pink-color;
-    font-weight: 400;
+    span {
+      display: inline-block;
+      text-decoration: none;
+      -webkit-transition: all 0.3s;
+      transition: all 0.3s;
+    }
+
+    .brand-text {
+      font-family: Tenor-Sans, tahoma, sans-serif;
+      color: $main-pretty-text-color;
+      font-weight: 800;
+      font-size: 1.2em;
+
+      .colored {
+        color: $main-pink-color;
+        font-weight: 400;
+      }
+    }
   }
 }
 

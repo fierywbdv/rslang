@@ -108,10 +108,8 @@ export const moveCardHandler = () => {
 };
 
 export async function greeting() {
-  const response = await learnWordsAPIService.getUser(localStorage.getItem('userId'), localStorage.getItem('token'));
-
   const greetingForUser = document.querySelector('.greeting-for-user');
-  greetingForUser.innerHTML = `Привет, ${response.name}`;
+  greetingForUser.innerHTML = `Привет, ${localStorage.getItem('userName')}`;
 }
 
 export const setSidebarHeight = () => {

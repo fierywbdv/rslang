@@ -15,7 +15,7 @@ const getCardsCount = () => {
 
   const cardsCount = document.createElement('span');
   cardsCount.setAttribute('id', 'show-cards-count');
-  cardsCount.textContent = '20';
+  cardsCount.textContent = `${localStorage.getItem('userCardsCount')}`;
 
   const formCardsInput = document.createElement('input');
   formCardsInput.setAttribute('type', 'range');
@@ -23,7 +23,7 @@ const getCardsCount = () => {
   formCardsInput.setAttribute('min', '10');
   formCardsInput.setAttribute('max', '30');
   formCardsInput.className = 'form-control-range';
-  formCardsInput.value = '20';
+  formCardsInput.value = `${localStorage.getItem('userCardsCount')}`;
 
   formCardsGroup.append(formCardsLabel, cardsCount, formCardsInput);
   formCardsCount.append(formCardsIcon, formCardsGroup);

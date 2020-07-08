@@ -34,7 +34,7 @@ class Main {
     await this.renderMainScreen();
     checkAnswer();
     // this.notationActionHandler();
-    getUserSettings();
+    // getUserSettings();
   }
 
   toggleBtnHandler() {
@@ -56,10 +56,10 @@ class Main {
   }
 }
 
-const getUserSettings = async () => {
-  const userSettings = await learnWordsAPIService.getUserSettings(localStorage.getItem('userId'), localStorage.getItem('token'));
-  console.log('userSettings', userSettings);
-  return userSettings;
-};
+// const getUserSettings = async () => {
+//   const userSettings = await learnWordsAPIService.getUserSettings(localStorage.getItem('userId'), localStorage.getItem('token'));
+//   console.log('userSettings', userSettings);
+//   return userSettings;
+// };
 
 export default new Main();

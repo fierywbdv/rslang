@@ -4,9 +4,9 @@ import getCardBody from './user.cardBody';
 
 const getUser = () => {
   const user = {
-    userName: 'User',
-    userMail: 'example@mail.com',
-    userPassword: 'cwewWRWQ12313@#@#',
+    userName: `${localStorage.getItem('userName')}`,
+    userMail: `${localStorage.getItem('email')}`,
+    userPassword: '',
   };
   return user;
 };

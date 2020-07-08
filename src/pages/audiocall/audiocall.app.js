@@ -42,31 +42,39 @@ class Audiocall {
     const root = document.getElementById('root');
     const body = document.querySelector('body');
     root.className = 'audio-call-root';
-    body.classList.add('audio-call-body');
+    body.className = 'audio-call-body';
 
     helper.rangeSlider();
 
     if (startButton) {
       startButton.addEventListener('click', async () => {
-        store.dispatch(setKindOfGameAudioCall('withUserWords'));
-        await this.setWords(this.group, this.page, 'withUserWords');
-        store.dispatch(togglePlayAudioCall());
+        if (!startButton.classList.contains('disable')) {
+          store.dispatch(setKindOfGameAudioCall('withUserWords'));
+          await this.setWords(this.group, this.page, 'withUserWords');
+          store.dispatch(togglePlayAudioCall());
+        }
       });
     }
 
     if (customStart) {
       customStart.addEventListener('click', async () => {
-        this.page = level.value;
-        this.group = group.value;
-        store.dispatch(setKindOfGameAudioCall('withRandomWords'));
-        await this.setWords(this.group, this.page, 'withRandomWords');
-        store.dispatch(togglePlayAudioCall());
-        store.dispatch(setRoundAndLevelAudioCall({ level: this.page, roundGame: this.group }));
+        if (!customStart.classList.contains('disable')) {
+          this.page = level.value;
+          this.group = group.value;
+          store.dispatch(setKindOfGameAudioCall('withRandomWords'));
+          await this.setWords(this.group, this.page, 'withRandomWords');
+          store.dispatch(togglePlayAudioCall());
+          store.dispatch(setRoundAndLevelAudioCall({ level: this.page, roundGame: this.group }));
+        }
       });
     }
   }
 
   async setWords(page, group, kind) {
+    const startButton = document.getElementById('start-play');
+    const customStart = document.getElementById('custom-start');
+    customStart.classList.add('disable')
+    startButton.classList.add('disable')
     const state = store.getState();
     const { gameNumber, randomGameNumber } = state.audioCallReducer;
     if (kind === 'withRandomWords') {
@@ -77,6 +85,8 @@ class Audiocall {
         store.dispatch(setQuestionsAudioCall(this.words
           .slice(COUNT_WORDS_PER_GAMES, this.words.length)));
       }
+      customStart.classList.remove('disable');
+      startButton.classList.remove('disable');
       this.playGameQuestion();
     } else {
       const { id, token } = helper.getUserData();
@@ -87,11 +97,12 @@ class Audiocall {
         const wordsForGame = newWords.slice(firstNum, firstNum + COUNT_WORDS_PER_GAMES);
         store.dispatch(setQuestionsAudioCall(wordsForGame));
         const callBackFinish = () => {
-          store.dispatch(setGameNumberAudioCall(0));
           store.dispatch(togglePlayAudioCall());
           const restartWords = this.userWords.map((item) => ({ ...item.optional }));
           const restartWordsForGame = restartWords.slice(0, COUNT_WORDS_PER_GAMES);
           store.dispatch(setQuestionsAudioCall(restartWordsForGame));
+          customStart.classList.remove('disable')
+          startButton.classList.remove('disable')
           this.playGameQuestion();
         };
         if (!wordsForGame.length) {
@@ -106,6 +117,8 @@ class Audiocall {
             callback: callBackFinish,
           }).showToast();
         } else {
+          customStart.classList.remove('disable')
+          startButton.classList.remove('disable')
           this.playGameQuestion();
         }
       }
@@ -117,7 +130,7 @@ class Audiocall {
     const { questionsGame, questionNumber } = state.audioCallReducer;
     const questions = Audiocall.getQuestionWithAnswers(questionsGame);
     helper.render('#root', questions[questionNumber], 'append', '.screen');
-    const { audio } = questionsGame[questionNumber];
+    const { audio } = questionsGame[questionNumber || 0];
     const repeatQuestion = document.querySelector('.play-audio');
     repeatQuestion.addEventListener('click', () => {
       this.sayQuestion(audio);
@@ -346,10 +359,6 @@ class Audiocall {
   }
 
   keyBoardListener(questionNumber) {
-    // const forget = document.querySelector('.forget');
-    // const state = store.getState();
-    // const { kind } = state.audioCallReducer;
-    // const next = document.querySelector('.next');
     document.addEventListener('keydown', (e) => {
       this.keyCode = e.which || e.keyCode;
       switch (this.keyCode) {

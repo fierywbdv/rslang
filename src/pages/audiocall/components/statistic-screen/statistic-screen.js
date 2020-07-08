@@ -5,11 +5,9 @@ import statisticLine from '../statistic-line';
 const statisticScreenComponent = (kindGame) => {
   const state = store.getState();
   const { correct, mistake } = state.audioCallReducer.stat;
-  console.log('statisticScreenComponent correct, mistake', correct, mistake);
   const { gameNumber, randomGameNumber } = state.audioCallReducer;
   const number = kindGame === 'withRandomWords' ? randomGameNumber : gameNumber;
   const { cor, miss } = helper.filterStatistic(correct, mistake, number - 1, kindGame);
-  console.log('statisticScreenComponent cor, miss', cor, miss);
   const corMurkUp = cor.map((item) => statisticLine(item));
   const misMurkUp = miss.map((item) => statisticLine(item));
 

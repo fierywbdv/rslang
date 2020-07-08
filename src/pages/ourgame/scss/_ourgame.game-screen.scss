@@ -56,6 +56,7 @@ body.our-game-body {
     position: absolute;
     z-index: -1;
     transition: opacity .5s ease;
+    z-index: 0;
   }
 }
 
@@ -139,6 +140,8 @@ body.our-game-body.op-10 {
   max-width: 640px;
   margin: 2rem auto;
   padding: 1.5rem 1rem;
+  z-index: 3;
+  position: relative;
 
   button.restart.btn.btn-success {
     margin: 0 auto;

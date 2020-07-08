@@ -6,6 +6,7 @@
 
   #root.audio-call-root {
     position: relative;
+    width: 100%;
   }
 
   @-o-keyframes fade-in {
@@ -50,6 +51,11 @@
     &:hover {
       box-shadow: 10px 10px 10px 0 rgba(0, 0, 0, .125);
     }
+  }
+
+  .row {
+    position: relative;
+    z-index: 3;
   }
 
   .list-unstyled {
@@ -208,6 +214,7 @@
     max-width: 100%;
     color: white;
     border-radius: .8rem;
+    min-height: 335px;
   }
 
   .card__header {

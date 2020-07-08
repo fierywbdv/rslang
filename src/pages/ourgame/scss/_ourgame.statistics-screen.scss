@@ -58,6 +58,8 @@
   max-width: 640px;
   margin: 2rem auto;
   padding: 1.5rem 1rem;
+  position: relative;
+  z-index: 3;
 
   button.restart.btn.btn-success {
     margin: 0 auto;

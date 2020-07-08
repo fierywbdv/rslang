@@ -10,6 +10,7 @@
 
   #root.audio-call-root {
     position: relative;
+    width: 100%;
   }
 
   @-o-keyframes fade-in {
@@ -50,6 +51,7 @@
     padding: 16px 32px;
     min-width: 250px;
     transition: box-shadow .25s ease-in-out;
+    min-height: 335px;
 
     &:hover {
       box-shadow: 10px 10px 10px 0 rgba(0, 0, 0, .125);

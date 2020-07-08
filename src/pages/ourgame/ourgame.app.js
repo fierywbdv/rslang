@@ -27,6 +27,7 @@ class Ourgame {
     this.page = null;
     this.group = null;
     this.isLast = false;
+    this.isFirstGame = null;
     this.removeWord = null;
     this.questionsGame = null;
     this.info = null;
@@ -45,25 +46,29 @@ class Ourgame {
     const customStart = document.getElementById('custom-start');
     const body = document.querySelector('body');
     body.className = 'our-game-body';
-    root.classList.add('our-game-root');
+    root.className = 'our-game-root';
     helper.rangeSlider();
 
     if (startButton) {
       startButton.addEventListener('click', async () => {
-        store.dispatch(setKindOfGame('withUserWords'));
-        await this.setWords(this.group, this.page, 'withUserWords');
-        store.dispatch(togglePlay());
+        if (!startButton.classList.contains('disable')) {
+          store.dispatch(setKindOfGame('withUserWords'));
+          await this.setWords(this.group, this.page, 'withUserWords');
+          store.dispatch(togglePlay());
+        }
       });
     }
 
     if (customStart) {
       customStart.addEventListener('click', async () => {
-        this.page = level.value;
-        this.group = group.value;
-        store.dispatch(setKindOfGame('withRandomWords'));
-        await this.setWords(this.group, this.page, 'withRandomWords');
-        store.dispatch(togglePlay());
-        store.dispatch(setRoundAndLevel({ level: this.page, roundGame: this.group }));
+        if (!customStart.classList.contains('disable')) {
+          this.page = level.value;
+          this.group = group.value;
+          store.dispatch(setKindOfGame('withRandomWords'));
+          await this.setWords(this.group, this.page, 'withRandomWords');
+          store.dispatch(togglePlay());
+          store.dispatch(setRoundAndLevel({ level: this.page, roundGame: this.group }));
+        }
       });
     }
   }
@@ -252,6 +257,10 @@ class Ourgame {
   async setWords(page, group, kind) {
     const state = store.getState();
     const { setGameNum, setRandomGameNum } = state.ourGameReducer;
+    const startButton = document.getElementById('start-play');
+    const customStart = document.getElementById('custom-start');
+    customStart.classList.add('disable')
+    startButton.classList.add('disable')
     if (kind === 'withRandomWords') {
       this.words = await learnWordsAPIService.getWordsByPageAndGroup(page, group);
       if (setRandomGameNum === 0 || setRandomGameNum % 2 === 0) {
@@ -259,6 +268,8 @@ class Ourgame {
       } else {
         store.dispatch(setQuestions(this.words.slice(COUNT_WORDS_PER_GAMES, this.words.length)));
       }
+      customStart.classList.remove('disable');
+      startButton.classList.remove('disable');
       this.playGame();
     } else {
       const { id, token } = helper.getUserData();
@@ -269,11 +280,12 @@ class Ourgame {
         const wordsForGame = newWords.slice(firstNum, firstNum + COUNT_WORDS_PER_GAMES);
         store.dispatch(setQuestions(wordsForGame));
         const callBackFinish = () => {
-          store.dispatch(setGameNumber(0));
           store.dispatch(togglePlay());
           const restartWords = this.userWords.map((item) => ({ ...item.optional }));
           const restartWordsForGame = restartWords.slice(0, COUNT_WORDS_PER_GAMES);
           store.dispatch(setQuestions(restartWordsForGame));
+          customStart.classList.remove('disable');
+          startButton.classList.remove('disable');
           this.playGame();
         };
         if (!wordsForGame.length) {
@@ -288,6 +300,8 @@ class Ourgame {
             callback: callBackFinish,
           }).showToast();
         } else {
+          customStart.classList.remove('disable');
+          startButton.classList.remove('disable');
           this.playGame();
         }
       }

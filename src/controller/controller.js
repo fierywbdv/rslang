@@ -12,6 +12,14 @@ import startScreenOurGameComponent from '../pages/ourgame/components/start-scree
 
 const controller = {
   callAction: (url) => {
+    const root = document.getElementById('root');
+    const body = document.querySelector('body');
+    root.className = '';
+    body.className = '';
+    if (root.hasChildNodes()) {
+      root.childNodes[0].remove();
+    }
+
     switch (url) {
       case '/':
         controller.actionMain();

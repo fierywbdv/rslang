@@ -77,7 +77,6 @@ function setStatisticReducer(state = { mistake: [], correct: [] }, action) {
     const {
       wordQues, mistake, game, quesNum, kind,
     } = action.statistic;
-    console.log('wordQues, mistake, game, quesNum, kind', wordQues, mistake, game, quesNum, kind);
     if (mistake) {
       return {
         ...state,

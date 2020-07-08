@@ -1,6 +1,7 @@
 import Toastify from 'toastify-js';
 import { learnWordsAPIService } from '../../../services/learnWordsAPIService';
 import { GAME_BREAKPOINT } from '../../ourgame/common/ourgame.constants';
+import mockData from './mock-data';
 
 const helper = {
   render: (elementDOM, renderElement, renderPlace, removeItem) => {
@@ -28,7 +29,9 @@ const helper = {
 
   getAnswers: (data) => {
     const newData = data.map((item, index, array) => {
-      const newArr = array.filter((elem) => elem.id !== item.id);
+      const newArr = array.length < 5
+        ? [...array, ...mockData].filter((elem) => elem.id !== item.id)
+        : array.filter((elem) => elem.id !== item.id);
       const answers = [];
       answers.push(item);
       for (let i = 4; i !== 0; i--) {
@@ -53,18 +56,23 @@ const helper = {
   isLastQuestion: (num, points) => points.some((elem) => elem === num),
 
   filterStatistic: (correct, mistake, gameNumber, kind) => {
-    console.log(correct, mistake, gameNumber, kind);
     const correctAnswers = correct.filter((elem) => elem.kind === kind)
       .filter((item) => item.gameNum === gameNumber);
+
     const mistakeAnswers = mistake.filter((elem) => elem.kind === kind)
       .filter((item) => item.gameNum === gameNumber);
+
     const sortCorrect = correctAnswers.filter((item) => mistakeAnswers
       .every((elem) => item.id !== elem.id));
+
     const uniqueMistake = Array.from(new Set(mistakeAnswers.map((a) => a.id)))
       .map((id) => mistakeAnswers.find((a) => a.id === id));
 
+    const uniqueCorrect = Array.from(new Set(sortCorrect.map((a) => a.id)))
+      .map((id) => sortCorrect.find((a) => a.id === id));
+
     return {
-      cor: sortCorrect,
+      cor: uniqueCorrect,
       miss: uniqueMistake,
     };
   },
@@ -206,6 +214,12 @@ const helper = {
       const posWidth = group.value / maxVal;
       group.parentNode.querySelector('.slider__positive').style.width = `${posWidth * 100}%`;
       lableGroup.innerHTML = `${+group.getAttribute('value') + 1}`;
+
+      levelGame.setAttribute('value', level);
+      const maxValue = levelGame.getAttribute('max');
+      const posWidthValue = levelGame.value / maxValue;
+      levelGame.parentNode.querySelector('.slider__positive').style.width = `${posWidthValue * 100}%`;
+      lableLevel.innerHTML = `${+level + 1}`;
       helper.message('Round Changed');
     } else {
       group.setAttribute('value', `${+roundGame}`);

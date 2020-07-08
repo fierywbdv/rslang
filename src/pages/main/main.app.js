@@ -1,7 +1,12 @@
-import { setSidebarItem, speakerHandler, checkAnswer } from './common/main.utils';
+import {
+  setSidebarItem, speakerHandler, checkAnswer,
+} from './common/main.utils';
+// import notationActionHandler from './components/getNotation/notationHandler';
 import renderMainScreen from './components/main-screen/main.screen';
+import { clearRoot } from '../user/common/user.utils';
 
 import './scss/main.styles.scss';
+import 'swiper/swiper-bundle.css';
 import { store } from '../../redux/store';
 import { learnWordsAPIService } from '../../services/learnWordsAPIService';
 
@@ -18,14 +23,18 @@ class Main {
     this.setSidebarItem = setSidebarItem;
     this.renderMainScreen = renderMainScreen;
     this.speakerHandler = speakerHandler;
+    this.clearRoot = clearRoot;
+    // this.notationActionHandler = notationActionHandler;
   }
 
   async init() {
+    this.clearRoot();
     this.toggleBtnHandler();
     this.menuHandler();
     await this.renderMainScreen();
-    // this.speakerHandler();
     checkAnswer();
+    // this.notationActionHandler();
+    getUserSettings();
   }
 
   toggleBtnHandler() {
@@ -46,5 +55,11 @@ class Main {
     });
   }
 }
+
+const getUserSettings = async () => {
+  const userSettings = await learnWordsAPIService.getUserSettings(localStorage.getItem('userId'), localStorage.getItem('token'));
+  console.log('userSettings', userSettings);
+  return userSettings;
+};
 
 export default new Main();

@@ -1,5 +1,6 @@
 // import Router from '../../../router/Router';
 import { learnWordsAPIService } from '../../../services/learnWordsAPIService';
+import getNotation from '../components/getNotation/getNotation';
 
 export const setSidebarItem = () => {
   const sideMenuItems = document.querySelectorAll('.side-navbar ul li a');
@@ -79,7 +80,10 @@ export const moveCardHandler = () => {
         const current = (slide.style.right).slice(0, -1) || 0;
         slide.style.right = `${+current + 100}%`;
       });
-    } else { nextBTN.classList.add('main-btn-disable'); }
+    } else {
+      nextBTN.classList.add('main-btn-disable');
+      getNotation();
+    }
     speakerHandler(currentSlide);
     inputHandler(currentSlide);
   });
@@ -124,5 +128,4 @@ export const setSidebarHeight = () => {
 
 export const checkAnswer = () => {
   const inputsArr = Array.from(document.querySelectorAll('.main-screen-card .to-write'));
-  console.log('inputsArr', inputsArr);
 };

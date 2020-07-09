@@ -1,5 +1,6 @@
-.main-swiper .card {
+.main-swiper .card{
   width: 100%;
+  min-height: 350px;
   margin-bottom: 30px;
   -webkit-box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.1), -1px 0 2px rgba(0, 0, 0, 0.05);
   box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.1), -1px 0 2px rgba(0, 0, 0, 0.05);
@@ -11,21 +12,33 @@
   background-color: #fff !important;
   border-bottom: none !important;
 }
+.main-screen-card .card-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  padding-top: 0 !important;
+}
 
 .phrase {
-  padding-top: 20px;
   font-family: 'Tenor-Sans', sans-serif;
   font-size: 1.8em;
   color: #10707f;
+}
+
+.main-screen-card .card-spacer {
+  height: 1px;
+  border-bottom: 1px solid  rgba(0,0,0,.1);
 }
 .translate {
   padding-bottom: 20px;
 }
 .to-write {
   height: 1.5em;
+  padding-left: 7px;
   background-color: #fdf6e2;
   border: none;
   color: #10707f;
+  text-transform: lowercase;
   &::-webkit-input-placeholder {
     color: transparent;
   }

@@ -1,5 +1,5 @@
 import {
-  setSidebarItem, speakerHandler, checkAnswer,
+  setSidebarItem, checkAnswer,
 } from './common/main.utils';
 // import notationActionHandler from './components/getNotation/notationHandler';
 import renderMainScreen from './components/main-screen/main.screen';
@@ -22,7 +22,6 @@ class Main {
     this.logoElement = null;
     this.setSidebarItem = setSidebarItem;
     this.renderMainScreen = renderMainScreen;
-    this.speakerHandler = speakerHandler;
     this.clearRoot = clearRoot;
     // this.notationActionHandler = notationActionHandler;
   }
@@ -32,7 +31,7 @@ class Main {
     this.toggleBtnHandler();
     this.menuHandler();
     await this.renderMainScreen();
-    checkAnswer();
+    // checkAnswer();
     // this.notationActionHandler();
     // getUserSettings();
   }

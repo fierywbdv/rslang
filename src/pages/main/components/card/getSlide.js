@@ -1,13 +1,13 @@
 import { getDOMElement } from '../../common/main.helper';
 import getCard from './getCard';
 
-const slide = (obj, i) => {
+const slide = (word, i) => {
   const swiperSlide = getDOMElement('div', 'main-swiper swiper-slide');
   const swiperContainer = getDOMElement('div', 'main-swiper container-fluid');
   const swiperRow = getDOMElement('div', 'main-swiper row justify-content-center');
   const swiperCol = getDOMElement('div', 'col-9');
 
-  const card = getCard({}, i);
+  const card = getCard(word, i);
 
   swiperCol.append(card);
 

@@ -8,7 +8,7 @@ const renderMainScreen = async () => {
   const root = document.querySelector('#root');
   const mainSwiper = await getSwiper();
   root.append(mainSwiper);
-  generateCards();
-  moveCardHandler();
+  await generateCards();
+  await moveCardHandler();
 };
 export default renderMainScreen;

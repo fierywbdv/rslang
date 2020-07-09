@@ -261,7 +261,7 @@ class LearnWordsAPIService {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          difficulty: wordDifficulty,
+          difficulty: `${wordDifficulty}`,
           optional,
         }),
       });

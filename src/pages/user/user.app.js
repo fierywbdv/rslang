@@ -7,6 +7,9 @@ import {
   clearRoot,
 } from './common/user.utils';
 import './scss/user.styles.scss';
+import { settings } from './common/user.helper';
+
+settings();
 
 class UserPage {
   constructor() {

@@ -94,7 +94,7 @@ export const formValidation = () => {
           })
 
           const response = await learnWordsAPIService.signIn(userEmail, userPassword);
-          learnWordsAPIService.setUserSettings(response.userId, response.token, '10', {});
+          learnWordsAPIService.setUserSettings(response.userId, response.token, '10', {userCardsCount: '20'});
         }
       } else {
         setAlarm(passwordConfirm, 'mismatched');
@@ -117,6 +117,13 @@ export const loginForm = () => {
     if(login !== undefined){
       localStorage.setItem('userId', login.userId);
       localStorage.setItem('token', login.token);
+      localStorage.setItem('refreshToken', login.refreshToken);
+
+      const user = await learnWordsAPIService.getUser(localStorage.getItem('userId'), localStorage.getItem('token'));
+      
+      localStorage.setItem('userName', user.name);
+      localStorage.setItem('email', user.email);
+
       store.dispatch(autorization());
     }
   })
@@ -126,7 +133,17 @@ export const logout = () => {
   document.querySelector('.logout').addEventListener('click', () => {
     localStorage.setItem('userId', null);
     localStorage.setItem('token', null);
-    localStorage.setItem('authorized', false)
+    localStorage.setItem('userName', null);
+    localStorage.setItem('email', null);
+    localStorage.setItem('authorized', false);
+    localStorage.setItem('wordsPerDay', null);
+    localStorage.setItem('userCardsCount', null);
+    localStorage.setItem('userSetExample', null);
+    localStorage.setItem('userSetExplanation', null);
+    localStorage.setItem('userSetImage', null);
+    localStorage.setItem('userSetTranscription', null);
+    localStorage.setItem('userSetTranslate', null);
+    localStorage.setItem('refreshToken', null);
     store.dispatch(disAutorization());
     document.location.href = "/";
   })

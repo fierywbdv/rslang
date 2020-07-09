@@ -1,70 +1,102 @@
 import { combineReducers } from 'redux';
 import {
-  TOGGLE_PLAY_GAME, ASK_QUESTION, ANSWER_GAME, SET_STATISTIC_GAME,
-  SET_QUESTIONS_GAME, SET_GAME_NUMBER,
+  TOGGLE_PLAY_AUDIO_CALL,
+  SET_KIND_OF_GAME_AUDIO_CALL,
+  SET_ROUND_AND_LEVEL_GAME_AUDIO_CALL,
+  SET_GAME_NUMBER_AUDIO_CALL,
+  SET_RANDOM_GAME_NUMBER_AUDIO_CALL,
+  SET_QUESTION_NUMBER_AUDIO_CALL,
+  SET_QUESTIONS_AUDIO_CALL,
+  SET_STATISTIC_AUDIO_CALL,
 } from './audiocall-types';
 
-function togglePlayReducer(state = false, action) {
-  if (action.type === TOGGLE_PLAY_GAME) {
+function togglePlayAudioCallReducer(state = false, action) {
+  if (action.type === TOGGLE_PLAY_AUDIO_CALL) {
     return !state;
   }
   return state;
 }
-function setGameNumberReducer(state = 0, action) {
-  if (action.type === SET_GAME_NUMBER) {
-    return state += 1;
+
+function setKindOfGameAudioCallReducer(state = 'withUserWords', action) {
+  if (action.type === SET_KIND_OF_GAME_AUDIO_CALL) {
+    return action.payload;
   }
   return state;
 }
 
-function askQuestionReducer(state = {}, action) {
-  if (action.type === ASK_QUESTION) {
+function setRoundAndLevelAudioCallReducer(state = {
+  flag: true,
+  level: 1,
+  roundGame: 1,
+},
+action) {
+  if (action.type === SET_ROUND_AND_LEVEL_GAME_AUDIO_CALL) {
     return {
-      ...action.questionInfo,
+      flag: action.payload.flag !== undefined ? action.payload.flag : !state.flag,
+      level: action.payload.level,
+      roundGame: action.payload.roundGame,
     };
   }
   return state;
 }
 
-function setQuestionsReducer(state = [], action) {
-  if (action.type === SET_QUESTIONS_GAME) {
+function setGameNumberAudioCallReducer(state = 0, action) {
+  if (action.type === SET_GAME_NUMBER_AUDIO_CALL) {
+    return action.payload !== undefined ? action.payload : state + 1;
+  }
+  return state;
+}
+function setRandomGameNumberAudioCallReducer(state = 0, action) {
+  if (action.type === SET_RANDOM_GAME_NUMBER_AUDIO_CALL) {
+    return action.payload !== undefined ? action.payload : state + 1;
+  }
+  return state;
+}
+
+function setQuestionNumberAudioCallReducer(state = 0, action) {
+  if (action.type === SET_QUESTION_NUMBER_AUDIO_CALL) {
+    return action.payload !== undefined ? action.payload : state + 1;
+  }
+  return state;
+}
+
+function setQuestionsAudioCallReducer(state = [], action) {
+  if (action.type === SET_QUESTIONS_AUDIO_CALL) {
     return [...action.questions];
   }
   return state;
 }
 
-function setStatisticReducer(state = { mistake: [], correct: [] }, action) {
-  if (action.type === SET_STATISTIC_GAME) {
+function setStatisticAudioCallReducer(state = { mistake: [], correct: [] }, action) {
+  if (action.type === SET_STATISTIC_AUDIO_CALL) {
     const {
-      wordQues, mistake, game, quesNum,
+      wordQues, mistake, game, quesNum, kind,
     } = action.statistic;
     if (mistake) {
       return {
         ...state,
-        mistake: [...state.mistake, { ...wordQues, gameNum: game, ques: quesNum }],
-
+        mistake: [...state.mistake, {
+          ...wordQues, gameNum: game, ques: quesNum, kind,
+        }],
       };
     }
     return {
       ...state,
-      correct: [...state.correct, { ...wordQues, gameNum: game, ques: quesNum }],
+      correct: [...state.correct, {
+        ...wordQues, gameNum: game, ques: quesNum, kind,
+      }],
     };
   }
   return state;
 }
 
-function answerReducer(state = {}, action) {
-  if (action.type === ANSWER_GAME) {
-    return { ...action.statistic };
-  }
-  return state;
-}
-
 export const audioCallReducer = combineReducers({
-  togglePlay: togglePlayReducer,
-  askInfo: askQuestionReducer,
-  setQuestionsGame: setQuestionsReducer,
-  stat: setStatisticReducer,
-  answer: answerReducer,
-  gameNumber: setGameNumberReducer,
+  togglePlay: togglePlayAudioCallReducer,
+  kind: setKindOfGameAudioCallReducer,
+  roundAndLevel: setRoundAndLevelAudioCallReducer,
+  gameNumber: setGameNumberAudioCallReducer,
+  randomGameNumber: setRandomGameNumberAudioCallReducer,
+  questionNumber: setQuestionNumberAudioCallReducer,
+  questionsGame: setQuestionsAudioCallReducer,
+  stat: setStatisticAudioCallReducer,
 });

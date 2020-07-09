@@ -2,26 +2,28 @@ import answerline from '../answers';
 
 const gameScreenComponent = (data) => {
   const {
-    id, word, image, answer, audio, transcription
+    id, word, image, answer, audio, transcription,
   } = data;
   const generateAnswerLines = (answers = []) => {
     const answerElements = [];
-    answers.forEach((item) => {
-      answerElements.push(answerline(item));
+    answers.forEach((item, index) => {
+      answerElements.push(answerline(item, index));
     });
     return answerElements;
   };
   const template = `<div class="cover">
-                          <img src="https://raw.githubusercontent.com/irinainina/rslang-data/master/${image}" 
-                          class="profile prof-img">
-                          <i class="fas fa-volume-up profile play-audio" data-audio="${audio}" aria-hidden="true"></i>
-                      </div>
-                      <div class="answers-group" >
-                        <div class="name result-word" data-audio="${audio}" data-word-id="${id}"><span></span>${word}</div>
-                        <div class="result-translate">${transcription}</div>
-                      </div>`;
+                      <img src="https://raw.githubusercontent.com/irinainina/rslang-data/master/${image}" 
+                      class="profile prof-img">
+                      <i class="fas fa-volume-up profile play-audio" data-audio="${audio}" aria-hidden="true"></i>
+                    </div>
+                    <div class="answers-group" >
+                      <div class="result-word" data-audio="${audio}" data-word-id="${id}"><span>${word}</span></div>
+                      <div class="result-translate">${transcription}</div>
+                    </div>`;
+
   const buttonsTemplate = `<button class="next btn btn-success">Next</button>
-                           <button class="forget btn btn-success">Forget</button>`;
+                           <button class="forget btn btn-success">Forget</button>
+                           <button class="reset  btn btn-success">Stop Game</button>`;
   const startScreen = document.createElement('div');
   startScreen.setAttribute('id', 'play-screen');
   startScreen.className = 'container screen';

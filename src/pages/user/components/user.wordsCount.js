@@ -15,7 +15,7 @@ const getWordsCount = () => {
 
   const wordCount = document.createElement('span');
   wordCount.setAttribute('id', 'show-words-count');
-  wordCount.textContent = '10';
+  wordCount.textContent = `${localStorage.getItem('wordsPerDay')}`;
 
   const formWordInput = document.createElement('input');
   formWordInput.setAttribute('type', 'range');
@@ -23,7 +23,7 @@ const getWordsCount = () => {
   formWordInput.setAttribute('min', '5');
   formWordInput.setAttribute('max', '15');
   formWordInput.className = 'form-control-range';
-  formWordInput.value = '10';
+  formWordInput.value = `${localStorage.getItem('wordsPerDay')}`;
 
   formWordGroup.append(formWordLabel, wordCount, formWordInput);
   formWordCount.append(formWordIcon, formWordGroup);

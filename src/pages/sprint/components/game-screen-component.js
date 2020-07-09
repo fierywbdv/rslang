@@ -2,8 +2,7 @@ import { timeChartComponent } from './time-chart-component';
 import { cardComponent } from './card-component';
 
 export const gameScreenComponent = () => {
-  const gameScreen = `<div class="sprint-wrapper bg">
-                        <div class="game-screen">
+  const gameScreen = `<div class="game-screen">
                             <div class="game-screen__content">
                                 <div class="choice">
                                     <div class="switches">
@@ -15,7 +14,11 @@ export const gameScreenComponent = () => {
                                     <span>Изученные слова</span>
                                 </div>
                                 <div class="current-state hidden">
-                                    <span class="points">0</span>${timeChartComponent()}
+                                    <span class="points">0</span>${timeChartComponent(60)}
+                                </div>
+                                <div class="sounds">
+                                  <i class="fas fa-volume-up chosen"></i>
+                                  <i class="fab fa-itunes-note chosen"></i>
                                 </div>
                                 ${cardComponent()}
                                 <div class="arrows hidden">
@@ -23,8 +26,9 @@ export const gameScreenComponent = () => {
                                     <div class="arrow"><i class="fas fa-long-arrow-alt-right"></i></div>
                                 </div>
                                 <button type="button" class="btn btn-lg start-game">Старт</button>
+                                <div class="start-timer hidden">${timeChartComponent(5)}</div>
+                                <p class="get-ready hidden">Приготовьтесь</p>
                             </div>
-                        </div>
-                    </div>`;
+                      </div>`;
   return gameScreen;
 };

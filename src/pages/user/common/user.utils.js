@@ -1,4 +1,9 @@
-import { passwordIsValid } from '../../promo/common/promo.utils';
+import { passwordIsValid} from '../../promo/common/promo.utils';
+import { learnWordsAPIService } from '../../../services/learnWordsAPIService';
+import { store } from '../../../redux/store';
+import { disAutorization } from '../../promo/promo-redux/promo-actions';
+import Toastify from 'toastify-js';
+import 'toastify-js/src/toastify.css';
 
 export const clearRoot = () => {
   const root = document.querySelector('#root');
@@ -154,7 +159,7 @@ const settingsFormValidation = (userName, userPassword, userMail) => {
 
 export const saveSettingsHandler = () => {
   const saveButton = document.querySelector('#save-settings');
-  saveButton.addEventListener('click', () => {
+  saveButton.addEventListener('click', async () => {
     const userName = document.querySelector('#edit-user-name');
     const userMail = document.querySelector('#edit-user-mail');
     const userPassword = document.querySelector('#edit-user-pass');
@@ -183,7 +188,33 @@ export const saveSettingsHandler = () => {
         userSetTranscription,
         userSetImage,
       };
-      return userSettings;
+      try {
+        const updateUser = await learnWordsAPIService.updateUser(localStorage.getItem('userId'), localStorage.getItem('token'), userSettings.userName, userSettings.userMail, userSettings.userPassword);
+        const setUserSettings = await learnWordsAPIService.setUserSettings(localStorage.getItem('userId'), localStorage.getItem('token'), `${userWordsCount}`, {
+        userCardsCount: userSettings.userCardsCount,
+        userSetTranslate: userSettings.userSetTranslate,
+        userSetExplanation: userSettings.userSetExplanation,
+        userSetExample: userSettings.userSetExample,
+        userSetTranscription: userSettings.userSetTranscription,
+        userSetImage: userSettings.userSetImage
+        })
+
+        if(updateUser !== undefined) {
+          Toastify({
+            text: 'Settings was saved',
+            backgroundColor: 'linear-gradient(to right, #036615, #03ab22)',
+            className: 'info',
+            position: 'right',
+            gravity: 'top',
+          }).showToast();
+        }
+
+        localStorage.setItem('userName', userSettings.userName);
+        localStorage.setItem('email', userSettings.userMail);
+
+      } catch(error) {
+        console.error(error);
+      }
     }
     return true;
   });
@@ -192,7 +223,23 @@ export const saveSettingsHandler = () => {
 export const deleteProfileHandler = () => {
   const deleteProfileBTN = document.querySelector('#delete-profile');
 
-  deleteProfileBTN.addEventListener('click', (e) => {
+  deleteProfileBTN.addEventListener('click', async (e) => {
     e.preventDefault();
+    const del = await learnWordsAPIService.deleteUser(localStorage.getItem('userId'), localStorage.getItem('token'));
+    localStorage.setItem('userId', null);
+    localStorage.setItem('token', null);
+    localStorage.setItem('userName', null);
+    localStorage.setItem('email', null);
+    localStorage.setItem('authorized', false);
+    localStorage.setItem('wordsPerDay', null);
+    localStorage.setItem('userCardsCount', null);
+    localStorage.setItem('userSetExample', null);
+    localStorage.setItem('userSetExplanation', null);
+    localStorage.setItem('userSetImage', null);
+    localStorage.setItem('userSetTranscription', null);
+    localStorage.setItem('userSetTranslate', null);
+    localStorage.setItem('refreshToken', null);
+    store.dispatch(disAutorization());
+    document.location.href = "/";
   });
 };

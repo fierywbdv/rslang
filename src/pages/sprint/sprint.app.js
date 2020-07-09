@@ -35,7 +35,7 @@ class Sprint {
     document.querySelector('.card').classList.remove('hidden');
     document.querySelector('.arrows').classList.remove('hidden');
 
-    const wordsList = await learnWordsAPIService.getWordsByPageAndGroup(this.level, this.round);
+    const wordsList = await learnWordsAPIService.getWordsByPageAndGroup(this.round, this.level);
     this.createWordsArray(wordsList);
     this.createTranslationsArray(wordsList);
     this.shuffledWords = shuffle(this.words.slice());
@@ -178,6 +178,8 @@ class Sprint {
   }
 
   init() {
+    document.getElementById('root').classList.add('root');
+
     store.subscribe(() => {
       const newState = store.getState();
       if (newState.sprintReducer.screen === 'start-screen') {
@@ -222,3 +224,14 @@ class Sprint {
 }
 
 export default new Sprint();
+
+function add(a) {
+  return function (b) {
+    if (b) {
+      return add(a + b);
+    }
+    return a;
+  };
+}
+
+console.log(add(1)(2)(3));

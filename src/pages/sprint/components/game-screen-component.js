@@ -2,7 +2,8 @@ import { timeChartComponent } from './time-chart-component';
 import { cardComponent } from './card-component';
 
 export const gameScreenComponent = () => {
-  const gameScreen = `<div class="game-screen">
+  const gameScreen = `<div class="sprint-wrapper bg">
+                        <div class="game-screen">
                             <div class="game-screen__content">
                                 <div class="choice">
                                     <div class="switches">
@@ -23,6 +24,7 @@ export const gameScreenComponent = () => {
                                 </div>
                                 <button type="button" class="btn btn-lg start-game">Старт</button>
                             </div>
+                        </div>
                     </div>`;
   return gameScreen;
 };

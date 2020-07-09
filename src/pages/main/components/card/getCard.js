@@ -5,12 +5,6 @@ const getCard = (word = {}, iterator) => {
   const userSettings = getUserSettings();
   console.log(word);
 
-  // userSetTranslate: true,
-  // userSetExplanation: true, объяснение
-  // userSetExample: true,
-  // userSetTranscription: true,
-  // userSetImage: true,
-
   const currentWordID = word.id;
   const currentWord = (word.word).toLowerCase();
   const currentWordLength = currentWord.length;

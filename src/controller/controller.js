@@ -8,9 +8,18 @@ import sprint from '../pages/sprint/sprint.app';
 import user from '../pages/user/user.app';
 import helper from '../pages/audiocall/common/audiocall.helper';
 import startScreenComponent from '../pages/audiocall/components/start-screen';
+import startScreenOurGameComponent from '../pages/ourgame/components/start-screen';
 
 const controller = {
   callAction: (url) => {
+    const root = document.getElementById('root');
+    const body = document.querySelector('body');
+    root.className = '';
+    body.className = '';
+    if (root.hasChildNodes()) {
+      root.childNodes[0].remove();
+    }
+
     switch (url) {
       case 'main':
         controller.actionMain();
@@ -55,7 +64,8 @@ const controller = {
     audiocall.init();
   },
   actionOurGame() {
-    ourgame.sayHello();
+    helper.render('#root', startScreenOurGameComponent());
+    ourgame.init();
   },
   actionSavanna() {
     savanna.sayHello();
@@ -67,11 +77,6 @@ const controller = {
     user.init();
   },
 
-  sayHello(text) {
-    const hello = document.createElement('h1');
-    hello.textContent = text;
-    document.querySelector('body').append(hello);
-  },
 };
 
 export default controller;

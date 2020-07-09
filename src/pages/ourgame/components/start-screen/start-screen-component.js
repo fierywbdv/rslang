@@ -1,8 +1,8 @@
-const startScreenComponent = () => {
+const startScreenOurGameComponent = () => {
   const template = `<div class="container">
                         <div class="row">
                             <div class="col-12">
-                                <h3 class="text-center">Audio Call</h3>
+                                <h3 class="text-center">Our Game</h3>
                             </div>
                         </div>
                     </div>
@@ -66,4 +66,4 @@ const startScreenComponent = () => {
   return startScreen;
 };
 
-export default startScreenComponent;
+export default startScreenOurGameComponent;

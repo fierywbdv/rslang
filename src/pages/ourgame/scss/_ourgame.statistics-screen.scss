@@ -1,80 +1,85 @@
 /* плавная загрузка страниц */
 @-webkit-keyframes fade-in {
-    0% {
-        opacity: .1;
-    }
+  0% {
+    opacity: .1;
+  }
 
-    100% {
-        opacity: 1;
-    }
+  100% {
+    opacity: 1;
+  }
 }
 
 @-moz-keyframes fade-in {
-    0% {
-        opacity: .1;
-    }
+  0% {
+    opacity: .1;
+  }
 
-    100% {
-        opacity: 1;
-    }
+  100% {
+    opacity: 1;
+  }
 }
 
 @-o-keyframes fade-in {
-    0% {
-        opacity: .1;
-    }
+  0% {
+    opacity: .1;
+  }
 
-    100% {
-        opacity: 1;
-    }
+  100% {
+    opacity: 1;
+  }
 }
 
 @keyframes fade-in {
-    0% {
-        opacity: .1;
-    }
+  0% {
+    opacity: .1;
+  }
 
-    100% {
-        opacity: 1;
-    }
+  100% {
+    opacity: 1;
+  }
 }
 
-#audio-call-statistic.container {
-    -webkit-animation: fade-in 1.5s linear; /* Safari 4+ */
-    -moz-animation: fade-in 1.5s linear; /* Fx 5+ */
-    -o-animation: fade-in 1.5s linear; /* Opera 12+ */
-    animation: fade-in 1.5s linear; /* IE 10+, Fx 29+ */
+#root.our-game-root {
+  position: relative;
+  width: 100%;
+  padding: 0;
+  margin: 0;
 }
 
-.audio-call-body .audio-call-statistic {
-    width: 100%;
-    max-width: 640px;
-    margin: 2rem auto;
-    padding: 1.5rem 1rem;
+.container.our-game-statistic {
+  -webkit-animation: fade-in 1.5s linear; /* Safari 4+ */
+  -moz-animation: fade-in 1.5s linear; /* Fx 5+ */
+  -o-animation: fade-in 1.5s linear; /* Opera 12+ */
+  animation: fade-in 1.5s linear; /* IE 10+, Fx 29+ */
+}
+
+.our-game-body .our-game-statistic {
+  width: 100%;
+  max-width: 640px;
+  margin: 2rem auto;
+  padding: 1.5rem 1rem;
+  position: relative;
+  z-index: 3;
 
   button.restart.btn.btn-success {
     margin: 0 auto;
     margin-top: 30px;
     padding: 10px 50px;
     display: flex;
-    position: relative;
-    z-index: 3;
   }
 
 
-    .container-inner {
-        display: flex;
-        flex-flow: row wrap;
-        justify-content: space-between;
-        position: relative;
-        z-index: 3;
+  .container-inner {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
 
-        .inner-left,
-        .inner-right {
-            width: 100%;
-            max-width: 48%;
-        }
+    .inner-left,
+    .inner-right {
+      width: 100%;
+      max-width: 48%;
     }
+  }
   i.fas.fa-volume-up {
     padding-right: 10px;
     padding-left: 10px;
@@ -98,16 +103,12 @@
     font-size: 20px;
     font-weight: 700;
     padding: 10px 20px;
-    position: relative;
-    z-index: 3;
   }
 
   h3 {
     margin: 2rem 0 2rem;
-    color: #fff;
+    color: #000000;
     font-size: 45px;
-    position: relative;
-    z-index: 3;
   }
 
   @media (min-width: 320px) and (max-width: 768px) {
@@ -188,7 +189,6 @@
   .inner-right {
     .box {
       border-bottom: 20px solid #f45329;
-      border-radius: 0 0 10px 10px;
     }
 
     .box h2 {

@@ -7,6 +7,7 @@ class LearnWordsAPIService {
   constructor(url) {
     this.url = url;
   }
+
   errorHandler(error) {
     Toastify({
       text: error.message,
@@ -276,6 +277,7 @@ class LearnWordsAPIService {
 
       const addWord = await response.json();
 
+
       return addWord;
     } catch (error) {
       this.errorHandler(error);
@@ -429,8 +431,8 @@ class LearnWordsAPIService {
 
       if (response.status === 403) {
         throw new Error('Incorrect e-mail or password!');
-      } else if(response.status === 404) {
-        throw new Error(`Couldn't find a(an) user with this e-mail!`);
+      } else if (response.status === 404) {
+        throw new Error('Couldn\'t find a(an) user with this e-mail!');
       } else if (response.status !== 200) {
         throw new Error('Some ERROR!');
       }

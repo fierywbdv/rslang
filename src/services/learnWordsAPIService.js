@@ -428,8 +428,8 @@ class LearnWordsAPIService {
 
       if (response.status === 403) {
         throw new Error('Incorrect e-mail or password!');
-      } else if(response.status === 404) {
-        throw new Error(`Couldn't find a(an) user with this e-mail!`);
+      } else if (response.status === 404) {
+        throw new Error('Couldn\'t find a(an) user with this e-mail!');
       } else if (response.status !== 200) {
         throw new Error('Some ERROR!');
       }

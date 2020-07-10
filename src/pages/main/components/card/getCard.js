@@ -63,11 +63,21 @@ const getCard = (word = {}, iterator) => {
     cardFooterTranslate.textContent = `${currentWordTranslate}  |  ${currentWordTranscription}`;
   }
 
-  const cardFooterSpeakerIcon = getDOMElement('i', 'main-speaker main-i fas fa-volume-up');
-  cardFooterSpeakerIcon.setAttribute('id', iterator);
-  cardFooterSpeakerIcon.setAttribute('data-audio', currentWordAudio);
+  const cardFooterIconArea = getDOMElement('div', 'main-icon-area');
 
-  cardDiv.append(cardFooterTranslate, cardFooterSpeakerIcon);
+  const cardFooterSpeakerIcon = getDOMElement('i', 'main-speaker main-i fas fa-volume-up');
+  cardFooterSpeakerIcon.setAttribute('id', `main-speaker-${iterator}`);
+
+  const cardFooterEyeIcon = getDOMElement('i', 'main-eye main-i fas fa-eye');
+  cardFooterEyeIcon.setAttribute('id', iterator);
+  cardFooterEyeIcon.setAttribute('data-audio', currentWordAudio);
+
+  const cardFooterArrowIcon = getDOMElement('i', 'main-arrow main-i fas fa-arrow-circle-right');
+  cardFooterArrowIcon.setAttribute('id', `main-arrow-${iterator}`);
+
+  cardFooterIconArea.append(cardFooterSpeakerIcon, cardFooterEyeIcon, cardFooterArrowIcon);
+
+  cardDiv.append(cardFooterTranslate, cardFooterIconArea);
   cardFooter.append(cardDiv);
 
   card.append(cardHeader, cardBody, cardFooter);

@@ -14,6 +14,18 @@ const generateCards = async () => {
   console.log('start');
   mainSwiper.style = 'visibility: hidden';
   buttonNext.style = 'visibility: hidden';
+  document.getElementById('root').insertAdjacentHTML("afterbegin", 
+  `<div class="overlay-loader">
+	  <div class="loader">
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+	  </div>
+  </div>`);
 
   for (let i = 0; i < userCardCount; i += 1) {
     if(wordsArr[i] === undefined) {
@@ -26,8 +38,9 @@ const generateCards = async () => {
     }
   }
 
+  document.querySelector('.overlay-loader').remove();
   mainSwiper.removeAttribute('style');
   buttonNext.removeAttribute('style');
-  console.log('end')
+  console.log('end');
 };
 export default generateCards;

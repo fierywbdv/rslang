@@ -37,6 +37,7 @@ export default class View {
     this.resultsResumeGameButton = null;
     this.speechInput = null;
     this.difficultiesContainer = null;
+    this.levelContainer = null;
     this.statusBar = null;
     this.slider = null;
 
@@ -146,6 +147,10 @@ export default class View {
     this.difficultiesContainer.addEventListener(EVENTS.CLICK, onDifficultChange);
   }
 
+  initLevel(onLevelChange) {
+    this.levelContainer.addEventListener(EVENTS.CLICK, onLevelChange);
+  }
+
   initResultButton(onResultButtonClick) {
     this.resultButton.addEventListener(EVENTS.CLICK, onResultButtonClick);
   }
@@ -185,6 +190,7 @@ export default class View {
     this.speechInput = ELEMENTS.SPEECH_INPUT;
     this.stopButton = ELEMENTS.BUTTONS.STOP;
     this.difficultiesContainer = ELEMENTS.BUTTONS.DIFFICULTIES;
+    this.levelContainer = ELEMENTS.BUTTONS.LEVEL;
     this.newButton = ELEMENTS.BUTTONS.NEW;
     this.resultButton = ELEMENTS.BUTTONS.RESULTS;
     this.resultsContainer = ELEMENTS.RESULT.CONTAINER;
@@ -193,6 +199,7 @@ export default class View {
     this.statusBar = ELEMENTS.STATUS_BAR;
   }
 }
+
 const menu = document.querySelector('.side-navbar');
 const introduction = document.querySelector('.introduction');
 const body = document.querySelector('.body-speakit');
@@ -200,11 +207,11 @@ const body = document.querySelector('.body-speakit');
 document.querySelector('.menu-btn').addEventListener('click', () => {
   if ((window.location.href.split('#'))[1] === 'speakit') {
     if (menu.className === 'side-navbar shrinked') {
-      introduction.classList.remove('actives');
-      body.classList.remove('actives');
+      introduction.classList.add('speakit-actives');
+      body.classList.add('speakit-actives');
     } else {
-      introduction.classList.add('actives');
-      body.classList.add('actives');
+      introduction.classList.remove('speakit-actives');
+      body.classList.remove('speakit-actives');
     }
   }
 });

@@ -25,11 +25,11 @@
   transition: .05s ease-in;
   border-radius: 10px;
   background-color: white;
+  background: #59d1e6;
   background-image: url('../assets/img/audio.png');
   background-repeat: no-repeat;
   background-position: 10px, 0;
   background-size: 32px;
-  background: #59d1e6;
   &:focus,
   &:hover,
   &:active {
@@ -50,6 +50,10 @@
   margin: 5px;
 
   text-align: center;
+}
+.speakit_level{
+  width: 61vw;
+  justify-content: center;
 }
 
 .main-card {

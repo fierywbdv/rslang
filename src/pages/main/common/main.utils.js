@@ -189,6 +189,7 @@ export const setWordsForCards = async () => {
   const userWords = await learnWordsAPIService.getAllUserWords(localStorage.getItem('userId'), localStorage.getItem('token'));
   console.log(userWords);
   const newWords = await getWords();
+  console.log(newWords);
   const wordsForCards = newWords.filter((newWord) => userWords.every((userWord) => userWord.wordId !== newWord.id));
   return wordsForCards;
 };

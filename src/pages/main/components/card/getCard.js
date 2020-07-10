@@ -1,6 +1,8 @@
 import { getDOMElement } from '../../common/main.helper';
 import { getPhrase, getUserSettings } from '../../common/main.utils';
 
+const baseUrl = 'https://raw.githubusercontent.com/irinainina/rslang-data/master/';
+
 const getCard = (word = {}, iterator) => {
   const userSettings = getUserSettings();
   // console.log(word);
@@ -14,6 +16,7 @@ const getCard = (word = {}, iterator) => {
   const currentWordTextExample = word.textExample;
   const currentWordAudio = word.audio;
   const currentWordAudioExample = word.audioExample;
+  const currentWordImage = word.image;
 
   const card = getDOMElement('div', 'main-screen-card card unselectable');
   card.setAttribute('id', `main-card-${iterator}`);
@@ -23,7 +26,11 @@ const getCard = (word = {}, iterator) => {
   const cardHeaderText = getDOMElement('small', 'main-screen-card text-primary');
   cardHeaderText.setAttribute('id', 'main-cardheader-text');
   cardHeaderText.textContent = 'служебная информация: новое слово, сложное слово, прочее';
-  cardHeader.append(cardHeaderText);
+
+  const cardHeaderImage = getDOMElement('img', 'main-screen-image');
+  cardHeaderImage.src = `${baseUrl}${currentWordImage}`;
+
+  cardHeader.append(cardHeaderText, cardHeaderImage);
 
   const cardBody = getDOMElement('div', 'main-screen-card card-body');
   const cardBodyPhrase = getDOMElement('div', 'main-screen-card phrase');

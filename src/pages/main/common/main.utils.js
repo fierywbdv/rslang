@@ -260,14 +260,11 @@ export const getNewRandomWord = async () => {
   const newWords = await getWords();
   const word = newWords[getRandomPage(20)];
 
-  const mass = [];
-
-  for (let i = 0; i < userWords.length; i++) {
-    mass.push(userWords[i].wordId);
-  }
+  const mass = userWords.map(({ wordId }) => wordId);
 
   if (mass.indexOf(word.id) === -1) {
     return word;
   }
+
   getNewRandomWord();
 };

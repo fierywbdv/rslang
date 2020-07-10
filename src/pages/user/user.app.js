@@ -1,6 +1,7 @@
 import { renderUserScreen } from './components/user.card';
 import {
   getUserWordsCount,
+  getUserLevel,
   getUserCardsCount,
   saveSettingsHandler,
   deleteProfileHandler,
@@ -15,6 +16,7 @@ class UserPage {
   constructor() {
     this.renderUserScreen = renderUserScreen;
     this.getUserWordsCount = getUserWordsCount;
+    this.getUserLevel = getUserLevel;
     this.getUserCardsCount = getUserCardsCount;
     this.saveSettingsHandler = saveSettingsHandler;
     this.deleteProfileHandler = deleteProfileHandler;
@@ -25,6 +27,7 @@ class UserPage {
     this.clearRoot();
     this.renderUserScreen();
     this.getUserWordsCount();
+    this.getUserLevel();
     this.getUserCardsCount();
     this.saveSettingsHandler();
     this.deleteProfileHandler();

@@ -4,13 +4,21 @@
   margin-bottom: 30px;
   -webkit-box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.1), -1px 0 2px rgba(0, 0, 0, 0.05);
   box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.1), -1px 0 2px rgba(0, 0, 0, 0.05);
-  border-radius: 0 !important;
+  border-radius: 2px !important;
+  border: none;
 }
 
 .main-swiper .card-header {
+  display: flex;
+  flex-direction: column;
   padding: 1rem 1.25rem;
   background-color: #fff !important;
   border-bottom: none !important;
+  & .main-screen-image {
+    max-height: 150px;
+    width: auto;
+    margin: 0 auto;
+  }
 }
 .main-screen-card .card-body {
   display: flex;

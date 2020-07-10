@@ -24,6 +24,7 @@ export const getUserSettings = () => ({
   userSetImage: localStorage.getItem('userSetImage'),
   userSetTranscription: localStorage.getItem('userSetTranscription'),
   userSetTranslate: localStorage.getItem('userSetTranslate'),
+  userLevel: localStorage.getItem('userLevel'),
 });
 
 export const getPhrase = (iterator, size, word, wordId, text, audioExample) => {
@@ -73,6 +74,10 @@ const speakerHandler = () => {
   });
 };
 
+const addToUserWords = (wordId, word, wordDifficulty) => {
+  learnWordsAPIService.createUserWord(localStorage.getItem('userId'), wordId, localStorage.getItem('token'), wordDifficulty, { word });
+};
+
 export const inputHandler = (iterator) => {
   const currentInput = document.querySelector(`#to-write-${iterator}`);
   const currentCard = document.querySelector(`#main-card-${iterator}`);
@@ -104,7 +109,6 @@ export const inputHandler = (iterator) => {
         });
       } else {
         wordDifficulty = 'true';
-        console.log('dif', wordDifficulty);
         currentInput.classList.add('incorrect');
         new Audio('../../../assets/audio/error.mp3').play();
         setTimeout(() => {
@@ -170,10 +174,6 @@ export const setSidebarHeight = () => {
   console.log('sidebar', sidebar.style.height);
 };
 
-const addToUserWords = (wordId, word, wordDifficulty) => {
-  learnWordsAPIService.createUserWord(localStorage.getItem('userId'), wordId, localStorage.getItem('token'), wordDifficulty, { word });
-};
-
 const getRandomPage = (max) => {
   const rand = Math.random() * (max);
   return Math.floor(rand);
@@ -181,13 +181,13 @@ const getRandomPage = (max) => {
 
 const getWords = async () => {
   const page = getRandomPage(30);
-  const words = await learnWordsAPIService.getWordsByPageAndGroup(page, localStorage.getItem('userLangLevel'));
+  const group = Number(localStorage.getItem('userLevel'));
+  const words = await learnWordsAPIService.getWordsByPageAndGroup(page, group);
   return words;
 };
 
 export const setWordsForCards = async () => {
   const userWords = await learnWordsAPIService.getAllUserWords(localStorage.getItem('userId'), localStorage.getItem('token'));
-  console.log(userWords);
   const newWords = await getWords();
   const wordsForCards = newWords.filter((newWord) => userWords.every((userWord) => userWord.wordId !== newWord.id));
   return wordsForCards;
@@ -200,13 +200,12 @@ export const getNewRandomWord = async () => {
 
   const mass = [];
 
-  for(let i = 0; i< userWords.length; i++) {
+  for (let i = 0; i < userWords.length; i++) {
     mass.push(userWords[i].wordId);
   }
-  
-  if(mass.indexOf(word.id) === -1) {
+
+  if (mass.indexOf(word.id) === -1) {
     return word;
-  } else {
-    getNewRandomWord();
   }
-}
+  getNewRandomWord();
+};

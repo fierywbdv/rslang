@@ -86,7 +86,7 @@
   font-size: 1.5em;
 }
 
-#user-words-count, #user-cards-count {
+#user-words-count, #user-cards-count, #user-level {
   justify-content: center;
   padding-top: 10px;
   padding-bottom: 0;
@@ -103,7 +103,7 @@
   }
 }
 
-#user-words-count > i, #user-cards-count > i {
+#user-words-count > i, #user-cards-count > i, #user-level > i {
   padding-left: 0;
   padding-right: 12px;
   color: $main-text-color;
@@ -116,7 +116,7 @@
   padding-bottom: 20px;
   border-bottom: 1px dashed #eee;
 }
-#show-words-count, #show-cards-count {
+#show-words-count, #show-cards-count, #show-user-level {
   padding-left: 10px;
   padding-right: 5px;
   color: $main-blue-color;

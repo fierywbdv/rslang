@@ -8,8 +8,8 @@ import { logout } from './pages/promo/common/promo.utils';
 window.onload = () => {
   englishPuzzle.init();
   savanna.init();
-  // main.toggleBtnHandler();
-  // main.menuHandler();
+  main.toggleBtnHandler();
+  main.menuHandler();
   logout();
 };
 

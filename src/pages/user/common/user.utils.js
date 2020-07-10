@@ -1,8 +1,8 @@
-import { passwordIsValid} from '../../promo/common/promo.utils';
+import Toastify from 'toastify-js';
+import { passwordIsValid } from '../../promo/common/promo.utils';
 import { learnWordsAPIService } from '../../../services/learnWordsAPIService';
 import { store } from '../../../redux/store';
 import { disAutorization } from '../../promo/promo-redux/promo-actions';
-import Toastify from 'toastify-js';
 import 'toastify-js/src/toastify.css';
 
 export const clearRoot = () => {
@@ -20,6 +20,15 @@ export const getUserWordsCount = () => {
   input.addEventListener('change', (event) => {
     const wordCount = document.querySelector('#show-words-count');
     wordCount.textContent = event.target.value;
+  });
+};
+
+export const getUserLevel = () => {
+  const input = document.querySelector('#set-user-level');
+
+  input.addEventListener('change', (event) => {
+    const userLevel = document.querySelector('#show-user-level');
+    userLevel.textContent = event.target.value;
   });
 };
 
@@ -164,6 +173,7 @@ export const saveSettingsHandler = () => {
     const userMail = document.querySelector('#edit-user-mail');
     const userPassword = document.querySelector('#edit-user-pass');
     const userWordsCount = document.querySelector('#set-user-words-count').value;
+    const userLevel = document.querySelector('#set-user-level').value;
     const userCardsCount = document.querySelector('#set-user-cards-count').value;
     const userSetTranslate = document.querySelector('#user-set-translate').checked;
     const userSetExplanation = document.querySelector('#user-set-explanation').checked;
@@ -180,6 +190,7 @@ export const saveSettingsHandler = () => {
         userName: userName.value,
         userMail: userMail.value,
         userPassword: userPassword.value,
+        userLevel,
         userWordsCount,
         userCardsCount,
         userSetTranslate,
@@ -191,15 +202,16 @@ export const saveSettingsHandler = () => {
       try {
         const updateUser = await learnWordsAPIService.updateUser(localStorage.getItem('userId'), localStorage.getItem('token'), userSettings.userName, userSettings.userMail, userSettings.userPassword);
         const setUserSettings = await learnWordsAPIService.setUserSettings(localStorage.getItem('userId'), localStorage.getItem('token'), `${userWordsCount}`, {
-        userCardsCount: userSettings.userCardsCount,
-        userSetTranslate: userSettings.userSetTranslate,
-        userSetExplanation: userSettings.userSetExplanation,
-        userSetExample: userSettings.userSetExample,
-        userSetTranscription: userSettings.userSetTranscription,
-        userSetImage: userSettings.userSetImage
-        })
+          userCardsCount: userSettings.userCardsCount,
+          userLevel: userSettings.userLevel,
+          userSetTranslate: userSettings.userSetTranslate,
+          userSetExplanation: userSettings.userSetExplanation,
+          userSetExample: userSettings.userSetExample,
+          userSetTranscription: userSettings.userSetTranscription,
+          userSetImage: userSettings.userSetImage,
+        });
 
-        if(updateUser !== undefined) {
+        if (updateUser !== undefined) {
           Toastify({
             text: 'Settings was saved',
             backgroundColor: 'linear-gradient(to right, #036615, #03ab22)',
@@ -211,6 +223,7 @@ export const saveSettingsHandler = () => {
           localStorage.setItem('userName', userSettings.userName);
           localStorage.setItem('email', userSettings.userMail);
           localStorage.setItem('wordsPerDay', userSettings.userWordsCount);
+          localStorage.setItem('userLevel', userSettings.userLevel);
           localStorage.setItem('userCardsCount', userSettings.userCardsCount);
           localStorage.setItem('userSetExample', userSettings.userSetExample);
           localStorage.setItem('userSetExplanation', userSettings.userSetExplanation);
@@ -218,8 +231,7 @@ export const saveSettingsHandler = () => {
           localStorage.setItem('userSetTranscription', userSettings.userSetTranscription);
           localStorage.setItem('userSetTranslate', userSettings.userSetTranslate);
         }
-
-      } catch(error) {
+      } catch (error) {
         console.error(error);
       }
     }
@@ -239,6 +251,7 @@ export const deleteProfileHandler = () => {
     localStorage.setItem('email', null);
     localStorage.setItem('authorized', false);
     localStorage.setItem('wordsPerDay', null);
+    localStorage.setItem('userLevel', null);
     localStorage.setItem('userCardsCount', null);
     localStorage.setItem('userSetExample', null);
     localStorage.setItem('userSetExplanation', null);
@@ -247,6 +260,6 @@ export const deleteProfileHandler = () => {
     localStorage.setItem('userSetTranslate', null);
     localStorage.setItem('refreshToken', null);
     store.dispatch(disAutorization());
-    document.location.href = "/";
+    document.location.href = '/';
   });
 };

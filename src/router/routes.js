@@ -39,6 +39,11 @@ const routes = [
     name: 'User',
     url: 'user',
   },
+  {
+    id: 9,
+    name: 'Team',
+    url: 'team',
+  },
 
 ];
 

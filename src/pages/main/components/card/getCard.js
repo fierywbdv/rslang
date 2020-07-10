@@ -5,7 +5,7 @@ const baseUrl = 'https://raw.githubusercontent.com/irinainina/rslang-data/master
 
 const getCard = (word = {}, iterator) => {
   const userSettings = getUserSettings();
-  
+
   const currentWordID = word.id;
   const currentWord = (word.word).toLowerCase();
   const currentWordLength = currentWord.length;
@@ -16,6 +16,7 @@ const getCard = (word = {}, iterator) => {
   const currentWordAudio = word.audio;
   const currentWordAudioExample = word.audioExample;
   const currentWordImage = word.image;
+  const currentWordAudioExplanation = word.audioMeaning;
 
   const card = getDOMElement('div', 'main-screen-card card unselectable');
   card.setAttribute('id', `main-card-${iterator}`);
@@ -46,7 +47,9 @@ const getCard = (word = {}, iterator) => {
     currentWord,
     currentWordID,
     currentWordTextExample,
-    currentWordAudioExample);
+    currentWordAudioExample,
+    currentWordAudio,
+    currentWordAudioExplanation);
 
   const spacer = getDOMElement('div', 'card-spacer');
 

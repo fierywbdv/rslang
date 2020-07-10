@@ -27,10 +27,12 @@ export const getUserSettings = () => ({
   userLevel: localStorage.getItem('userLevel'),
 });
 
-export const getPhrase = (iterator, size, word, wordId, text, audioExample) => {
-  const inputLength = (word.match(/[lijft]/g)) ? size - 1 : size;
+export const getPhrase = (iterator, size, word, wordId, text, audioExample, audioWord, audioExplanation) => {
+  let inputLength = (word.match(/[lijft]/g)) ? size - 1 : size;
+  inputLength = (word.match(/[mw]/g)) ? inputLength + 1 : inputLength;
   const input = `<input id = "to-write-${iterator}" class="to-write"size = ${inputLength}
-   placeholder = ${word} spellcheck = "false" data = ${wordId} data-audio-example = ${audioExample}>`;
+   placeholder = ${word} spellcheck = "false" data = ${wordId} data-audio-example = ${audioExample}
+   data-audio = ${audioWord} data-audio-explanation = ${audioExplanation}>`;
 
   const regExp = /<b.*?>.*?<\/b.*?>/si;
   const phrase = text.replace(regExp, input);
@@ -92,20 +94,80 @@ export const inputHandler = (iterator) => {
   currentInput.addEventListener('keydown', (e) => {
     if (e.keyCode === 13) {
       if (currentInput.value === currentInput.placeholder) {
-        nextBTN.classList.remove('main-btn-disable');
-        const urlAudio = currentInput.getAttribute('data-audio-example');
-        const audio = new Audio(`${baseUrl}${urlAudio}`);
-        audio.play();
         currentInput.style.color = '#34c716';
         currentInput.blur();
         currentCard.setAttribute('guessed', 'true');
         addToUserWords(currentInput.getAttribute('data'), currentInput.placeholder, wordDifficulty);
 
-        audio.addEventListener('ended', () => {
-          const nextBtnIsDisable = nextBTN.classList.contains('main-btn-disable');
-          if (!nextBtnIsDisable) {
-            nextBTN.click();
-          } else { getNotation(); }
+        const urlAudio = currentInput.getAttribute('data-audio');
+        const audioWord = new Audio(`${baseUrl}${urlAudio}`);
+        const urlAudioExample = currentInput.getAttribute('data-audio-example');
+        const audioExample = new Audio(`${baseUrl}${urlAudioExample}`);
+        const urlAudioExplanation = currentInput.getAttribute('data-audio-explanation');
+        const audioExplanation = new Audio(`${baseUrl}${urlAudioExplanation}`);
+
+        audioWord.play();
+
+        if (localStorage.getItem('userSetExample') === 'true') {
+          audioWord.addEventListener('ended', () => {
+            setTimeout(() => {
+              audioExample.play();
+            }, 500);
+          });
+          if (localStorage.getItem('userSetExplanation') === 'true') {
+            audioExample.addEventListener('ended', () => {
+              setTimeout(() => {
+                audioExplanation.play();
+              }, 500);
+            });
+          }
+        } else if (localStorage.getItem('userSetExplanation') === 'true') {
+          audioWord.addEventListener('ended', () => {
+            setTimeout(() => {
+              audioExplanation.play();
+            }, 500);
+          });
+        }
+
+        audioWord.addEventListener('ended', () => {
+          if (localStorage.getItem('userSetExample') === 'true') {
+            audioExample.addEventListener('ended', () => {
+              if (localStorage.getItem('userSetExplanation') === 'true') {
+                audioExplanation.addEventListener('ended', () => {
+                  nextBTN.classList.remove('main-btn-disable');
+                  const nextBtnIsDisable = nextBTN.classList.contains('main-btn-disable');
+                  if (!nextBtnIsDisable) {
+                    nextBTN.click();
+                  } else { getNotation(); }
+                });
+              } else {
+                nextBTN.classList.remove('main-btn-disable');
+                const nextBtnIsDisable = nextBTN.classList.contains('main-btn-disable');
+                if (!nextBtnIsDisable) {
+                  nextBTN.click();
+                } else { getNotation(); }
+              }
+            });
+          } else if (localStorage.getItem('userSetExplanation') === 'true') {
+            audioExplanation.addEventListener('ended', () => {
+              nextBTN.classList.remove('main-btn-disable');
+              const nextBtnIsDisable = nextBTN.classList.contains('main-btn-disable');
+              if (!nextBtnIsDisable) {
+                nextBTN.click();
+              } else { getNotation(); }
+            });
+          } else {
+            nextBTN.classList.remove('main-btn-disable');
+            const nextBtnIsDisable = nextBTN.classList.contains('main-btn-disable');
+            if (!nextBtnIsDisable) {
+              nextBTN.click();
+            } else { getNotation(); }
+          }
+          // nextBTN.classList.remove('main-btn-disable');
+          // const nextBtnIsDisable = nextBTN.classList.contains('main-btn-disable');
+          // if (!nextBtnIsDisable) {
+          //   nextBTN.click();
+          // } else { getNotation(); }
         });
       } else {
         wordDifficulty = 'true';

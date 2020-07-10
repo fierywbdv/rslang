@@ -109,7 +109,6 @@ export const inputHandler = (iterator) => {
         });
       } else {
         wordDifficulty = 'true';
-        console.log('dif', wordDifficulty);
         currentInput.classList.add('incorrect');
         new Audio('../../../assets/audio/error.mp3').play();
         setTimeout(() => {
@@ -203,13 +202,12 @@ export const getNewRandomWord = async () => {
 
   const mass = [];
 
-  for(let i = 0; i< userWords.length; i++) {
+  for (let i = 0; i < userWords.length; i++) {
     mass.push(userWords[i].wordId);
   }
-  
-  if(mass.indexOf(word.id) === -1) {
+
+  if (mass.indexOf(word.id) === -1) {
     return word;
-  } else {
-    getNewRandomWord();
   }
-}
+  getNewRandomWord();
+};

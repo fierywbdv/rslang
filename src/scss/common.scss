@@ -494,3 +494,15 @@ nav.side-navbar.shrinked .sidebar-header .title {
 .sprint-wrapper {
   min-height: 100vh;
 }
+
+.body-speakit {
+
+  .main-card {
+    position: relative;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+}

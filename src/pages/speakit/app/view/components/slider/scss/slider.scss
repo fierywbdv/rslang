@@ -45,13 +45,6 @@
     outline: none;
     .slider__button-icon {
       background-color: rgba(136, 169, 212, 0.4);
-
-      // box-shadow: 1px 1px 10px 4px white;
-
-      // @include media-tablet {
-      //   transform: scale(0.8);
-      // }
-
     }
   }
 }
@@ -68,8 +61,6 @@
   background-repeat: no-repeat;
   background-position: 50% 50%;
 
-
-  // @include transition;
 
   @include media-desktop {
     left: 30%;

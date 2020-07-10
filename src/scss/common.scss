@@ -211,7 +211,7 @@ nav.navbar .menu-btn.active span:last-of-type {
 }
 
 nav.side-navbar {
-  min-height: 100vh;
+  height: calc(100vh - 78px);
   background: $main-light-color;
   min-width: 200px;
   max-width: 200px;
@@ -477,32 +477,32 @@ nav.side-navbar.shrinked .sidebar-header .title {
 }
 
 // Add for fix bugs
-
-.introduction {
-  min-height: 100vh;
-}
-
-#root {
-  min-height: 100vh;
-  overflow: hidden;
-}
-
-.body-speakit {
-  min-height: 100vh;
-}
-
-.sprint-wrapper {
-  min-height: 100vh;
-}
-
-.body-speakit {
-
-  .main-card {
-    position: relative;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    flex-wrap: wrap;
-  }
-
-}
+//
+//.introduction {
+//  min-height: 100vh;
+//}
+//
+//#root {
+//  min-height: 100vh;
+//  overflow: hidden;
+//}
+//
+//.body-speakit {
+//  min-height: 100vh;
+//}
+//
+//.sprint-wrapper {
+//  min-height: 100vh;
+//}
+//
+//.body-speakit {
+//
+//  .main-card {
+//    position: relative;
+//    display: flex;
+//    justify-content: space-around;
+//    align-items: center;
+//    flex-wrap: wrap;
+//  }
+//
+//}

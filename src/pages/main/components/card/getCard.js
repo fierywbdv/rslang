@@ -44,20 +44,39 @@ const getCard = (word = {}, iterator) => {
 
   const spacer = getDOMElement('div', 'card-spacer');
 
+  if(localStorage.getItem('userSetExample') === 'false') {
+    document.querySelectorAll('.phrase').forEach((el) => {
+      const start = el.innerHTML.indexOf('<');
+      const end = el.innerHTML.indexOf('>');
+      const res = el.innerHTML.slice(start, end+1);
+      el.innerHTML = res;
+    });
+  }
+
   const cardTranslateExample = getDOMElement('div', 'main-screen-card translate-example');
   cardTranslateExample.textContent = currentWordExplanation;
   cardBody.append(cardBodyPhrase, spacer, cardTranslateExample);
 
-  // if (localStorage.getItem('userSetExplanation') === 'false') {
-  //   document.querySelectorAll('.translate-example').forEach((el) => {
-  //     el.style = "visibility: hidden;"
-  //   });
-  // }
+  if (localStorage.getItem('userSetExplanation') === 'false') {
+    document.querySelectorAll('.translate-example').forEach((el) => {
+      el.style = "visibility: hidden;"
+    });
+  }
 
   const cardFooter = getDOMElement('div', 'main-screen-card card-footer text-muted');
   const cardDiv = getDOMElement('div', 'main-screen-card card-footer-area');
   const cardFooterTranslate = getDOMElement('span', 'main-screen-card card-footer-translate');
-  cardFooterTranslate.textContent = `${currentWordTranslate}  |  ${currentWordTranscription}`;
+
+  if (localStorage.getItem('userSetTranslate') === 'false' && localStorage.getItem('userSetTranscription') === 'false') {
+    cardFooterTranslate.textContent = '';//`${currentWordTranslate}  |  ${currentWordTranscription}`;
+  } else if(localStorage.getItem('userSetTranslate') === 'true' && localStorage.getItem('userSetTranscription') === 'false'){
+    cardFooterTranslate.textContent = `${currentWordTranslate}`;//`${currentWordTranslate}  |  ${currentWordTranscription}`;
+  } else if(localStorage.getItem('userSetTranslate') === 'false' && localStorage.getItem('userSetTranscription') === 'true') {
+    cardFooterTranslate.textContent = `${currentWordTranscription}`;
+  } else {
+    cardFooterTranslate.textContent = `${currentWordTranslate}  |  ${currentWordTranscription}`;
+  }
+
   const cardFooterSpeakerIcon = getDOMElement('i', 'main-speaker main-i fas fa-volume-up');
   cardFooterSpeakerIcon.setAttribute('id', iterator);
   cardFooterSpeakerIcon.setAttribute('data-audio', currentWordAudio);
@@ -66,6 +85,21 @@ const getCard = (word = {}, iterator) => {
   cardFooter.append(cardDiv);
 
   card.append(cardHeader, cardBody, cardFooter);
+
+  const baseUrl = 'https://raw.githubusercontent.com/irinainina/rslang-data/master/';
+  const currentWordImage = word.image;
+
+  const cardHeaderImage = getDOMElement('img', 'main-screen-image');
+  cardHeaderImage.src = `${baseUrl}${currentWordImage}`;
+
+  cardHeader.append(cardHeaderText, cardHeaderImage);
+
+  if(localStorage.getItem('userSetImage') === 'false') {
+    document.querySelectorAll('.main-screen-image').forEach((el) => {
+      el.style = "display: none;"
+    })
+  }
+
   return card;
 };
 

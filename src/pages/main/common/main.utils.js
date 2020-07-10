@@ -24,6 +24,7 @@ export const getUserSettings = () => ({
   userSetImage: localStorage.getItem('userSetImage'),
   userSetTranscription: localStorage.getItem('userSetTranscription'),
   userSetTranslate: localStorage.getItem('userSetTranslate'),
+  userLevel: localStorage.getItem('userLevel'),
 });
 
 export const getPhrase = (iterator, size, word, wordId, text, audioExample) => {
@@ -71,6 +72,10 @@ const speakerHandler = () => {
       new Audio(`${baseUrl}${urlAudio}`).play();
     });
   });
+};
+
+const addToUserWords = (wordId, word, wordDifficulty) => {
+  learnWordsAPIService.createUserWord(localStorage.getItem('userId'), wordId, localStorage.getItem('token'), wordDifficulty, { word });
 };
 
 export const inputHandler = (iterator) => {
@@ -170,18 +175,15 @@ export const setSidebarHeight = () => {
   console.log('sidebar', sidebar.style.height);
 };
 
-const addToUserWords = (wordId, word, wordDifficulty) => {
-  learnWordsAPIService.createUserWord(localStorage.getItem('userId'), wordId, localStorage.getItem('token'), wordDifficulty, { word });
-};
-
 const getRandomPage = () => {
-  const rand = Math.random() * (29 + 1);
+  const rand = Math.random() * (29);
   return Math.floor(rand);
 };
 
 const getWords = async () => {
   const page = getRandomPage();
-  const words = await learnWordsAPIService.getWordsByPageAndGroup(page, localStorage.getItem('userLangLevel'));
+  const group = Number(localStorage.getItem('userLevel'));
+  const words = await learnWordsAPIService.getWordsByPageAndGroup(page, group);
   return words;
 };
 

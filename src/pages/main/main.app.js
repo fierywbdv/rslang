@@ -1,5 +1,5 @@
 import {
-  setSidebarItem, greeting,
+  setSidebarItem, greeting, toggleBtnHandler,
 } from './common/main.utils';
 // import notationActionHandler from './components/getNotation/notationHandler';
 import renderMainScreen from './components/main-screen/main.screen';
@@ -28,8 +28,8 @@ class Main {
 
   async init() {
     this.clearRoot();
-    this.toggleBtnHandler();
-    this.menuHandler();
+    // this.toggleBtnHandler();
+    // this.menuHandler();
     await this.renderMainScreen();
     // checkAnswer();
     // this.notationActionHandler();

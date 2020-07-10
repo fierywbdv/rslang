@@ -10,7 +10,7 @@ const getCardHeader = () => {
   headerText.innerText = 'Настройка профиля';
 
   const headerIcon = document.createElement('i');
-  headerIcon.className = 'fas col-1 fa-user-cog';
+  headerIcon.className = 'fas col-1 fa-user-cog user-i';
 
   headerDiv.append(headerIcon, headerText);
   userCardHeader.append(headerDiv);

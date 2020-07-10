@@ -3,7 +3,7 @@ import { getPhrase, getUserSettings } from '../../common/main.utils';
 
 const getCard = (word = {}, iterator) => {
   const userSettings = getUserSettings();
-  console.log(word);
+  // console.log(word);
 
   const currentWordID = word.id;
   const currentWord = (word.word).toLowerCase();

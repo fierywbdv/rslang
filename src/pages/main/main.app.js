@@ -1,5 +1,5 @@
 import {
-  setSidebarItem, checkAnswer,
+  setSidebarItem, greeting,
 } from './common/main.utils';
 // import notationActionHandler from './components/getNotation/notationHandler';
 import renderMainScreen from './components/main-screen/main.screen';
@@ -14,7 +14,7 @@ if (store.getState().promoReducer.authorized === 'false') {
   document.location.href = '/';
 }
 
-// greeting();
+greeting();
 
 class Main {
   constructor() {

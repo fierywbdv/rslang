@@ -105,6 +105,10 @@ nav.navbar .nav-menu {
   }
 }
 
+nav.navbar .greeting-for-user {
+  color: $main-blue-color;
+}
+
 nav.navbar .dropdown-menu {
   right: 0;
   min-width: 120px;

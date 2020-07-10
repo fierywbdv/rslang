@@ -1,10 +1,11 @@
-import { getUserSettings, getWord } from '../../common/main.utils';
+import { getUserSettings, setWordsForCards } from '../../common/main.utils';
+
 import getSlide from './getSlide';
 
 const generateCards = async () => {
   const mainSwiper = document.querySelector('.main-swiper .swiper-wrapper');
 
-  const wordsArr = await getWord();
+  const wordsArr = await setWordsForCards();
 
   const userSettings = getUserSettings();
   const userCardCount = userSettings.userCardsCount;

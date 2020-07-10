@@ -27,7 +27,7 @@ export const getUserSettings = () => ({
 });
 
 export const getPhrase = (iterator, size, word, wordId, text, audioExample) => {
-  const inputLength = (word.match(/[lijf]/g)) ? size - 1 : size;
+  const inputLength = (word.match(/[lijft]/g)) ? size - 1 : size;
   const input = `<input id = "to-write-${iterator}" class="to-write"size = ${inputLength}
    placeholder = ${word} spellcheck = "false" data = ${wordId} data-audio-example = ${audioExample}>`;
 
@@ -78,7 +78,7 @@ export const inputHandler = (iterator) => {
   const currentCard = document.querySelector(`#main-card-${iterator}`);
   const nextBTN = document.querySelector('#main-button-next');
   currentInput.focus();
-  let wordDifficulty = 0;
+  let wordDifficulty = 'false';
 
   if (currentCard.getAttribute('guessed') === 'false') {
     nextBTN.classList.add('main-btn-disable');
@@ -86,8 +86,6 @@ export const inputHandler = (iterator) => {
 
   currentInput.addEventListener('keydown', (e) => {
     if (e.keyCode === 13) {
-      console.log('currentInput.value ', currentInput.value, 'currentInput.placeholder ', currentInput.placeholder);
-      console.log(currentInput.value === currentInput.placeholder);
       if (currentInput.value === currentInput.placeholder) {
         nextBTN.classList.remove('main-btn-disable');
         const urlAudio = currentInput.getAttribute('data-audio-example');
@@ -96,7 +94,7 @@ export const inputHandler = (iterator) => {
         currentInput.style.color = '#34c716';
         currentInput.blur();
         currentCard.setAttribute('guessed', 'true');
-        addToUserWords(currentInput.getAttribute('data'), toString(wordDifficulty));
+        addToUserWords(currentInput.getAttribute('data'), currentInput.placeholder, wordDifficulty);
 
         audio.addEventListener('ended', () => {
           const nextBtnIsDisable = nextBTN.classList.contains('main-btn-disable');
@@ -105,8 +103,8 @@ export const inputHandler = (iterator) => {
           } else { getNotation(); }
         });
       } else {
-        wordDifficulty += 1;
-        console.log('dif', toString(wordDifficulty));
+        wordDifficulty = 'true';
+        console.log('dif', wordDifficulty);
         currentInput.classList.add('incorrect');
         new Audio('../../../assets/audio/error.mp3').play();
         setTimeout(() => {
@@ -157,7 +155,7 @@ export const moveCardHandler = () => {
 
 export async function greeting() {
   const greetingForUser = document.querySelector('.greeting-for-user');
-  greetingForUser.innerHTML = `Привет, ${localStorage.getItem('userName')}`;
+  greetingForUser.innerHTML = `Привет, ${localStorage.getItem('userName')}!`;
 }
 
 export const setSidebarHeight = () => {
@@ -172,12 +170,25 @@ export const setSidebarHeight = () => {
   console.log('sidebar', sidebar.style.height);
 };
 
-export const getWord = async () => {
-  const words = await learnWordsAPIService.getWordsByPageAndGroup(0, 0);
-  console.log(words);
+const addToUserWords = (wordId, word, wordDifficulty) => {
+  learnWordsAPIService.createUserWord(localStorage.getItem('userId'), wordId, localStorage.getItem('token'), wordDifficulty, { word });
+};
+
+const getRandomPage = () => {
+  const rand = Math.random() * (29 + 1);
+  return Math.floor(rand);
+};
+
+const getWord = async () => {
+  const page = getRandomPage();
+  const words = await learnWordsAPIService.getWordsByPageAndGroup(page, localStorage.getItem('userLangLevel'));
   return words;
 };
 
-const addToUserWords = (wordId, wordDifficulty) => {
-  learnWordsAPIService.createUserWord(localStorage.getItem('userId'), wordId, localStorage.getItem('token'), wordDifficulty, {});
+export const setWordsForCards = async () => {
+  const userWords = await learnWordsAPIService.getAllUserWords(localStorage.getItem('userId'), localStorage.getItem('token'));
+  console.log(userWords);
+  const newWords = await getWord();
+  const wordsForCards = newWords.filter((newWord) => userWords.every((userWord) => userWord.wordId !== newWord.id));
+  return wordsForCards;
 };

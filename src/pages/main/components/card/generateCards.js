@@ -11,9 +11,15 @@ const generateCards = async () => {
   const userSettings = getUserSettings();
   const userCardCount = userSettings.userCardsCount;
 
-  console.log('start');
   mainSwiper.style = 'visibility: hidden';
   buttonNext.style = 'visibility: hidden';
+  document.getElementById('root').insertAdjacentHTML("afterbegin", 
+  `<div class="cssload-thecube">
+	<div class="cssload-cube cssload-c1"></div>
+	<div class="cssload-cube cssload-c2"></div>
+	<div class="cssload-cube cssload-c4"></div>
+	<div class="cssload-cube cssload-c3"></div>
+</div>`);
 
   for (let i = 0; i < userCardCount; i += 1) {
     if(wordsArr[i] === undefined) {
@@ -26,8 +32,8 @@ const generateCards = async () => {
     }
   }
 
+  document.querySelector('.cssload-thecube').remove();
   mainSwiper.removeAttribute('style');
   buttonNext.removeAttribute('style');
-  console.log('end')
 };
 export default generateCards;

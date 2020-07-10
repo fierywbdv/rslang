@@ -41,6 +41,12 @@ const getCard = (word = {}, iterator) => {
   cardTranslateExample.textContent = currentWordExplanation;
   cardBody.append(cardBodyPhrase, spacer, cardTranslateExample);
 
+  // if (localStorage.getItem('userSetExplanation') === 'false') {
+  //   document.querySelectorAll('.translate-example').forEach((el) => {
+  //     el.style = "visibility: hidden;"
+  //   });
+  // }
+
   const cardFooter = getDOMElement('div', 'main-screen-card card-footer text-muted');
   const cardDiv = getDOMElement('div', 'main-screen-card card-footer-area');
   const cardFooterTranslate = getDOMElement('span', 'main-screen-card card-footer-translate');

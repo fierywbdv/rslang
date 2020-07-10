@@ -179,7 +179,7 @@ const getRandomPage = () => {
   return Math.floor(rand);
 };
 
-const getWord = async () => {
+const getWords = async () => {
   const page = getRandomPage();
   const words = await learnWordsAPIService.getWordsByPageAndGroup(page, localStorage.getItem('userLangLevel'));
   return words;
@@ -188,7 +188,7 @@ const getWord = async () => {
 export const setWordsForCards = async () => {
   const userWords = await learnWordsAPIService.getAllUserWords(localStorage.getItem('userId'), localStorage.getItem('token'));
   console.log(userWords);
-  const newWords = await getWord();
+  const newWords = await getWords();
   const wordsForCards = newWords.filter((newWord) => userWords.every((userWord) => userWord.wordId !== newWord.id));
   return wordsForCards;
 };

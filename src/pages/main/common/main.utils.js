@@ -80,7 +80,10 @@ const addToUserWords = (wordId, word, wordDifficulty) => {
   learnWordsAPIService.createUserWord(localStorage.getItem('userId'), wordId, localStorage.getItem('token'), wordDifficulty, { word });
 };
 
-export const inputHandler = (iterator) => {
+export const inputHandler = (iterator, slidesCount) => {
+  console.log('iterator ', iterator);
+  const lastSlide = slidesCount - 1;
+  console.log('lastSlide ', lastSlide);
   const currentInput = document.querySelector(`#to-write-${iterator}`);
   const currentCard = document.querySelector(`#main-card-${iterator}`);
   const nextBTN = document.querySelector('#main-button-next');
@@ -135,39 +138,34 @@ export const inputHandler = (iterator) => {
               if (localStorage.getItem('userSetExplanation') === 'true') {
                 audioExplanation.addEventListener('ended', () => {
                   nextBTN.classList.remove('main-btn-disable');
-                  const nextBtnIsDisable = nextBTN.classList.contains('main-btn-disable');
-                  if (!nextBtnIsDisable) {
-                    nextBTN.click();
-                  } else { getNotation(); }
+                  if (iterator === lastSlide) {
+                    nextBTN.classList.add('main-btn-disable');
+                    getNotation();
+                  } else { nextBTN.click(); }
                 });
               } else {
                 nextBTN.classList.remove('main-btn-disable');
-                const nextBtnIsDisable = nextBTN.classList.contains('main-btn-disable');
-                if (!nextBtnIsDisable) {
-                  nextBTN.click();
-                } else { getNotation(); }
+                if (iterator === lastSlide) {
+                  nextBTN.classList.add('main-btn-disable');
+                  getNotation();
+                } else { nextBTN.click(); }
               }
             });
           } else if (localStorage.getItem('userSetExplanation') === 'true') {
             audioExplanation.addEventListener('ended', () => {
               nextBTN.classList.remove('main-btn-disable');
-              const nextBtnIsDisable = nextBTN.classList.contains('main-btn-disable');
-              if (!nextBtnIsDisable) {
-                nextBTN.click();
-              } else { getNotation(); }
+              if (iterator === lastSlide) {
+                nextBTN.classList.add('main-btn-disable');
+                getNotation();
+              } else { nextBTN.click(); }
             });
           } else {
             nextBTN.classList.remove('main-btn-disable');
-            const nextBtnIsDisable = nextBTN.classList.contains('main-btn-disable');
-            if (!nextBtnIsDisable) {
-              nextBTN.click();
-            } else { getNotation(); }
+            if (iterator === lastSlide) {
+              nextBTN.classList.add('main-btn-disable');
+              getNotation();
+            } else { nextBTN.click(); }
           }
-          // nextBTN.classList.remove('main-btn-disable');
-          // const nextBtnIsDisable = nextBTN.classList.contains('main-btn-disable');
-          // if (!nextBtnIsDisable) {
-          //   nextBTN.click();
-          // } else { getNotation(); }
         });
       } else {
         wordDifficulty = 'true';
@@ -187,9 +185,10 @@ export const moveCardHandler = () => {
   const nextBTN = document.querySelector('#main-button-next');
   const slidesArr = Array.from(document.querySelectorAll('.main-swiper .swiper-slide'));
   let currentSlide = 0;
+  const slidesCount = slidesArr.length;
 
   speakerHandler();
-  inputHandler(currentSlide);
+  inputHandler(currentSlide, slidesCount);
 
   nextBTN.addEventListener('click', () => {
     const isNotLastSlide = currentSlide < slidesArr.length - 1;
@@ -198,7 +197,7 @@ export const moveCardHandler = () => {
       nextBTN.classList.remove('main-btn-disable');
       moveToRight();
       currentSlide += 1;
-      inputHandler(currentSlide);
+      inputHandler(currentSlide, slidesCount);
       if (currentSlide === slidesArr.length - 1) {
         nextBTN.classList.add('main-btn-disable');
       }
@@ -213,7 +212,7 @@ export const moveCardHandler = () => {
       prevBTN.classList.remove('main-btn-disable');
       moveToLeft();
       currentSlide -= 1;
-      inputHandler(currentSlide);
+      inputHandler(currentSlide, slidesCount);
     }
     if (currentSlide === 0) { prevBTN.classList.add('main-btn-disable'); }
   });

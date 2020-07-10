@@ -73,8 +73,8 @@ class Audiocall {
   async setWords(page, group, kind) {
     const startButton = document.getElementById('start-play');
     const customStart = document.getElementById('custom-start');
-    customStart.classList.add('disable')
-    startButton.classList.add('disable')
+    customStart.classList.add('disable');
+    startButton.classList.add('disable');
     const state = store.getState();
     const { gameNumber, randomGameNumber } = state.audioCallReducer;
     if (kind === 'withRandomWords') {
@@ -101,13 +101,13 @@ class Audiocall {
           const restartWords = this.userWords.map((item) => ({ ...item.optional }));
           const restartWordsForGame = restartWords.slice(0, COUNT_WORDS_PER_GAMES);
           store.dispatch(setQuestionsAudioCall(restartWordsForGame));
-          customStart.classList.remove('disable')
-          startButton.classList.remove('disable')
+          customStart.classList.remove('disable');
+          startButton.classList.remove('disable');
           this.playGameQuestion();
         };
         if (!wordsForGame.length) {
           Toastify({
-            text: 'Words finished. You will start from begin',
+            text: 'Слова законьчились. Вы начнете сначала',
             duration: 3000,
             close: true,
             gravity: 'top',
@@ -117,8 +117,8 @@ class Audiocall {
             callback: callBackFinish,
           }).showToast();
         } else {
-          customStart.classList.remove('disable')
-          startButton.classList.remove('disable')
+          customStart.classList.remove('disable');
+          startButton.classList.remove('disable');
           this.playGameQuestion();
         }
       }

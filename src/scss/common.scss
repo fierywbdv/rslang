@@ -464,6 +464,10 @@ nav.side-navbar.shrinked .sidebar-header .title {
     transform: none;
   }
 
+  .brand-text.d-inline-block {
+    display: none !important;
+  }
+
 }
 
 // Add for fix bugs

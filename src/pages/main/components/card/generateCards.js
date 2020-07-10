@@ -3,12 +3,17 @@ import { getUserSettings, setWordsForCards, getNewRandomWord } from '../../commo
 import getSlide from './getSlide';
 
 const generateCards = async () => {
+  const buttonNext = document.querySelector('.swiper-button-next')
   const mainSwiper = document.querySelector('.main-swiper .swiper-wrapper');
 
   const wordsArr = await setWordsForCards();
 
   const userSettings = getUserSettings();
   const userCardCount = userSettings.userCardsCount;
+
+  console.log('start');
+  mainSwiper.style = 'visibility: hidden';
+  buttonNext.style = 'visibility: hidden';
 
   for (let i = 0; i < userCardCount; i += 1) {
     if(wordsArr[i] === undefined) {
@@ -20,5 +25,9 @@ const generateCards = async () => {
       mainSwiper.append(slide);
     }
   }
+
+  mainSwiper.removeAttribute('style');
+  buttonNext.removeAttribute('style');
+  console.log('end')
 };
 export default generateCards;

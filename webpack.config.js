@@ -47,10 +47,10 @@ module.exports = {
         from: './pages/promo/assets/img/',
         to: './assets/promo/img/',
       },
-      {
-        from: './pages/main/components/some_component/assets/',
-        to: './assets/main/',
-      },
+      // {
+      //   from: './pages/main/components/some_component/assets/',
+      //   to: './assets/main/',
+      // },
       {
         from: './pages/sprint/assets/audio/',
         to: './assets/audio/',

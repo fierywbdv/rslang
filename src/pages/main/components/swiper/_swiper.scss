@@ -1,0 +1,9 @@
+.main-swiper.swiper-container {
+  margin-top: 40px;
+  width: 70vw;
+  max-width: 900px;
+}
+
+#main-button-next.main-btn-disable,  #main-button-prev.main-btn-disable{
+  display: none !important;
+}

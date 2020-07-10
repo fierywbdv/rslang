@@ -94,7 +94,14 @@ export const formValidation = () => {
           })
 
           const response = await learnWordsAPIService.signIn(userEmail, userPassword);
-          learnWordsAPIService.setUserSettings(response.userId, response.token, '10', {userCardsCount: '20'});
+          learnWordsAPIService.setUserSettings(response.userId, response.token, '10', {
+            userCardsCount: '20', 
+            userLevel: '0', 
+            userSetExample: 'true', 
+            userSetExplanation: 'true',
+            userSetImage: 'true', 
+            userSetTranscription: 'true',
+            userSetTranslate: 'true'});
         }
       } else {
         setAlarm(passwordConfirm, 'mismatched');
@@ -138,6 +145,7 @@ export const logout = () => {
     localStorage.setItem('authorized', false);
     localStorage.setItem('wordsPerDay', null);
     localStorage.setItem('userCardsCount', null);
+    localStorage.setItem('userLevel', null);
     localStorage.setItem('userSetExample', null);
     localStorage.setItem('userSetExplanation', null);
     localStorage.setItem('userSetImage', null);

@@ -204,7 +204,7 @@ nav.navbar .menu-btn.active span:last-of-type {
 }
 
 nav.side-navbar {
-  height: calc(100vh - 78px);
+  min-height: 100vh;
   background: $main-light-color;
   min-width: 200px;
   max-width: 200px;
@@ -463,4 +463,24 @@ nav.side-navbar.shrinked .sidebar-header .title {
     -webkit-transform: none;
     transform: none;
   }
+
+}
+
+// Add for fix bugs
+
+.introduction {
+  min-height: 100vh;
+}
+
+#root {
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+.body-speakit {
+  min-height: 100vh;
+}
+
+.sprint-wrapper {
+  min-height: 100vh;
 }

@@ -174,13 +174,13 @@ const addToUserWords = (wordId, word, wordDifficulty) => {
   learnWordsAPIService.createUserWord(localStorage.getItem('userId'), wordId, localStorage.getItem('token'), wordDifficulty, { word });
 };
 
-const getRandomPage = () => {
-  const rand = Math.random() * (29 + 1);
+const getRandomPage = (max) => {
+  const rand = Math.random() * (max);
   return Math.floor(rand);
 };
 
 const getWords = async () => {
-  const page = getRandomPage();
+  const page = getRandomPage(30);
   const words = await learnWordsAPIService.getWordsByPageAndGroup(page, localStorage.getItem('userLangLevel'));
   return words;
 };
@@ -192,3 +192,21 @@ export const setWordsForCards = async () => {
   const wordsForCards = newWords.filter((newWord) => userWords.every((userWord) => userWord.wordId !== newWord.id));
   return wordsForCards;
 };
+
+export const getNewRandomWord = async () => {
+  const userWords = await learnWordsAPIService.getAllUserWords(localStorage.getItem('userId'), localStorage.getItem('token'));
+  const newWords = await getWords();
+  const word = newWords[getRandomPage(20)];
+
+  const mass = [];
+
+  for(let i = 0; i< userWords.length; i++) {
+    mass.push(userWords[i].wordId);
+  }
+  
+  if(mass.indexOf(word.id) === -1) {
+    return word;
+  } else {
+    getNewRandomWord();
+  }
+}

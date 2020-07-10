@@ -1,10 +1,9 @@
 import { getDOMElement } from '../../common/main.helper';
-import { getPhrase, getUserSettings } from '../../common/main.utils';
+import { getPhrase, getUserSettings, getNewRandomWord } from '../../common/main.utils';
 
 const getCard = (word = {}, iterator) => {
   const userSettings = getUserSettings();
-  // console.log(word);
-
+  
   const currentWordID = word.id;
   const currentWord = (word.word).toLowerCase();
   const currentWordLength = currentWord.length;
@@ -22,6 +21,7 @@ const getCard = (word = {}, iterator) => {
   const cardHeader = getDOMElement('div', 'main-screen-card card-header');
   const cardHeaderText = getDOMElement('small', 'main-screen-card text-primary');
   cardHeaderText.setAttribute('id', 'main-cardheader-text');
+
   cardHeaderText.textContent = 'служебная информация: новое слово, сложное слово, прочее';
   cardHeader.append(cardHeaderText);
 

@@ -1,4 +1,4 @@
-import { getUserSettings, setWordsForCards } from '../../common/main.utils';
+import { getUserSettings, setWordsForCards, getNewRandomWord } from '../../common/main.utils';
 
 import getSlide from './getSlide';
 
@@ -11,8 +11,14 @@ const generateCards = async () => {
   const userCardCount = userSettings.userCardsCount;
 
   for (let i = 0; i < userCardCount; i += 1) {
-    const slide = getSlide(wordsArr[i], i);
-    mainSwiper.append(slide);
+    if(wordsArr[i] === undefined) {
+      const word = await getNewRandomWord();
+      const slide = getSlide(word, i);
+      mainSwiper.append(slide);
+    } else {
+      const slide = getSlide(wordsArr[i], i);
+      mainSwiper.append(slide);
+    }
   }
 };
 export default generateCards;

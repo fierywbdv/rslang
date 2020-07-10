@@ -175,13 +175,13 @@ export const setSidebarHeight = () => {
   console.log('sidebar', sidebar.style.height);
 };
 
-const getRandomPage = () => {
-  const rand = Math.random() * (29);
+const getRandomPage = (max) => {
+  const rand = Math.random() * (max);
   return Math.floor(rand);
 };
 
 const getWords = async () => {
-  const page = getRandomPage();
+  const page = getRandomPage(30);
   const group = Number(localStorage.getItem('userLevel'));
   const words = await learnWordsAPIService.getWordsByPageAndGroup(page, group);
   return words;
@@ -195,3 +195,21 @@ export const setWordsForCards = async () => {
   const wordsForCards = newWords.filter((newWord) => userWords.every((userWord) => userWord.wordId !== newWord.id));
   return wordsForCards;
 };
+
+export const getNewRandomWord = async () => {
+  const userWords = await learnWordsAPIService.getAllUserWords(localStorage.getItem('userId'), localStorage.getItem('token'));
+  const newWords = await getWords();
+  const word = newWords[getRandomPage(20)];
+
+  const mass = [];
+
+  for(let i = 0; i< userWords.length; i++) {
+    mass.push(userWords[i].wordId);
+  }
+  
+  if(mass.indexOf(word.id) === -1) {
+    return word;
+  } else {
+    getNewRandomWord();
+  }
+}

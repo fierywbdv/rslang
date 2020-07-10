@@ -81,9 +81,7 @@ const addToUserWords = (wordId, word, wordDifficulty) => {
 };
 
 export const inputHandler = (iterator, slidesCount) => {
-  console.log('iterator ', iterator);
   const lastSlide = slidesCount - 1;
-  console.log('lastSlide ', lastSlide);
   const currentInput = document.querySelector(`#to-write-${iterator}`);
   const currentCard = document.querySelector(`#main-card-${iterator}`);
   const nextBTN = document.querySelector('#main-button-next');

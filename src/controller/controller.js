@@ -21,7 +21,7 @@ const controller = {
     }
 
     switch (url) {
-      case '/':
+      case 'main':
         controller.actionMain();
         break;
       case 'puzzle':
@@ -51,7 +51,7 @@ const controller = {
   },
 
   actionMain: () => {
-
+    main.init();
   },
   actionPuzzle: () => {
     englishPuzzle.sayHello();

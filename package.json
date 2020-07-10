@@ -10,6 +10,7 @@
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.3.0",
     "source-map-loader": "^1.0.0",
+    "swiper": "^6.0.0",
     "toastify-js": "^1.8.0"
   },
   "devDependencies": {

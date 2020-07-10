@@ -1,13 +1,14 @@
-import { learnWordsAPIService } from "../../../services/learnWordsAPIService";
+import { learnWordsAPIService } from '../../../services/learnWordsAPIService';
 
 export const settings = async () => {
-    const settings = await learnWordsAPIService.getUserSettings(localStorage.getItem('userId'), localStorage.getItem('token'));
-    console.log(settings);
-    localStorage.setItem('wordsPerDay', settings.wordsPerDay);
-    localStorage.setItem('userCardsCount', settings.optional.userCardsCount);
-    localStorage.setItem('userSetExample', settings.optional.userSetExample);
-    localStorage.setItem('userSetExplanation', settings.optional.userSetExplanation);
-    localStorage.setItem('userSetImage', settings.optional.userSetImage);
-    localStorage.setItem('userSetTranscription', settings.optional.userSetTranscription);
-    localStorage.setItem('userSetTranslate', settings.optional.userSetTranslate);
-}
+  const userSettings = await learnWordsAPIService.getUserSettings(localStorage.getItem('userId'), localStorage.getItem('token'));
+  console.log(userSettings)
+  localStorage.setItem('wordsPerDay', userSettings.wordsPerDay);
+  localStorage.setItem('userCardsCount', userSettings.optional.userCardsCount);
+  localStorage.setItem('userLevel', userSettings.optional.userLevel);
+  localStorage.setItem('userSetExample', userSettings.optional.userSetExample);
+  localStorage.setItem('userSetExplanation', userSettings.optional.userSetExplanation);
+  localStorage.setItem('userSetImage', userSettings.optional.userSetImage);
+  localStorage.setItem('userSetTranscription', userSettings.optional.userSetTranscription);
+  localStorage.setItem('userSetTranslate', userSettings.optional.userSetTranslate);
+};

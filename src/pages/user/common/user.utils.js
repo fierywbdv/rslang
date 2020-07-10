@@ -207,10 +207,17 @@ export const saveSettingsHandler = () => {
             position: 'right',
             gravity: 'top',
           }).showToast();
-        }
 
-        localStorage.setItem('userName', userSettings.userName);
-        localStorage.setItem('email', userSettings.userMail);
+          localStorage.setItem('userName', userSettings.userName);
+          localStorage.setItem('email', userSettings.userMail);
+          localStorage.setItem('wordsPerDay', userSettings.userWordsCount);
+          localStorage.setItem('userCardsCount', userSettings.userCardsCount);
+          localStorage.setItem('userSetExample', userSettings.userSetExample);
+          localStorage.setItem('userSetExplanation', userSettings.userSetExplanation);
+          localStorage.setItem('userSetImage', userSettings.userSetImage);
+          localStorage.setItem('userSetTranscription', userSettings.userSetTranscription);
+          localStorage.setItem('userSetTranslate', userSettings.userSetTranslate);
+        }
 
       } catch(error) {
         console.error(error);

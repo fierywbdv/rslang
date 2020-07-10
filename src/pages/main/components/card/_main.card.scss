@@ -102,3 +102,16 @@
   -ms-user-select: none;
   user-select: none;
 }
+
+.main-swiper .card-header {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem 1.25rem;
+  background-color: #fff !important;
+  border-bottom: none !important;
+  & .main-screen-image {
+    max-height: 150px;
+    width: auto;
+    margin: 0 auto;
+  }
+}

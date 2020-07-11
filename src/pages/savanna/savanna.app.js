@@ -30,13 +30,13 @@ export default new Savanna();
 function drawPage() {
   const page = document.querySelector('#root');
   page.innerHTML += `
-      <div class="body-savanna">
+      <div class="savanna-body">
 
-        <div class="page-wrapper">
-          <h2 class="name">Саванна</h2>
+        <div class="main-page-wrapper">
+          <h2 class="savanna-name">Саванна</h2>
           <p class="about">Выберите правильный перевод слова</p>
           <button class="start__button">Начать игру</button>
-          <div class="difficulties">
+          <div class="difficulties-lvl">
             <span class="lvl__text">Уровень:</span>
             <button class="lvl_button lvl-1 active-lvl">1</button>
             <button class="lvl_button lvl-2">2</button>
@@ -47,9 +47,9 @@ function drawPage() {
           </div> 
         </div>
 
-        <div class="second-page hidden">
+        <div class="second-page savanna-hidden">
 
-          <div class="hearts">
+          <div class="hearts-wrapper">
             <img class="one-heart" src='./assets/img/heart.svg'/>
             <img class="one-heart" src='./assets/img/heart.svg'/>
             <img class="one-heart" src='./assets/img/heart.svg'/>
@@ -58,7 +58,7 @@ function drawPage() {
           </div>
 
           <div class="top-word">
-            <span class="lvl__text current-word">words</span>
+            <span class="lvl__text savanna-current-word">words</span>
           </div>
 
           <div class="word-wrapper">
@@ -69,17 +69,17 @@ function drawPage() {
           </div>
 
           <div class="spinner-diamond">
-            <img class="diamond" src='./assets/img/diamond.gif'/>
+            <img class="gif-diamond" src='./assets/img/diamond.gif'/>
           </div>
         </div>
     
-        <div class="results hidden">
+        <div class="savanna-results savanna-hidden">
           <div class="results__correct">
-              <span class="name right">Правильно:
+              <span class="savanna-name right-answers">Правильно:
               </span>
           </div>
           <div class="results__errors">
-              <span class="name wrong">Ошибок:
+              <span class="savanna-name wrong-answers">Ошибок:
               </span>
           </div>
           <button class="main-menu-button">Главное меню</button>

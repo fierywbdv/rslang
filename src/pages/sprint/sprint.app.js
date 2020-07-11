@@ -88,27 +88,27 @@ class Sprint {
   }
 
   showPair() {
-    document.querySelector('.card__word').innerHTML = this.shuffledWords[this.pairNumber];
-    document.querySelector('.card__translation').innerHTML = this.shuffledTranslations[this.pairNumber];
-    const wordIndex = this.words.indexOf(this.shuffledWords[this.pairNumber]);
-    playAudio(`${AUDIO_PATH}${this.wordsList[wordIndex].audio}`, this.isDynamicActivated);
+    const number = Math.floor(Math.random() * this.wordsList.length);
+    if (number % 2) {
+      document.querySelector('.card__translation').innerHTML = this.translations[this.pairNumber];
+    } else {
+      document.querySelector('.card__translation').innerHTML = this.translations[number];
+    }
+    document.querySelector('.card__word').innerHTML = this.words[this.pairNumber];
+    playAudio(`${AUDIO_PATH}${this.wordsList[this.pairNumber].audio}`, this.isDynamicActivated);
   }
 
   async getWords() {
     this.level = document.getElementById('level').value - 1;
     this.round = document.getElementById('round').value - 1;
+
     localStorage.setItem('level', this.level + 1);
     localStorage.setItem('round', this.round + 1);
-    console.log(localStorage.getItem('level'), localStorage.getItem('round'));
+
     this.wordsList = await learnWordsAPIService.getWordsByPageAndGroup(this.round, this.level);
-    console.log(this.wordsList);
+    shuffle(this.wordsList);
     this.words = createWordsArray(this.wordsList);
     this.translations = createTranslationsArray(this.wordsList);
-
-    this.shuffledWords = [...shuffle(this.words.slice(0, 10)), ...shuffle(this.words.slice(10))];
-    const firstPart = shuffle(this.translations.slice(0, 10));
-    const secondPart = shuffle(this.translations.slice(10));
-    this.shuffledTranslations = [...firstPart, ...secondPart];
   }
 
   async addWords() {
@@ -125,26 +125,22 @@ class Sprint {
     }
 
     const newWordsList = await learnWordsAPIService.getWordsByPageAndGroup(this.round, this.level);
-    console.log(newWordsList);
+    shuffle(newWordsList);
     this.wordsList.push(...newWordsList);
     const newWords = createWordsArray(newWordsList);
     this.words.push(...newWords);
     const newTranslations = createTranslationsArray(newWordsList);
     this.translations.push(...newTranslations);
-    this.shuffledWords.push(...shuffle(newWords.slice(0, 10)), ...shuffle(newWords.slice(10)));
-    const firstPart = shuffle(newTranslations.slice(0, 10));
-    const secondPart = shuffle(newTranslations.slice(10));
-    this.shuffledTranslations.push(...firstPart, ...secondPart);
   }
 
   answerCorrectly() {
     if (this.checkAnswer()) {
-      this.correctAnswers.push(this.shuffledWords[this.pairNumber]);
+      this.correctAnswers.push(this.words[this.pairNumber]);
       this.correctAnswersNumber++;
       this.showCorrectAnswer();
       this.addPoints();
     } else {
-      this.wrongAnswers.push(this.shuffledWords[this.pairNumber]);
+      this.wrongAnswers.push(this.words[this.pairNumber]);
       this.correctAnswersNumber = 0;
       this.showMistake();
       this.subtractPoints();
@@ -159,13 +155,13 @@ class Sprint {
 
   answerWrong() {
     if (this.checkAnswer()) {
-      this.wrongAnswers.push(this.shuffledWords[this.pairNumber]);
+      this.wrongAnswers.push(this.words[this.pairNumber]);
       this.correctAnswersNumber = 0;
       this.showMistake();
       this.subtractPoints();
       cleanCircles();
     } else {
-      this.correctAnswers.push(this.shuffledWords[this.pairNumber]);
+      this.correctAnswers.push(this.words[this.pairNumber]);
       this.correctAnswersNumber++;
       this.showCorrectAnswer();
       this.addPoints();
@@ -178,8 +174,7 @@ class Sprint {
   }
 
   checkAnswer() {
-    const wordIndex = this.words.indexOf(this.shuffledWords[this.pairNumber]);
-    return this.translations[wordIndex] === this.shuffledTranslations[this.pairNumber];
+    return document.querySelector('.card__translation').innerHTML === this.translations[this.pairNumber];
   }
 
   showMistake() {

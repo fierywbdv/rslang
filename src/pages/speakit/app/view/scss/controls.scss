@@ -12,6 +12,10 @@
   align-items: baseline;
   flex-wrap: wrap;
 }
+.game__button-results_new,
+.game__button-new {
+  display: none;
+}
 
 .game__difficult {
   box-sizing: border-box;
@@ -28,6 +32,7 @@
   justify-content: center;
   flex-wrap: wrap;
   align-items: baseline;
+  margin-top: 15px;
 }
 
 .game__button {
@@ -36,7 +41,7 @@
 }
 
 .disabled.game__button {
-  // background-color: lightcoral;
+  background-color: lightcoral;
   box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.2), 0 8px 10px 0 rgba(0, 0, 0, 0.4);
 
   &:focus,
@@ -46,7 +51,7 @@
   }
 }
 
-.active.game__difficult{
+.speakit_active.game__difficult{
  box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.2), 0 8px 10px 0 rgba(0, 0, 0, 0.4);
 
   &:focus,

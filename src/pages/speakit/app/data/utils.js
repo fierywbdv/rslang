@@ -39,6 +39,8 @@ export const getClosestLink = ({ target }) => target.closest(`.${CLASS_NAMES.LIN
 
 export const isButtonClicked = ({ target }) => target.closest(`.${CLASS_NAMES.BUTTON_ROUNDED}`);
 
+export const isButtonClicked1 = ({ target }) => target.closest(`.${CLASS_NAMES.BUTTON_ROUNDED1}`);
+
 export const toggleDocumentScroll = () => document.body
   .classList.toggle(CLASS_NAMES.OVERFLOW_HIDDEN);
 

@@ -3,19 +3,8 @@ import { SPEAKIT_CLASS_NAMES, SPEAKIT_GREETINGS } from './common/savanna.constan
 
 import './scss/savanna.styles.scss';
 
-class Savanna {
-  constructor() {
-    this.logo = null;
-  }
+function Savanna() {
 
-  sayHello() {
-    console.log(this.logo);
-    document.querySelector(`.${CLASS_NAMES.MAIN.LOGO}`).after(speakitLogo);
-  }
-
-  init() {
-    this.logo = SPEAKIT_GREETINGS;
-  }
 }
 
 export default new Savanna();

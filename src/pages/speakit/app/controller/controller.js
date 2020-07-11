@@ -34,6 +34,7 @@ export default class Controller {
     this.onChangeSpeechInput = this.onChangeSpeechInput.bind(this);
     this.onStopButtonClick = this.onStopButtonClick.bind(this);
     this.onDifficultChange = this.onDifficultChange.bind(this);
+    this.onLevelChange = this.onLevelChange.bind(this);
     this.onNewButtonClick = this.onNewButtonClick.bind(this);
     this.onResultButtonClick = this.onResultButtonClick.bind(this);
     this.onResultCardClick = this.onResultCardClick.bind(this);
@@ -152,6 +153,7 @@ export default class Controller {
     this.view.playSuccessSound();
     this.onResultButtonClick();
     this.onStopButtonClick();
+    this.onLevelChangeNext();
   }
 
   onStopButtonClick() {
@@ -181,9 +183,32 @@ export default class Controller {
     button.classList.add(CLASS_NAMES.ACTIVE);
 
     const newDifficult = +button.innerText - 1;
-    if (newDifficult === this.difficult) return;
     showSpinner();
     this.newGame(newDifficult);
+  }
+
+  onLevelChange(event) {
+    const button = event.target;
+    if (button.localName === 'button') {
+      this.view.removeActiveStates(ELEMENTS.BUTTONS.LEVEL);
+      button.classList.add(CLASS_NAMES.ACTIVE);
+      let newDifficult = +button.innerText - 1;
+      if (newDifficult > 5) {
+        newDifficult %= 5;
+      }
+      showSpinner();
+      this.newGame(newDifficult);
+    }
+  }
+
+  onLevelChangeNext() {
+    console.log(this.difficult);
+    const button = ELEMENTS.BUTTONS.LEVEL.querySelector('.speakit_active');
+    console.log(button);
+    button.classList.remove(CLASS_NAMES.ACTIVE);
+    button.nextElementSibling.classList.add(CLASS_NAMES.ACTIVE);
+    showSpinner();
+    this.newGame(this.difficult += 1);
   }
 
   onNewButtonClick() {
@@ -255,6 +280,7 @@ export default class Controller {
     this.view.initSpeechInput(this.onChangeSpeechInput);
     this.view.initStopButton(this.onStopButtonClick);
     this.view.initDifficulties(this.onDifficultChange);
+    this.view.initLevel(this.onLevelChange);
     this.view.initNewButton(this.onNewButtonClick);
     this.view.initResultButton(this.onResultButtonClick);
     this.view.initResultsNewGameButton(this.onResultsNewGameButtonClick);

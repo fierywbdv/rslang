@@ -20,7 +20,7 @@ const getCardsCount = () => {
   const formCardsInput = document.createElement('input');
   formCardsInput.setAttribute('type', 'range');
   formCardsInput.setAttribute('id', 'set-user-cards-count');
-  formCardsInput.setAttribute('min', '10');
+  formCardsInput.setAttribute('min', '3');
   formCardsInput.setAttribute('max', '30');
   formCardsInput.className = 'form-control-range';
   formCardsInput.value = `${localStorage.getItem('userCardsCount')}`;

@@ -427,6 +427,7 @@ nav.side-navbar.shrinked .sidebar-header .title {
   .content-inner.active {
     width: calc(100% - 90px);
   }
+
   nav.navbar .menu-btn {
     margin-right: 10px;
     font-size: 1.2em;
@@ -469,4 +470,9 @@ nav.side-navbar.shrinked .sidebar-header .title {
     -webkit-transform: none;
     transform: none;
   }
+
+  .brand-text.d-inline-block {
+    display: none !important;
+  }
+
 }

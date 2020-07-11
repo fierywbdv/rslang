@@ -1,12 +1,11 @@
 
-
 import './scss/savanna.styles.scss';
 
-function Savanna() {
+export default function Savanna() {
 
 }
 
-export default new Savanna();
+
 
 function drawPage() {
   const page = document.querySelector('#root');
@@ -31,11 +30,11 @@ function drawPage() {
         <div class="savanna-second-page hidden">
 
           <div class="savanna-hearts-wrapper">
-            <img class="savanna-one-heart" src='./assets/img/heart.svg'/>
-            <img class="savanna-one-heart" src='./assets/img/heart.svg'/>
-            <img class="savanna-one-heart" src='./assets/img/heart.svg'/>
-            <img class="savanna-one-heart" src='./assets/img/heart.svg'/>
-            <img class="savanna-one-heart" src='./assets/img/heart.svg'/>
+            <img class="savanna-one-heart" src='assets/savanna/img/heart.svg'/>
+            <img class="savanna-one-heart" src='assets/savanna/img/heart.svg'/>
+            <img class="savanna-one-heart" src='assets/savanna/img/heart.svg'/>
+            <img class="savanna-one-heart" src='assets/savanna/img/heart.svg'/>
+            <img class="savanna-one-heart" src='assets/savanna/img/heart.svg'/>
           </div>
 
           <div class="savanna-top-word">
@@ -50,7 +49,7 @@ function drawPage() {
           </div>
 
           <div class="savanna-spinner-diamond">
-            <img class="savanna-gif-diamond" src='./assets/img/diamond.gif'/>
+            <img class="savanna-gif-diamond" src='assets/savanna/img/diamond.gif'/>
           </div>
         </div>
     

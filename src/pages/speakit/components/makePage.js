@@ -8,32 +8,65 @@ export default function makePage() {
           <div class="main">
             <div class="game__controls">
               <div class="buttons__wrapper">
+                <div class="button__container">
+                  <button class="game__button game__button-new button-rounded">Новая игра</button>
+                  <button class="game__button game__button-start button-rounded">Начать игру с рандомными словами</button>
+                  <button class="game__button game__button-start game__button-start-lerned button-rounded">Начать игру с ранее изученными словами </button>
+                  <button class="game__button game__button-stop button-rounded">Остановить игру</button>
+                  <button class="game__button game__button-results button-rounded">Результаты</button>
+                </div>
                 <div class="difficulties">
-                  <span class="difficult__description">Уровень:</span>
-                  <button class="game__difficult game__difficult-1 button-rounded active">1</button>
+                  <span class="difficult__description">Уровень сложности:</span>
+                  <button class="game__difficult game__difficult-1 button-rounded speakit_active">1</button>
                   <button class="game__difficult game__difficult-2 button-rounded">2</button>
                   <button class="game__difficult game__difficult-3 button-rounded">3</button>
                   <button class="game__difficult game__difficult-4 button-rounded">4</button>
                   <button class="game__difficult game__difficult-5 button-rounded">5</button>
                   <button class="game__difficult game__difficult-6 button-rounded">6</button>
                 </div>
-                <div class="button__container">
-                  <button class="game__button game__button-new button-rounded">Новая игра</button>
-                  <button class="game__button game__button-start button-rounded">Начать игру</button>
-                  <button class="game__button game__button-stop button-rounded">Остановить игру</button>
-                  <button class="game__button game__button-results button-rounded">Результаты</button>
+                <div class="difficulties speakit_level">
+                 <span class="difficult__description">Раунд:</span>
+                 <button class="game__difficult game__difficult-1 button-rounded1 speakit_active">1</button>
+                 <button class="game__difficult game__difficult-2 button-rounded1">2</button>
+                 <button class="game__difficult game__difficult-3 button-rounded1">3</button>
+                 <button class="game__difficult game__difficult-4 button-rounded1">4</button>
+                 <button class="game__difficult game__difficult-5 button-rounded1">5</button>
+                 <button class="game__difficult game__difficult-6 button-rounded1">6</button>
+                 <button class="game__difficult game__difficult-7 button-rounded1">7</button>
+                 <button class="game__difficult game__difficult-8 button-rounded1">8</button>
+                 <button class="game__difficult game__difficult-9 button-rounded1">9</button>
+                 <button class="game__difficult game__difficult-10 button-rounded1">10</button>
+                 <button class="game__difficult game__difficult-11 button-rounded1">11</button>
+                 <button class="game__difficult game__difficult-12 button-rounded1">12</button>
+                 <button class="game__difficult game__difficult-13 button-rounded1">13</button>
+                 <button class="game__difficult game__difficult-14 button-rounded1">14</button>
+                 <button class="game__difficult game__difficult-15 button-rounded1">15</button>
+                 <button class="game__difficult game__difficult-16 button-rounded1">16</button>
+                 <button class="game__difficult game__difficult-17 button-rounded1">17</button>
+                 <button class="game__difficult game__difficult-18 button-rounded1">18</button>
+                 <button class="game__difficult game__difficult-19 button-rounded1">19</button>
+                 <button class="game__difficult game__difficult-20 button-rounded1">20</button>
+                 <button class="game__difficult game__difficult-21 button-rounded1">21</button>
+                 <button class="game__difficult game__difficult-22 button-rounded1">22</button>
+                 <button class="game__difficult game__difficult-23 button-rounded1">23</button>
+                 <button class="game__difficult game__difficult-24 button-rounded1">24</button>
+                 <button class="game__difficult game__difficult-25 button-rounded1">25</button>
+                 <button class="game__difficult game__difficult-26 button-rounded1">26</button>
+                 <button class="game__difficult game__difficult-27 button-rounded1">27</button>
+                 <button class="game__difficult game__difficult-28 button-rounded1">28</button>
+                 <button class="game__difficult game__difficult-29 button-rounded1">29</button>
+                 <button class="game__difficult game__difficult-30 button-rounded1">30</button>
                 </div>
               </div>
               <p class="status-bar"></p>
             </div>
-    
-            <div class="main-card">
+            <div class="speakit-main-card">
+              <div class="picture__container">
+                <img class="main-card__picture" alt="current word picture">
+              </div>
               <div>
                 <p class="main-card__translation"></p>
                 <input class="main-card__speech-input input" type="text" readonly> <!-- readonly -->
-              </div>
-              <div class="picture__container">
-                <img class="main-card__picture" alt="current word picture">
               </div>
             </div>
     

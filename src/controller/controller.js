@@ -9,6 +9,7 @@ import user from '../pages/user/user.app';
 import helper from '../pages/audiocall/common/audiocall.helper';
 import startScreenComponent from '../pages/audiocall/components/start-screen';
 import startScreenOurGameComponent from '../pages/ourgame/components/start-screen';
+import teamScreenComponent from '../pages/team/components/team-screen';
 
 const controller = {
   callAction: (url) => {
@@ -45,6 +46,9 @@ const controller = {
       case 'user':
         controller.actionUser();
         break;
+      case 'team':
+        controller.actionTeam();
+        break;
       default:
         break;
     }
@@ -77,6 +81,9 @@ const controller = {
     user.init();
   },
 
+  actionTeam() {
+    helper.render('#root', teamScreenComponent());
+  }
 };
 
 export default controller;

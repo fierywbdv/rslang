@@ -7,3 +7,16 @@
 #main-button-next.main-btn-disable,  #main-button-prev.main-btn-disable{
   display: none !important;
 }
+
+#main-progres {
+  margin-left: 10px;
+  margin-right: 10px;
+  height: 2px;
+  & .main-progress-area {
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    left: 50%;
+    color: gray;
+  }
+}

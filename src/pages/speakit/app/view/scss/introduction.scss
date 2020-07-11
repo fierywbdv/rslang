@@ -5,9 +5,8 @@
   background-repeat: no-repeat;
   background-size: cover;
   background-blend-mode: multiply;
-  opacity: 0.8;
   z-index: 10;
-  width: calc(100vw - 200px);
+  width: calc(100vw - 100px);
   overflow: hidden;
 }
 
@@ -21,16 +20,16 @@
   width: 100vw;
 }
 
-.actives {
-  width: calc(100vw - 100px);
+.speakit-actives {
+  width: calc(100vw - 200px);
 }
 
 @media (max-width: 575px) {
   .introduction {
     width: 100vw;
   }
-  .actives {
-    width: calc(100vw - 100px);
+  .speakit-actives {
+    width: 100vw;
   }
 }
 
@@ -40,7 +39,7 @@
 
 .introduction__button {
   margin-top:50vh;
-  margin-left:5vw;
+  margin-left: calc(46vw - 90px);
   bottom: 200px;
   min-width: 15vw;
   min-height: 50px;

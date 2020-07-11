@@ -11,8 +11,8 @@ import {
 } from './common/promo.utils';
 import { store } from '../../redux/store';
 
-if(store.getState().promoReducer.authorized === 'true') {
-  document.location.href = "/main.index.html";
+if (store.getState().promoReducer.authorized === 'true') {
+  document.location.href = '/main.index.html';
 }
 
 window.onload = () => {
@@ -29,11 +29,11 @@ window.onload = () => {
 store.subscribe(() => {
   const state = store.getState().promoReducer;
 
-  if(state.authorized === false) {
-    localStorage.setItem('authorized', false)
-    document.location.href = "/";
-  } else if(state.authorized === true) {
-    localStorage.setItem('authorized', true)
-    document.location.href = "/main.index.html";
+  if (state.authorized === false) {
+    localStorage.setItem('authorized', false);
+    document.location.href = '/';
+  } else if (state.authorized === true) {
+    localStorage.setItem('authorized', true);
+    document.location.href = '/main.index.html';
   }
-})
+});

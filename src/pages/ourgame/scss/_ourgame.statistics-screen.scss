@@ -52,6 +52,9 @@
   -o-animation: fade-in 1.5s linear; /* Opera 12+ */
   animation: fade-in 1.5s linear; /* IE 10+, Fx 29+ */
 }
+#our-game-statistic.container {
+  display: block;
+}
 
 .our-game-body .our-game-statistic {
   width: 100%;

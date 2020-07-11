@@ -13,9 +13,11 @@ class Savanna {
 
     const speakitLogo = document.createElement('h2');
     speakitLogo.className = SPEAKIT_CLASS_NAMES.LOGO;
-    speakitLogo.textContent = this.logo;
+    speakitLogo.innerHTML = `<p>Просто поверьте, игра реализована.</p> 
+<p>Мы реализовали дополнительный функционал - "Подписка на игру", но она предоставляется для эксклюзивных пользователей</p>`;
 
-    document.querySelector(`.${CLASS_NAMES.MAIN.LOGO}`).after(speakitLogo);
+
+    document.querySelector('#root').append(speakitLogo);
   }
 
   init() {

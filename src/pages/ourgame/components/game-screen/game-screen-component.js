@@ -13,7 +13,7 @@ const gameScreenComponent = () => {
   helper.shuffle(answersMurkUp).forEach((item) => answersUl.append(item));
   questionMurkUp.forEach((elem) => questionUl.append(elem));
 
-  const title = '<h3 id="info-word">Could you please match the words</h3>';
+  const title = '<h3 id="info-word">Соотнесите слова с переводом</h3>';
   const gameScreen = document.createElement('div');
   gameScreen.setAttribute('id', 'our-game-play-screen');
   gameScreen.innerHTML = title;
@@ -26,14 +26,14 @@ const gameScreenComponent = () => {
   containerInnerLeft.className = 'inner-left';
 
   const innerBox = document.createElement('div');
-  innerBox.innerHTML = '<h2>Words</h2>';
+  innerBox.innerHTML = '<h2>Слова</h2>';
   innerBox.className = 'box';
 
   if (setQuestionsGame.length) {
     innerBox.append(questionUl);
   } else {
     const noCor = document.createElement('ul');
-    noCor.innerHTML = '<li>No Words</li>';
+    noCor.innerHTML = '<li>Нет слов</li>';
     innerBox.append(noCor);
   }
 
@@ -44,19 +44,19 @@ const gameScreenComponent = () => {
   containerInnerRight.className = 'inner-right';
 
   const innerBoxRight = document.createElement('div');
-  innerBoxRight.innerHTML = '<h2>Translations</h2>';
+  innerBoxRight.innerHTML = '<h2>Перевод</h2>';
   innerBoxRight.className = 'box';
 
   if (setQuestionsGame.length) {
     innerBoxRight.append(answersUl);
   } else {
     const noMis = document.createElement('ul');
-    noMis.innerHTML = '<li>No words</li>';
+    noMis.innerHTML = '<li>Нет слов</li>';
     innerBoxRight.append(noMis);
   }
 
   const button = document.createElement('button');
-  button.innerText = 'Stop Game';
+  button.innerText = 'Остановить игру';
   button.className = 'restart  btn btn-success';
 
   containerInnerRight.append(innerBoxRight);

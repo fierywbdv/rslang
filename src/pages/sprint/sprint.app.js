@@ -40,8 +40,6 @@ class Sprint {
     this.wordsList = [];
     this.words = [];
     this.translations = [];
-    this.shuffledWords = [];
-    this.shuffledTranslations = [];
     this.pairNumber = 0;
     this.pointsToAdd = 10;
     this.correctAnswersNumber = 0;
@@ -52,6 +50,8 @@ class Sprint {
     this.isDynamicActivated = true;
     this.isSoundActivated = true;
     this.arrowsHandler = null;
+    this.learnedWordsHandler = null;
+    this.areLearnedWordsChosen = false;
   }
 
   startGame() {
@@ -98,12 +98,19 @@ class Sprint {
     playAudio(`${AUDIO_PATH}${this.wordsList[this.pairNumber].audio}`, this.isDynamicActivated);
   }
 
-  async getWords() {
+  initLevelAndGroup() {
     this.level = document.getElementById('level').value - 1;
     this.round = document.getElementById('round').value - 1;
+  }
 
+  setLevelAndGroup() {
     localStorage.setItem('level', this.level + 1);
     localStorage.setItem('round', this.round + 1);
+  }
+
+  async getWords() {
+    this.initLevelAndGroup();
+    this.setLevelAndGroup();
 
     this.wordsList = await learnWordsAPIService.getWordsByPageAndGroup(this.round, this.level);
     shuffle(this.wordsList);
@@ -112,19 +119,26 @@ class Sprint {
   }
 
   async addWords() {
-    if (this.round === LAST_ROUND) {
-      if (this.level === LAST_LEVEL) {
-        this.round = 0;
-        this.level = 0;
+    if (!this.areLearnedWordsChosen) {
+      if (this.round === LAST_ROUND) {
+        if (this.level === LAST_LEVEL) {
+          this.round = 0;
+          this.level = 0;
+        } else {
+          this.round = 0;
+          this.level++;
+        }
       } else {
-        this.round = 0;
-        this.level++;
+        this.round++;
       }
     } else {
-      this.round++;
+      this.areLearnedWordsChosen = false;
+      this.initLevelAndGroup();
+      this.setLevelAndGroup();
     }
 
     const newWordsList = await learnWordsAPIService.getWordsByPageAndGroup(this.round, this.level);
+    console.log(newWordsList);
     shuffle(newWordsList);
     this.wordsList.push(...newWordsList);
     const newWords = createWordsArray(newWordsList);
@@ -148,7 +162,7 @@ class Sprint {
     }
     this.pairNumber++;
     this.showPair();
-    if (this.pairNumber * 2 === this.words.length) {
+    if (this.pairNumber === Math.ceil(this.words.length / 2)) {
       this.addWords();
     }
   }
@@ -268,7 +282,7 @@ class Sprint {
     this.correctAnswers = [];
     this.secondsRemaining = 60;
     this.wrongAnswers = [];
-
+    this.areLearnedWordsChosen = false;
     document.querySelector('.sprint-wrapper').innerHTML = gameScreenComponent();
 
     setLevelAndRound();
@@ -282,6 +296,7 @@ class Sprint {
 
     this.renderButtonEvents();
     document.addEventListener('keyup', this.renderArrowsEvents.bind(this)());
+    document.querySelector('.learned-words').addEventListener('click', this.learnedWordsHandler);
     this.renderSoundsEvents();
   }
 
@@ -314,8 +329,10 @@ class Sprint {
   renderButtonEvents() {
     const start = document.querySelector('.start-game');
     start.addEventListener('click', () => {
-      this.getWords();
-
+      if (!this.areLearnedWordsChosen) {
+        this.getWords();
+      }
+      document.querySelector('.learned-words').removeEventListener('click', this.learnedWordsHandler);
       document.querySelector('.start-game').classList.add('hidden');
       document.querySelector('.start-timer').classList.remove('hidden');
       document.querySelector('.get-ready').classList.remove('hidden');
@@ -356,6 +373,24 @@ class Sprint {
     });
   }
 
+  async chooseLearnedWords() {
+    const learnedWordsInfo = await learnWordsAPIService.getAllUserWords(localStorage.getItem('userId'), localStorage.getItem('token'));
+    if (learnedWordsInfo.length) {
+      document.querySelector('.learned-words').classList.add('chosen');
+      this.areLearnedWordsChosen = true;
+
+      this.wordsList = learnedWordsInfo.map((learnedWord) => learnedWord.optional.word);
+      shuffle(this.wordsList);
+      this.words = createWordsArray(this.wordsList);
+      this.translations = createTranslationsArray(this.wordsList);
+      console.log(this.wordsList, this.words, this.translations);
+    } else {
+      document.querySelector('.error-message').classList.remove('none');
+      setTimeout(() => document.querySelector('.error-message').classList.add('none'), 1000);
+      console.log('Вы не выучили ни одного слова');
+    }
+  }
+
   init() {
     document.getElementById('root').classList.add('root');
 
@@ -378,6 +413,8 @@ class Sprint {
         this.renderButtonEvents();
         document.addEventListener('keyup', this.renderArrowsEvents.bind(this)());
         this.renderSoundsEvents();
+        this.learnedWordsHandler = this.chooseLearnedWords.bind(this);
+        document.querySelector('.learned-words').addEventListener('click', this.learnedWordsHandler);
       }
     });
 

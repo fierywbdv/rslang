@@ -56,11 +56,11 @@ function drawPage() {
         </div>
     
         <div class="savanna-results hidden">
-          <div class="results__correct">
+          <div class="savanna-results-correct">
               <span class="savanna-name right-answers">Правильно:
               </span>
           </div>
-          <div class="results__errors">
+          <div class="savanna-results-errors">
               <span class="savanna-name wrong-answers">Ошибок:
               </span>
           </div>

@@ -19,6 +19,9 @@ const getCard = (word = {}, iterator) => {
   const card = getDOMElement('div', 'main-screen-card card unselectable');
   card.setAttribute('id', `main-card-${iterator}`);
   card.setAttribute('guessed', 'false');
+  card.setAttribute('data-img', currentWordImage);
+  card.setAttribute('data-translate', currentWordTranslate);
+  card.setAttribute('data-translate', currentWordTranslate);
 
   const cardHeader = getDOMElement('div', 'main-screen-card card-header');
   const cardHeaderText = getDOMElement('small', 'main-screen-card text-primary');

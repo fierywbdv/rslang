@@ -61,6 +61,3 @@ export default class Model {
     this.loadResults();
   }
 }
-
-console.log(`В игру Speakit играли: ${JSON.parse(localStorage.getItem(CLASS_NAMES.RESULT.PAGE)).length} раза`);
-console.log(JSON.parse(localStorage.getItem(CLASS_NAMES.RESULT.PAGE)) || []);

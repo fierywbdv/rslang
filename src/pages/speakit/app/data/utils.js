@@ -4,6 +4,8 @@ import {
   EVENTS,
 } from './helper';
 
+import { learnWordsAPIService } from '../../../../services/learnWordsAPIService';
+
 export const createCard = ({
   word,
   image,
@@ -69,6 +71,12 @@ export const loadCardsJSON = (difficult, addPageList) => {
   const url = `${CARDS_API_URL}${difficult}&page=${randomPage}`;
   fetchData(url, addPageList);
 };
+
+async function a() {
+  const b = await learnWordsAPIService.getAllUserWords(localStorage.getItem('userId'), localStorage.getItem('token'));
+  console.log(b);
+}
+a();
 
 const TRANSLATION_API = {
   KEY: 'trnsl.1.1.20200501T172144Z.c784356c3f286594.5cbbf7226bde620d92ce5f3996d05cc59c7d6a7a',

@@ -4,8 +4,6 @@ import { getPhrase, getUserSettings, getNewRandomWord } from '../../common/main.
 const baseUrl = 'https://raw.githubusercontent.com/irinainina/rslang-data/master/';
 
 const getCard = (word = {}, iterator) => {
-  const userSettings = getUserSettings();
-
   const currentWordID = word.id;
   const currentWord = (word.word).toLowerCase();
   const currentWordLength = currentWord.length;
@@ -31,12 +29,6 @@ const getCard = (word = {}, iterator) => {
   const cardHeaderImage = getDOMElement('img', 'main-screen-image');
   cardHeaderImage.src = `${baseUrl}${currentWordImage}`;
 
-  if (localStorage.getItem('userSetImage') === 'false') {
-    document.querySelectorAll('.main-screen-image').forEach((el) => {
-      el.style = 'display: none;';
-    });
-  }
-
   cardHeader.append(cardHeaderText, cardHeaderImage);
 
   const cardBody = getDOMElement('div', 'main-screen-card card-body');
@@ -53,44 +45,39 @@ const getCard = (word = {}, iterator) => {
 
   const spacer = getDOMElement('div', 'card-spacer');
 
-  if (localStorage.getItem('userSetExample') === 'false') {
-    document.querySelectorAll('.phrase').forEach((el) => {
-      const start = el.innerHTML.indexOf('<');
-      const end = el.innerHTML.indexOf('>');
-      const res = el.innerHTML.slice(start, end + 1);
-      el.innerHTML = res;
-    });
-  }
-
   const cardTranslateExample = getDOMElement('div', 'main-screen-card translate-example');
   cardTranslateExample.textContent = currentWordExplanation;
   cardBody.append(cardBodyPhrase, spacer, cardTranslateExample);
-
-  if (localStorage.getItem('userSetExplanation') === 'false') {
-    document.querySelectorAll('.translate-example').forEach((el) => {
-      el.style = 'visibility: hidden;';
-    });
-  }
 
   const cardFooter = getDOMElement('div', 'main-screen-card card-footer text-muted');
   const cardDiv = getDOMElement('div', 'main-screen-card card-footer-area');
   const cardFooterTranslate = getDOMElement('span', 'main-screen-card card-footer-translate');
 
   if (localStorage.getItem('userSetTranslate') === 'false' && localStorage.getItem('userSetTranscription') === 'false') {
-    cardFooterTranslate.textContent = '';// `${currentWordTranslate}  |  ${currentWordTranscription}`;
+    cardFooterTranslate.textContent = '';
   } else if (localStorage.getItem('userSetTranslate') === 'true' && localStorage.getItem('userSetTranscription') === 'false') {
-    cardFooterTranslate.textContent = `${currentWordTranslate}`;// `${currentWordTranslate}  |  ${currentWordTranscription}`;
+    cardFooterTranslate.textContent = `${currentWordTranslate}`;
   } else if (localStorage.getItem('userSetTranslate') === 'false' && localStorage.getItem('userSetTranscription') === 'true') {
     cardFooterTranslate.textContent = `${currentWordTranscription}`;
   } else {
     cardFooterTranslate.textContent = `${currentWordTranslate}  |  ${currentWordTranscription}`;
   }
 
-  const cardFooterSpeakerIcon = getDOMElement('i', 'main-speaker main-i fas fa-volume-up');
-  cardFooterSpeakerIcon.setAttribute('id', iterator);
-  cardFooterSpeakerIcon.setAttribute('data-audio', currentWordAudio);
+  const cardFooterIconArea = getDOMElement('div', 'main-icon-area');
 
-  cardDiv.append(cardFooterTranslate, cardFooterSpeakerIcon);
+  const cardFooterSpeakerIcon = getDOMElement('i', 'main-speaker main-i fas fa-volume-up');
+  cardFooterSpeakerIcon.setAttribute('id', `main-speaker-${iterator}`);
+
+  const cardFooterEyeIcon = getDOMElement('i', 'main-eye main-i fas fa-eye');
+  cardFooterEyeIcon.setAttribute('id', iterator);
+  cardFooterEyeIcon.setAttribute('data-audio', currentWordAudio);
+
+  const cardFooterArrowIcon = getDOMElement('i', 'main-arrow main-i fas fa-arrow-circle-right');
+  cardFooterArrowIcon.setAttribute('id', `main-arrow-${iterator}`);
+
+  cardFooterIconArea.append(cardFooterSpeakerIcon, cardFooterEyeIcon, cardFooterArrowIcon);
+
+  cardDiv.append(cardFooterTranslate, cardFooterIconArea);
   cardFooter.append(cardDiv);
 
   card.append(cardHeader, cardBody, cardFooter);

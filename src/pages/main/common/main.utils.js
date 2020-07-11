@@ -105,8 +105,22 @@ const eyeSpeakerHandler = () => {
   });
 };
 
-const addToUserWords = (wordId, word, wordDifficulty) => {
-  learnWordsAPIService.createUserWord(localStorage.getItem('userId'), wordId, localStorage.getItem('token'), wordDifficulty, { word });
+const addToUserWords = (dataWord) => {
+  const data = [
+    localStorage.getItem('userId'),
+    dataWord.wordId,
+    localStorage.getItem('token'),
+    dataWord.wordDifficulty,
+    {
+      word: dataWord.word,
+      wordAudio: dataWord.wordAudio,
+      wordTranslate: dataWord.wordTranslate,
+      wordImage: dataWord.wordImage,
+    },
+  ];
+
+  console.log(...data);
+  learnWordsAPIService.createUserWord(...data);
 };
 
 const validateAnswer = (event, iterator, slidesCount) => {
@@ -140,7 +154,16 @@ const validateAnswer = (event, iterator, slidesCount) => {
       currentInput.style.color = '#34c716';
       currentInput.blur();
       currentCard.setAttribute('guessed', 'true');
-      addToUserWords(currentInput.getAttribute('data'), currentInput.placeholder, wordDifficulty);
+
+      const dataWord = {
+        wordId: currentInput.getAttribute('data'),
+        word: currentInput.placeholder,
+        wordDifficulty,
+        wordAudio: currentInput.getAttribute('data-audio'),
+        wordTranslate: currentCard.getAttribute('data-translate'),
+        wordImage: currentCard.getAttribute('data-img'),
+      };
+      addToUserWords(dataWord);
 
       const urlAudio = currentInput.getAttribute('data-audio');
       const audioWord = new Audio(`${baseUrl}${urlAudio}`);
@@ -152,7 +175,6 @@ const validateAnswer = (event, iterator, slidesCount) => {
       const soundIcon = document.querySelector(`#main-speaker-${iterator}`);
 
       if (!soundIcon.classList.contains('sound-off')) {
-        console.log('Играю!');
         audioWord.play();
 
         if (localStorage.getItem('userSetExample') === 'true') {
@@ -222,17 +244,14 @@ const validateAnswer = (event, iterator, slidesCount) => {
             }
           }
         });
+      } else if (iterator === lastSlide) {
+        nextBTN.classList.add('main-btn-disable');
+        getNotation();
       } else {
-        console.log('Не играю!');
-        if (iterator === lastSlide) {
-          nextBTN.classList.add('main-btn-disable');
-          getNotation();
-        } else {
-          setTimeout(() => {
-            nextBTN.click();
-            changeProgressBar(iterator);
-          }, 1500);
-        }
+        setTimeout(() => {
+          nextBTN.click();
+          changeProgressBar(iterator);
+        }, 1500);
       }
     } else {
       const soundIcon = document.querySelector(`#main-speaker-${iterator}`);
@@ -250,13 +269,11 @@ const validateAnswer = (event, iterator, slidesCount) => {
 };
 
 export const inputHandler = (iterator, slidesCount) => {
-  // const lastSlide = slidesCount - 1;
   const currentInput = document.querySelector(`#to-write-${iterator}`);
   const currentArrowBTN = document.querySelector(`#main-arrow-${iterator}`);
   const currentCard = document.querySelector(`#main-card-${iterator}`);
   const nextBTN = document.querySelector('#main-button-next');
   currentInput.focus();
-  // const wordDifficulty = 'false';
 
   if (currentCard.getAttribute('guessed') === 'false') {
     nextBTN.classList.add('main-btn-disable');
@@ -267,97 +284,8 @@ export const inputHandler = (iterator, slidesCount) => {
     currentInput.dispatchEvent(emulateEnter);
   });
 
-  // currentInput.addEventListener('enterClick', (e) => {
-  //   console.log('e2 ', e);
-  // });
-
   currentInput.addEventListener('keydown', (e) => validateAnswer(e, iterator, slidesCount));
   currentInput.addEventListener('enterClick', (e) => validateAnswer(e, iterator, slidesCount));
-  // currentInput.addEventListener('keydown', (e) => {
-  // console.log(e.type);
-  // if (e.keyCode === 13 || e.type === 'enterClick') {
-  //   if (currentInput.value === currentInput.placeholder) {
-  //     currentInput.style.color = '#34c716';
-  //     currentInput.blur();
-  //     currentCard.setAttribute('guessed', 'true');
-  //     addToUserWords(currentInput.getAttribute('data'), currentInput.placeholder, wordDifficulty);
-
-  //     const urlAudio = currentInput.getAttribute('data-audio');
-  //     const audioWord = new Audio(`${baseUrl}${urlAudio}`);
-  //     const urlAudioExample = currentInput.getAttribute('data-audio-example');
-  //     const audioExample = new Audio(`${baseUrl}${urlAudioExample}`);
-  //     const urlAudioExplanation = currentInput.getAttribute('data-audio-explanation');
-  //     const audioExplanation = new Audio(`${baseUrl}${urlAudioExplanation}`);
-
-  //     audioWord.play();
-
-  //     if (localStorage.getItem('userSetExample') === 'true') {
-  //       audioWord.addEventListener('ended', () => {
-  //         setTimeout(() => {
-  //           audioExample.play();
-  //         }, 500);
-  //       });
-  //       if (localStorage.getItem('userSetExplanation') === 'true') {
-  //         audioExample.addEventListener('ended', () => {
-  //           setTimeout(() => {
-  //             audioExplanation.play();
-  //           }, 500);
-  //         });
-  //       }
-  //     } else if (localStorage.getItem('userSetExplanation') === 'true') {
-  //       audioWord.addEventListener('ended', () => {
-  //         setTimeout(() => {
-  //           audioExplanation.play();
-  //         }, 500);
-  //       });
-  //     }
-
-  //     audioWord.addEventListener('ended', () => {
-  //       if (localStorage.getItem('userSetExample') === 'true') {
-  //         audioExample.addEventListener('ended', () => {
-  //           if (localStorage.getItem('userSetExplanation') === 'true') {
-  //             audioExplanation.addEventListener('ended', () => {
-  //               nextBTN.classList.remove('main-btn-disable');
-  //               if (iterator === lastSlide) {
-  //                 nextBTN.classList.add('main-btn-disable');
-  //                 getNotation();
-  //               } else { nextBTN.click(); }
-  //             });
-  //           } else {
-  //             nextBTN.classList.remove('main-btn-disable');
-  //             if (iterator === lastSlide) {
-  //               nextBTN.classList.add('main-btn-disable');
-  //               getNotation();
-  //             } else { nextBTN.click(); }
-  //           }
-  //         });
-  //       } else if (localStorage.getItem('userSetExplanation') === 'true') {
-  //         audioExplanation.addEventListener('ended', () => {
-  //           nextBTN.classList.remove('main-btn-disable');
-  //           if (iterator === lastSlide) {
-  //             nextBTN.classList.add('main-btn-disable');
-  //             getNotation();
-  //           } else { nextBTN.click(); }
-  //         });
-  //       } else {
-  //         nextBTN.classList.remove('main-btn-disable');
-  //         if (iterator === lastSlide) {
-  //           nextBTN.classList.add('main-btn-disable');
-  //           getNotation();
-  //         } else { nextBTN.click(); }
-  //       }
-  //     });
-  //   } else {
-  //     wordDifficulty = 'true';
-  //     currentInput.classList.add('incorrect');
-  //     new Audio('../../../assets/audio/error.mp3').play();
-  //     setTimeout(() => {
-  //       currentInput.value = '';
-  //       currentInput.classList.remove('incorrect');
-  //     }, 1500);
-  //   }
-  // }
-  // });
 };
 
 export const moveCardHandler = () => {
@@ -433,11 +361,13 @@ const getWords = async () => {
   const page = getRandomPage(30);
   const group = Number(localStorage.getItem('userLevel'));
   const words = await learnWordsAPIService.getWordsByPageAndGroup(page, group);
+  console.log(words);
   return words;
 };
 
 export const setWordsForCards = async () => {
   const userWords = await learnWordsAPIService.getAllUserWords(localStorage.getItem('userId'), localStorage.getItem('token'));
+  console.log(userWords);
   const newWords = await getWords();
   const wordsForCards = newWords.filter((newWord) => userWords.every((userWord) => userWord.wordId !== newWord.id));
   return wordsForCards;

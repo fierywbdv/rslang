@@ -259,8 +259,8 @@ class Ourgame {
     const { setGameNum, setRandomGameNum } = state.ourGameReducer;
     const startButton = document.getElementById('start-play');
     const customStart = document.getElementById('custom-start');
-    customStart.classList.add('disable')
-    startButton.classList.add('disable')
+    customStart.classList.add('disable');
+    startButton.classList.add('disable');
     if (kind === 'withRandomWords') {
       this.words = await learnWordsAPIService.getWordsByPageAndGroup(page, group);
       if (setRandomGameNum === 0 || setRandomGameNum % 2 === 0) {

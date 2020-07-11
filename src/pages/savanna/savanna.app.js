@@ -13,14 +13,14 @@ class Savanna {
   }
 }
 
-export default new Savanna();
+export default new Savanna() ;
 
 function drawPage() {
   const page = document.querySelector('#root');
   page.innerHTML += `
       <div class="savanna-body">
 
-        <div class="savanna-main-page-wrapper hidden">
+        <div class="savanna-main-page-wrapper">
           <h2 class="savanna-name">Саванна</h2>
           <p class="savanna-about">Выберите правильный перевод слова</p>
           <button class="savanna-start__button">Начать игру</button>
@@ -35,7 +35,7 @@ function drawPage() {
           </div> 
         </div>
 
-        <div class="savanna-second-page">
+        <div class="savanna-second-page hidden">
 
           <div class="savanna-hearts-wrapper">
             <img class="savanna-one-heart" src='assets/savanna/img/heart.svg'/>
@@ -79,4 +79,25 @@ function drawPage() {
 
 if ((window.location.href.split('#'))[1] === 'savanna') {
   drawPage();
+
+  var savannaStartButton = document.querySelector('.savanna-start__button');
+  var savannaSecondPage = document.querySelector('.savanna-second-page');
+  var savannaDifficulties = document.querySelectorAll('.savanna-lvl_button');
+
+  for (let i=0; i < savannaDifficulties.length; i++) {
+    savannaDifficulties[i].addEventListener("click", function() {
+      var current = document.getElementsByClassName("active-lvl");
+      current[0].className = current[0].className.replace(" active-lvl", "");
+      this.className += " active-lvl";
+    });
+  }
+
+  savannaStartButton.onclick = function(event) {
+    let target = event.target;
+    target.parentNode.classList.add('hidden');
+    savannaSecondPage.classList.remove('hidden');
+  }
 }
+
+
+

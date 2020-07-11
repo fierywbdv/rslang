@@ -8,6 +8,9 @@ import { statisticsScreenComponent } from './components/statistics-screen-compon
 import { learnWordsAPIService } from '../../services/learnWordsAPIService';
 import {
   shuffle,
+  createWordsArray,
+  createTranslationsArray,
+  setLevelAndRound,
   toggleCirclesNumber,
   cleanCircles,
   renderBackground,
@@ -84,14 +87,6 @@ class Sprint {
     }, 1000);
   }
 
-  createWordsArray(wordsList) {
-    this.words = wordsList.map((item) => item.word);
-  }
-
-  createTranslationsArray(wordsList) {
-    this.translations = wordsList.map((item) => item.wordTranslate);
-  }
-
   showPair() {
     document.querySelector('.card__word').innerHTML = this.shuffledWords[this.pairNumber];
     document.querySelector('.card__translation').innerHTML = this.shuffledTranslations[this.pairNumber];
@@ -102,11 +97,14 @@ class Sprint {
   async getWords() {
     this.level = document.getElementById('level').value - 1;
     this.round = document.getElementById('round').value - 1;
-
+    localStorage.setItem('level', this.level + 1);
+    localStorage.setItem('round', this.round + 1);
+    console.log(localStorage.getItem('level'), localStorage.getItem('round'));
     this.wordsList = await learnWordsAPIService.getWordsByPageAndGroup(this.round, this.level);
     console.log(this.wordsList);
-    this.createWordsArray(this.wordsList);
-    this.createTranslationsArray(this.wordsList);
+    this.words = createWordsArray(this.wordsList);
+    this.translations = createTranslationsArray(this.wordsList);
+
     this.shuffledWords = [...shuffle(this.words.slice(0, 10)), ...shuffle(this.words.slice(10))];
     const firstPart = shuffle(this.translations.slice(0, 10));
     const secondPart = shuffle(this.translations.slice(10));
@@ -129,9 +127,9 @@ class Sprint {
     const newWordsList = await learnWordsAPIService.getWordsByPageAndGroup(this.round, this.level);
     console.log(newWordsList);
     this.wordsList.push(...newWordsList);
-    const newWords = newWordsList.map((item) => item.word);
+    const newWords = createWordsArray(newWordsList);
     this.words.push(...newWords);
-    const newTranslations = newWordsList.map((item) => item.wordTranslate);
+    const newTranslations = createTranslationsArray(newWordsList);
     this.translations.push(...newTranslations);
     this.shuffledWords.push(...shuffle(newWords.slice(0, 10)), ...shuffle(newWords.slice(10)));
     const firstPart = shuffle(newTranslations.slice(0, 10));
@@ -274,14 +272,19 @@ class Sprint {
     this.pointsToAdd = 10;
     this.correctAnswers = [];
     this.secondsRemaining = 60;
+    this.wrongAnswers = [];
+
     document.querySelector('.sprint-wrapper').innerHTML = gameScreenComponent();
+
+    setLevelAndRound();
+
     if (!this.isSoundActivated) {
       document.querySelector('.fa-itunes-note').classList.remove('chosen');
     }
     if (!this.isDynamicActivated) {
       document.querySelector('.fa-volume-up').classList.remove('chosen');
     }
-    this.wrongAnswers = [];
+
     this.renderButtonEvents();
     document.addEventListener('keyup', this.renderArrowsEvents.bind(this)());
     this.renderSoundsEvents();
@@ -374,10 +377,10 @@ class Sprint {
 
       if (newState.sprintReducer.screen === 'game-screen' && !document.querySelector('.game-screen')) {
         document.querySelector('.sprint-wrapper').innerHTML = gameScreenComponent();
-
+        if (localStorage.getItem('level') && localStorage.getItem('round')) {
+          setLevelAndRound();
+        }
         this.renderButtonEvents();
-        // this.renderArrowsEvents();
-        // this.arrowsHandler = this.renderArrowsEvents.bind(this);
         document.addEventListener('keyup', this.renderArrowsEvents.bind(this)());
         this.renderSoundsEvents();
       }

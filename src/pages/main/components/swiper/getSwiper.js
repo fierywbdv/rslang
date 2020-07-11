@@ -5,7 +5,6 @@ import getSlide from '../card/getSlide';
 const getSwiper = () => {
   const swiperContainer = getDOMElement('div', 'main-swiper swiper-container');
   const swiperWrapper = getDOMElement('div', 'main-swiper swiper-wrapper');
-  // const swiperPagination = getDOMElement('div', 'main-swiper swiper-pagination');
   const swiperButtonPrev = getDOMElement('div', 'main-swiper swiper-button-prev main-btn-disable');
   swiperButtonPrev.setAttribute('id', 'main-button-prev');
   const swiperButtonNext = getDOMElement('div', 'main-swiper swiper-button-next');

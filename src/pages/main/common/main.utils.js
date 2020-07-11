@@ -118,7 +118,6 @@ const addToUserWords = async (dataWord) => {
   ];
   console.log(mass[0]);
   mass.shift();
-  //console.log(...data);
   learnWordsAPIService.createUserWord(...data);
 };
 

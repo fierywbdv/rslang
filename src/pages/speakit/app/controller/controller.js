@@ -20,7 +20,6 @@ import {
   showSpinner,
 } from '../data/utils';
 
-
 export default class Controller {
   constructor(model, view) {
     this.model = model;

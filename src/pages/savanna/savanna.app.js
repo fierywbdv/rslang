@@ -32,7 +32,7 @@ function drawPage() {
   page.innerHTML += `
       <div class="body-savanna">
 
-        <div class="page-wrapper">
+        <div class="page-wrapper hidden">
           <h2 class="name">Саванна</h2>
           <p class="about">Выберите правильный перевод слова</p>
           <button class="start__button">Начать игру</button>
@@ -47,8 +47,30 @@ function drawPage() {
           </div> 
         </div>
 
+        <div class="second-page hidden">
 
-        <div class="spinner hidden">
+          <div class="hearts">
+            <img class="one-heart" src='http://localhost:3000/assets/img/09d92e7dd7871d709007195574eaf1a3.svg'/>
+            <img class="one-heart" src='http://localhost:3000/assets/img/09d92e7dd7871d709007195574eaf1a3.svg'/>
+            <img class="one-heart" src='http://localhost:3000/assets/img/09d92e7dd7871d709007195574eaf1a3.svg'/>
+            <img class="one-heart" src='http://localhost:3000/assets/img/09d92e7dd7871d709007195574eaf1a3.svg'/>
+            <img class="one-heart" src='http://localhost:3000/assets/img/09d92e7dd7871d709007195574eaf1a3.svg'/>
+          </div>
+
+          <div class="top-word">
+            <span class="lvl__text current-word">words</span>
+          </div>
+
+          <div class="word-wrapper">
+            <button class="word-button answer-1">первое</button>
+            <button class="word-button answer-2">второе</button>
+            <button class="word-button answer-3">третье</button>
+            <button class="word-button answer-4">четвертое</button>
+          </div>
+
+          <div class="spinner-diamond">
+            <img class="diamond" src='http://localhost:3000/assets/img/17999a2403a9b1ebde0704b69f521392.gif'/>
+          </div>
         </div>
     
         <div class="results hidden">

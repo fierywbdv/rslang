@@ -14,58 +14,58 @@ function drawPage() {
   page.innerHTML += `
       <div class="savanna-body">
 
-        <div class="main-page-wrapper">
+        <div class="savanna-main-page-wrapper">
           <h2 class="savanna-name">Саванна</h2>
-          <p class="about">Выберите правильный перевод слова</p>
-          <button class="start__button">Начать игру</button>
-          <div class="difficulties-lvl">
-            <span class="lvl__text">Уровень:</span>
-            <button class="lvl_button lvl-1 active-lvl">1</button>
-            <button class="lvl_button lvl-2">2</button>
-            <button class="lvl_button lvl-3">3</button>
-            <button class="lvl_button lvl-4">4</button>
-            <button class="lvl_button lvl-5">5</button>
-            <button class="lvl_button lvl-6">6</button>
+          <p class="savanna-about">Выберите правильный перевод слова</p>
+          <button class="savanna-start__button">Начать игру</button>
+          <div class="savanna-difficulties-lvl">
+            <span class="savanna-lvl__text">Уровень:</span>
+            <button class="savanna-lvl_button savanna-lvl-1 active-lvl">1</button>
+            <button class="savanna-lvl_button savanna-lvl-2">2</button>
+            <button class="savanna-lvl_button savanna-lvl-3">3</button>
+            <button class="savanna-lvl_button savanna-lvl-4">4</button>
+            <button class="savanna-lvl_button savanna-lvl-5">5</button>
+            <button class="savanna-lvl_button savanna-lvl-6">6</button>
           </div> 
         </div>
 
-        <div class="second-page hidden">
+        <div class="savanna-second-page hidden">
 
-          <div class="hearts-wrapper">
-            <img class="one-heart" src='./assets/img/heart.svg'/>
-            <img class="one-heart" src='./assets/img/heart.svg'/>
-            <img class="one-heart" src='./assets/img/heart.svg'/>
-            <img class="one-heart" src='./assets/img/heart.svg'/>
-            <img class="one-heart" src='./assets/img/heart.svg'/>
+          <div class="savanna-hearts-wrapper">
+            <img class="savanna-one-heart" src='./assets/img/heart.svg'/>
+            <img class="savanna-one-heart" src='./assets/img/heart.svg'/>
+            <img class="savanna-one-heart" src='./assets/img/heart.svg'/>
+            <img class="savanna-one-heart" src='./assets/img/heart.svg'/>
+            <img class="savanna-one-heart" src='./assets/img/heart.svg'/>
           </div>
 
-          <div class="top-word">
-            <span class="lvl__text savanna-current-word">words</span>
+          <div class="savanna-top-word">
+            <span class="savanna-lvl__text savanna-current-word">words</span>
           </div>
 
-          <div class="word-wrapper">
-            <button class="word-button answer-1">первое</button>
-            <button class="word-button answer-2">второе</button>
-            <button class="word-button answer-3">третье</button>
-            <button class="word-button answer-4">четвертое</button>
+          <div class="savanna-word-wrapper">
+            <button class="savanna-word-button savanna-answer-1">первое</button>
+            <button class="savanna-word-button savanna-answer-2">второе</button>
+            <button class="savanna-word-button savanna-answer-3">третье</button>
+            <button class="savanna-word-button savanna-answer-4">четвертое</button>
           </div>
 
-          <div class="spinner-diamond">
-            <img class="gif-diamond" src='./assets/img/diamond.gif'/>
+          <div class="savanna-spinner-diamond">
+            <img class="savanna-gif-diamond" src='./assets/img/diamond.gif'/>
           </div>
         </div>
     
         <div class="savanna-results hidden">
           <div class="savanna-results-correct">
-              <span class="savanna-name right-answers">Правильно:
+              <span class="savanna-name savanna-right-answers">Правильно:
               </span>
           </div>
           <div class="savanna-results-errors">
-              <span class="savanna-name wrong-answers">Ошибок:
+              <span class="savanna-name savanna-wrong-answers">Ошибок:
               </span>
           </div>
-          <button class="main-menu-button">Главное меню</button>
-          <button class="new-game-button">Новая игра</button>
+          <button class="savanna-main-menu-button">Главное меню</button>
+          <button class="savanna-new-game-button">Новая игра</button>
         </div>
       </div>
     `;

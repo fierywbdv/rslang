@@ -18,7 +18,7 @@
     display: none;
 }
 
-.main-page-wrapper {
+.savanna-main-page-wrapper {
     width: 100%;
     height: 100%;
     padding: 0;
@@ -30,7 +30,7 @@
     color: #ffffff;
 }
 
-.second-page {
+.savanna-second-page {
     width: 100%;
     height: 100%;
     padding: 0;
@@ -44,7 +44,7 @@
     margin: 0;
 }
 
-.main-menu-button {
+.savanna-main-menu-button {
     position: relative;
     top: 50%;
     left: 35%;
@@ -72,7 +72,7 @@
     }
 }
 
-.new-game-button {
+.savanna-new-game-button {
     position: relative;
     top: 50%;
     left: 45%;
@@ -112,15 +112,15 @@
     left: 40%;
 }
 
-.right-answers {
+.savanna-right-answers {
     color: rgb(29, 245, 126) !important;
 }
 
-.wrong-answers {
+.savanna-wrong-answers {
     color: rgb(151, 8, 15) !important;
 }
 
-.word-wrapper {
+.savanna-word-wrapper {
     position: absolute;
     top: 70%;
     left: 30%;
@@ -136,7 +136,7 @@
     align-items: center;
 }
 
-.word-button {
+.savanna-word-button {
     position: relative;
     transform: translate(-50%, 0);
     color: #ffffff;
@@ -162,7 +162,7 @@
     }
 }
 
-.top-word {
+.savanna-top-word {
     position: absolute;
     top: 9vh;
     left: 40vw;
@@ -178,7 +178,7 @@
     align-items: baseline;
 }
 
-.hearts-wrapper {
+.savanna-hearts-wrapper {
     position: absolute;
     right: 5vw;
     top: 20vh;
@@ -192,7 +192,7 @@
     padding-top: 5px;
 }
 
-.spinner-diamond {
+.savanna-spinner-diamond {
     position: absolute;
     top: 90vh;
     left: 49vw;
@@ -205,21 +205,21 @@
     align-items: baseline;
 }
 
-.gif-diamond {
+.savanna-gif-diamond {
     border-radius: 30px 30px 50px 50px;
 }
 
-.one-heart {
+.savanna-one-heart {
     filter: invert(1);
     width: 25px;
     height: 25px;
 }
 
-.grey-heart {
+.savanna-grey-heart {
     filter: invert(0.4);
 }
 
-.about {
+.savanna-about {
     position: relative;
     color: #ffffff;
     top: -5%;
@@ -244,7 +244,7 @@
     -webkit-text-stroke: 1px rgba(255, 255, 255, 0.8);
 }
 
-.start__button {
+.savanna-start__button {
     position: relative;
     left: 50%;
     transform: translate(-50%, 0);
@@ -270,7 +270,7 @@
     }
 }
 
-.lvl_button {
+.savanna-lvl_button {
     box-sizing: border-box;
     display: block;
     width: 35px;
@@ -295,7 +295,7 @@
     }
 }
 
-.lvl__text {
+.savanna-lvl__text {
     align-self: center;
     display: block;
     margin-right: 10px;
@@ -306,12 +306,12 @@
     -webkit-text-stroke: 1px rgba(255, 255, 255, 0.8);
 }
 
-.active-lvl {
+.savanna-active-lvl {
     color: white;
     background-color: rgb(109, 208, 238);
 }
 
-.difficulties-lvl {
+.savanna-difficulties-lvl {
     position: absolute;
     left: 40vw;
     top: 70vh;

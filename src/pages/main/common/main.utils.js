@@ -122,14 +122,11 @@ const addToUserWords = async (dataWord) => {
 };
 
 const validateAnswer = (event, iterator, slidesCount) => {
-  // const currentCardNumber = iterator + 1;
   const lastCardNumber = slidesCount;
-
   const currentCardLabel = document.querySelector('#current-slide');
   const lastCardLabel = document.querySelector('#slides-count');
   const progressBar = document.querySelector('.main-swiper .progress-bar');
 
-  // currentCardLabel.innerText = currentCardNumber;
   lastCardLabel.innerText = lastCardNumber;
 
   const changeProgressBar = (i) => {
@@ -141,7 +138,6 @@ const validateAnswer = (event, iterator, slidesCount) => {
 
   const lastSlide = slidesCount - 1;
   const currentInput = document.querySelector(`#to-write-${iterator}`);
-  // const currentArrowBTN = document.querySelector(`#main-arrow-${iterator}`);
   const currentCard = document.querySelector(`#main-card-${iterator}`);
   const nextBTN = document.querySelector('#main-button-next');
   currentInput.focus();
@@ -365,8 +361,24 @@ const getWords = async () => {
 
 export const setWordsForCards = async () => {
   const userWords = await learnWordsAPIService.getAllUserWords(localStorage.getItem('userId'), localStorage.getItem('token'));
-  console.log(userWords);
   const newWords = await getWords();
+  const typeOfGame = localStorage.getItem('typeOfGame');
+
+  switch (typeOfGame) {
+    case 'new':
+      console.log(typeOfGame);
+      break;
+    case 'repeat':
+      console.log(typeOfGame);
+      break;
+    case 'mix':
+      console.log(typeOfGame);
+      break;
+    default:
+      break;
+  }
+
+  console.log(userWords);
   const wordsForCards = newWords.filter((newWord) => userWords.every((userWord) => userWord.wordId !== newWord.id));
   return wordsForCards;
 };

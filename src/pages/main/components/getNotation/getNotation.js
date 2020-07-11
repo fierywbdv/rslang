@@ -31,6 +31,7 @@ const getNotation = () => {
   Вы можете увеличить количество карточек в настройках, либо можете продолжить обучение.`;
 
   const notationFooter = getDOMElement('div', 'notation-footer');
+
   const notationBTNSettings = getDOMElement('button', 'btn btn-outline-primary');
   notationBTNSettings.setAttribute('type', 'button');
   notationBTNSettings.setAttribute('id', 'notation-settings');
@@ -40,6 +41,16 @@ const getNotation = () => {
   settingsBTNIcon.textContent = ' настройки';
 
   notationBTNSettings.append(settingsBTNIcon);
+
+  const notationBTNSelect = getDOMElement('button', 'btn btn-outline-primary');
+  notationBTNSelect.setAttribute('type', 'button');
+  notationBTNSelect.setAttribute('id', 'notation-select');
+
+  const selectBTNIcon = document.createElement('i');
+  selectBTNIcon.className = 'fas fa-sync-alt';
+  selectBTNIcon.textContent = ' выбор задачи';
+
+  notationBTNSelect.append(selectBTNIcon);
 
   const notationBTNContinue = getDOMElement('button', 'btn btn-outline-primary');
   notationBTNContinue.setAttribute('type', 'button');
@@ -51,7 +62,7 @@ const getNotation = () => {
 
   notationBTNContinue.append(continueBTNIcon);
 
-  notationFooter.append(notationBTNSettings, notationBTNContinue);
+  notationFooter.append(notationBTNSettings, notationBTNSelect, notationBTNContinue);
   notationCol.append(notationHeader, notationText, notationFooter);
 
   notationRow.append(notationCol);

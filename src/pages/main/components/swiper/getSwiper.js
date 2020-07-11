@@ -35,18 +35,11 @@ const getSwiper = () => {
   swiperProgressBar.append(swiperProgressValue);
   swiperProgress.append(swiperProgressBar);
 
-  // const slide = getSlide();
-  // const slide2 = getSlide();
-
-  // swiperWrapper.append(slide, slide2);
-
   swiperContainer.append(swiperWrapper,
-    // swiperPagination,
     swiperButtonPrev,
     swiperButtonNext,
     swiperProgress);
 
-  // return swiperContainer;
   return new Promise((resolve) => {
     (resolve(swiperContainer));
   });

@@ -1,0 +1,71 @@
+@import '../../../../scss/variables';
+
+.select-screen-card.container {
+  width: 70vw;
+  & .select-screen-card.row {
+    width: 100%;
+  }
+}
+.select-screen-card .card{
+  margin-top: 40px;
+  width: 100%;
+  margin-bottom: 30px;
+  -webkit-box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.1), -1px 0 2px rgba(0, 0, 0, 0.05);
+  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.1), -1px 0 2px rgba(0, 0, 0, 0.05);
+  border-radius: 2px !important;
+  border: none;
+  & .select-screen-body.col {
+    & button {
+      width: 100%;
+      font-size: .8em;
+      color: $main-pink-color;
+      border: none;
+      border-radius: 0;
+      border-left: 2px solid $main-pink-color;
+      border-bottom: 1px solid transparent;
+      background-color: $main-light-color;
+      &:hover, .active {
+        border-color: $main-blue-color;
+        color: $main-blue-color;
+        background-color: $main-bg-color;
+      }
+      &:hover ~ .text {
+        color: rgb(116, 116, 116);
+      }
+    }
+    & .text {
+      margin-top: 30px;
+      padding: 0 5px;
+      font-size: .8em;
+      color: rgb(160, 160, 160);
+      border-left: 1px solid rgb(160, 160, 160);
+    }
+  }
+  & .card-header {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    border-bottom: 1px solid rgba(0,0,0,.1);
+    & .select-header_logo {
+      padding: 0;
+    }
+    & .select-header-h4 {
+      padding-left: 0;
+      margin-left: -1em;
+      margin-bottom: 0;
+      text-align: center;
+      color: #10707f;
+    }
+    & .select-logo-text {
+      margin-left: 5px;
+    }
+  }
+  & .select-text {
+    text-align: center;
+    padding: 20px 30px;
+    color: $main-text-color;
+    font-size: 1.2em;
+    line-height: 1.8em;
+  }
+}

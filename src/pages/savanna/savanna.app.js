@@ -3,8 +3,14 @@ import { SPEAKIT_CLASS_NAMES, SPEAKIT_GREETINGS } from './common/savanna.constan
 
 import './scss/savanna.styles.scss';
 
-function Savanna() {
+class Savanna {
+  init() {
 
+  }
+  
+  sayHello() {
+
+  }
 }
 
 export default new Savanna();
@@ -14,7 +20,7 @@ function drawPage() {
   page.innerHTML += `
       <div class="savanna-body">
 
-        <div class="savanna-main-page-wrapper">
+        <div class="savanna-main-page-wrapper hidden">
           <h2 class="savanna-name">Саванна</h2>
           <p class="savanna-about">Выберите правильный перевод слова</p>
           <button class="savanna-start__button">Начать игру</button>
@@ -29,14 +35,14 @@ function drawPage() {
           </div> 
         </div>
 
-        <div class="savanna-second-page hidden">
+        <div class="savanna-second-page">
 
           <div class="savanna-hearts-wrapper">
-            <img class="savanna-one-heart" src='./assets/img/heart.svg'/>
-            <img class="savanna-one-heart" src='./assets/img/heart.svg'/>
-            <img class="savanna-one-heart" src='./assets/img/heart.svg'/>
-            <img class="savanna-one-heart" src='./assets/img/heart.svg'/>
-            <img class="savanna-one-heart" src='./assets/img/heart.svg'/>
+            <img class="savanna-one-heart" src='assets/savanna/img/heart.svg'/>
+            <img class="savanna-one-heart" src='assets/savanna/img/heart.svg'/>
+            <img class="savanna-one-heart" src='assets/savanna/img/heart.svg'/>
+            <img class="savanna-one-heart" src='assets/savanna/img/heart.svg'/>
+            <img class="savanna-one-heart" src='assets/savanna/img/heart.svg'/>
           </div>
 
           <div class="savanna-top-word">
@@ -51,7 +57,7 @@ function drawPage() {
           </div>
 
           <div class="savanna-spinner-diamond">
-            <img class="savanna-gif-diamond" src='./assets/img/diamond.gif'/>
+            <img class="savanna-gif-diamond" src='assets/savanna/img/diamond.gif'/>
           </div>
         </div>
     

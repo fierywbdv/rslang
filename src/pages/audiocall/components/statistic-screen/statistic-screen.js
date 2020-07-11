@@ -16,7 +16,7 @@ const statisticScreenComponent = (kindGame) => {
   misMurkUp.forEach((item) => misUl.append(item));
   corMurkUp.forEach((elem) => corUl.append(elem));
 
-  const template = '<h3>Result</h3>';
+  const template = '<h3>Результат</h3>';
   const startScreen = document.createElement('div');
   startScreen.setAttribute('id', 'audio-call-statistic');
   startScreen.innerHTML = template;
@@ -29,14 +29,14 @@ const statisticScreenComponent = (kindGame) => {
   containerInnerLeft.className = 'inner-left';
 
   const innerBox = document.createElement('div');
-  innerBox.innerHTML = '<h2>Correct</h2>';
+  innerBox.innerHTML = '<h2>Правильные ответы</h2>';
   innerBox.className = 'box';
 
   if (cor.length) {
     innerBox.append(corUl);
   } else {
     const noCor = document.createElement('ul');
-    noCor.innerHTML = '<li>Bad! No Correct answers</li>';
+    noCor.innerHTML = '<li>Плохо! Нет правильных ответов</li>';
     innerBox.append(noCor);
   }
 
@@ -47,14 +47,14 @@ const statisticScreenComponent = (kindGame) => {
   containerInnerRight.className = 'inner-right';
 
   const innerBoxRight = document.createElement('div');
-  innerBoxRight.innerHTML = '<h2>Mistake</h2>';
+  innerBoxRight.innerHTML = '<h2>Ошибки</h2>';
   innerBoxRight.className = 'box';
 
   if (miss.length) {
     innerBoxRight.append(misUl);
   } else {
     const noMis = document.createElement('ul');
-    noMis.innerHTML = '<li>Great! No Mistakes</li>';
+    noMis.innerHTML = '<li>Отлично! нет ошибок</li>';
     innerBoxRight.append(noMis);
   }
 

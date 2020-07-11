@@ -72,7 +72,7 @@ const controller = {
     ourgame.init();
   },
   actionSavanna() {
-    savanna.sayHello();
+    savanna();
   },
   actionSprint() {
     sprint.init();

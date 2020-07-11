@@ -1,5 +1,4 @@
-import { CLASS_NAMES } from '../../common/common.constants';
-import { SPEAKIT_CLASS_NAMES, SPEAKIT_GREETINGS } from './common/savanna.constants';
+
 
 import './scss/savanna.styles.scss';
 

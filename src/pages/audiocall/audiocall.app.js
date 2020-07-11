@@ -92,13 +92,13 @@ class Audiocall {
       const { id, token } = helper.getUserData();
       this.userWords = await learnWordsAPIService.getAllUserWords(id, token);
       if (this.userWords.length) {
-        const newWords = this.userWords.map((item) => ({ ...item.optional }));
+        const newWords = this.userWords.map((item) => ({ ...item.optional.word }));
         const firstNum = gameNumber * 10;
         const wordsForGame = newWords.slice(firstNum, firstNum + COUNT_WORDS_PER_GAMES);
         store.dispatch(setQuestionsAudioCall(wordsForGame));
         const callBackFinish = () => {
           store.dispatch(togglePlayAudioCall());
-          const restartWords = this.userWords.map((item) => ({ ...item.optional }));
+          const restartWords = this.userWords.map((item) => ({ ...item.optional.word }));
           const restartWordsForGame = restartWords.slice(0, COUNT_WORDS_PER_GAMES);
           store.dispatch(setQuestionsAudioCall(restartWordsForGame));
           customStart.classList.remove('disable');
@@ -107,7 +107,7 @@ class Audiocall {
         };
         if (!wordsForGame.length) {
           Toastify({
-            text: 'Слова законьчились. Вы начнете сначала',
+            text: 'Слова закончились. Вы начнете сначала',
             duration: 3000,
             close: true,
             gravity: 'top',
@@ -405,12 +405,11 @@ class Audiocall {
 
   init() {
     this.startGame();
-    // baban666@tut.by  asdf_Ghjk1
     const { id, token } = helper.getUserData();
     (async () => {
       const newWords = await learnWordsAPIService.getAllUserWords(id, token);
       if (newWords.length) {
-        this.userWords = newWords.map((item) => ({ ...item.optional }));
+        this.userWords = newWords.map((item) => ({ ...item.optional.word }));
         await helper.showStartButton(newWords);
       } else {
         await helper.showStartButton();

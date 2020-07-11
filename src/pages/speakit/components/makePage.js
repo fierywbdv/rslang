@@ -60,7 +60,7 @@ export default function makePage() {
               </div>
               <p class="status-bar"></p>
             </div>
-            <div class="main-card">
+            <div class="speakit-main-card">
               <div class="picture__container">
                 <img class="main-card__picture" alt="current word picture">
               </div>

@@ -32,7 +32,7 @@ function drawPage() {
   page.innerHTML += `
       <div class="body-savanna">
 
-        <div class="page-wrapper hidden">
+        <div class="page-wrapper">
           <h2 class="name">Саванна</h2>
           <p class="about">Выберите правильный перевод слова</p>
           <button class="start__button">Начать игру</button>
@@ -50,11 +50,11 @@ function drawPage() {
         <div class="second-page hidden">
 
           <div class="hearts">
-            <img class="one-heart" src='http://localhost:3000/assets/img/09d92e7dd7871d709007195574eaf1a3.svg'/>
-            <img class="one-heart" src='http://localhost:3000/assets/img/09d92e7dd7871d709007195574eaf1a3.svg'/>
-            <img class="one-heart" src='http://localhost:3000/assets/img/09d92e7dd7871d709007195574eaf1a3.svg'/>
-            <img class="one-heart" src='http://localhost:3000/assets/img/09d92e7dd7871d709007195574eaf1a3.svg'/>
-            <img class="one-heart" src='http://localhost:3000/assets/img/09d92e7dd7871d709007195574eaf1a3.svg'/>
+            <img class="one-heart" src='./assets/img/heart.svg'/>
+            <img class="one-heart" src='./assets/img/heart.svg'/>
+            <img class="one-heart" src='./assets/img/heart.svg'/>
+            <img class="one-heart" src='./assets/img/heart.svg'/>
+            <img class="one-heart" src='./assets/img/heart.svg'/>
           </div>
 
           <div class="top-word">
@@ -69,19 +69,21 @@ function drawPage() {
           </div>
 
           <div class="spinner-diamond">
-            <img class="diamond" src='http://localhost:3000/assets/img/17999a2403a9b1ebde0704b69f521392.gif'/>
+            <img class="diamond" src='./assets/img/diamond.gif'/>
           </div>
         </div>
     
         <div class="results hidden">
           <div class="results__correct">
-              <span class="correct__lead">Правильно:
+              <span class="name right">Правильно:
               </span>
           </div>
           <div class="results__errors">
-              <span class="errors__lead">Ошибок:
+              <span class="name wrong">Ошибок:
               </span>
           </div>
+          <button class="main-menu-button">Главное меню</button>
+          <button class="new-game-button">Новая игра</button>
         </div>
       </div>
     `;

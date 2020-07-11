@@ -10,11 +10,6 @@ class Savanna {
 
   sayHello() {
     console.log(this.logo);
-
-    const speakitLogo = document.createElement('h2');
-    speakitLogo.className = SPEAKIT_CLASS_NAMES.LOGO;
-    speakitLogo.textContent = this.logo;
-
     document.querySelector(`.${CLASS_NAMES.MAIN.LOGO}`).after(speakitLogo);
   }
 
@@ -22,8 +17,6 @@ class Savanna {
     this.logo = SPEAKIT_GREETINGS;
   }
 }
-
-
 
 export default new Savanna();
 
@@ -47,7 +40,7 @@ function drawPage() {
           </div> 
         </div>
 
-        <div class="second-page savanna-hidden">
+        <div class="second-page hidden">
 
           <div class="hearts-wrapper">
             <img class="one-heart" src='./assets/img/heart.svg'/>
@@ -73,7 +66,7 @@ function drawPage() {
           </div>
         </div>
     
-        <div class="savanna-results savanna-hidden">
+        <div class="savanna-results hidden">
           <div class="results__correct">
               <span class="savanna-name right-answers">Правильно:
               </span>

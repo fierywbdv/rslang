@@ -59,6 +59,10 @@ module.exports = {
         from: './pages/speakit/assets/',
         to: './assets/speakit/',
       },
+      {
+        from: './pages/savanna/assets/',
+        to: './assets/savanna/',
+      },
     ]),
   ],
   module: {

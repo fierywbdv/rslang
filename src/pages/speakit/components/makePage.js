@@ -10,8 +10,9 @@ export default function makePage() {
               <div class="buttons__wrapper">
                 <div class="button__container">
                   <button class="game__button game__button-new button-rounded">Новая игра</button>
-                  <button class="game__button game__button-start button-rounded">Начать игру с рандомными словами</button>
-                  <button class="game__button game__button-start game__button-start-lerned button-rounded">Начать игру с ранее изученными словами </button>
+                  <button class="game__button game__button-start button-rounded">Начать игру</button>
+                  <button class="game__button game__button-start-lerned button-rounded">играть с изученными словами </button>
+                  <button class="game__button game__button-start-random button-rounded">играть с рандомными словами </button>
                   <button class="game__button game__button-stop button-rounded">Остановить игру</button>
                   <button class="game__button game__button-results button-rounded">Результаты</button>
                 </div>

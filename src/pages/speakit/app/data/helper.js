@@ -66,6 +66,8 @@ export const ELEMENTS = {
     RESULTS: document.querySelector('.game__button-results'),
     DIFFICULTIES: document.querySelector('.difficulties'),
     LEVEL: document.querySelector('.speakit_level'),
+    playLernedWordButton: document.querySelector('.game__button-start-lerned'),
+    playRandomWordButton: document.querySelector('.game__button-start-random'),
     RESULTS_NEW_GAME: document.querySelector('.game__button-results_new'),
     RESULTS_RESUME_GAME: document.querySelector('.game__button-results_return'),
   },

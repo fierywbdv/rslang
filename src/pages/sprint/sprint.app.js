@@ -48,12 +48,10 @@ class Sprint {
     this.wrongAnswers = [];
     this.isDynamicActivated = true;
     this.isSoundActivated = true;
+    this.arrowsHandler = null;
   }
 
-  async startGame() {
-    this.level = document.getElementById('level').value - 1;
-    this.round = document.getElementById('round').value - 1;
-
+  startGame() {
     document.querySelector('.current-state').classList.remove('hidden');
     document.querySelector('.card').classList.remove('hidden');
     document.querySelector('.arrows').classList.remove('hidden');
@@ -67,6 +65,7 @@ class Sprint {
       this.secondsRemaining = +document.querySelector('.percentage').innerHTML - 1;
       if (this.secondsRemaining === 0) {
         clearInterval(timer);
+        document.removeEventListener('keyup', this.arrowsHandler);
         this.audio.pause();
         const points = document.querySelector('.points').innerHTML;
         saveStatistics(points);
@@ -101,11 +100,17 @@ class Sprint {
   }
 
   async getWords() {
+    this.level = document.getElementById('level').value - 1;
+    this.round = document.getElementById('round').value - 1;
+
     this.wordsList = await learnWordsAPIService.getWordsByPageAndGroup(this.round, this.level);
+    console.log(this.wordsList);
     this.createWordsArray(this.wordsList);
     this.createTranslationsArray(this.wordsList);
-    this.shuffledWords = shuffle(this.words.slice());
-    this.shuffledTranslations = shuffle(this.translations.slice());
+    this.shuffledWords = [...shuffle(this.words.slice(0, 10)), ...shuffle(this.words.slice(10))];
+    const firstPart = shuffle(this.translations.slice(0, 10));
+    const secondPart = shuffle(this.translations.slice(10));
+    this.shuffledTranslations = [...firstPart, ...secondPart];
   }
 
   async addWords() {
@@ -122,13 +127,16 @@ class Sprint {
     }
 
     const newWordsList = await learnWordsAPIService.getWordsByPageAndGroup(this.round, this.level);
+    console.log(newWordsList);
     this.wordsList.push(...newWordsList);
     const newWords = newWordsList.map((item) => item.word);
     this.words.push(...newWords);
     const newTranslations = newWordsList.map((item) => item.wordTranslate);
     this.translations.push(...newTranslations);
-    this.shuffledWords.push(...shuffle(newWords.slice()));
-    this.shuffledTranslations.push(...shuffle(newTranslations.slice()));
+    this.shuffledWords.push(...shuffle(newWords.slice(0, 10)), ...shuffle(newWords.slice(10)));
+    const firstPart = shuffle(newTranslations.slice(0, 10));
+    const secondPart = shuffle(newTranslations.slice(10));
+    this.shuffledTranslations.push(...firstPart, ...secondPart);
   }
 
   answerCorrectly() {
@@ -275,6 +283,7 @@ class Sprint {
     }
     this.wrongAnswers = [];
     this.renderButtonEvents();
+    document.addEventListener('keyup', this.renderArrowsEvents.bind(this)());
     this.renderSoundsEvents();
   }
 
@@ -324,14 +333,15 @@ class Sprint {
   }
 
   renderArrowsEvents() {
-    document.addEventListener('keyup', (event) => {
+    this.arrowsHandler = (event) => {
       if (event.code === 'ArrowLeft') {
         this.answerWrong();
       }
       if (event.code === 'ArrowRight') {
         this.answerCorrectly();
       }
-    });
+    };
+    return this.arrowsHandler;
   }
 
   renderSoundsEvents() {
@@ -366,7 +376,9 @@ class Sprint {
         document.querySelector('.sprint-wrapper').innerHTML = gameScreenComponent();
 
         this.renderButtonEvents();
-        this.renderArrowsEvents();
+        // this.renderArrowsEvents();
+        // this.arrowsHandler = this.renderArrowsEvents.bind(this);
+        document.addEventListener('keyup', this.renderArrowsEvents.bind(this)());
         this.renderSoundsEvents();
       }
     });

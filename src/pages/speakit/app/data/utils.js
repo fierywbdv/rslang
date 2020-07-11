@@ -72,11 +72,11 @@ export const loadCardsJSON = (difficult, addPageList) => {
   fetchData(url, addPageList);
 };
 
-async function a() {
-  const b = await learnWordsAPIService.getAllUserWords(localStorage.getItem('userId'), localStorage.getItem('token'));
-  console.log(b);
+async function addLernedWords() {
+  const lernedWords = await learnWordsAPIService.getAllUserWords(localStorage.getItem('userId'), localStorage.getItem('token'));
+  console.log(lernedWords.map((i) => i.optional.word));
 }
-a();
+addLernedWords();
 
 const TRANSLATION_API = {
   KEY: 'trnsl.1.1.20200501T172144Z.c784356c3f286594.5cbbf7226bde620d92ce5f3996d05cc59c7d6a7a',

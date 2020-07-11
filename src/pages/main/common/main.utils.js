@@ -1,6 +1,7 @@
 // import Router from '../../../router/Router';
 import { learnWordsAPIService } from '../../../services/learnWordsAPIService';
 import getNotation from '../components/getNotation/getNotation';
+import { mass } from '../components/card/generateCards';
 
 const baseUrl = 'https://raw.githubusercontent.com/irinainina/rslang-data/master/';
 
@@ -105,21 +106,19 @@ const eyeSpeakerHandler = () => {
   });
 };
 
-const addToUserWords = (dataWord) => {
+const addToUserWords = async (dataWord) => {
   const data = [
     localStorage.getItem('userId'),
     dataWord.wordId,
     localStorage.getItem('token'),
     dataWord.wordDifficulty,
     {
-      word: dataWord.word,
-      wordAudio: dataWord.wordAudio,
-      wordTranslate: dataWord.wordTranslate,
-      wordImage: dataWord.wordImage,
+      word: mass[0],
     },
   ];
-
-  console.log(...data);
+  console.log(mass[0]);
+  mass.shift();
+  //console.log(...data);
   learnWordsAPIService.createUserWord(...data);
 };
 

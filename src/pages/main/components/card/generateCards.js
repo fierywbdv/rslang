@@ -2,6 +2,8 @@ import { getUserSettings, setWordsForCards, getNewRandomWord } from '../../commo
 
 import getSlide from './getSlide';
 
+export let mass = [];
+
 const generateCards = async () => {
   const buttonNext = document.querySelector('.swiper-button-next');
   const mainSwiper = document.querySelector('.main-swiper .swiper-wrapper');
@@ -20,17 +22,21 @@ const generateCards = async () => {
 	<div class="cssload-cube cssload-c4"></div>
 	<div class="cssload-cube cssload-c3"></div>
 </div>`);
+  mass = [];
 
   for (let i = 0; i < userCardCount; i += 1) {
     if (wordsArr[i] === undefined) {
       const word = await getNewRandomWord();
+      mass.push(word);
       const slide = getSlide(word, i);
       mainSwiper.append(slide);
     } else {
+      mass.push(wordsArr[i]);
       const slide = getSlide(wordsArr[i], i);
       mainSwiper.append(slide);
     }
   }
+
   if (localStorage.getItem('userSetImage') === 'false') {
     document.querySelectorAll('.main-screen-image').forEach((el) => {
       el.style = 'display: none;';

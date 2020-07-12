@@ -9,6 +9,11 @@
     width: 100%;
   }
 
+  #root.our-game-root {
+    overflow: hidden;
+  }
+
+
   @-o-keyframes fade-in {
     0% {
       opacity: .1;
@@ -472,5 +477,12 @@
     .card {
       margin-bottom: 20px;
     }
+
+    .card-button.two button {
+      width: 165px;
+      height: 165px;
+      font-size: 45px;
+    }
+
   }
 }

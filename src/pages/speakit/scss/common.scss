@@ -74,6 +74,10 @@ background-color: white;
   }
 }
 
+.button-rounded:focus {
+  outline: unset;
+}
+
 .button {
   text-decoration: none;
   outline: none;

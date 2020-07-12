@@ -11,8 +11,9 @@ export const gameScreenComponent = () => {
                                         <label for="round">Раунд</label>
                                         <input id="round" name="round" value="1" type="number" min="1" max="30" required>
                                     </div>
-                                    <span>Изученные слова</span>
+                                    <span class="learned-words">Изученные слова</span>
                                 </div>
+                                <span class="error-message none">Нет изученных слов</span>
                                 <div class="current-state hidden">
                                     <span class="points">0</span>${timeChartComponent(60)}
                                 </div>

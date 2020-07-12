@@ -11,7 +11,7 @@
   #root.audio-call-root {
     position: relative;
     width: 100%;
-
+    overflow: hidden;
     .container {
       display: inherit;
     }
@@ -474,6 +474,12 @@
     }
     .card {
       margin-bottom: 20px;
+    }
+
+    .card-button.two button {
+      width: 165px;
+      height: 165px;
+      font-size: 45px;
     }
   }
 }

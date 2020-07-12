@@ -3,7 +3,7 @@
 @import "../../../scss/variables.scss";
 @import '../../../scss/common.scss';
 
-.container {
+.team-container {
   max-width: 1140px;
   margin: 0 auto;
   padding: 0 40px;
@@ -473,7 +473,7 @@ input.input-material.is-invalid ~ .help {
 }
 
 @media (max-width: 575px) {
-  .container {
+  .team-container {
     padding: 15px 20px;
   }
   .hero {

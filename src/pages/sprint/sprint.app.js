@@ -8,6 +8,9 @@ import { statisticsScreenComponent } from './components/statistics-screen-compon
 import { learnWordsAPIService } from '../../services/learnWordsAPIService';
 import {
   shuffle,
+  createWordsArray,
+  createTranslationsArray,
+  setLevelAndRound,
   toggleCirclesNumber,
   cleanCircles,
   renderBackground,
@@ -37,23 +40,21 @@ class Sprint {
     this.wordsList = [];
     this.words = [];
     this.translations = [];
-    this.shuffledWords = [];
-    this.shuffledTranslations = [];
     this.pairNumber = 0;
     this.pointsToAdd = 10;
     this.correctAnswersNumber = 0;
     this.audio = new Audio();
-    this.playPromise = null;
     this.correctAnswers = [];
     this.wrongAnswers = [];
     this.isDynamicActivated = true;
     this.isSoundActivated = true;
+    this.arrowsHandler = null;
+    this.learnedWordsHandler = null;
+    this.areLearnedWordsChosen = false;
+    this.areWordsAdded = false;
   }
 
-  async startGame() {
-    this.level = document.getElementById('level').value - 1;
-    this.round = document.getElementById('round').value - 1;
-
+  startGame() {
     document.querySelector('.current-state').classList.remove('hidden');
     document.querySelector('.card').classList.remove('hidden');
     document.querySelector('.arrows').classList.remove('hidden');
@@ -67,6 +68,7 @@ class Sprint {
       this.secondsRemaining = +document.querySelector('.percentage').innerHTML - 1;
       if (this.secondsRemaining === 0) {
         clearInterval(timer);
+        document.removeEventListener('keyup', this.arrowsHandler);
         this.audio.pause();
         const points = document.querySelector('.points').innerHTML;
         saveStatistics(points);
@@ -85,30 +87,28 @@ class Sprint {
     }, 1000);
   }
 
-  createWordsArray(wordsList) {
-    this.words = wordsList.map((item) => item.word);
-  }
-
-  createTranslationsArray(wordsList) {
-    this.translations = wordsList.map((item) => item.wordTranslate);
-  }
-
   showPair() {
-    document.querySelector('.card__word').innerHTML = this.shuffledWords[this.pairNumber];
-    document.querySelector('.card__translation').innerHTML = this.shuffledTranslations[this.pairNumber];
-    const wordIndex = this.words.indexOf(this.shuffledWords[this.pairNumber]);
-    playAudio(`${AUDIO_PATH}${this.wordsList[wordIndex].audio}`, this.isDynamicActivated);
+    const number = Math.floor(Math.random() * this.wordsList.length);
+    if (number % 2) {
+      document.querySelector('.card__translation').innerHTML = this.translations[this.pairNumber];
+    } else {
+      document.querySelector('.card__translation').innerHTML = this.translations[number];
+    }
+    document.querySelector('.card__word').innerHTML = this.words[this.pairNumber];
+    playAudio(`${AUDIO_PATH}${this.wordsList[this.pairNumber].audio}`, this.isDynamicActivated);
   }
 
-  async getWords() {
-    this.wordsList = await learnWordsAPIService.getWordsByPageAndGroup(this.round, this.level);
-    this.createWordsArray(this.wordsList);
-    this.createTranslationsArray(this.wordsList);
-    this.shuffledWords = shuffle(this.words.slice());
-    this.shuffledTranslations = shuffle(this.translations.slice());
+  initLevelAndGroup() {
+    this.level = document.getElementById('level').value - 1;
+    this.round = document.getElementById('round').value - 1;
   }
 
-  async addWords() {
+  setLevelAndGroup() {
+    localStorage.setItem('level', this.level + 1);
+    localStorage.setItem('round', this.round + 1);
+  }
+
+  changeLevelAndGroup() {
     if (this.round === LAST_ROUND) {
       if (this.level === LAST_LEVEL) {
         this.round = 0;
@@ -120,60 +120,81 @@ class Sprint {
     } else {
       this.round++;
     }
+  }
+
+  async getWords() {
+    this.initLevelAndGroup();
+    this.setLevelAndGroup();
+
+    this.wordsList = await learnWordsAPIService.getWordsByPageAndGroup(this.round, this.level);
+    shuffle(this.wordsList);
+    this.words = createWordsArray(this.wordsList);
+    this.translations = createTranslationsArray(this.wordsList);
+  }
+
+  async addWords() {
+    if ((!this.areLearnedWordsChosen) || this.areWordsAdded) {
+      this.changeLevelAndGroup();
+    } else {
+      if (this.wordsList.length >= 20) {
+        this.areLearnedWordsChosen = false;
+      }
+      this.initLevelAndGroup();
+      this.setLevelAndGroup();
+      this.areWordsAdded = true;
+    }
 
     const newWordsList = await learnWordsAPIService.getWordsByPageAndGroup(this.round, this.level);
+    shuffle(newWordsList);
     this.wordsList.push(...newWordsList);
-    const newWords = newWordsList.map((item) => item.word);
+    const newWords = createWordsArray(newWordsList);
     this.words.push(...newWords);
-    const newTranslations = newWordsList.map((item) => item.wordTranslate);
+    const newTranslations = createTranslationsArray(newWordsList);
     this.translations.push(...newTranslations);
-    this.shuffledWords.push(...shuffle(newWords.slice()));
-    this.shuffledTranslations.push(...shuffle(newTranslations.slice()));
   }
 
   answerCorrectly() {
     if (this.checkAnswer()) {
-      this.correctAnswers.push(this.shuffledWords[this.pairNumber]);
+      this.correctAnswers.push(this.words[this.pairNumber]);
       this.correctAnswersNumber++;
       this.showCorrectAnswer();
       this.addPoints();
     } else {
-      this.wrongAnswers.push(this.shuffledWords[this.pairNumber]);
+      this.wrongAnswers.push(this.words[this.pairNumber]);
       this.correctAnswersNumber = 0;
       this.showMistake();
       this.subtractPoints();
       cleanCircles();
     }
     this.pairNumber++;
-    this.showPair();
-    if (this.pairNumber * 2 === this.words.length) {
+    if (this.pairNumber === Math.ceil(this.words.length / 2)) {
       this.addWords();
     }
+    this.showPair();
   }
 
   answerWrong() {
     if (this.checkAnswer()) {
-      this.wrongAnswers.push(this.shuffledWords[this.pairNumber]);
+      this.wrongAnswers.push(this.words[this.pairNumber]);
       this.correctAnswersNumber = 0;
       this.showMistake();
       this.subtractPoints();
       cleanCircles();
     } else {
-      this.correctAnswers.push(this.shuffledWords[this.pairNumber]);
+      this.correctAnswers.push(this.words[this.pairNumber]);
       this.correctAnswersNumber++;
       this.showCorrectAnswer();
       this.addPoints();
     }
     this.pairNumber++;
-    this.showPair();
-    if (this.pairNumber * 2 === this.words.length) {
+    if (this.pairNumber === Math.ceil(this.words.length / 2)) {
       this.addWords();
     }
+    this.showPair();
   }
 
   checkAnswer() {
-    const wordIndex = this.words.indexOf(this.shuffledWords[this.pairNumber]);
-    return this.translations[wordIndex] === this.shuffledTranslations[this.pairNumber];
+    return document.querySelector('.card__translation').innerHTML === this.translations[this.pairNumber];
   }
 
   showMistake() {
@@ -266,15 +287,23 @@ class Sprint {
     this.pointsToAdd = 10;
     this.correctAnswers = [];
     this.secondsRemaining = 60;
+    this.wrongAnswers = [];
+    this.areLearnedWordsChosen = false;
+    this.areWordsAdded = false;
     document.querySelector('.sprint-wrapper').innerHTML = gameScreenComponent();
+
+    setLevelAndRound();
+
     if (!this.isSoundActivated) {
       document.querySelector('.fa-itunes-note').classList.remove('chosen');
     }
     if (!this.isDynamicActivated) {
       document.querySelector('.fa-volume-up').classList.remove('chosen');
     }
-    this.wrongAnswers = [];
+
     this.renderButtonEvents();
+    document.addEventListener('keyup', this.renderArrowsEvents.bind(this)());
+    document.querySelector('.learned-words').addEventListener('click', this.learnedWordsHandler);
     this.renderSoundsEvents();
   }
 
@@ -307,7 +336,10 @@ class Sprint {
   renderButtonEvents() {
     const start = document.querySelector('.start-game');
     start.addEventListener('click', () => {
-      this.getWords();
+      if (!this.areLearnedWordsChosen) {
+        this.getWords();
+      }
+      document.querySelector('.learned-words').removeEventListener('click', this.learnedWordsHandler);
 
       document.querySelector('.start-game').classList.add('hidden');
       document.querySelector('.start-timer').classList.remove('hidden');
@@ -324,14 +356,15 @@ class Sprint {
   }
 
   renderArrowsEvents() {
-    document.addEventListener('keyup', (event) => {
+    this.arrowsHandler = (event) => {
       if (event.code === 'ArrowLeft') {
         this.answerWrong();
       }
       if (event.code === 'ArrowRight') {
         this.answerCorrectly();
       }
-    });
+    };
+    return this.arrowsHandler;
   }
 
   renderSoundsEvents() {
@@ -348,9 +381,27 @@ class Sprint {
     });
   }
 
-  init() {
-    document.getElementById('root').classList.add('root');
+  async chooseLearnedWords() {
+    const learnedWordsInfo = await learnWordsAPIService.getAllUserWords(localStorage.getItem('userId'), localStorage.getItem('token'));
+    if (learnedWordsInfo.length) {
+      document.querySelector('.learned-words').classList.add('chosen');
+      this.areLearnedWordsChosen = true;
+      this.wordsList = learnedWordsInfo.map((learnedWord) => learnedWord.optional.word);
+      shuffle(this.wordsList);
+      this.words = createWordsArray(this.wordsList);
+      this.translations = createTranslationsArray(this.wordsList);
+      if (learnedWordsInfo.length < 20) {
+        this.addWords();
+      }
+    } else {
+      document.querySelector('.error-message').classList.remove('none');
+      setTimeout(() => document.querySelector('.error-message').classList.add('none'), 1000);
+    }
+  }
 
+  init() {
+    document.body.classList.add('sprint-body');
+    document.getElementById('root').classList.add('root');
     store.subscribe(() => {
       const newState = store.getState();
       if (newState.sprintReducer.screen === 'start-screen') {
@@ -364,10 +415,14 @@ class Sprint {
 
       if (newState.sprintReducer.screen === 'game-screen' && !document.querySelector('.game-screen')) {
         document.querySelector('.sprint-wrapper').innerHTML = gameScreenComponent();
-
+        if (localStorage.getItem('level') && localStorage.getItem('round')) {
+          setLevelAndRound();
+        }
         this.renderButtonEvents();
-        this.renderArrowsEvents();
+        document.addEventListener('keyup', this.renderArrowsEvents.bind(this)());
         this.renderSoundsEvents();
+        this.learnedWordsHandler = this.chooseLearnedWords.bind(this);
+        document.querySelector('.learned-words').addEventListener('click', this.learnedWordsHandler);
       }
     });
 

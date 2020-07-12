@@ -55,7 +55,7 @@ const statisticScreenComponent = (kindGame) => {
     innerBoxRight.append(misUl);
   } else {
     const noMis = document.createElement('ul');
-    noMis.innerHTML = '<li>Отлично! нет ошибок<</li>';
+    noMis.innerHTML = '<li>Отлично! нет ошибок</li>';
     innerBoxRight.append(noMis);
   }
 

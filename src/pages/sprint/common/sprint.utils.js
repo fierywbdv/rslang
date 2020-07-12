@@ -1,6 +1,34 @@
-import { AUDIO_PATH } from './sprint.constants';
+import { AUDIO_PATH, LAST_ROUND, LAST_LEVEL } from './sprint.constants';
 
 export const shuffle = (array) => array.sort(() => Math.random() - 0.5);
+
+export const createWordsArray = (wordsList) => wordsList.map((item) => item.word);
+
+export const createTranslationsArray = (wordsList) => wordsList.map((item) => item.wordTranslate);
+
+export const setLevelAndRound = () => {
+  const storedLevel = +localStorage.getItem('level');
+  const storedRound = +localStorage.getItem('round');
+
+  let newLevel;
+  let newRound;
+
+  if (storedRound === LAST_ROUND + 1) {
+    if (storedLevel === LAST_LEVEL + 1) {
+      newLevel = 1;
+      newRound = 1;
+    } else {
+      newLevel = storedLevel + 1;
+      newRound = 1;
+    }
+  } else {
+    newLevel = storedLevel;
+    newRound = storedRound + 1;
+  }
+
+  document.getElementById('level').value = newLevel;
+  document.getElementById('round').value = newRound;
+};
 
 export const toggleCirclesNumber = () => {
   document.querySelector('.card__circles').firstElementChild.classList.toggle('hidden');
@@ -46,9 +74,7 @@ export const playResultsAudio = () => {
 
 export const saveStatistics = (points) => {
   const statistics = JSON.parse(localStorage.getItem('statistics')) || [];
-  console.log(statistics);
   statistics.push({ date: new Date().toLocaleString(), points });
-  console.log(statistics);
   localStorage.setItem('statistics', JSON.stringify(statistics));
 };
 

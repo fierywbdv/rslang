@@ -1,3 +1,5 @@
+import Toastify from 'toastify-js';
+
 import {
   LANGUAGE,
   MAX_WORDS_COUNT,
@@ -6,7 +8,7 @@ import {
   DATA_PATH,
   CLASS_NAMES,
 } from '../data/helper';
-
+import { learnWordsAPIService } from '../../../../services/learnWordsAPIService';
 import {
   initIntroButton,
   toggleDocumentScroll,
@@ -36,6 +38,8 @@ export default class Controller {
     this.onDifficultChange = this.onDifficultChange.bind(this);
     this.onLevelChange = this.onLevelChange.bind(this);
     this.onNewButtonClick = this.onNewButtonClick.bind(this);
+    this.onLernedWordButtonClick = this.onLernedWordButtonClick.bind(this);
+    this.onRandomWordButtonClick = this.onRandomWordButtonClick.bind(this);
     this.onResultButtonClick = this.onResultButtonClick.bind(this);
     this.onResultCardClick = this.onResultCardClick.bind(this);
     this.onResultsNewGameButtonClick = this.onResultsNewGameButtonClick.bind(this);
@@ -216,6 +220,37 @@ export default class Controller {
     this.newGame(this.difficult);
   }
 
+  async onLernedWordButtonClick(event) {
+    const lernedWords = await learnWordsAPIService.getAllUserWords(localStorage.getItem('userId'), localStorage.getItem('token'));
+    if (lernedWords.length < 9) {
+      Toastify({
+        text: 'Недостаточно изученных слов для игры',
+        duration: 3000,
+        close: true,
+        gravity: 'top',
+        position: 'left',
+        backgroundColor: 'linear-gradient(to right, #00b09b, #96c93d)',
+        stopOnFocus: true,
+      }).showToast();
+      return;
+    }
+    const button = event.target;
+    button.classList.add(CLASS_NAMES.DISABLED);
+    const RandomButton = document.querySelector('.game__button-start-random');
+    RandomButton.classList.remove(CLASS_NAMES.DISABLED);
+    showSpinner();
+    this.newGame(this.difficult);
+  }
+
+  onRandomWordButtonClick(event) {
+    const button = event.target;
+    button.classList.add(CLASS_NAMES.DISABLED);
+    const LernedButton = document.querySelector('.game__button-start-lerned');
+    LernedButton.classList.remove(CLASS_NAMES.DISABLED);
+    showSpinner();
+    this.newGame(this.difficult);
+  }
+
   onResultsNewGameButtonClick() {
     togglePageState(CLASS_NAMES.RESULT.PAGE);
     this.view.resultList.remove();
@@ -281,6 +316,8 @@ export default class Controller {
     this.view.initStopButton(this.onStopButtonClick);
     this.view.initDifficulties(this.onDifficultChange);
     this.view.initLevel(this.onLevelChange);
+    this.view.playLernedWordButton(this.onLernedWordButtonClick);
+    this.view.playRandomWordButton(this.onRandomWordButtonClick);
     this.view.initNewButton(this.onNewButtonClick);
     this.view.initResultButton(this.onResultButtonClick);
     this.view.initResultsNewGameButton(this.onResultsNewGameButtonClick);

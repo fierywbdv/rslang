@@ -1,3 +1,13 @@
 @import './ourgame.game-screen';
 @import './ourgame.statistics-screen';
 @import './ourgame.start-screen';
+
+
+// Common styles
+
+.our-game-body, .audio-call-body {
+  nav.side-navbar {
+    height: auto;
+    min-height: 100vh;
+  }
+}

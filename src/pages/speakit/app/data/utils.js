@@ -4,6 +4,8 @@ import {
   EVENTS,
 } from './helper';
 
+import { learnWordsAPIService } from '../../../../services/learnWordsAPIService';
+
 export const createCard = ({
   word,
   image,
@@ -57,17 +59,27 @@ export const shuffleArray = (array) => {
   return result;
 };
 
-const fetchData = async (url, callBack) => {
+const playLernedWordButton = document.querySelector('.game__button-start-lerned');
+const playRandomWordButton = document.querySelector('.game__button-start-random');
+
+const fetchDataLerned = async (url, callBack) => {
+  const lernedWords = await learnWordsAPIService.getAllUserWords(localStorage.getItem('userId'), localStorage.getItem('token'));
+  const lernedWordsNew = lernedWords.map((i) => i.optional.word);
   const response = await fetch(url);
   const json = await response.json();
-  callBack(json);
+  if (lernedWordsNew.length > 9 || playLernedWordButton.className === 'game__button game__button-start-lerned button-rounded disabled') {
+    callBack(lernedWordsNew);
+  }
+  if ((playRandomWordButton.className === 'game__button game__button-start-random button-rounded disabled') || (lernedWordsNew.length <= 9)) {
+    callBack(json);
+  }
 };
 
 const CARDS_API_URL = 'https://afternoon-falls-25894.herokuapp.com/words?group=';
 export const loadCardsJSON = (difficult, addPageList) => {
   const randomPage = Math.floor(Math.random() * 30);
   const url = `${CARDS_API_URL}${difficult}&page=${randomPage}`;
-  fetchData(url, addPageList);
+  fetchDataLerned(url, addPageList);
 };
 
 const TRANSLATION_API = {
@@ -76,7 +88,7 @@ const TRANSLATION_API = {
 };
 
 export const translateWord = (word, callBack) => {
-  fetchData(`${TRANSLATION_API.URL}${word}&key=${TRANSLATION_API.KEY}`, callBack);
+  fetchDataLerned(`${TRANSLATION_API.URL}${word}&key=${TRANSLATION_API.KEY}`, callBack);
 };
 
 export const createStar = (starSrc) => {

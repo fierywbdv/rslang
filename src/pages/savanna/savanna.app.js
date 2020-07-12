@@ -5,6 +5,8 @@ export default function Savanna() {
 
 }
 
+
+
 function drawPage() {
   const page = document.querySelector('#root');
   page.innerHTML += `

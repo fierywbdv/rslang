@@ -180,6 +180,8 @@ export const saveSettingsHandler = () => {
     const userSetExample = document.querySelector('#user-set-example').checked;
     const userSetTranscription = document.querySelector('#user-set-transcription').checked;
     const userSetImage = document.querySelector('#user-set-image').checked;
+    const userAddDifficult = document.querySelector('#user-set-difficult').checked;
+    const userAddDeleted = document.querySelector('#user-set-deleted').checked;
 
     inputHandler(userMail);
     inputHandler(userPassword);
@@ -198,6 +200,8 @@ export const saveSettingsHandler = () => {
         userSetExample,
         userSetTranscription,
         userSetImage,
+        userAddDifficult,
+        userAddDeleted,
       };
       try {
         const updateUser = await learnWordsAPIService.updateUser(localStorage.getItem('userId'), localStorage.getItem('token'), userSettings.userName, userSettings.userMail, userSettings.userPassword);
@@ -209,6 +213,8 @@ export const saveSettingsHandler = () => {
           userSetExample: userSettings.userSetExample,
           userSetTranscription: userSettings.userSetTranscription,
           userSetImage: userSettings.userSetImage,
+          userAddDifficult: userSettings.userAddDifficult,
+          userAddDeleted: userSettings.userAddDeleted,
         });
 
         if (updateUser !== undefined) {
@@ -230,6 +236,8 @@ export const saveSettingsHandler = () => {
           localStorage.setItem('userSetImage', userSettings.userSetImage);
           localStorage.setItem('userSetTranscription', userSettings.userSetTranscription);
           localStorage.setItem('userSetTranslate', userSettings.userSetTranslate);
+          localStorage.setItem('userAddDifficult', userSettings.userAddDifficult);
+          localStorage.setItem('userAddDeleted', userSettings.userAddDeleted);
         }
       } catch (error) {
         console.error(error);

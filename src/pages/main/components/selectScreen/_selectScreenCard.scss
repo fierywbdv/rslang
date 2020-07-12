@@ -1,9 +1,14 @@
 @import '../../../../scss/variables';
 
 .select-screen-card.container {
-  width: 70vw;
+  position: fixed;
+  width: calc(100vw - 200px);
+  &.container-shrinked {
+    width: calc(100vw - 100px);
+  }
   & .select-screen-card.row {
     width: 100%;
+    max-width: 600px;
   }
 }
 .select-screen-card .card{

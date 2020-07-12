@@ -1,6 +1,7 @@
 import getCardHeader from './user.cardHeader';
 import getCardFooter from './user.cardFooter';
 import getCardBody from './user.cardBody';
+import { sidebarListener } from '../../main/common/main.utils';
 
 const getUser = () => {
   const user = {
@@ -26,7 +27,7 @@ const getUserCard = () => {
 
 const getUserSettings = () => {
   const userContainer = document.createElement('div');
-  userContainer.className = 'container-fluid';
+  userContainer.className = 'container-fluid user-container';
 
   const userRow = document.createElement('div');
   userRow.className = 'row justify-content-center';
@@ -42,4 +43,5 @@ export const renderUserScreen = () => {
   const root = document.querySelector('#root');
   const card = getUserSettings();
   root.append(card);
+  sidebarListener();
 };

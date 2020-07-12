@@ -306,6 +306,7 @@ class LearnWordsAPIService {
           Accept: '*/*',
         },
       });
+      console.log(response);
 
       if (response.status === 401) {
         throw new Error('Access token is missing or invalid!');

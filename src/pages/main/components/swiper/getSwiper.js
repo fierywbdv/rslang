@@ -1,8 +1,8 @@
-import swiper from './swiper';
+// import swiper from './swiper';
 import { getDOMElement } from '../../common/main.helper';
-import getSlide from '../card/getSlide';
 
 const getSwiper = () => {
+  const container = getDOMElement('div', 'main-swiper-container');
   const swiperContainer = getDOMElement('div', 'main-swiper swiper-container');
   const swiperWrapper = getDOMElement('div', 'main-swiper swiper-wrapper');
   const swiperButtonPrev = getDOMElement('div', 'main-swiper swiper-button-prev main-btn-disable');
@@ -24,11 +24,11 @@ const getSwiper = () => {
 
   const swiperCurrentSlide = getDOMElement('span', '');
   swiperCurrentSlide.setAttribute('id', 'current-slide');
-  swiperCurrentSlide.textContent = '1';
+  swiperCurrentSlide.textContent = '0';
 
   const swiperSlidesCount = getDOMElement('span', '');
   swiperSlidesCount.setAttribute('id', 'slides-count');
-  swiperSlidesCount.textContent = '100';
+  swiperSlidesCount.textContent = '0';
 
   swiperProgressValue.append(swiperCurrentSlide, ' / ', swiperSlidesCount);
 
@@ -40,8 +40,10 @@ const getSwiper = () => {
     swiperButtonNext,
     swiperProgress);
 
+  container.append(swiperContainer);
+
   return new Promise((resolve) => {
-    (resolve(swiperContainer));
+    (resolve(container));
   });
 };
 

@@ -1,16 +1,7 @@
 @import '../../../scss/normalize.scss';
-
 @import '../../../scss/mixins.scss';
 @import '../../../scss/variables.scss';
-
 @import '../../../scss/common.scss';
-
-@import './main.logo.scss';
-
-#root {
-  background-color: $main-bg-color !important;
-}
-
 @import '../components/swiper/_swiper';
 @import '../components/card/main.card';
 @import '../components/getNotation/notation';

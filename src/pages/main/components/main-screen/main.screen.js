@@ -1,6 +1,7 @@
 import getSwiper from '../swiper/getSwiper';
 import generateCards from '../card/generateCards';
-import { moveCardHandler } from '../../common/main.utils';
+import deleteWordHandler from '../card/deleteWordHandler';
+import { moveCardHandler, sidebarListener } from '../../common/main.utils';
 
 const renderMainScreen = async () => {
   const root = document.querySelector('#root');
@@ -8,5 +9,7 @@ const renderMainScreen = async () => {
   root.append(mainSwiper);
   await generateCards();
   await moveCardHandler();
+  await deleteWordHandler();
+  sidebarListener();
 };
 export default renderMainScreen;

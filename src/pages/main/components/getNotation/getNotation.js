@@ -6,7 +6,7 @@ const getNotation = () => {
   overlay.setAttribute('id', 'notation-overlay');
   const notationRow = getDOMElement('div', 'notation-row justify-content-center');
   notationRow.setAttribute('id', 'notation-body');
-  const notationCol = getDOMElement('div', 'main-screen-popup col-11 col-sm-10 col-md-8 col-lg-6 col-xl-5');
+  const notationCol = getDOMElement('div', 'main-screen-popup col-11 col-sm-10 col-md-8 col-lg-7 col-xl-6');
   const notationHeader = getDOMElement('div', 'notation-header');
 
   const notationHeaderLogo = getDOMElement('div', 'notation-header_logo col-md-3 col-sm-4 col-5');

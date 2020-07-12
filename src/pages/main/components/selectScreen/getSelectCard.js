@@ -4,9 +4,9 @@ import './_selectScreenCard.scss';
 
 const getSelectCard = () => {
   const userName = localStorage.getItem('userName');
-  const container = getDOMElement('div', 'select-screen-card container');
+  const container = getDOMElement('div', 'select-screen-card container-fluid');
   const row = getDOMElement('div', 'select-screen-card row justify-content-center');
-  const col = getDOMElement('div', 'col-12');
+  const col = getDOMElement('div', 'col-8');
   const card = getDOMElement('div', 'select-screen-card card');
   const cardHeader = getDOMElement('div', 'select-screen-card card-header d-flex');
   const cardBody = getDOMElement('div', 'select-screen-card card-body');
@@ -37,21 +37,21 @@ const getSelectCard = () => {
   const bodyRow = getDOMElement('div', 'select-screen-body row justify-content-center');
 
   const bodyColOne = getDOMElement('div', 'select-screen-body col col-4');
-  const bodyTextOne = getDOMElement('p', 'select-screen-body text');
+  const bodyTextOne = getDOMElement('div', 'select-screen-body text');
   bodyTextOne.innerText = phraseNew;
   const bodyColOneButton = getButton('new');
   bodyColOneButton.innerText = 'новые слова';
   bodyColOne.append(bodyColOneButton, bodyTextOne);
 
   const bodyColTwo = getDOMElement('div', 'select-screen-body col col-4');
-  const bodyTextTwo = getDOMElement('p', 'select-screen-body text');
+  const bodyTextTwo = getDOMElement('div', 'select-screen-body text');
   bodyTextTwo.innerText = phraseRepeat;
   const bodyColTwoButton = getButton('repeat');
   bodyColTwoButton.innerText = 'изученные слова';
   bodyColTwo.append(bodyColTwoButton, bodyTextTwo);
 
   const bodyColThree = getDOMElement('div', 'select-screen-body col col-4');
-  const bodyTextThree = getDOMElement('p', 'select-screen-body text');
+  const bodyTextThree = getDOMElement('div', 'select-screen-body text');
   bodyTextThree.innerText = phraseMix;
   const bodyColThreeButton = getButton('mix');
   bodyColThreeButton.innerText = 'новые и изученные';

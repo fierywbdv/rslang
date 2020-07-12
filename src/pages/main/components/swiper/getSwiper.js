@@ -1,11 +1,10 @@
-import swiper from './swiper';
+// import swiper from './swiper';
 import { getDOMElement } from '../../common/main.helper';
-import getSlide from '../card/getSlide';
 
 const getSwiper = () => {
+  const container = getDOMElement('div', 'main-swiper-container');
   const swiperContainer = getDOMElement('div', 'main-swiper swiper-container');
   const swiperWrapper = getDOMElement('div', 'main-swiper swiper-wrapper');
-  // const swiperPagination = getDOMElement('div', 'main-swiper swiper-pagination');
   const swiperButtonPrev = getDOMElement('div', 'main-swiper swiper-button-prev main-btn-disable');
   swiperButtonPrev.setAttribute('id', 'main-button-prev');
   const swiperButtonNext = getDOMElement('div', 'main-swiper swiper-button-next');
@@ -25,31 +24,26 @@ const getSwiper = () => {
 
   const swiperCurrentSlide = getDOMElement('span', '');
   swiperCurrentSlide.setAttribute('id', 'current-slide');
-  swiperCurrentSlide.textContent = '1';
+  swiperCurrentSlide.textContent = '0';
 
   const swiperSlidesCount = getDOMElement('span', '');
   swiperSlidesCount.setAttribute('id', 'slides-count');
-  swiperSlidesCount.textContent = '100';
+  swiperSlidesCount.textContent = '0';
 
   swiperProgressValue.append(swiperCurrentSlide, ' / ', swiperSlidesCount);
 
   swiperProgressBar.append(swiperProgressValue);
   swiperProgress.append(swiperProgressBar);
 
-  // const slide = getSlide();
-  // const slide2 = getSlide();
-
-  // swiperWrapper.append(slide, slide2);
-
   swiperContainer.append(swiperWrapper,
-    // swiperPagination,
     swiperButtonPrev,
     swiperButtonNext,
     swiperProgress);
 
-  // return swiperContainer;
+  container.append(swiperContainer);
+
   return new Promise((resolve) => {
-    (resolve(swiperContainer));
+    (resolve(container));
   });
 };
 

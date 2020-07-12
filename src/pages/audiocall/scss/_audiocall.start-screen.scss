@@ -11,7 +11,7 @@
   #root.audio-call-root {
     position: relative;
     width: 100%;
-
+    overflow: hidden;
     .container {
       display: inherit;
     }

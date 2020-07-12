@@ -1,14 +1,11 @@
-import {
-  setSidebarItem, greeting, toggleBtnHandler,
-} from './common/main.utils';
-// import notationActionHandler from './components/getNotation/notationHandler';
+import { setSidebarItem, greeting } from './common/main.utils';
 import renderMainScreen from './components/main-screen/main.screen';
+import renderSelectScreen from './components/selectScreen/renderSelectScreen';
 import { clearRoot } from '../user/common/user.utils';
 
 import './scss/main.styles.scss';
 import 'swiper/swiper-bundle.css';
 import { store } from '../../redux/store';
-import { learnWordsAPIService } from '../../services/learnWordsAPIService';
 
 if (store.getState().promoReducer.authorized === 'false') {
   document.location.href = '/';
@@ -23,17 +20,16 @@ class Main {
     this.setSidebarItem = setSidebarItem;
     this.renderMainScreen = renderMainScreen;
     this.clearRoot = clearRoot;
-    // this.notationActionHandler = notationActionHandler;
+    this.renderSelectScreen = renderSelectScreen;
   }
 
   async init() {
     this.clearRoot();
-    // this.toggleBtnHandler();
-    // this.menuHandler();
     await this.renderMainScreen();
-    // checkAnswer();
-    // this.notationActionHandler();
-    // getUserSettings();
+  }
+
+  select() {
+    this.renderSelectScreen();
   }
 
   toggleBtnHandler() {
@@ -54,11 +50,5 @@ class Main {
     });
   }
 }
-
-// const getUserSettings = async () => {
-//   const userSettings = await learnWordsAPIService.getUserSettings(localStorage.getItem('userId'), localStorage.getItem('token'));
-//   console.log('userSettings', userSettings);
-//   return userSettings;
-// };
 
 export default new Main();

@@ -1,14 +1,15 @@
 import getSwiper from '../swiper/getSwiper';
 import generateCards from '../card/generateCards';
-import { moveCardHandler } from '../../common/main.utils';
-// import { setWordsForCards } from '../../common/main.helper';
+import deleteWordHandler from '../card/deleteWordHandler';
+import { moveCardHandler, sidebarListener } from '../../common/main.utils';
 
 const renderMainScreen = async () => {
   const root = document.querySelector('#root');
   const mainSwiper = await getSwiper();
   root.append(mainSwiper);
-  // await setWordsForCards();
   await generateCards();
   await moveCardHandler();
+  await deleteWordHandler();
+  sidebarListener();
 };
 export default renderMainScreen;

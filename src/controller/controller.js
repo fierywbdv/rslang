@@ -49,6 +49,9 @@ const controller = {
       case 'team':
         controller.actionTeam();
         break;
+      case '/':
+        controller.actionSelect();
+        break;
       default:
         break;
     }
@@ -79,6 +82,9 @@ const controller = {
   },
   actionUser() {
     user.init();
+  },
+  actionSelect() {
+    main.select();
   },
 
   actionTeam() {

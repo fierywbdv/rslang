@@ -6,7 +6,7 @@ const getCardFooter = () => {
   footerDiv.className = 'card-footer-area';
 
   const footerBTN = document.createElement('button');
-  footerBTN.className = 'btn btn-outline-secondary';
+  footerBTN.className = 'btn btn-outline-danger';
   footerBTN.setAttribute('type', 'button');
   footerBTN.setAttribute('id', 'delete-profile');
 

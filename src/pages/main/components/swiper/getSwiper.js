@@ -24,11 +24,11 @@ const getSwiper = () => {
 
   const swiperCurrentSlide = getDOMElement('span', '');
   swiperCurrentSlide.setAttribute('id', 'current-slide');
-  swiperCurrentSlide.textContent = '0';
+  swiperCurrentSlide.textContent = '1';
 
   const swiperSlidesCount = getDOMElement('span', '');
   swiperSlidesCount.setAttribute('id', 'slides-count');
-  swiperSlidesCount.textContent = '0';
+  swiperSlidesCount.textContent = '1';
 
   swiperProgressValue.append(swiperCurrentSlide, ' / ', swiperSlidesCount);
 

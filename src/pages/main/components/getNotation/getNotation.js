@@ -6,7 +6,7 @@ const getNotation = () => {
   overlay.setAttribute('id', 'notation-overlay');
   const notationRow = getDOMElement('div', 'notation-row justify-content-center');
   notationRow.setAttribute('id', 'notation-body');
-  const notationCol = getDOMElement('div', 'main-screen-popup col-11 col-sm-10 col-md-8 col-lg-6 col-xl-5');
+  const notationCol = getDOMElement('div', 'main-screen-popup col-11 col-sm-10 col-md-8 col-lg-7 col-xl-6');
   const notationHeader = getDOMElement('div', 'notation-header');
 
   const notationHeaderLogo = getDOMElement('div', 'notation-header_logo col-md-3 col-sm-4 col-5');
@@ -31,6 +31,7 @@ const getNotation = () => {
   Вы можете увеличить количество карточек в настройках, либо можете продолжить обучение.`;
 
   const notationFooter = getDOMElement('div', 'notation-footer');
+
   const notationBTNSettings = getDOMElement('button', 'btn btn-outline-primary');
   notationBTNSettings.setAttribute('type', 'button');
   notationBTNSettings.setAttribute('id', 'notation-settings');
@@ -40,6 +41,16 @@ const getNotation = () => {
   settingsBTNIcon.textContent = ' настройки';
 
   notationBTNSettings.append(settingsBTNIcon);
+
+  const notationBTNSelect = getDOMElement('button', 'btn btn-outline-primary');
+  notationBTNSelect.setAttribute('type', 'button');
+  notationBTNSelect.setAttribute('id', 'notation-select');
+
+  const selectBTNIcon = document.createElement('i');
+  selectBTNIcon.className = 'fas fa-sync-alt';
+  selectBTNIcon.textContent = ' выбор задачи';
+
+  notationBTNSelect.append(selectBTNIcon);
 
   const notationBTNContinue = getDOMElement('button', 'btn btn-outline-primary');
   notationBTNContinue.setAttribute('type', 'button');
@@ -51,7 +62,7 @@ const getNotation = () => {
 
   notationBTNContinue.append(continueBTNIcon);
 
-  notationFooter.append(notationBTNSettings, notationBTNContinue);
+  notationFooter.append(notationBTNSettings, notationBTNSelect, notationBTNContinue);
   notationCol.append(notationHeader, notationText, notationFooter);
 
   notationRow.append(notationCol);

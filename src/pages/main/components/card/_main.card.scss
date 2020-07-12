@@ -14,11 +14,61 @@
   padding: 1rem 1.25rem;
   background-color: #fff !important;
   border-bottom: none !important;
+  & .card-header-area {
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 10px;
+    border-bottom: 1px solid  rgba(0,0,0,.1);
+    & .card-header-controls {
+      & i {
+        font-size: 1.5em;
+        margin-left: 10px;
+        margin-right: 10px;
+        cursor: pointer;
+        color: $main-blue-color;
+        & .main-difficult-text, .main-delete-text {
+          opacity: 0;
+          visibility: hidden;
+          position: absolute;
+          z-index: 10;
+          padding: 5px;
+          right: 120px;
+          font-size: .6em;
+          color: $main-text-color;
+        }
+        &.main-difficult-icon {
+          &:hover>.main-difficult-text {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(20px);
+            transition: all .5s ease;
+          }
+        }
+        &.main-delete-icon {
+          &:hover>.main-delete-text {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(20px);
+            transition: all .5s ease;
+          }
+        }
+      }
+    }
+  }
+
   & .main-screen-image {
+    padding-top: 20px;
     max-height: 150px;
     width: auto;
     margin: 0 auto;
   }
+}
+.main-difficult-icon :hover ~ .main-difficult-text {
+  opacity: 1;
+  visibility: visible;
+}
+i.main-i .far .fa-life-ring .main-difficult-icon:hover  {
+  color: red;
 }
 .main-screen-card .card-body {
   display: flex;
@@ -68,6 +118,32 @@
   color: $main-green-color;
   transition: 1s;
 }
+.to-write.deleted {
+  &::-webkit-input-placeholder {
+    color: red;
+    opacity: 1;
+    transition: .5s;
+    text-decoration: line-through;
+  }
+  &::-moz-placeholder {
+    color: red;
+    opacity: 1;
+    transition: .5s;
+    text-decoration: line-through;
+  }
+  &:-moz-placeholder {
+    color: red;
+    opacity: 1;
+    transition: .5s;
+    text-decoration: line-through;
+  }
+  &:-ms-input-placeholder {
+    color: red;
+    opacity: 1;
+    transition: .5s;
+    text-decoration: line-through;
+  }
+}
 .to-write.show {
   &::-webkit-input-placeholder {
     color: $main-pink-color;
@@ -100,7 +176,7 @@
     margin-right: 5px;
   }
 }
-.main-speaker, .main-arrow, .main-eye {
+i.main-speaker, i.main-arrow, i.main-eye {
   font-size: 1.5em;
   padding: 0;
   cursor: pointer;

@@ -1,3 +1,1 @@
-const MAIN_GREETINGS = 'Hello from Main';
-
-export default MAIN_GREETINGS;
+export const baseUrl = 'https://raw.githubusercontent.com/irinainina/rslang-data/master/';

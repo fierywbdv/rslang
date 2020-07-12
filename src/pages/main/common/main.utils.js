@@ -17,6 +17,41 @@ export const setSidebarItem = () => {
   });
 };
 
+export const sidebarListener = () => {
+  const sidebar = document.querySelector('.side-navbar');
+  const toggleBTN = document.querySelector('.menu-btn');
+  sidebar.classList.add('side-navbar-main-user');
+
+  toggleBTN.addEventListener('click', () => {
+    const containerMain = document.querySelector('.main-swiper.swiper-container');
+    const containerUser = document.querySelector('.container-fluid.user-container');
+    const containerSelect = document.querySelector('.select-screen-card.container-fluid');
+    const url = window.location.hash;
+
+    if (url === '#main') {
+      if (sidebar.classList.contains('shrinked')) {
+        containerMain.classList.add('container-shrinked');
+      } else {
+        containerMain.classList.remove('container-shrinked');
+      }
+    }
+    if (url === '#user') {
+      if (sidebar.classList.contains('shrinked')) {
+        containerUser.classList.add('container-shrinked');
+      } else {
+        containerUser.classList.remove('container-shrinked');
+      }
+    }
+    if (url === '') {
+      if (sidebar.classList.contains('shrinked')) {
+        containerSelect.classList.add('container-shrinked');
+      } else {
+        containerSelect.classList.remove('container-shrinked');
+      }
+    }
+  });
+};
+
 export const getUserSettings = () => ({
   wordsPerDay: localStorage.getItem('wordsPerDay'),
   userCardsCount: localStorage.getItem('userCardsCount'),
@@ -106,43 +141,41 @@ const eyeSpeakerHandler = () => {
   });
 };
 
-const addToUserWords = async (dataWord) => {
+export const addToUserWords = async (dataWord, isDeleted) => {
   const data = [
     localStorage.getItem('userId'),
     dataWord.wordId,
     localStorage.getItem('token'),
     dataWord.wordDifficulty,
     {
+      isDeleted,
       word: mass[0],
     },
   ];
   console.log(mass[0]);
   mass.shift();
-  //console.log(...data);
   learnWordsAPIService.createUserWord(...data);
 };
 
-const validateAnswer = (event, iterator, slidesCount) => {
-  // const currentCardNumber = iterator + 1;
-  const lastCardNumber = slidesCount;
-
+export const changeProgressBar = (index, slidesCount) => {
   const currentCardLabel = document.querySelector('#current-slide');
-  const lastCardLabel = document.querySelector('#slides-count');
   const progressBar = document.querySelector('.main-swiper .progress-bar');
+  const lastCardNumber = slidesCount;
+  const currentCardNumber = index + 2;
 
-  // currentCardLabel.innerText = currentCardNumber;
+  currentCardLabel.innerText = currentCardNumber;
+  const currentProgress = Math.floor((currentCardNumber / lastCardNumber) * 100);
+  progressBar.style.width = `${currentProgress}%`;
+};
+
+const validateAnswer = (event, iterator, slidesCount) => {
+  const lastCardNumber = slidesCount;
+  const lastCardLabel = document.querySelector('#slides-count');
+
   lastCardLabel.innerText = lastCardNumber;
-
-  const changeProgressBar = (i) => {
-    const currentCardNumber = i + 2;
-    currentCardLabel.innerText = currentCardNumber;
-    const currentProgress = Math.floor((currentCardNumber / lastCardNumber) * 100);
-    progressBar.style.width = `${currentProgress}%`;
-  };
 
   const lastSlide = slidesCount - 1;
   const currentInput = document.querySelector(`#to-write-${iterator}`);
-  // const currentArrowBTN = document.querySelector(`#main-arrow-${iterator}`);
   const currentCard = document.querySelector(`#main-card-${iterator}`);
   const nextBTN = document.querySelector('#main-button-next');
   currentInput.focus();
@@ -162,7 +195,7 @@ const validateAnswer = (event, iterator, slidesCount) => {
         wordTranslate: currentCard.getAttribute('data-translate'),
         wordImage: currentCard.getAttribute('data-img'),
       };
-      addToUserWords(dataWord);
+      addToUserWords(dataWord, 'false');
 
       const urlAudio = currentInput.getAttribute('data-audio');
       const audioWord = new Audio(`${baseUrl}${urlAudio}`);
@@ -207,7 +240,7 @@ const validateAnswer = (event, iterator, slidesCount) => {
                     getNotation();
                   } else {
                     nextBTN.click();
-                    changeProgressBar(iterator);
+                    changeProgressBar(iterator, slidesCount);
                   }
                 });
               } else {
@@ -217,7 +250,7 @@ const validateAnswer = (event, iterator, slidesCount) => {
                   getNotation();
                 } else {
                   nextBTN.click();
-                  changeProgressBar(iterator);
+                  changeProgressBar(iterator, slidesCount);
                 }
               }
             });
@@ -229,7 +262,7 @@ const validateAnswer = (event, iterator, slidesCount) => {
                 getNotation();
               } else {
                 nextBTN.click();
-                changeProgressBar(iterator);
+                changeProgressBar(iterator, slidesCount);
               }
             });
           } else {
@@ -239,7 +272,7 @@ const validateAnswer = (event, iterator, slidesCount) => {
               getNotation();
             } else {
               nextBTN.click();
-              changeProgressBar(iterator);
+              changeProgressBar(iterator, slidesCount);
             }
           }
         });
@@ -249,7 +282,7 @@ const validateAnswer = (event, iterator, slidesCount) => {
       } else {
         setTimeout(() => {
           nextBTN.click();
-          changeProgressBar(iterator);
+          changeProgressBar(iterator, slidesCount);
         }, 1500);
       }
     } else {
@@ -364,11 +397,50 @@ const getWords = async () => {
   return words;
 };
 
+const shuffleArr = (arr) => {
+  let j;
+  let temp;
+  const resultArr = arr;
+  for (let i = resultArr.length - 1; i > 0; i--) {
+    j = Math.floor(Math.random() * (i + 1));
+    temp = arr[j];
+    resultArr[j] = arr[i];
+    resultArr[i] = temp;
+  }
+  return resultArr;
+};
+
 export const setWordsForCards = async () => {
   const userWords = await learnWordsAPIService.getAllUserWords(localStorage.getItem('userId'), localStorage.getItem('token'));
-  console.log(userWords);
   const newWords = await getWords();
-  const wordsForCards = newWords.filter((newWord) => userWords.every((userWord) => userWord.wordId !== newWord.id));
+  const typeOfGame = localStorage.getItem('typeOfGame');
+
+  console.log('userWords ', userWords);
+
+  const onlyNewWords = newWords.filter((newWord) => userWords.every((userWord) => userWord.wordId !== newWord.id));
+
+  const notDeletedWords = userWords.filter((word) => word.optional.isDeleted !== 'true');
+  const onlyRepeatWords = notDeletedWords.map((word) => word.optional.word);
+
+  const mixWords = shuffleArr([...onlyRepeatWords, ...onlyNewWords]);
+
+  let wordsForCards = onlyNewWords;
+
+  switch (typeOfGame) {
+    case 'new':
+      wordsForCards = onlyNewWords;
+      break;
+    case 'repeat':
+      wordsForCards = onlyRepeatWords;
+      break;
+    case 'mix':
+      wordsForCards = mixWords;
+      break;
+    default:
+      break;
+  }
+
+  console.log('wordsForCards', wordsForCards);
   return wordsForCards;
 };
 

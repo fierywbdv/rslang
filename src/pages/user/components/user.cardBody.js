@@ -3,6 +3,7 @@ import getUserLevelForm from './user.level';
 import getCardsCount from './user.cardsCount';
 import getWordsCount from './user.wordsCount';
 import getCardSettings from './user.cardSettings';
+import getCardControls from './user.cardControls';
 
 const getCardBody = (user) => {
   const { userName, userMail, userPassword } = user;
@@ -18,6 +19,7 @@ const getCardBody = (user) => {
   const userWordCount = getWordsCount();
   const userCardsCount = getCardsCount();
   const userCardSettings = getCardSettings();
+  const userCardControls = getCardControls();
   const submitButton = getSubmitButton();
 
   const buttonArea = document.createElement('div');
@@ -31,6 +33,7 @@ const getCardBody = (user) => {
     userWordCount,
     userCardsCount,
     userCardSettings,
+    userCardControls,
     buttonArea);
 
   return userCardBody;

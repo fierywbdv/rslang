@@ -1,6 +1,7 @@
 const notationActionHandler = () => {
   const settingsBTN = document.querySelector('#notation-settings');
   const learningBTN = document.querySelector('#notation-continue');
+  const selectBTN = document.querySelector('#notation-select');
   const overlay = document.querySelector('#notation-overlay');
   const notation = document.querySelector('#notation-body');
 
@@ -17,6 +18,14 @@ const notationActionHandler = () => {
       overlay.parentNode.removeChild(overlay);
       notation.parentNode.removeChild(notation);
       window.location.href = '#main';
+    });
+  }
+
+  if (selectBTN) {
+    selectBTN.addEventListener('click', () => {
+      overlay.parentNode.removeChild(overlay);
+      notation.parentNode.removeChild(notation);
+      window.location.href = '/';
     });
   }
 };

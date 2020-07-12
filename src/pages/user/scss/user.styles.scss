@@ -3,6 +3,18 @@
 @import "../../../scss/variables.scss";
 @import '../../../scss/common.scss';
 
+
+.container-fluid.user-container {
+  width: calc(100vw - 200px);
+  font-size: .9em;
+  &.container-shrinked {
+    width: calc(100vw - 100px);
+  }
+}
+nav.side-navbar.side-navbar-main-user {
+  height: auto;
+  min-height: calc(100vh - 78px);
+}
 .user-card {
   padding-top: 50px;
   margin-right: auto;
@@ -112,7 +124,7 @@
   padding-right: 5px;
 }
 
-#edit-user-pass-form, #user-cards-count {
+#edit-user-pass-form, #user-cards-count, .card-settings {
   padding-bottom: 20px;
   border-bottom: 1px dashed #eee;
 }
@@ -122,11 +134,12 @@
   color: $main-blue-color;
   font-size: 1.3em;
 }
-.card-settings {
+
+.card-settings, .card-controls {
   display: flex;
   justify-content: center;
   margin: 0 auto;
-  padding: 10px 0 0 0;
+  padding: 10px 0 20px 0;
   & label.form-control-label {
     color: $main-text-color;
     padding-right: 0;
@@ -159,12 +172,29 @@ input.form-check-input {
     padding-top: .5em;
   }
 }
+.control-card-checkboxes {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
 .card-footer-area {
   display: flex;
   justify-content: center;
-  & button i {
-    padding: 0;
-    font-size: .9em;
+  & button {
+    color: $main-pink-color;
+    border-color: $main-pink-color;
+    &:hover {
+      color: $main-light-color;
+      background-color: $main-pink-color;
+      border-color: $main-pink-color;
+    }
+    &:hover ~ i {
+      color: $main-light-color;
+    }
+    & i {
+      padding: 0;
+      font-size: .9em;
+    }
   }
 }
 

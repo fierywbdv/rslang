@@ -37,6 +37,8 @@ export default class View {
     this.resultsResumeGameButton = null;
     this.speechInput = null;
     this.difficultiesContainer = null;
+    this.LernedWordButton = null;
+    this.RandomWordButton = null;
     this.levelContainer = null;
     this.statusBar = null;
     this.slider = null;
@@ -151,6 +153,14 @@ export default class View {
     this.levelContainer.addEventListener(EVENTS.CLICK, onLevelChange);
   }
 
+  playLernedWordButton(onLernedWordButtonClick) {
+    this.LernedWordButton.addEventListener(EVENTS.CLICK, onLernedWordButtonClick);
+  }
+
+  playRandomWordButton(onRandomWordButtonClick) {
+    this.RandomWordButton.addEventListener(EVENTS.CLICK, onRandomWordButtonClick);
+  }
+
   initResultButton(onResultButtonClick) {
     this.resultButton.addEventListener(EVENTS.CLICK, onResultButtonClick);
   }
@@ -191,6 +201,8 @@ export default class View {
     this.stopButton = ELEMENTS.BUTTONS.STOP;
     this.difficultiesContainer = ELEMENTS.BUTTONS.DIFFICULTIES;
     this.levelContainer = ELEMENTS.BUTTONS.LEVEL;
+    this.LernedWordButton = ELEMENTS.BUTTONS.playLernedWordButton;
+    this.RandomWordButton = ELEMENTS.BUTTONS.playRandomWordButton;
     this.newButton = ELEMENTS.BUTTONS.NEW;
     this.resultButton = ELEMENTS.BUTTONS.RESULTS;
     this.resultsContainer = ELEMENTS.RESULT.CONTAINER;

@@ -4,9 +4,9 @@ import gameLine from '../geme-line/game-line';
 
 const gameScreenComponent = () => {
   const state = store.getState();
-  const { setQuestionsGame, kind } = state.ourGameReducer;
+  const { setQuestionsGame } = state.ourGameReducer;
   const answersMurkUp = setQuestionsGame.map((item) => gameLine(item));
-  const questionMurkUp = setQuestionsGame.map((item) => gameLine(item, 'question', kind));
+  const questionMurkUp = setQuestionsGame.map((item) => gameLine(item, 'question'));
   const questionUl = document.createElement('ul');
   const answersUl = document.createElement('ul');
 

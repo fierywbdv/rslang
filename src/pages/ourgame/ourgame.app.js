@@ -81,14 +81,6 @@ class Ourgame {
         this.askQuestion(e.target);
       });
     });
-
-    const state = store.getState();
-    const { kind } = state.ourGameReducer;
-    if (kind === 'withUserWords') {
-      this.removeWordFromDictionary();
-    } else {
-      this.addWordToDictionary();
-    }
     this.listenAnswer();
     this.setRestart();
   }
@@ -259,8 +251,8 @@ class Ourgame {
     const { setGameNum, setRandomGameNum } = state.ourGameReducer;
     const startButton = document.getElementById('start-play');
     const customStart = document.getElementById('custom-start');
-    customStart.classList.add('disable')
-    startButton.classList.add('disable')
+    customStart.classList.add('disable');
+    startButton.classList.add('disable');
     if (kind === 'withRandomWords') {
       this.words = await learnWordsAPIService.getWordsByPageAndGroup(page, group);
       if (setRandomGameNum === 0 || setRandomGameNum % 2 === 0) {
@@ -275,13 +267,13 @@ class Ourgame {
       const { id, token } = helper.getUserData();
       this.userWords = await learnWordsAPIService.getAllUserWords(id, token);
       if (this.userWords.length) {
-        const newWords = this.userWords.map((item) => ({ ...item.optional }));
+        const newWords = this.userWords.map((item) => ({ ...item.optional.word }));
         const firstNum = setGameNum * 10;
         const wordsForGame = newWords.slice(firstNum, firstNum + COUNT_WORDS_PER_GAMES);
         store.dispatch(setQuestions(wordsForGame));
         const callBackFinish = () => {
           store.dispatch(togglePlay());
-          const restartWords = this.userWords.map((item) => ({ ...item.optional }));
+          const restartWords = this.userWords.map((item) => ({ ...item.optional.word }));
           const restartWordsForGame = restartWords.slice(0, COUNT_WORDS_PER_GAMES);
           store.dispatch(setQuestions(restartWordsForGame));
           customStart.classList.remove('disable');
@@ -290,7 +282,7 @@ class Ourgame {
         };
         if (!wordsForGame.length) {
           Toastify({
-            text: 'Words finished. You will start from begin',
+            text: 'Слова закончились. Вы начнете сначала',
             duration: 3000,
             close: true,
             gravity: 'top',
@@ -327,45 +319,13 @@ class Ourgame {
     });
   }
 
-  addWordToDictionary() {
-    const addButtons = document.querySelectorAll('.add');
-    if (addButtons && addButtons.length) {
-      addButtons.forEach((item) => {
-        item.addEventListener('click', async (e) => {
-          e.stopPropagation();
-          const elem = e.target;
-          const wordId = elem.getAttribute('data-id');
-          const word = this.getQuestion(elem.getAttribute('data-id'));
-          const { id, token } = helper.getUserData();
-          await learnWordsAPIService.createUserWord(id, wordId, token, 'weak', word);
-        });
-      });
-    }
-  }
-
-  removeWordFromDictionary() {
-    const removeButtons = document.querySelectorAll('.remove-word');
-    if (removeButtons && removeButtons.length) {
-      removeButtons.forEach((item) => {
-        item.addEventListener('click', async (e) => {
-          e.stopPropagation();
-          this.removeWord = e.target;
-          const wordId = this.removeWord.getAttribute('data-id');
-          const { id, token } = helper.getUserData();
-          await learnWordsAPIService.deleteUserWord(id, wordId, token);
-        });
-      });
-    }
-  }
-
   init() {
     this.startGame();
-    // baban666@tut.by  asdf_Ghjk1
     const { id, token } = helper.getUserData();
     (async () => {
       const newWords = await learnWordsAPIService.getAllUserWords(id, token);
       if (newWords.length) {
-        this.userWords = newWords.map((item) => ({ ...item.optional }));
+        this.userWords = newWords.map((item) => ({ ...item.optional.word }));
         await helper.showStartButton(newWords);
       } else {
         await helper.showStartButton();

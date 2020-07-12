@@ -207,7 +207,7 @@ const helper = {
       const posWidthValue = levelGame.value / maxValue;
       levelGame.parentNode.querySelector('.slider__positive').style.width = `${posWidthValue * 100}%`;
       lableLevel.innerHTML = `${+level === 0 ? 2 : +level + 1}`;
-      helper.message('Level Changed');
+      helper.message('Уровень изменен');
     } else if (flag === true && +roundGame !== 29) {
       group.setAttribute('value', `${+roundGame + 1}`);
       const maxVal = group.getAttribute('max');
@@ -220,7 +220,7 @@ const helper = {
       const posWidthValue = levelGame.value / maxValue;
       levelGame.parentNode.querySelector('.slider__positive').style.width = `${posWidthValue * 100}%`;
       lableLevel.innerHTML = `${+level + 1}`;
-      helper.message('Round Changed');
+      helper.message('Раунд изменен');
     } else {
       group.setAttribute('value', `${+roundGame}`);
       const maxVal = group.getAttribute('max');

@@ -44,7 +44,6 @@ class Sprint {
     this.pointsToAdd = 10;
     this.correctAnswersNumber = 0;
     this.audio = new Audio();
-    this.playPromise = null;
     this.correctAnswers = [];
     this.wrongAnswers = [];
     this.isDynamicActivated = true;
@@ -52,6 +51,7 @@ class Sprint {
     this.arrowsHandler = null;
     this.learnedWordsHandler = null;
     this.areLearnedWordsChosen = false;
+    this.areWordsAdded = false;
   }
 
   startGame() {
@@ -108,6 +108,20 @@ class Sprint {
     localStorage.setItem('round', this.round + 1);
   }
 
+  changeLevelAndGroup() {
+    if (this.round === LAST_ROUND) {
+      if (this.level === LAST_LEVEL) {
+        this.round = 0;
+        this.level = 0;
+      } else {
+        this.round = 0;
+        this.level++;
+      }
+    } else {
+      this.round++;
+    }
+  }
+
   async getWords() {
     this.initLevelAndGroup();
     this.setLevelAndGroup();
@@ -119,26 +133,18 @@ class Sprint {
   }
 
   async addWords() {
-    if (!this.areLearnedWordsChosen) {
-      if (this.round === LAST_ROUND) {
-        if (this.level === LAST_LEVEL) {
-          this.round = 0;
-          this.level = 0;
-        } else {
-          this.round = 0;
-          this.level++;
-        }
-      } else {
-        this.round++;
-      }
+    if ((!this.areLearnedWordsChosen) || this.areWordsAdded) {
+      this.changeLevelAndGroup();
     } else {
-      this.areLearnedWordsChosen = false;
+      if (this.wordsList.length >= 20) {
+        this.areLearnedWordsChosen = false;
+      }
       this.initLevelAndGroup();
       this.setLevelAndGroup();
+      this.areWordsAdded = true;
     }
 
     const newWordsList = await learnWordsAPIService.getWordsByPageAndGroup(this.round, this.level);
-    console.log(newWordsList);
     shuffle(newWordsList);
     this.wordsList.push(...newWordsList);
     const newWords = createWordsArray(newWordsList);
@@ -161,10 +167,10 @@ class Sprint {
       cleanCircles();
     }
     this.pairNumber++;
-    this.showPair();
     if (this.pairNumber === Math.ceil(this.words.length / 2)) {
       this.addWords();
     }
+    this.showPair();
   }
 
   answerWrong() {
@@ -181,10 +187,10 @@ class Sprint {
       this.addPoints();
     }
     this.pairNumber++;
-    this.showPair();
-    if (this.pairNumber * 2 === this.words.length) {
+    if (this.pairNumber === Math.ceil(this.words.length / 2)) {
       this.addWords();
     }
+    this.showPair();
   }
 
   checkAnswer() {
@@ -283,6 +289,7 @@ class Sprint {
     this.secondsRemaining = 60;
     this.wrongAnswers = [];
     this.areLearnedWordsChosen = false;
+    this.areWordsAdded = false;
     document.querySelector('.sprint-wrapper').innerHTML = gameScreenComponent();
 
     setLevelAndRound();
@@ -333,6 +340,7 @@ class Sprint {
         this.getWords();
       }
       document.querySelector('.learned-words').removeEventListener('click', this.learnedWordsHandler);
+
       document.querySelector('.start-game').classList.add('hidden');
       document.querySelector('.start-timer').classList.remove('hidden');
       document.querySelector('.get-ready').classList.remove('hidden');
@@ -383,11 +391,12 @@ class Sprint {
       shuffle(this.wordsList);
       this.words = createWordsArray(this.wordsList);
       this.translations = createTranslationsArray(this.wordsList);
-      console.log(this.wordsList, this.words, this.translations);
+      if (learnedWordsInfo.length < 20) {
+        this.addWords();
+      }
     } else {
       document.querySelector('.error-message').classList.remove('none');
       setTimeout(() => document.querySelector('.error-message').classList.add('none'), 1000);
-      console.log('Вы не выучили ни одного слова');
     }
   }
 

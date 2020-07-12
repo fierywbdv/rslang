@@ -13,7 +13,7 @@ export const gameScreenComponent = () => {
                                     </div>
                                     <span class="learned-words">Изученные слова</span>
                                 </div>
-                                <span class="error-message none">Вы не выучили ни одного слова</span>
+                                <span class="error-message none">Нет изученных слов</span>
                                 <div class="current-state hidden">
                                     <span class="points">0</span>${timeChartComponent(60)}
                                 </div>

@@ -2,7 +2,7 @@ import '../../scss/team.styles.scss';
 
 const teamScreenComponent = () => {
   const template = `<section class="about-team">
-      <div class="container about-team__container">
+      <div class="team-container about-team__container">
         <h2>Наша команда</h2>
         <div class="about-team__representation">
           <div class="team-member">

@@ -28,7 +28,6 @@ export const setLevelAndRound = () => {
 
   document.getElementById('level').value = newLevel;
   document.getElementById('round').value = newRound;
-  console.log(newLevel, newRound);
 };
 
 export const toggleCirclesNumber = () => {

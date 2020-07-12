@@ -46,7 +46,7 @@ function drawPage() {
           </div>
 
           <div class="savanna-top-word">
-            <span class="savanna-lvl__text savanna-current-word">words</span>
+            <span class="savanna-lvl__text savanna-current-word" id="savanna-falling-word">words</span>
           </div>
 
           <div class="savanna-word-wrapper">
@@ -77,25 +77,55 @@ function drawPage() {
     `;
 }
 
+const savannaDifficulties = document.querySelectorAll('.savanna-lvl_button');
+
+function startNextAnimation() {
+  const savannaFallingWord = document.getElementById('savanna-falling-word');
+  
+  savannaFallingWord.classList.remove('savanna-animated');
+  savannaFallingWord.className.replace(" active", " hidden");
+  savannaFallingWord.classList.add('savanna-animated');
+  savannaFallingWord.addEventListener("transitionend", animationReset, false);
+}
+
+function animationReset() {
+  const savannaFallingWord = document.getElementById('savanna-falling-word');
+  const savannaHearts = document.querySelectorAll('.savanna-one-heart');
+
+  savannaFallingWord.classList.remove('savanna-animated');
+  for (let i=0; i < savannaHearts.length && !savannaHearts[i].classList.contains("savanna-grey-heart"); i++) {
+    savannaHearts[i].classList.add('savanna-grey-heart');
+    break;
+  }
+  startNextAnimation();
+}
+
 if ((window.location.href.split('#'))[1] === 'savanna') {
   drawPage();
 
-  var savannaStartButton = document.querySelector('.savanna-start__button');
-  var savannaSecondPage = document.querySelector('.savanna-second-page');
-  var savannaDifficulties = document.querySelectorAll('.savanna-lvl_button');
+  const savannaStartButton = document.querySelector('.savanna-start__button');
+  const savannaSecondPage = document.querySelector('.savanna-second-page');
+  const savannaDifficulties = document.querySelectorAll('.savanna-lvl_button');
 
   for (let i=0; i < savannaDifficulties.length; i++) {
     savannaDifficulties[i].addEventListener("click", function() {
-      var current = document.getElementsByClassName("active-lvl");
+      const current = document.getElementsByClassName("active-lvl");
       current[0].className = current[0].className.replace(" active-lvl", "");
       this.className += " active-lvl";
     });
   }
 
   savannaStartButton.onclick = function(event) {
+
+    const savannaFallingWord = document.getElementById('savanna-falling-word');
     let target = event.target;
+    
     target.parentNode.classList.add('hidden');
     savannaSecondPage.classList.remove('hidden');
+    setTimeout(() =>{
+      savannaFallingWord.classList.add('savanna-animated');
+    },300);
+    savannaFallingWord.addEventListener("transitionend", animationReset, false);
   }
 }
 

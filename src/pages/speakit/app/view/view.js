@@ -227,3 +227,10 @@ document.querySelector('.menu-btn').addEventListener('click', () => {
     }
   }
 });
+menu.addEventListener('click', () => {
+  if ((window.location.href.split('#'))[1] === 'speakit') {
+    menu.classList.add('speakit-navbar-actives');
+  } else {
+    menu.classList.remove('speakit-navbar-actives');
+  }
+});

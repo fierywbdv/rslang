@@ -8,12 +8,13 @@
   z-index: 10;
   width: calc(100vw - 100px);
   overflow: hidden;
+  height: 100%;
 }
 
 .introduction__container {
   position: relative;
-  width: 100vw;
-  height: calc(100vh - 78px);
+  height: calc(100vh - 77px);
+
 }
 
 .width {
@@ -35,6 +36,10 @@
 
 .introduction.hidden {
   display: none;
+}
+
+.speakit-navbar-actives {
+height: auto !important;
 }
 
 .introduction__button {

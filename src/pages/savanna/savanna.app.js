@@ -1,19 +1,9 @@
-import { CLASS_NAMES } from '../../common/common.constants';
-import { SPEAKIT_CLASS_NAMES, SPEAKIT_GREETINGS } from './common/savanna.constants';
 
 import './scss/savanna.styles.scss';
 
-class Savanna {
-  init() {
+export default function Savanna() {
 
-  }
-  
-  sayHello() {
-
-  }
 }
-
-export default new Savanna() ;
 
 function drawPage() {
   const page = document.querySelector('#root');

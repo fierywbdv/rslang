@@ -89,15 +89,11 @@ class Sprint {
 
   showPair() {
     const number = Math.floor(Math.random() * this.wordsList.length);
-    console.log(number);
     if (number % 2) {
       document.querySelector('.card__translation').innerHTML = this.translations[this.pairNumber];
-      console.log(this.translations[this.pairNumber]);
     } else {
       document.querySelector('.card__translation').innerHTML = this.translations[number];
-      console.log(this.translations[number]);
     }
-    console.log(this.words[this.pairNumber]);
     document.querySelector('.card__word').innerHTML = this.words[this.pairNumber];
     playAudio(`${AUDIO_PATH}${this.wordsList[this.pairNumber].audio}`, this.isDynamicActivated);
   }
@@ -131,7 +127,6 @@ class Sprint {
     this.setLevelAndGroup();
 
     this.wordsList = await learnWordsAPIService.getWordsByPageAndGroup(this.round, this.level);
-    console.log(this.wordsList);
     shuffle(this.wordsList);
     this.words = createWordsArray(this.wordsList);
     this.translations = createTranslationsArray(this.wordsList);
@@ -150,7 +145,6 @@ class Sprint {
     }
 
     const newWordsList = await learnWordsAPIService.getWordsByPageAndGroup(this.round, this.level);
-    console.log(newWordsList);
     shuffle(newWordsList);
     this.wordsList.push(...newWordsList);
     const newWords = createWordsArray(newWordsList);
@@ -392,9 +386,7 @@ class Sprint {
     if (learnedWordsInfo.length) {
       document.querySelector('.learned-words').classList.add('chosen');
       this.areLearnedWordsChosen = true;
-      console.log(learnedWordsInfo);
       this.wordsList = learnedWordsInfo.map((learnedWord) => learnedWord.optional.word);
-      console.log(this.wordsList);
       shuffle(this.wordsList);
       this.words = createWordsArray(this.wordsList);
       this.translations = createTranslationsArray(this.wordsList);

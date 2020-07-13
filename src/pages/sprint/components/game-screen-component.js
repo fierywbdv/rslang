@@ -18,7 +18,7 @@ export const gameScreenComponent = () => {
                                     <span class="points">0</span>${timeChartComponent(60)}
                                 </div>
                                 <div class="sounds">
-                                  <i class="fas fa-volume-up chosen"></i>
+                                  <i class="fas fa-volume-up"></i>
                                   <i class="fab fa-itunes-note chosen"></i>
                                 </div>
                                 ${cardComponent()}

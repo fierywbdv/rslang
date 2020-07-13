@@ -64,7 +64,7 @@ export const ELEMENTS = {
     GAME: document.querySelector('.game__button-start'),
     STOP: document.querySelector('.game__button-stop'),
     RESULTS: document.querySelector('.game__button-results'),
-    DIFFICULTIES: document.querySelector('.levels'),
+    DIFFICULTIES: document.querySelector('.speakit-levels'),
     LEVEL: document.querySelector('.speakit_level'),
     playLernedWordButton: document.querySelector('.game__button-start-lerned'),
     playRandomWordButton: document.querySelector('.game__button-start-random'),

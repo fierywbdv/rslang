@@ -16,7 +16,7 @@ export default function makePage() {
                   <button class="game__button game__button-stop button-rounded">Остановить игру</button>
                   <button class="game__button game__button-results button-rounded">Результаты</button>
                 </div>
-                <div class="levels">
+                <div class="speakit-levels">
                   <span class="levels__result">Уровень сложности:</span>
                   <button class="game__difficult game__difficult-1 button-rounded speakit_active">1</button>
                   <button class="game__difficult game__difficult-2 button-rounded">2</button>
@@ -25,7 +25,7 @@ export default function makePage() {
                   <button class="game__difficult game__difficult-5 button-rounded">5</button>
                   <button class="game__difficult game__difficult-6 button-rounded">6</button>
                 </div>
-                <div class="levels speakit_level">
+                <div class="speakit-levels speakit_level">
                  <span class="levels__result">Раунд:</span>
                  <button class="game__difficult game__difficult-1 button-rounded1 speakit_active">1</button>
                  <button class="game__difficult game__difficult-2 button-rounded1">2</button>

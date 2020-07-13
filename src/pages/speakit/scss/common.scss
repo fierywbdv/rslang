@@ -12,10 +12,11 @@
 
 }
 
-.centralizer {
+.speakit-wrapper {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 10px;
+  height: calc(100vh - 77px);
 }
 
 .hidden {
@@ -75,6 +76,10 @@ background-color: white;
 }
 
 .button-rounded:focus {
+  outline: unset;
+}
+
+.button-rounded1:focus {
   outline: unset;
 }
 

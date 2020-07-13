@@ -2,22 +2,22 @@ export default function makePage() {
   const pageWiew = document.querySelector('#root');
   pageWiew.innerHTML += `
     <div class="body-speakit overflow-hidden">
-        <div class="centralizer hidden">
-          <div class="header">
+        <div class="speakit-wrapper hidden">
+          <div class="speakit-wrapper-header">
           </div>
-          <div class="main">
-            <div class="game__controls">
-              <div class="buttons__wrapper">
-                <div class="button__container">
-                  <button class="game__button game__button-new button-rounded">Новая игра</button>
+          <div class="speakit-wrapper-basik">
+            <div class="speakit-wrapper-basik-control">
+              <div class="speakit-basik-wrapper">
+                <div class="speakit-basik-container">
                   <button class="game__button game__button-start button-rounded">Начать игру</button>
                   <button class="game__button game__button-start-lerned button-rounded">играть с изученными словами </button>
                   <button class="game__button game__button-start-random button-rounded">играть с рандомными словами </button>
+                  <button class="game__button game__button-new button-rounded">Новая игра</button>
                   <button class="game__button game__button-stop button-rounded">Остановить игру</button>
                   <button class="game__button game__button-results button-rounded">Результаты</button>
                 </div>
-                <div class="difficulties">
-                  <span class="difficult__description">Уровень сложности:</span>
+                <div class="levels">
+                  <span class="levels__result">Уровень сложности:</span>
                   <button class="game__difficult game__difficult-1 button-rounded speakit_active">1</button>
                   <button class="game__difficult game__difficult-2 button-rounded">2</button>
                   <button class="game__difficult game__difficult-3 button-rounded">3</button>
@@ -25,8 +25,8 @@ export default function makePage() {
                   <button class="game__difficult game__difficult-5 button-rounded">5</button>
                   <button class="game__difficult game__difficult-6 button-rounded">6</button>
                 </div>
-                <div class="difficulties speakit_level">
-                 <span class="difficult__description">Раунд:</span>
+                <div class="levels speakit_level">
+                 <span class="levels__result">Раунд:</span>
                  <button class="game__difficult game__difficult-1 button-rounded1 speakit_active">1</button>
                  <button class="game__difficult game__difficult-2 button-rounded1">2</button>
                  <button class="game__difficult game__difficult-3 button-rounded1">3</button>
@@ -61,6 +61,10 @@ export default function makePage() {
               </div>
               <p class="status-bar"></p>
             </div>
+
+             <div class="cards__container">
+            </div>
+            
             <div class="speakit-main-card">
               <div class="picture__container">
                 <img class="main-card__picture" alt="current word picture">
@@ -71,8 +75,7 @@ export default function makePage() {
               </div>
             </div>
     
-            <div class="cards__container">
-            </div>
+           
     
             <div class="results__container">
               <div class="button__container-results">
@@ -99,7 +102,7 @@ export default function makePage() {
           </div>
         </div>
     
-        <div class="spinner hidden">
+        <div class="speakit-starter hidden">
           <div class="spinner__gear">
             <div class="spinner__inner">
               <div>
@@ -111,14 +114,14 @@ export default function makePage() {
               </div>
             </div>
           </div>
-          <svg class="spinner" viewBox="0 0 50 50">
+          <svg class="speakit-starter" viewBox="0 0 50 50">
   <circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="5"></circle>
 </svg>
         </div>
     
-        <div class="introduction">
-          <div class="introduction__container">
-            <button class="introduction__button button-rounded">Старт</button>
+        <div class="speakit-first-wrapper">
+          <div class="speakit-first-wrapper__container">
+            <button class="speakit-first-wrapper__button button-rounded">Старт</button>
           </div>
         </div>
     
@@ -127,14 +130,14 @@ export default function makePage() {
             <p class="time"></p>
             <div class="results__correct">
               <p class="correct__title">
-                <span class="correct__lead">Правильно:
+                <span class="correct__lead">Правильнst ответы:
                   <span class="correct"></span>
                 </span>
               </p>
             </div>
             <div class="results__errors">
               <p class="errors__title">
-                <span class="errors__lead">Ошибок:
+                <span class="errors__lead">Не правильные ответы:
                   <span class="errors"></span>
                 </span>
               </p>

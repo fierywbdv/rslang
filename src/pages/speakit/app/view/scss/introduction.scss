@@ -1,4 +1,4 @@
-.introduction {
+.speakit-first-wrapper {
   background-color: rgb(89, 209, 230);
   background-image: url('../assets/img/bg.jpg');
   background-position: center;
@@ -11,7 +11,7 @@
   height: 100%;
 }
 
-.introduction__container {
+.speakit-first-wrapper__container {
   position: relative;
   height: calc(100vh - 77px);
 
@@ -26,7 +26,7 @@
 }
 
 @media (max-width: 575px) {
-  .introduction {
+  .speakit-first-wrapper {
     width: 100vw;
   }
   .speakit-actives {
@@ -34,7 +34,7 @@
   }
 }
 
-.introduction.hidden {
+.speakit-first-wrapper.hidden {
   display: none;
 }
 
@@ -42,7 +42,7 @@
 height: auto !important;
 }
 
-.introduction__button {
+.speakit-first-wrapper__button {
   margin-top:50vh;
   margin-left: calc(46vw - 90px);
   bottom: 200px;

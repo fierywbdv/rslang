@@ -12,7 +12,6 @@ export default class Model {
 
   loadPage(response) {
     this.translationsMap = new Map();
-
     const shuffledResponse = shuffleArray(response).slice(0, MAX_WORDS_COUNT).map((wordData) => {
       const {
         word,

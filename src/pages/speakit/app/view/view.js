@@ -213,24 +213,21 @@ export default class View {
 }
 
 const menu = document.querySelector('.side-navbar');
-const introduction = document.querySelector('.introduction');
+const introduction = document.querySelector('.speakit-first-wrapper');
 const body = document.querySelector('.body-speakit');
+
+if ((window.location.href.split('#'))[1] === 'speakit') {
+  menu.classList.add('speakit-navbar-actives');
+}
 
 document.querySelector('.menu-btn').addEventListener('click', () => {
   if ((window.location.href.split('#'))[1] === 'speakit') {
-    if (menu.className === 'side-navbar shrinked') {
+    if ((menu.classList.length === 3)) {
       introduction.classList.add('speakit-actives');
       body.classList.add('speakit-actives');
     } else {
       introduction.classList.remove('speakit-actives');
       body.classList.remove('speakit-actives');
     }
-  }
-});
-menu.addEventListener('click', () => {
-  if ((window.location.href.split('#'))[1] === 'speakit') {
-    menu.classList.add('speakit-navbar-actives');
-  } else {
-    menu.classList.remove('speakit-navbar-actives');
   }
 });

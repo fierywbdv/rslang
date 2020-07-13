@@ -8,7 +8,7 @@ import {
   DATA_PATH,
   CLASS_NAMES,
 } from '../data/helper';
-import { learnWordsAPIService } from '../../../../services/learnWordsAPIService';
+
 import {
   initIntroButton,
   toggleDocumentScroll,
@@ -88,6 +88,7 @@ export default class Controller {
 
   onPageCardClick(event) {
     const selectedCard = getClosestLink(event);
+
     if (!selectedCard) return;
     event.preventDefault();
 
@@ -97,7 +98,6 @@ export default class Controller {
     const { word } = selectedCard.dataset;
     const translation = this.model.translationsMap.get(word);
     this.view.renderTranslation(translation);
-
     const imageSrc = selectedCard.dataset.image;
     this.view.renderPicture(`${DATA_PATH}${imageSrc}`);
 
@@ -206,9 +206,7 @@ export default class Controller {
   }
 
   onLevelChangeNext() {
-    console.log(this.difficult);
     const button = ELEMENTS.BUTTONS.LEVEL.querySelector('.speakit_active');
-    console.log(button);
     button.classList.remove(CLASS_NAMES.ACTIVE);
     button.nextElementSibling.classList.add(CLASS_NAMES.ACTIVE);
     showSpinner();
@@ -220,9 +218,9 @@ export default class Controller {
     this.newGame(this.difficult);
   }
 
-  async onLernedWordButtonClick(event) {
-    const lernedWords = await learnWordsAPIService.getAllUserWords(localStorage.getItem('userId'), localStorage.getItem('token'));
-    if (lernedWords.length < 9) {
+  onLernedWordButtonClick(event) {
+    const lernedWordsNew = localStorage.getItem('lernedWordsNew');
+    if (lernedWordsNew <= 9) {
       Toastify({
         text: 'Недостаточно изученных слов для игры',
         duration: 3000,

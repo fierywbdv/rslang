@@ -65,10 +65,15 @@ const playRandomWordButton = document.querySelector('.game__button-start-random'
 const fetchDataLerned = async (url, callBack) => {
   const lernedWords = await learnWordsAPIService.getAllUserWords(localStorage.getItem('userId'), localStorage.getItem('token'));
   const lernedWordsNew = lernedWords.map((i) => i.optional.word);
+  localStorage.setItem('lernedWordsNew', lernedWordsNew.length);
   const response = await fetch(url);
   const json = await response.json();
   if (lernedWordsNew.length > 9 || playLernedWordButton.className === 'game__button game__button-start-lerned button-rounded disabled') {
-    callBack(lernedWordsNew);
+    if (json.length) {
+      callBack(lernedWordsNew);
+    } else {
+      callBack(json);
+    }
   }
   if ((playRandomWordButton.className === 'game__button game__button-start-random button-rounded disabled') || (lernedWordsNew.length <= 9)) {
     callBack(json);

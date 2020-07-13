@@ -2,7 +2,7 @@
   background-image: url('../assets/img/main_bg.jpg');
   background-size: cover;
   width: calc(100vw - 100px);
-  height: calc(100vh - 78px);
+  height: 100%;
 }
 
 @media (max-width: 575px) {
@@ -12,10 +12,11 @@
 
 }
 
-.centralizer {
+.speakit-wrapper {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 10px;
+  height: calc(100vh - 77px);
 }
 
 .hidden {
@@ -75,6 +76,10 @@ background-color: white;
 }
 
 .button-rounded:focus {
+  outline: unset;
+}
+
+.button-rounded1:focus {
   outline: unset;
 }
 

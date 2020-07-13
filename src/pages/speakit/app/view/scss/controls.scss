@@ -1,4 +1,4 @@
-.difficulties {
+.speakit-levels {
   display: flex;
   flex-wrap: wrap;
   align-items: baseline;
@@ -6,15 +6,11 @@
   padding-top: 10px;
 }
 
-.buttons__wrapper {
+.speakit-basik-wrapper {
   display: flex;
   justify-content: space-evenly;
   align-items: baseline;
   flex-wrap: wrap;
-}
-.game__button-results_new,
-.game__button-new {
-  display: none;
 }
 
 .game__difficult {
@@ -27,7 +23,7 @@
   line-height: 30px;
 }
 
-.button__container {
+.speakit-basik-container {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
@@ -62,13 +58,12 @@
   }
 }
 
-.difficult__description {
+.levels__result {
   align-self: center;
   display: block;
   margin-right: 10px;
   font-size: 25px;
   font-family: Tenor-Sans, tahoma, sans-serif;
   font-weight: 900;
-  color: rgb(41, 63, 185);
-  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.8);
+  color: white;
 }

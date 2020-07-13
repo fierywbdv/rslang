@@ -1,4 +1,4 @@
-.introduction {
+.speakit-first-wrapper {
   background-color: rgb(89, 209, 230);
   background-image: url('../assets/img/bg.jpg');
   background-position: center;
@@ -8,12 +8,13 @@
   z-index: 10;
   width: calc(100vw - 100px);
   overflow: hidden;
+  height: 100%;
 }
 
-.introduction__container {
+.speakit-first-wrapper__container {
   position: relative;
-  width: 100vw;
-  height: calc(100vh - 78px);
+  height: calc(100vh - 77px);
+
 }
 
 .width {
@@ -25,7 +26,7 @@
 }
 
 @media (max-width: 575px) {
-  .introduction {
+  .speakit-first-wrapper {
     width: 100vw;
   }
   .speakit-actives {
@@ -33,11 +34,15 @@
   }
 }
 
-.introduction.hidden {
+.speakit-first-wrapper.hidden {
   display: none;
 }
 
-.introduction__button {
+.speakit-navbar-actives {
+height: auto !important;
+}
+
+.speakit-first-wrapper__button {
   margin-top:50vh;
   margin-left: calc(46vw - 90px);
   bottom: 200px;

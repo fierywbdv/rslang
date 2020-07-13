@@ -12,7 +12,6 @@ export default class Model {
 
   loadPage(response) {
     this.translationsMap = new Map();
-
     const shuffledResponse = shuffleArray(response).slice(0, MAX_WORDS_COUNT).map((wordData) => {
       const {
         word,
@@ -61,3 +60,6 @@ export default class Model {
     this.loadResults();
   }
 }
+
+// console.log(`В игру Speakit играли: ${JSON.parse(localStorage.getItem(CLASS_NAMES.RESULT.PAGE)).length} раза`);
+// console.log(JSON.parse(localStorage.getItem(CLASS_NAMES.RESULT.PAGE)) || []);

@@ -46,9 +46,9 @@ export const EVENTS = {
 export const DATA_PATH = 'https://raw.githubusercontent.com/GoldenkovVitali/rslang-data/master/data/';
 
 export const ELEMENTS = {
-  CENTRALIZER: document.querySelector('.centralizer'),
-  INTRODUCTION: document.querySelector('.introduction'),
-  SPINNER: document.querySelector('.spinner'),
+  CENTRALIZER: document.querySelector('.speakit-wrapper'),
+  INTRODUCTION: document.querySelector('.speakit-first-wrapper'),
+  SPINNER: document.querySelector('.speakit-starter'),
   CARDS_CONTAINER: document.querySelector('.cards__container'),
   PICTURE: document.querySelector('.main-card__picture'),
   TRANSLATION: document.querySelector('.main-card__translation'),
@@ -59,12 +59,12 @@ export const ELEMENTS = {
     CONTAINER: document.body.querySelector('.gallery'),
   },
   BUTTONS: {
-    INTRODUCTION: document.querySelector('.introduction__button'),
+    INTRODUCTION: document.querySelector('.speakit-first-wrapper__button'),
     NEW: document.querySelector('.game__button-new'),
     GAME: document.querySelector('.game__button-start'),
     STOP: document.querySelector('.game__button-stop'),
     RESULTS: document.querySelector('.game__button-results'),
-    DIFFICULTIES: document.querySelector('.difficulties'),
+    DIFFICULTIES: document.querySelector('.speakit-levels'),
     LEVEL: document.querySelector('.speakit_level'),
     playLernedWordButton: document.querySelector('.game__button-start-lerned'),
     playRandomWordButton: document.querySelector('.game__button-start-random'),

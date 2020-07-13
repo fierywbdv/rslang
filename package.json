@@ -4,6 +4,7 @@
   "description": "Final task rslang",
   "main": "index.js",
   "dependencies": {
+    "diff": "^4.0.2",
     "editorconfig": "0.15.3",
     "redux": "^4.0.5",
     "redux-devtools-extension": "^2.13.8",

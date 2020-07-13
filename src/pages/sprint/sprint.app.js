@@ -46,7 +46,6 @@ class Sprint {
     this.audio = new Audio();
     this.correctAnswers = [];
     this.wrongAnswers = [];
-    this.isDynamicActivated = true;
     this.isSoundActivated = true;
     this.arrowsHandler = null;
     this.learnedWordsHandler = null;
@@ -60,6 +59,11 @@ class Sprint {
     document.querySelector('.arrows').classList.remove('hidden');
 
     this.startCountdown();
+    const dynamic = document.querySelector('.sounds .fa-volume-up');
+    dynamic.addEventListener('click', () => {
+      dynamic.classList.add('active');
+      playAudio(`${AUDIO_PATH}${this.wordsList[this.pairNumber].audio}`, true, dynamic);
+    });
     this.showPair();
   }
 
@@ -95,7 +99,6 @@ class Sprint {
       document.querySelector('.card__translation').innerHTML = this.translations[number];
     }
     document.querySelector('.card__word').innerHTML = this.words[this.pairNumber];
-    playAudio(`${AUDIO_PATH}${this.wordsList[this.pairNumber].audio}`, this.isDynamicActivated);
   }
 
   initLevelAndGroup() {
@@ -297,9 +300,6 @@ class Sprint {
     if (!this.isSoundActivated) {
       document.querySelector('.fa-itunes-note').classList.remove('chosen');
     }
-    if (!this.isDynamicActivated) {
-      document.querySelector('.fa-volume-up').classList.remove('chosen');
-    }
 
     this.renderButtonEvents();
     document.addEventListener('keyup', this.renderArrowsEvents.bind(this)());
@@ -368,12 +368,6 @@ class Sprint {
   }
 
   renderSoundsEvents() {
-    const dynamic = document.querySelector('.fa-volume-up');
-    dynamic.addEventListener('click', () => {
-      dynamic.classList.toggle('chosen');
-      this.isDynamicActivated = !this.isDynamicActivated;
-    });
-
     const notes = document.querySelector('.fa-itunes-note');
     notes.addEventListener('click', () => {
       notes.classList.toggle('chosen');

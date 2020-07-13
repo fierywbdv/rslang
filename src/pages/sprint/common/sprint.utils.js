@@ -56,18 +56,22 @@ export const renderBackground = () => {
   bgImage.src = path;
 };
 
-export const playAudio = (path, isActivated) => {
+export const playAudio = (path, isActivated, elem) => {
   if (isActivated) {
     const audio = new Audio(path);
     audio.play();
+    if (path.includes(AUDIO_PATH) && elem) {
+      audio.addEventListener('ended', () => elem.classList.remove('active'));
+    }
   }
 };
 
 export const playResultsAudio = () => {
   document.querySelector('.results__list').addEventListener('click', (event) => {
     if (event.target.tagName === 'I') {
+      event.target.classList.add('active');
       const path = event.target.getAttribute('data-audio');
-      playAudio(`${AUDIO_PATH}${path}`, true);
+      playAudio(`${AUDIO_PATH}${path}`, true, event.target);
     }
   });
 };

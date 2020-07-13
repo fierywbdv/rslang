@@ -130,7 +130,7 @@ export default function makePage() {
             <p class="time"></p>
             <div class="results__correct">
               <p class="correct__title">
-                <span class="correct__lead">Правильнst ответы:
+                <span class="correct__lead">Правильные ответы:
                   <span class="correct"></span>
                 </span>
               </p>

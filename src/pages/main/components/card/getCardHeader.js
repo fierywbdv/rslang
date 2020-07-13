@@ -1,32 +1,37 @@
 import { getDOMElement } from '../../common/main.helper';
 import { baseUrl } from '../../common/main.constants';
 
-const getCardHeader = (iterator, typeOfWord, currentWordImage) => {
+const getCardHeader = (iterator, currentWordImageURL) => {
   const cardHeader = getDOMElement('div', 'main-screen-card card-header');
   const cardHeaderArea = getDOMElement('div', 'main-screen-card card-header-area');
   const cardHeaderText = getDOMElement('small', 'main-screen-card text-primary');
   cardHeaderText.setAttribute('id', 'main-cardheader-text');
 
-  let cardInfo;
+  const cardHeaderGame = getDOMElement('span', 'main-type-game');
+  cardHeaderGame.textContent = 'тренировка: ';
 
-  // ======= исправить тосле того, как Женя начнет передават объект typeOfWord ==/
+  const typeOfGame = localStorage.getItem('typeOfGame');
 
-  const typeOfWordTest = {
-    newWord: 'true',
-    difficultyWord: 'true',
-  };
-  const newWord = typeOfWordTest.newWord === 'true';
-  const difficultyWord = typeOfWordTest.difficultyWord === 'true';
+  let cardInfo = 'изучение новых слов';
 
-  if (difficultyWord) { cardInfo = 'сложное слово'; }
-  if (newWord) {
-    cardInfo = 'новое слово';
-  } else if (!newWord && !difficultyWord) {
-    cardInfo = 'изученное слово';
+  switch (typeOfGame) {
+    case 'new':
+      cardInfo = 'изучение новых слов';
+      break;
+    case 'repeat':
+      cardInfo = 'повторение изученных слов';
+      break;
+    case 'mix':
+      cardInfo = 'новые и изученные слова';
+      break;
+    default:
+      break;
   }
-  // ===============
 
-  cardHeaderText.textContent = cardInfo;
+  const cardHeaderSelectLink = getDOMElement('a', '');
+  cardHeaderSelectLink.href = '/';
+  cardHeaderSelectLink.textContent = cardInfo;
+  cardHeaderText.append(cardHeaderGame, cardHeaderSelectLink);
 
   const cardHeaderControls = getDOMElement('div', 'd-flex card-header-controls');
 
@@ -48,7 +53,7 @@ const getCardHeader = (iterator, typeOfWord, currentWordImage) => {
   if (localStorage.getItem('userAddDeleted') === 'true') { cardHeaderControls.append(controlDelIcon); }
 
   const cardHeaderImage = getDOMElement('img', 'main-screen-image');
-  cardHeaderImage.src = `${baseUrl}${currentWordImage}`;
+  cardHeaderImage.src = `${baseUrl}${currentWordImageURL}`;
 
   cardHeaderArea.append(cardHeaderText, cardHeaderControls);
 

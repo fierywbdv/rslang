@@ -3,30 +3,23 @@ import {
 } from '../../common/main.utils';
 import getNotation from '../getNotation/getNotation';
 
-const deleteWordHandler = () => {
-  const deleteButtonsArr = Array.from(document.querySelectorAll('.main-delete-icon'));
+const difficultyWordHandler = () => {
+  const difficultyButtonsArr = Array.from(document.querySelectorAll('.main-difficulty-icon'));
   const lastSlide = Number(document.querySelector('#slides-count').textContent);
   const nextBTN = document.querySelector('#main-button-next');
 
-  if (deleteButtonsArr.length > 0) {
-    deleteButtonsArr.forEach((button) => {
+  if (difficultyButtonsArr.length > 0) {
+    difficultyButtonsArr.forEach((button) => {
       button.addEventListener('click', () => {
         const currentIterator = Number(button.getAttribute('id'));
         const card = document.querySelector(`#main-card-${currentIterator}`);
+        const input = document.querySelector(`#to-write-${currentIterator}`);
         const typeOfGame = localStorage.getItem('typeOfGame');
-
-        let input;
-
-        if (localStorage.getItem('userSetExplanation') === 'true') {
-          input = document.querySelector(`#to-write-${currentIterator}`);
-        } else {
-          input = document.querySelector(`#to-write-example-${currentIterator}`);
-        }
 
         const dataWord = {
           wordId: input.getAttribute('data'),
           word: input.placeholder,
-          wordDifficulty: 'false',
+          wordDifficulty: "'true'",
           wordAudio: input.getAttribute('data-audio'),
           wordTranslate: card.getAttribute('data-translate'),
           wordImage: card.getAttribute('data-img'),
@@ -58,4 +51,4 @@ const deleteWordHandler = () => {
     });
   }
 };
-export default deleteWordHandler;
+export default difficultyWordHandler;

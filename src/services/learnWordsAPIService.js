@@ -286,8 +286,6 @@ class LearnWordsAPIService {
       if (response.status === 401) {
         throw new Error('Access token is missing or invalid!');
       } else if (response.status === 417) {
-        console.log('Я ошибка из сервиса!!!!!');
-        // throw new Error('Error 417');
         this.updateUserWord(userId, wordId, token, wordDifficulty, optional);
       } else if (response.status !== 200) {
         throw new Error('Some ERROR!');
@@ -302,10 +300,6 @@ class LearnWordsAPIService {
         const refrsh = await this.refreshToken(localStorage.getItem('userId'), localStorage.getItem('refreshToken'));
         return this.createUserWord(localStorage.getItem('userId'), wordId, localStorage.getItem('token'), wordDifficulty, optional);
       }
-      // if (error.message === 'Error 417') {
-      //   console.log('Я ошибка из сервиса222222');
-      //   this.updateUserWord(localStorage.getItem('userId'), wordId, localStorage.getItem('token'), wordDifficulty, optional);
-      // }
     }
   }
 

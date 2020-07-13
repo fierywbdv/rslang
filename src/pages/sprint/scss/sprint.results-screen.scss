@@ -57,7 +57,7 @@
           margin-right: 30px;
           cursor: pointer;
 
-          &:hover {
+          &:hover, &.active {
             color: #686a7685;
           }
         }

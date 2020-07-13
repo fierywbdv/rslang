@@ -4,7 +4,7 @@ import getCardBody from './getCardBody';
 
 const getCard = (currentWord = {}, iterator) => {
   const {
-    audio, image, textMeaning, transcription, wordTranslate,
+    audio, image, transcription, wordTranslate,
   } = currentWord;
   const card = getDOMElement('div', 'main-screen-card card unselectable');
   card.setAttribute('id', `main-card-${iterator}`);
@@ -14,55 +14,6 @@ const getCard = (currentWord = {}, iterator) => {
 
   const cardHeader = getCardHeader(iterator, image);
   const cardBody = getCardBody(currentWord, iterator);
-
-  // const cardBody = getDOMElement('div', 'main-screen-card card-body');
-
-  // const phraseMeaningDiv = getDOMElement('div', 'main-screen-card explanation-area');
-  // phraseMeaningDiv.setAttribute('id', `main-phrase-${iterator}`);
-
-  // const phraseMeaning = getDOMElement('div', 'card-body phrase-explanation');
-  // const meaningTranslate = getDOMElement('span', 'card-body explanation-translate');
-
-  // if (localStorage.getItem('userSetExplanation') === 'true') {
-  //   const wordObj = {
-  //     iterator,
-  //     word,
-  //     id,
-  //     textExample,
-  //     audioExample,
-  //     audio,
-  //     textMeaning,
-  //     audioMeaning,
-  //   };
-  //   phraseMeaning.innerHTML = getPhraseMeaning(wordObj);
-  //   meaningTranslate.textContent = textMeaningTranslate;
-  //   phraseMeaningDiv.append(phraseMeaning, meaningTranslate);
-  // }
-
-  // const phraseExampleDiv = getDOMElement('div', 'main-screen-card example-area');
-  // const phraseExample = getDOMElement('div', 'card-body phrase-example');
-  // const exampleTranslate = getDOMElement('span', 'card-body example-translate');
-
-  // if (localStorage.getItem('userSetExample') === 'true') {
-  //   const wordObj = {
-  //     iterator,
-  //     word,
-  //     audioMeaning,
-  //     textMeaning,
-  //   };
-
-  //   phraseExample.innerHTML = getPhraseExample(wordObj);
-  //   phraseMeaning.innerHTML = getPhraseMeaning(wordObj);
-  //   meaningTranslate.textContent = textExampleTranslate;
-  //   phraseExampleDiv.append(phraseMeaning, exampleTranslate);
-  // }
-
-  // const spacer = getDOMElement('div', 'card-spacer');
-
-  // const cardTranslateExample = getDOMElement('div', 'main-screen-card translate-example');
-  // cardTranslateExample.textContent = textMeaning;
-
-  // cardBody.append(phraseMeaningDiv, spacer, cardTranslateExample);
 
   const cardFooter = getDOMElement('div', 'main-screen-card card-footer text-muted');
   const cardDiv = getDOMElement('div', 'main-screen-card card-footer-area');

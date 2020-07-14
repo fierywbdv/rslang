@@ -1,10 +1,13 @@
 import { getDOMElement } from '../../common/main.helper';
-import { getPhraseMeaning, getPhraseExample } from '../../common/main.utils';
+import { getPhraseMeaning, getPhraseExample, getWordInput } from '../../common/main.utils';
 
 const getCardBody = (currentWord, iterator) => {
   const {
-    audio, audioExample, audioMeaning, id, textExample, textExampleTranslate, textMeaning, textMeaningTranslate, transcription, word, wordTranslate,
+    audio, audioExample, audioMeaning, id, textExample,
+    textExampleTranslate, textMeaning, textMeaningTranslate, word,
   } = currentWord;
+
+  word.toLowerCase();
 
   const cardBody = getDOMElement('div', 'main-screen-card card-body');
 
@@ -12,23 +15,34 @@ const getCardBody = (currentWord, iterator) => {
   phraseMeaningDiv.setAttribute('id', `main-phrase-${iterator}`);
   const phraseExplanation = getDOMElement('div', 'card-body phrase-explanation');
   const explanationTranslate = getDOMElement('span', 'card-body explanation-translate');
+  explanationTranslate.setAttribute('id', `explanation-translate-${iterator}`);
 
   const spacer = getDOMElement('div', 'card-spacer');
 
-  if (localStorage.getItem('userSetExplanation') === 'true') {
+  const setExplanation = localStorage.getItem('userSetExplanation') === 'true';
+  const setExplanationTranslate = localStorage.getItem('userSetExplanationTranslate') === 'true';
+
+  if (setExplanation) {
     const wordObj = {
       iterator, word, id, textExample, audioExample, audio, textMeaning, audioMeaning,
     };
     phraseExplanation.innerHTML = getPhraseMeaning(wordObj);
-    explanationTranslate.textContent = textMeaningTranslate;
-    phraseMeaningDiv.append(phraseExplanation, explanationTranslate);
+
+    if (setExplanationTranslate) {
+      explanationTranslate.textContent = textMeaningTranslate;
+      phraseMeaningDiv.append(phraseExplanation, explanationTranslate);
+    } else { phraseMeaningDiv.append(phraseExplanation); }
   }
 
   const phraseExampleDiv = getDOMElement('div', 'main-screen-card example-area');
   const phraseExample = getDOMElement('div', 'card-body phrase-example');
   const exampleTranslate = getDOMElement('span', 'card-body example-translate');
+  exampleTranslate.setAttribute('id', `example-translate-${iterator}`);
 
-  if (localStorage.getItem('userSetExample') === 'true') {
+  const setExample = localStorage.getItem('userSetExample') === 'true';
+  const setExampleTranslate = localStorage.getItem('userSetExampleTranslate') === 'true';
+
+  if (setExample) {
     const wordObj = {
       id, iterator, word, audioExample, textExample, audio,
     };
@@ -37,8 +51,20 @@ const getCardBody = (currentWord, iterator) => {
     } else {
       phraseExample.innerHTML = getPhraseExample(wordObj, 'false');
     }
-    exampleTranslate.textContent = textExampleTranslate;
-    phraseExampleDiv.append(phraseExample, exampleTranslate);
+
+    if (setExampleTranslate) {
+      exampleTranslate.textContent = textExampleTranslate;
+      phraseExampleDiv.append(phraseExample, exampleTranslate);
+    } else { phraseExampleDiv.append(phraseExample); }
+  }
+
+  if (!setExample && !setExplanation) {
+    const phraseWordInput = getDOMElement('div', 'card-body phrase-explanation');
+    const wordObj = {
+      iterator, word, id, textExample, audioExample, audio, textMeaning, audioMeaning,
+    };
+    phraseWordInput.innerHTML = getWordInput(wordObj);
+    phraseMeaningDiv.append(phraseWordInput);
   }
 
   cardBody.append(phraseMeaningDiv, spacer, phraseExampleDiv);

@@ -1,6 +1,6 @@
 import './scss/results.scss';
 
-import { CLASS_NAMES, ELEMENTS } from '../../../data/helper';
+import { CLASS_NAMES, ELEMENTS } from '../../../game-line/helper';
 import PageCard from '../pageCard/pageCard';
 
 export default class ResultsList {

@@ -11,9 +11,9 @@ import {
   CLASS_NAMES,
   ELEMENTS, EVENTS,
   DATA_PATH,
-} from '../data/helper';
+} from '../game-line/helper';
 
-import { setActiveState, createStar } from '../data/utils';
+import { setActiveState, createStar } from '../game-line/utils';
 
 import PageList from './components/pageList/pageList';
 import ResultsList from './components/resultsList/resultsList';

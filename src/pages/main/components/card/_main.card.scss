@@ -67,10 +67,10 @@
     margin: 0 auto;
   }
 }
-.main-difficult-icon :hover ~ .main-difficult-text {
-  opacity: 1;
-  visibility: visible;
-}
+// .main-difficult-icon :hover ~ .main-difficult-text {
+//   opacity: 1;
+//   visibility: visible;
+// }
 i.main-i .far .fa-life-ring .main-difficult-icon:hover  {
   color: red;
 }
@@ -219,9 +219,55 @@ i.main-i .far .fa-life-ring .main-difficult-icon:hover  {
 }
 .main-screen-card .card-footer-area {
   justify-content: space-between;
-  & .main-icon-area i {
-    margin-left: 5px;
-    margin-right: 5px;
+  & .main-icon-area {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    &  i {
+      margin-left: 5px;
+      margin-right: 5px;
+      & .main-speaker-text, .main-answer-text, .main-arrow-text {
+        opacity: 0;
+        visibility: hidden;
+        display: block;
+        width: max-content;
+        position: absolute;
+        z-index: 10;
+        bottom: 40px;
+        right: 0;
+        padding: 5px;
+        font-size: .6em;
+        color: $main-text-color;
+        font-weight: 100;
+      }
+      & .main-arrow-text {
+        right: 25%;
+      }
+      &.main-speaker {
+        &:hover>.main-speaker-text {
+          opacity: 1;
+          visibility: visible;
+          transform: translateY(20px);
+          transition: all .5s ease;
+        }
+      }
+      &.main-eye {
+        &:hover>.main-answer-text {
+          opacity: 1;
+          visibility: visible;
+          transform: translateY(20px);
+          transition: all .5s ease;
+        }
+      }
+      &.main-arrow {
+        &:hover>.main-arrow-text {
+          opacity: 1;
+          visibility: visible;
+          transform: translateY(20px);
+          transition: all .5s ease;
+        }
+      }
+    }
   }
 }
 i.main-speaker, i.main-arrow, i.main-eye {

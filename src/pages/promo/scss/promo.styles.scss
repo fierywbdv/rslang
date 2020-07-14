@@ -167,6 +167,19 @@
 
   &__container {
     justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    a {
+      text-decoration: underline;
+      color: #000;
+
+      h2 {
+        font-weight: 700;
+        margin-bottom: 40px;
+        color: #000;
+      }
+    }
   }
 }
 

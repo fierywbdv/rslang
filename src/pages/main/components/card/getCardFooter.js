@@ -8,17 +8,26 @@ const getCardFooter = (currentWord, iterator) => {
   const cardFooter = getDOMElement('div', 'main-screen-card card-footer text-muted');
   const cardDiv = getDOMElement('div', 'main-screen-card card-footer-area');
   const cardFooterTranslate = getDOMElement('span', 'main-screen-card card-footer-translate');
+  cardFooterTranslate.setAttribute('id', `footer-translate-${iterator}`);
 
-  if (localStorage.getItem('userSetTranslate') === 'false' && localStorage.getItem('userSetTranscription') === 'false') {
+  const userSetTranslate = localStorage.getItem('userSetTranslate') === 'true';
+  const userSetTranscription = localStorage.getItem('userSetTranscription') === 'true';
+  const setExplanation = localStorage.getItem('userSetExplanation') === 'true';
+  const setExample = localStorage.getItem('userSetExample') === 'true';
+
+  if (!userSetTranslate && !userSetTranscription) {
     cardFooterTranslate.textContent = '';
-  } else if (localStorage.getItem('userSetTranslate') === 'true' && localStorage.getItem('userSetTranscription') === 'false') {
+  } else if (userSetTranslate && !userSetTranscription) {
     cardFooterTranslate.textContent = `${wordTranslate}`;
-  } else if (localStorage.getItem('userSetTranslate') === 'false' && localStorage.getItem('userSetTranscription') === 'true') {
+  } else if (!userSetTranslate && userSetTranscription) {
     cardFooterTranslate.textContent = `${transcription}`;
   } else {
     cardFooterTranslate.textContent = `${wordTranslate}  |  ${transcription}`;
   }
 
+  if (userSetTranslate && !setExplanation && !setExample) {
+    cardFooterTranslate.classList.add('show');
+  }
   const cardFooterIconArea = getDOMElement('div', 'main-icon-area');
 
   const cardFooterSpeakerIcon = getDOMElement('i', 'main-speaker main-i fas fa-volume-up');
@@ -29,7 +38,8 @@ const getCardFooter = (currentWord, iterator) => {
   cardFooterSpeakerIcon.append(speakerIconText);
 
   const cardFooterEyeIcon = getDOMElement('i', 'main-eye main-i fas fa-eye');
-  cardFooterEyeIcon.setAttribute('id', iterator);
+  cardFooterEyeIcon.setAttribute('data_id', iterator);
+  cardFooterEyeIcon.setAttribute('id', `main-eye-${iterator}`);
   cardFooterEyeIcon.setAttribute('data-audio', audio);
 
   const eyeIconText = getDOMElement('span', 'main-answer-text');
@@ -43,7 +53,11 @@ const getCardFooter = (currentWord, iterator) => {
   arrowIconText.textContent = 'далее';
   cardFooterArrowIcon.append(arrowIconText);
 
-  cardFooterIconArea.append(cardFooterSpeakerIcon, cardFooterEyeIcon, cardFooterArrowIcon);
+  if (localStorage.getItem('userShowAnswer') === 'true') {
+    cardFooterIconArea.append(cardFooterSpeakerIcon, cardFooterEyeIcon, cardFooterArrowIcon);
+  } else {
+    cardFooterIconArea.append(cardFooterSpeakerIcon, cardFooterArrowIcon);
+  }
 
   cardDiv.append(cardFooterTranslate, cardFooterIconArea);
   cardFooter.append(cardDiv);

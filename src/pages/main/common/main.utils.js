@@ -70,10 +70,11 @@ export const getPhraseMeaning = (wordObj, needInput = 'true') => {
   } = wordObj;
   const wordSize = word.length;
 
-  let inputLength = (word.match(/[lijft]/g)) ? wordSize - 1 : wordSize;
-  inputLength = (word.match(/[mw]/g)) ? inputLength + 1 : inputLength;
+  // let inputLength = (word.match(/[lij]/g)) ? wordSize - 1 : wordSize;
+  // inputLength = (word.match(/[ft]/g)) ? inputLength - 1 : inputLength;
+  // inputLength = (word.match(/[mw]/g)) ? inputLength + 1 : inputLength;
 
-  const input = `<input id = "to-write-${iterator}" class="to-write" size = ${inputLength}
+  const input = `<input id = "to-write-${iterator}" class="to-write" size = ${wordSize}
    placeholder = ${word} spellcheck = "false" data = ${id} data-audio-example = ${audioExample}
    data-audio = ${audio} data-audio-explanation = ${audioMeaning}>`;
 
@@ -98,10 +99,10 @@ export const getPhraseExample = (wordObj, needInput = 'false') => {
   } = wordObj;
   const wordSize = word.length;
 
-  let inputLength = (word.match(/[lijft]/g)) ? wordSize - 1 : wordSize;
-  inputLength = (word.match(/[mw]/g)) ? inputLength + 1 : inputLength;
+  // let inputLength = (word.match(/[lijft]/g)) ? wordSize - 1 : wordSize;
+  // inputLength = (word.match(/[mw]/g)) ? inputLength + 1 : inputLength;
 
-  const input = `<input id = "to-write-example-${iterator}" data = ${id} class="to-write" size = ${inputLength}
+  const input = `<input id = "to-write-example-${iterator}" data = ${id} class="to-write" size = ${wordSize}
    placeholder = ${word} spellcheck = "false" data-audio = ${audio} data-audio-explanation = ${audioExample}>`;
 
   const regExp = /<b.*?>.*?<\/b.*?>/si;
@@ -118,6 +119,22 @@ export const getPhraseExample = (wordObj, needInput = 'false') => {
   }
 
   return phraseExplanation;
+};
+
+export const getWordInput = (wordObj) => {
+  const {
+    iterator, word, id, audioExample, audio, audioMeaning,
+  } = wordObj;
+  const wordSize = word.length;
+
+  // let inputLength = (word.match(/[lijft]/g)) ? wordSize - 1 : wordSize;
+  // inputLength = (word.match(/[mw]/g)) ? inputLength + 1 : inputLength;
+
+  const input = `<input id = "to-write-word-${iterator}" class="to-write" size = ${wordSize}
+   placeholder = ${word} spellcheck = "false" data = ${id} data-audio-example = ${audioExample}
+   data-audio = ${audio} data-audio-explanation = ${audioMeaning}>`;
+
+  return input;
 };
 
 const moveToRight = () => {
@@ -142,6 +159,17 @@ const moveToLeft = () => {
     const current = (slide.style.right).slice(0, -1) || 0;
     slide.style.right = `${+current - 100}%`;
   });
+};
+
+export const changeProgressBar = (index, slidesCount) => {
+  const currentCardLabel = document.querySelector('#current-slide');
+  const progressBar = document.querySelector('.main-swiper .progress-bar');
+  const lastCardNumber = slidesCount;
+  const currentCardNumber = index + 2;
+
+  currentCardLabel.innerText = currentCardNumber;
+  const currentProgress = Math.floor((currentCardNumber / lastCardNumber) * 100);
+  progressBar.style.width = `${currentProgress}%`;
 };
 
 const soundHandler = () => {
@@ -172,34 +200,68 @@ const soundHandler = () => {
 
 const eyeSpeakerHandler = () => {
   const speakersArr = Array.from(document.querySelectorAll('.main-eye'));
+  const nextBTN = document.querySelector('#main-button-next');
+  const lastSlide = Number(document.querySelector('#slides-count').textContent);
 
   if (speakersArr.length > 0) {
     speakersArr.forEach((speaker) => {
-      const current = speaker.getAttribute('id');
+      const current = speaker.getAttribute('data_id');
+      const currentCard = document.querySelector(`#main-card-${current}`);
+      const nextArrow = document.querySelector(`#main-arrow-${current}`);
+      const explanationTranslate = document.querySelector(`#explanation-translate-${current}`);
+      const exampleTranslate = document.querySelector(`#example-translate-${current}`);
 
       let currentInput;
       let exampleInput;
 
-      if (localStorage.getItem('userSetExplanation') === 'true') {
+      const userSetExplanation = localStorage.getItem('userSetExplanation') === 'true';
+      const userSetExample = localStorage.getItem('userSetExample') === 'true';
+
+      if (userSetExplanation) {
         currentInput = document.querySelector(`#to-write-${current}`);
-      } else if (localStorage.getItem('userSetExample') === 'true') {
+      } else if (userSetExample) {
         currentInput = document.querySelector(`#to-write-example-${current}`);
+      } else {
+        currentInput = document.querySelector(`#to-write-word-${current}`);
       }
 
-      if (localStorage.getItem('userSetExample') === 'true' && localStorage.getItem('userSetExplanation') === 'true') {
+      if (userSetExample && userSetExplanation) {
         exampleInput = document.querySelector(`#underlined_word-${current}`);
       }
 
       const urlAudio = speaker.getAttribute('data-audio');
 
       speaker.addEventListener('click', () => {
-        const currentID = speaker.getAttribute('id');
-        const soundIcon = document.querySelector(`#main-speaker-${currentID}`);
-        currentInput.value = '';
-        currentInput.classList.add('show');
-        exampleInput.classList.add('show');
-        if (!soundIcon.classList.contains('sound-off')) {
-          new Audio(`${baseUrl}${urlAudio}`).play();
+        if (!speaker.classList.contains('eye-disabled')) {
+          speaker.classList.add('eye-disabled');
+          nextArrow.classList.add('main-arrow-disabled');
+          const currentID = Number(speaker.getAttribute('data_id'));
+          const soundIcon = document.querySelector(`#main-speaker-${currentID}`);
+          const currentSlide = currentID + 1;
+          currentInput.value = '';
+          currentInput.classList.add('show');
+          if (exampleInput) { exampleInput.classList.add('show'); }
+          if (explanationTranslate) { explanationTranslate.classList.add('show'); }
+          if (exampleTranslate) { exampleTranslate.classList.add('show'); }
+          currentCard.setAttribute('guessed', 'true');
+
+          if (!soundIcon.classList.contains('sound-off')) {
+            new Audio(`${baseUrl}${urlAudio}`).play();
+          }
+          setTimeout(() => {
+            nextBTN.classList.remove('main-btn-disable');
+
+            if (currentSlide === lastSlide) {
+              nextBTN.classList.add('main-btn-disable');
+              getNotation();
+            } else {
+              currentInput.readOnly = true;
+              nextBTN.click();
+              speaker.classList.add('end');
+              nextArrow.classList.add('end');
+              changeProgressBar(currentID, lastSlide);
+            }
+          }, 3000);
         }
       });
     });
@@ -255,17 +317,6 @@ export const updateMixUserWords = async (dataWord, isDeleted) => {
   learnWordsAPIService.createUserWord(...data);
 };
 
-export const changeProgressBar = (index, slidesCount) => {
-  const currentCardLabel = document.querySelector('#current-slide');
-  const progressBar = document.querySelector('.main-swiper .progress-bar');
-  const lastCardNumber = slidesCount;
-  const currentCardNumber = index + 2;
-
-  currentCardLabel.innerText = currentCardNumber;
-  const currentProgress = Math.floor((currentCardNumber / lastCardNumber) * 100);
-  progressBar.style.width = `${currentProgress}%`;
-};
-
 const validateAnswer = (event, iterator, slidesCount) => {
   const lastCardNumber = slidesCount;
   const lastCardLabel = document.querySelector('#slides-count');
@@ -274,32 +325,53 @@ const validateAnswer = (event, iterator, slidesCount) => {
   let currentInput;
   const lastSlide = slidesCount - 1;
 
-  if (localStorage.getItem('userSetExplanation') === 'true') {
+  const userSetExplanation = localStorage.getItem('userSetExplanation') === 'true';
+  const userSetExample = localStorage.getItem('userSetExample') === 'true';
+
+  if (userSetExplanation) {
     currentInput = document.querySelector(`#to-write-${iterator}`);
-  } else {
+  } else if (userSetExample) {
     currentInput = document.querySelector(`#to-write-example-${iterator}`);
+  } else {
+    currentInput = document.querySelector(`#to-write-word-${iterator}`);
   }
 
   const currentCard = document.querySelector(`#main-card-${iterator}`);
   const nextBTN = document.querySelector('#main-button-next');
+  const explanationTranslate = document.querySelector(`#explanation-translate-${iterator}`);
+  const exampleTranslate = document.querySelector(`#example-translate-${iterator}`);
+  const wordTranslate = document.querySelector(`#footer-translate-${iterator}`);
+  const exampleInput = document.querySelector(`#underlined_word-${iterator}`);
+  const nextArrow = document.querySelector(`#main-arrow-${iterator}`);
+  const speaker = document.querySelector(`#main-eye-${iterator}`);
+
   currentInput.focus();
-  let wordDifficulty = 'false';
 
   if (event.keyCode === 13 || event.type === 'enterClick') {
     if (currentInput.value === currentInput.placeholder) {
+      speaker.classList.add('eye-disabled');
+      nextArrow.classList.add('main-arrow-disabled');
+      if (explanationTranslate) { explanationTranslate.classList.add('show'); }
+      if (exampleTranslate) { exampleTranslate.classList.add('show'); }
+      if (wordTranslate) { wordTranslate.classList.add('show'); }
+
       currentInput.style.color = '#34c716';
       currentInput.blur();
       currentCard.setAttribute('guessed', 'true');
+      currentInput.readOnly = true;
+      if (exampleInput) { exampleInput.classList.add('show'); }
 
       const dataWord = {
         wordId: currentInput.getAttribute('data'),
         word: currentInput.placeholder,
-        wordDifficulty,
+        wordDifficulty: localStorage.getItem('wordDifficulty'),
         wordAudio: currentInput.getAttribute('data-audio'),
         wordTranslate: currentCard.getAttribute('data-translate'),
         wordImage: currentCard.getAttribute('data-img'),
       };
-      addToUserWords(dataWord, 'false');
+      if (localStorage.getItem('typeOfGame' === 'new')) {
+        addToUserWords(dataWord, 'false');
+      }
 
       const urlAudio = currentInput.getAttribute('data-audio');
       const audioWord = new Audio(`${baseUrl}${urlAudio}`);
@@ -355,6 +427,10 @@ const validateAnswer = (event, iterator, slidesCount) => {
                   } else {
                     nextBTN.click();
                     changeProgressBar(iterator, slidesCount);
+                    speaker.classList.add('eye-disabled');
+                    speaker.classList.add('end');
+                    nextArrow.classList.add('main-arrow-disabled');
+                    nextArrow.classList.add('end');
                   }
                 });
               } else {
@@ -365,6 +441,10 @@ const validateAnswer = (event, iterator, slidesCount) => {
                 } else {
                   nextBTN.click();
                   changeProgressBar(iterator, slidesCount);
+                  speaker.classList.add('eye-disabled');
+                  speaker.classList.add('end');
+                  nextArrow.classList.add('main-arrow-disabled');
+                  nextArrow.classList.add('end');
                 }
               }
             });
@@ -377,6 +457,10 @@ const validateAnswer = (event, iterator, slidesCount) => {
               } else {
                 nextBTN.click();
                 changeProgressBar(iterator, slidesCount);
+                speaker.classList.add('eye-disabled');
+                speaker.classList.add('end');
+                nextArrow.classList.add('main-arrow-disabled');
+                nextArrow.classList.add('end');
               }
             });
           } else {
@@ -387,6 +471,10 @@ const validateAnswer = (event, iterator, slidesCount) => {
             } else {
               nextBTN.click();
               changeProgressBar(iterator, slidesCount);
+              speaker.classList.add('eye-disabled');
+              speaker.classList.add('end');
+              nextArrow.classList.add('main-arrow-disabled');
+              nextArrow.classList.add('end');
             }
           }
         });
@@ -399,11 +487,15 @@ const validateAnswer = (event, iterator, slidesCount) => {
         setTimeout(() => {
           nextBTN.click();
           changeProgressBar(iterator, slidesCount);
+          speaker.classList.add('eye-disabled');
+          speaker.classList.add('end');
+          nextArrow.classList.add('main-arrow-disabled');
+          nextArrow.classList.add('end');
         }, 1500);
       }
     } else {
       const soundIcon = document.querySelector(`#main-speaker-${iterator}`);
-      wordDifficulty = 'true';
+      localStorage.setItem('wordDifficulty', 'true');
       currentInput.classList.add('incorrect');
       // mainHelper.checkSpell(currentInput.placeholder, currentInput.value, currentInput);
 
@@ -419,12 +511,18 @@ const validateAnswer = (event, iterator, slidesCount) => {
 };
 
 export const inputHandler = (iterator, slidesCount) => {
-  if (document.querySelector(`#to-write-${iterator}`) || document.querySelector(`#to-write-example-${iterator}`)) {
+  const inputExplanation = document.querySelector(`#to-write-${iterator}`);
+  const inputExample = document.querySelector(`#to-write-example-${iterator}`);
+  const inputOnlyWord = document.querySelector(`#to-write-word-${iterator}`);
+
+  if (inputExplanation || inputExample || inputOnlyWord) {
     let currentInput;
     if (localStorage.getItem('userSetExplanation') === 'true') {
-      currentInput = document.querySelector(`#to-write-${iterator}`);
+      currentInput = inputExplanation;
+    } else if (localStorage.getItem('userSetExample') === 'true') {
+      currentInput = inputExample;
     } else {
-      currentInput = document.querySelector(`#to-write-example-${iterator}`);
+      currentInput = inputOnlyWord;
     }
 
     const currentArrowBTN = document.querySelector(`#main-arrow-${iterator}`);
@@ -436,11 +534,18 @@ export const inputHandler = (iterator, slidesCount) => {
       nextBTN.classList.add('main-btn-disable');
     }
 
-    currentArrowBTN.addEventListener('click', () => {
-      const emulateEnter = new CustomEvent('enterClick', { detail: { action: 'keydown' } });
-      currentInput.dispatchEvent(emulateEnter);
+    currentArrowBTN.addEventListener('click', (e) => {
+      if (!document.querySelector(`#main-arrow-${iterator}`).classList.contains('main-arrow-disabled')) {
+        if (currentCard.getAttribute('guessed') === 'false') {
+          const emulateEnter = new CustomEvent('enterClick', { detail: { action: 'keydown' } });
+          currentInput.dispatchEvent(emulateEnter);
+        } else {
+          document.querySelector('#main-button-next').click();
+        }
+      }
     });
 
+    localStorage.setItem('wordDifficulty', 'false');
     currentInput.addEventListener('keydown', (e) => validateAnswer(e, iterator, slidesCount));
     currentInput.addEventListener('enterClick', (e) => validateAnswer(e, iterator, slidesCount));
   }
@@ -476,6 +581,7 @@ export const moveCardHandler = () => {
       if (currentSlide === slidesArr.length - 1) {
         nextBTN.classList.add('main-btn-disable');
       }
+      changeProgressBar(currentSlide - 1, slidesCount);
     }
   });
 
@@ -490,6 +596,7 @@ export const moveCardHandler = () => {
       inputHandler(currentSlide, slidesCount);
     }
     if (currentSlide === 0) { prevBTN.classList.add('main-btn-disable'); }
+    changeProgressBar(currentSlide - 1, slidesCount);
   });
 };
 

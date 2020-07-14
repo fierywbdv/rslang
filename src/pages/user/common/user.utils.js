@@ -41,7 +41,7 @@ export const getUserCardsCount = () => {
   });
 };
 
-export const getCheckbox = (id, content, checked = false) => {
+export const getCheckbox = (id, content, checked = false, addClass = '') => {
   const cardDiv = document.createElement('div');
 
   const cardCheck = document.createElement('input');
@@ -49,7 +49,7 @@ export const getCheckbox = (id, content, checked = false) => {
   cardCheck.setAttribute('id', id);
   cardCheck.setAttribute('value', '');
   if (checked) { cardCheck.setAttribute('checked', ''); }
-  cardCheck.className = 'form-check-input';
+  cardCheck.className = `form-check-input ${addClass}`;
   const cardCheckLabel = document.createElement('label');
   cardCheckLabel.className = 'form-check-label';
   cardCheckLabel.setAttribute('for', id);
@@ -61,7 +61,7 @@ export const getCheckbox = (id, content, checked = false) => {
 
 const checkboxHandler = () => {
   const cardSettings = document.querySelector('.card-settings');
-  const boxArr = Array.from(cardSettings.querySelectorAll('input'));
+  const boxArr = Array.from(cardSettings.querySelectorAll('input.check-required'));
   const res = 1 + boxArr.findIndex((el) => el.checked);
 
   if (!res) {
@@ -182,6 +182,9 @@ export const saveSettingsHandler = () => {
     const userSetImage = document.querySelector('#user-set-image').checked;
     const userAddDifficult = document.querySelector('#user-set-difficult').checked;
     const userAddDeleted = document.querySelector('#user-set-deleted').checked;
+    const userShowAnswer = document.querySelector('#user-set-answer').checked;
+    const userSetExplanationTranslate = document.querySelector('#user-set-explanation-translate').checked;
+    const userSetExampleTranslate = document.querySelector('#user-set-example-translate').checked;
 
     inputHandler(userMail);
     inputHandler(userPassword);
@@ -202,6 +205,9 @@ export const saveSettingsHandler = () => {
         userSetImage,
         userAddDifficult,
         userAddDeleted,
+        userShowAnswer,
+        userSetExplanationTranslate,
+        userSetExampleTranslate,
       };
       try {
         const updateUser = await learnWordsAPIService.updateUser(localStorage.getItem('userId'), localStorage.getItem('token'), userSettings.userName, userSettings.userMail, userSettings.userPassword);
@@ -215,6 +221,9 @@ export const saveSettingsHandler = () => {
           userSetImage: userSettings.userSetImage,
           userAddDifficult: userSettings.userAddDifficult,
           userAddDeleted: userSettings.userAddDeleted,
+          userShowAnswer: userSettings.userShowAnswer,
+          userSetExplanationTranslate: userSettings.userSetExplanationTranslate,
+          userSetExampleTranslate: userSettings.userSetExampleTranslate,
         });
 
         if (updateUser !== undefined) {
@@ -238,6 +247,9 @@ export const saveSettingsHandler = () => {
           localStorage.setItem('userSetTranslate', userSettings.userSetTranslate);
           localStorage.setItem('userAddDifficult', userSettings.userAddDifficult);
           localStorage.setItem('userAddDeleted', userSettings.userAddDeleted);
+          localStorage.setItem('userShowAnswer', userSettings.userShowAnswer);
+          localStorage.setItem('userSetExplanationTranslate', userSettings.userSetExplanationTranslate);
+          localStorage.setItem('userSetExampleTranslate', userSettings.userSetExampleTranslate);
         }
       } catch (error) {
         console.error(error);
@@ -266,6 +278,11 @@ export const deleteProfileHandler = () => {
     localStorage.setItem('userSetImage', null);
     localStorage.setItem('userSetTranscription', null);
     localStorage.setItem('userSetTranslate', null);
+    localStorage.setItem('userAddDifficult', null);
+    localStorage.setItem('userAddDeleted', null);
+    localStorage.setItem('userShowAnswer', null);
+    localStorage.setItem('userSetExplanationTranslate', null);
+    localStorage.setItem('userSetExampleTranslate', null);
     localStorage.setItem('refreshToken', null);
     store.dispatch(disAutorization());
     document.location.href = '/';

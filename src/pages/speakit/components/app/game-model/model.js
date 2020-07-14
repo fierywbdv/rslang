@@ -1,5 +1,5 @@
-import { CLASS_NAMES, MAX_WORDS_COUNT } from '../data/helper';
-import { shuffleArray, translateWord } from '../data/utils';
+import { CLASS_NAMES, MAX_WORDS_COUNT } from '../game-line/helper';
+import { shuffleArray, translateWord } from '../game-line/utils';
 
 export default class Model {
   constructor() {

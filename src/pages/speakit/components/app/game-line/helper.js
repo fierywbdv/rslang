@@ -1,4 +1,4 @@
-import makePage from '../../components/makePage';
+import makePage from '../../makePage';
 
 if ((window.location.href.split('#'))[1] === 'speakit') {
   makePage();

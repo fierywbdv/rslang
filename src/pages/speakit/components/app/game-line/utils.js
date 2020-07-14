@@ -4,7 +4,7 @@ import {
   EVENTS,
 } from './helper';
 
-import { learnWordsAPIService } from '../../../../services/learnWordsAPIService';
+import { learnWordsAPIService } from '../../../../../services/learnWordsAPIService';
 
 export const createCard = ({
   word,

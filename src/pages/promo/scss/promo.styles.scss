@@ -48,8 +48,8 @@
   background-repeat: no-repeat;
   background-position: center bottom;
   background-size: cover;
-  padding-top: 140px;
-  padding-bottom: 140px;
+  padding-top: 158px;
+  padding-bottom: 158px;
   color: #fff;
   text-align: center;
 
@@ -167,8 +167,13 @@
 
   &__container {
     justify-content: center;
-    align-items: center;
-    flex-direction: column;
+  }
+}
+
+.repository {
+  &__container {
+    justify-content: center;
+    padding: 15px 20px;
 
     a {
       text-decoration: underline;
@@ -176,8 +181,7 @@
 
       h2 {
         font-weight: 700;
-        margin-bottom: 40px;
-        color: #000;
+        margin-bottom: 0;
       }
     }
   }
@@ -492,6 +496,9 @@ input.input-material.is-invalid ~ .help {
   .hero {
     padding-top: 80px;
     padding-bottom: 80px;
+  }
+  .repository h2 {
+    font-size: 1.5rem;
   }
   .login__logo{
     display: none;

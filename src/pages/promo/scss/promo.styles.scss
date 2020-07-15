@@ -48,8 +48,8 @@
   background-repeat: no-repeat;
   background-position: center bottom;
   background-size: cover;
-  padding-top: 140px;
-  padding-bottom: 140px;
+  padding-top: 158px;
+  padding-bottom: 158px;
   color: #fff;
   text-align: center;
 
@@ -160,6 +160,42 @@
   }
 }
 
+.mockups {
+  padding-top: 40px;
+  &__container {
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    h2 {
+      font-weight: 700;
+      margin-bottom: 40px;
+    }
+
+    .mockups__devices {
+      position: relative;
+      height: 600px;
+      width: 550px;
+      user-select: none;
+
+      img {
+        position: absolute;
+
+        &:first-child {
+          height: 300px;
+          z-index: 10;
+          top: 250px;
+        }
+
+        &:last-child {
+          height: 500px;
+          right: 55px;
+        }
+      }
+    }
+  }
+}
+
 .video {
   background-color: #fff;
   padding-top: 80px;
@@ -167,8 +203,16 @@
 
   &__container {
     justify-content: center;
-    align-items: center;
-    flex-direction: column;
+  }
+}
+
+.repository {
+  background-color: #fff;
+  padding: 80px 0;
+
+  &__container {
+    justify-content: center;
+    padding: 15px 20px;
 
     a {
       text-decoration: underline;
@@ -176,8 +220,7 @@
 
       h2 {
         font-weight: 700;
-        margin-bottom: 40px;
-        color: #000;
+        margin-bottom: 0;
       }
     }
   }
@@ -485,6 +528,27 @@ input.input-material.is-invalid ~ .help {
   }
 }
 
+
+@media (max-width: 767px) {
+  .mockups {
+    &__container {
+      .mockups__devices {
+        height: 550px;
+        width: 496px;
+        img:first-child {
+          height: 250px;
+          top: 240px;
+        }
+
+        img:last-child {
+          right: 65px;
+          height: 450px;
+        }
+      }
+    }
+  }
+}
+
 @media (max-width: 575px) {
   .promo-container {
     padding: 15px 20px;
@@ -492,6 +556,31 @@ input.input-material.is-invalid ~ .help {
   .hero {
     padding-top: 80px;
     padding-bottom: 80px;
+  }
+  .mockups {
+    &__container {
+      h2 {
+        font-size: 1rem;
+      }
+
+      .mockups__devices {
+        width: 335px;
+        height: 480px;
+
+        img:first-child {
+          left: -70px;
+          top: 190px;
+        }
+
+        img:last-child {
+          height: 400px;
+          right: 10px;
+        }
+      }
+    }
+  }
+  .repository h2 {
+    font-size: 1.5rem;
   }
   .login__logo{
     display: none;
@@ -502,5 +591,27 @@ input.input-material.is-invalid ~ .help {
   }
   .password-text {
     font-size: small;
+  }
+}
+
+
+@media (max-width: 374px) {
+  .mockups {
+    &__container {
+      .mockups__devices {
+        width: 280px;
+        height: 420px;
+
+        img:first-child {
+          height: 200px;
+          left: -55px;
+          top: 184px;
+        }
+
+        img:last-child {
+          height: 350px;
+        }
+      }
+    }
   }
 }

@@ -572,28 +572,6 @@ content: "";
     & .main-icon-area {
       justify-content: flex-end;
     }
-    //   & i {
-    //     & .main-speaker-text, .main-answer-text, .main-arrow-text {
-    //       right: 140px;
-    //       bottom: 0;
-    //     }
-    //     &.main-speaker {
-    //       &:hover>.main-speaker-text {
-    //         transform: translateX(20px);
-    //       }
-    //     }
-    //     &.main-eye {
-    //       &:hover>.main-answer-text {
-    //         transform: translateX(20px);
-    //       }
-    //     }
-    //     &.main-arrow {
-    //       &:hover>.main-arrow-text {
-    //         transform: translateX(20px);
-    //       }
-    //     }
-    //   }
-    // }
   }
 }
 
@@ -631,10 +609,6 @@ content: "";
   .main-screen-card .card-footer-translate {
     font-size: .8em;
   }
-  // .main-speaker-text, .main-answer-text, .main-arrow-text {
-  //   transform: none !important;
-  //   right: 100px !important;
-  // }
   .main-difficult-text, .main-delete-text {
     transform: none !important;
     right: 70px !important;

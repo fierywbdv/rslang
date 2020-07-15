@@ -205,11 +205,21 @@ input.form-check-input {
   }
   #edit-user-name-form i,  #edit-user-mail-form i, #edit-user-pass-form i, .card-header-area i {
     padding-left: 0;
+    margin-left: 0;
   }
 }
 
-@media (max-width: 330px) {
+@media (max-width: 500px) {
   .user-container .card-header-area i {
     display: none;
+  }
+  .user-container .card.card-settings .card-body label {
+    font-size: .9em !important;
+  }
+  #user-words-count, #user-cards-count, #user-level {
+    font-size: .9em !important;
+  }
+  .user-card-header {
+    padding-right: 0;
   }
 }

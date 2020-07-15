@@ -1,0 +1,69 @@
+.speakit-levels {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  margin: 5px;
+  padding-top: 10px;
+}
+
+.speakit-basik-wrapper {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: baseline;
+  flex-wrap: wrap;
+}
+
+.game__difficult {
+  box-sizing: border-box;
+  display: block;
+  width: 35px;
+  height: 35px;
+  margin: 0 5px;
+  padding: 0;
+  line-height: 30px;
+}
+
+.speakit-basik-container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  align-items: baseline;
+  margin-top: 15px;
+}
+
+.game__button {
+  margin: 0 10px;
+  margin-bottom: 5px;
+}
+
+.disabled.game__button {
+  background-color: lightcoral;
+  box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.2), 0 8px 10px 0 rgba(0, 0, 0, 0.4);
+
+  &:focus,
+  &:hover,
+  &:active {
+    color: white;
+  }
+}
+
+.speakit_active.game__difficult{
+ box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.2), 0 8px 10px 0 rgba(0, 0, 0, 0.4);
+
+  &:focus,
+  &:hover,
+  &:active {
+    color: white;
+    box-shadow: 0 0 10px 0 #335e97 inset, 0 0 10px 4px #335e97;
+  }
+}
+
+.levels__result {
+  align-self: center;
+  display: block;
+  margin-right: 10px;
+  font-size: 25px;
+  font-family: Tenor-Sans, tahoma, sans-serif;
+  font-weight: 900;
+  color: white;
+}

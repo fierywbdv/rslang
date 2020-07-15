@@ -1,3 +1,6 @@
+.main-swiper-container {
+  margin-bottom: 20px;
+}
 .main-swiper.swiper-container {
   width: calc(100vw - 200px);
   margin-top: 40px;
@@ -24,5 +27,16 @@
     position: absolute;
     left: 50%;
     color: gray;
+  }
+}
+
+@media (max-width: 575px ) {
+  .main-swiper.swiper-container {
+    // width: calc(100vw - 100px);
+    width: 100vw;
+    margin-top: 40px;
+    &.container-shrinked {
+      width: calc(100vw - 100px);
+    }
   }
 }

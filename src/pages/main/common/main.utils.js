@@ -21,45 +21,41 @@ export const setSidebarItem = () => {
 export const sidebarListener = () => {
   const sidebar = document.querySelector('.side-navbar');
   const toggleBTN = document.querySelector('.menu-btn');
-  // const url = window.location.hash;
+  const containerMain = document.querySelector('.main-swiper.swiper-container');
+  const containerUser = document.querySelector('.container-fluid.user-container');
+  const containerSelect = document.querySelector('.select-screen-card.container-fluid');
 
-  // sidebar.classList.add('side-navbar-main-user');
-
-  // window.addEventListener('hashchange', () => {
-  //   sidebar.classList.remove('side-navbar-main-user');
-  // });
-
-  // if (url === '#main' || url === '#user' || url === '' || url === 'team') {
-  //   sidebar.classList.add('side-navbar-main-user');
-  // } else {
-  //   sidebar.classList.remove('side-navbar-main-user');
-  // }
+  if (sidebar.classList.contains('shrinked')) {
+    if (containerMain) { containerMain.classList.add('container-shrinked'); }
+    if (containerUser) { containerUser.classList.add('container-shrinked'); }
+    if (containerSelect) { containerSelect.classList.add('container-shrinked'); }
+  }
 
   toggleBTN.addEventListener('click', () => {
-    const containerMain = document.querySelector('.main-swiper.swiper-container');
-    const containerUser = document.querySelector('.container-fluid.user-container');
-    const containerSelect = document.querySelector('.select-screen-card.container-fluid');
+    const containerMainDiv = document.querySelector('.main-swiper.swiper-container');
+    const containerUserDiv = document.querySelector('.container-fluid.user-container');
+    const containerSelectDiv = document.querySelector('.select-screen-card.container-fluid');
     const url = window.location.hash;
 
     if (url === '#main') {
       if (sidebar.classList.contains('shrinked')) {
-        containerMain.classList.add('container-shrinked');
+        containerMainDiv.classList.add('container-shrinked');
       } else {
-        containerMain.classList.remove('container-shrinked');
+        containerMainDiv.classList.remove('container-shrinked');
       }
     }
     if (url === '#user') {
       if (sidebar.classList.contains('shrinked')) {
-        containerUser.classList.add('container-shrinked');
+        containerUserDiv.classList.add('container-shrinked');
       } else {
-        containerUser.classList.remove('container-shrinked');
+        containerUserDiv.classList.remove('container-shrinked');
       }
     }
     if (url === '') {
       if (sidebar.classList.contains('shrinked')) {
-        containerSelect.classList.add('container-shrinked');
+        containerSelectDiv.classList.add('container-shrinked');
       } else {
-        containerSelect.classList.remove('container-shrinked');
+        containerSelectDiv.classList.remove('container-shrinked');
       }
     }
   });
@@ -212,6 +208,7 @@ const eyeSpeakerHandler = () => {
       const nextArrow = document.querySelector(`#main-arrow-${current}`);
       const explanationTranslate = document.querySelector(`#explanation-translate-${current}`);
       const exampleTranslate = document.querySelector(`#example-translate-${current}`);
+      const footerTranslate = document.querySelector(`#footer-translate-${current}`);
 
       let currentInput;
       let exampleInput;
@@ -253,6 +250,7 @@ const eyeSpeakerHandler = () => {
           if (exampleInput) { exampleInput.classList.add('show'); }
           if (explanationTranslate) { explanationTranslate.classList.add('show'); }
           if (exampleTranslate) { exampleTranslate.classList.add('show'); }
+          if (footerTranslate) { footerTranslate.classList.add('show'); }
           currentCard.setAttribute('guessed', 'true');
 
           if (!soundIcon.classList.contains('sound-off')) {

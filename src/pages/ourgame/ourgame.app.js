@@ -170,6 +170,7 @@ class Ourgame {
       this.setRestart();
       this.setRepeat();
       store.dispatch(setQuestionNumber(0));
+      this.setFinalStatistic();
     }
   }
 
@@ -237,6 +238,17 @@ class Ourgame {
       kind,
     };
     store.dispatch(setStatistic(this.info));
+  }
+
+  setFinalStatistic() {
+    const state = store.getState();
+    const { setGameNum, setRandomGameNum, setStatistic, kind } = state.ourGameReducer;
+    const { correct, mistake } = setStatistic;
+    const number = kind === 'withRandomWords' ? setRandomGameNum : setGameNum;
+    const { cor, miss } = helper.filterStatistic(correct, mistake, number - 1, kind);
+    console.log('setFinalStatistic', setGameNum, setRandomGameNum, correct, mistake)
+    const oldStat = localStorage.getItem('OurGame');
+    localStorage.setItem('OurGame', !oldStat ? '1' : +oldStat + 1);
   }
 
   getQuestion(id) {

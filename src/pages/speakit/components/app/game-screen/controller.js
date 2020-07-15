@@ -7,7 +7,7 @@ import {
   EVENTS,
   DATA_PATH,
   CLASS_NAMES,
-} from '../data/helper';
+} from '../game-line/helper';
 
 import {
   initIntroButton,
@@ -18,7 +18,7 @@ import {
   togglePageState,
   hideSpinner,
   showSpinner,
-} from '../data/utils';
+} from '../game-line/utils';
 
 export default class Controller {
   constructor(model, view) {

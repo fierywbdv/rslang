@@ -29,7 +29,7 @@ const teamScreenComponent = () => {
           <div class="team-member">
             <img class="img-fluid rounded-circle" src="./assets/promo/img/photo_dmitriy.png" width="300" height="300">
             <h3>Дмитрий</h3>
-            <p>Разработал дизайн, разметку и логику главной страницы приложения.</p>
+            <p>Разработал дизайн, UI и логику меню регистрации и главной страницы приложения.</p>
           </div>
           <div class="team-member">
             <img class="img-fluid rounded-circle" src="./assets/promo/img/photo_kanstantin.jpg" width="300" height="300">

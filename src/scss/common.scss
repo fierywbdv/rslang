@@ -10,6 +10,32 @@
   font-family: Poppins-Lights;
   src: url('/assets/fonts/Poppins-Lights.ttf');
 }
+@font-face {
+  font-family: CodePro;
+  src: url('/assets/fonts/SourceCodePro-BlackItalic.ttf');
+}
+@font-face {
+  font-family: CodePro-Light;
+  src: url('/assets/fonts/SourceCodePro-Light.ttf');
+}
+@font-face {
+  font-family: 'Oxygen Mono';
+  src: url('/assets/fonts/OxygenMono-Regular.ttf');
+}
+@font-face {
+  font-family: 'Noto Mono';
+  src: url('/assets/fonts/notomono-regular.ttf');
+}
+
+@font-face {
+  font-family: 'Arsapia-Light';
+  src: url('/assets/fonts/Arsapia-Light.ttf');
+}
+@font-face {
+  font-family: 'Corporate Mono';
+  src: url('/assets/fonts/Corporate-Mono-Oblique.ttf');
+}
+
 
 .logo {
   text-decoration: underline;

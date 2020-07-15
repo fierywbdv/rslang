@@ -1,5 +1,5 @@
-import { CLASS_NAMES } from '../../../data/helper';
-import { createCard, createCardWithTranslation } from '../../../data/utils';
+import { CLASS_NAMES } from '../../../game-line/helper';
+import { createCard, createCardWithTranslation } from '../../../game-line/utils';
 
 export default class PageCard {
   constructor(container, cardData, translationData = null) {

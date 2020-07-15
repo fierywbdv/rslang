@@ -1,4 +1,4 @@
-import { CLASS_NAMES } from '../../../data/helper';
+import { CLASS_NAMES } from '../../../game-line/helper';
 import PageCard from '../pageCard/pageCard';
 
 export default class PageList {

@@ -127,9 +127,10 @@ function animationReset() {
       gameOver();
   }
 
-  for (let i=0; i < savannaHearts.length && !savannaHearts[i].classList.contains("savanna-grey-heart"); i++) {
+  for (let i=savannaHeartsCounter; i < savannaHearts.length && !savannaHearts[i].classList.contains("savanna-grey-heart"); i++) {
     savannaHearts[i].classList.add('savanna-grey-heart');
-    savannaHeartsCounter = savannaHeartsCounter + 1;
+    savannaHeartsCounter = i;
+    console.log(savannaHeartsCounter);
     break;
   }
 
@@ -195,7 +196,9 @@ if ((window.location.href.split('#'))[1] === 'savanna') {
     translations = shuffleArr(translations);
     savannaAnswers.forEach((element, i) => element.innerText = translations[i].wordTranslate);
 
-    window.onclick = animationReset;
+    for (let i=0; i < savannaAnswers.length; i++) {
+      savannaAnswers[i].addEventListener("click", animationReset, false);
+    }
     savannaFallingWord.addEventListener("transitionend", animationReset, false);
   }
 }

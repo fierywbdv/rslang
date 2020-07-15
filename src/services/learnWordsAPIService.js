@@ -245,10 +245,10 @@ class LearnWordsAPIService {
           optional: optionalObject,
         }),
       });
-      console.log(JSON.stringify({
-        difficulty: `${wordDifficulty}`,
-        optional: optionalObject,
-      }));
+      // console.log(JSON.stringify({
+      //   difficulty: `${wordDifficulty}`,
+      //   optional: optionalObject,
+      // }));
 
       if (response.status === 401) {
         throw new Error('Access token is missing or invalid!');

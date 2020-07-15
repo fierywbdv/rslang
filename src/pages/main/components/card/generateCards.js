@@ -43,21 +43,6 @@ const generateCards = async () => {
     });
   }
 
-  // if (localStorage.getItem('userSetExample') === 'false') {
-  //   document.querySelectorAll('.phrase').forEach((el) => {
-  //     const start = el.innerHTML.indexOf('<');
-  //     const end = el.innerHTML.indexOf('>');
-  //     const res = el.innerHTML.slice(start, end + 1);
-  //     el.innerHTML = res;
-  //   });
-  // }
-
-  // if (localStorage.getItem('userSetExplanation') === 'false') {
-  //   document.querySelectorAll('.translate-example').forEach((el) => {
-  //     el.style = 'visibility: hidden;';
-  //   });
-  // }
-
   document.querySelector('.cssload-thecube').remove();
   mainSwiper.removeAttribute('style');
   buttonNext.removeAttribute('style');

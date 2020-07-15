@@ -1,8 +1,6 @@
-// import Router from '../../../router/Router';
 import { learnWordsAPIService } from '../../../services/learnWordsAPIService';
 import getNotation from '../components/getNotation/getNotation';
 import { mass } from '../components/card/generateCards';
-import mainHelper from '../../../common/common.helper';
 
 const baseUrl = 'https://raw.githubusercontent.com/irinainina/rslang-data/master/';
 
@@ -236,7 +234,6 @@ const eyeSpeakerHandler = () => {
       speaker.addEventListener('click', () => {
         if (!speaker.classList.contains('eye-disabled')) {
           learnedCards += 1;
-          console.log('learnedCards ', learnedCards);
           mainDailyStatistic.learnedCards = learnedCards;
           localStorage.setItem('mainDailyStatistic', JSON.stringify(mainDailyStatistic));
 
@@ -278,7 +275,6 @@ const eyeSpeakerHandler = () => {
 
 const getUserWord = async (wordID) => {
   const newWord = await learnWordsAPIService.getUserWordById(localStorage.getItem('userId'), wordID, localStorage.getItem('token'));
-  console.log('newWord', newWord);
   if (newWord === undefined) {
     return 'false';
   }
@@ -316,14 +312,11 @@ export const updateUserWords = async (dataWord, isDeleted) => {
   mass.shift();
 
   const wordIsStudied = await getUserWord(dataWord.wordId);
-  console.log('wordIsStudied', wordIsStudied);
 
   if (wordIsStudied === 'true') {
-    console.log('пробую перезаписать');
     learnWordsAPIService.updateUserWord(...data);
   }
   if (wordIsStudied === 'false') {
-    console.log('пробую создать');
     learnWordsAPIService.createUserWord(...data);
   }
 };
@@ -343,13 +336,10 @@ export const updateMixUserWords = async (dataWord, isDeleted) => {
   mass.shift();
 
   const wordIsStudied = await getUserWord(dataWord.wordId);
-  console.log('wordIsStudied', wordIsStudied);
   if (wordIsStudied === 'true') {
-    console.log('пробую перезаписать');
     learnWordsAPIService.updateUserWord(...data);
   }
   if (wordIsStudied === 'false') {
-    console.log('пробую создать');
     learnWordsAPIService.createUserWord(...data);
   }
 };
@@ -575,11 +565,9 @@ const validateAnswer = (event, iterator, slidesCount) => {
 
       let wrongWords = Number(mainDailyStatistic.wrongWords) || 0;
       wrongWords += 1;
-      console.log('wrongWords', wrongWords);
       mainDailyStatistic.wrongWords = wrongWords;
       let currentGuessedRow = Number(mainDailyStatistic.currentGuessedRow) || 0;
       currentGuessedRow = 0;
-      console.log('currentGuessedRow', currentGuessedRow);
       mainDailyStatistic.currentGuessedRow = currentGuessedRow;
       localStorage.setItem('mainDailyStatistic', JSON.stringify(mainDailyStatistic));
 
@@ -719,14 +707,9 @@ export const setWordsForCards = async () => {
   const newWords = await getWords();
   const typeOfGame = localStorage.getItem('typeOfGame');
 
-  console.log('userWords ', userWords);
-
   const onlyNewWords = newWords.filter((newWord) => userWords.every((userWord) => userWord.wordId !== newWord.id));
-  console.log('onlyNewWords', onlyNewWords);
   const notDeletedWords = userWords.filter((word) => word.optional.isDeleted !== 'true');
   const onlyRepeatWords = notDeletedWords.map((word) => word.optional.word);
-
-  console.log('onlyRepeatWords', onlyRepeatWords);
 
   const mixWords = shuffleArr([...onlyRepeatWords, ...onlyNewWords]);
 
@@ -746,7 +729,6 @@ export const setWordsForCards = async () => {
       break;
   }
 
-  console.log('wordsForCards', wordsForCards);
   return wordsForCards;
 };
 

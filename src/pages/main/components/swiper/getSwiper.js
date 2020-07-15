@@ -1,4 +1,3 @@
-// import swiper from './swiper';
 import { getDOMElement } from '../../common/main.helper';
 
 const getSwiper = () => {

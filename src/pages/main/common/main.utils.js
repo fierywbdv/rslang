@@ -369,7 +369,7 @@ const validateAnswer = (event, iterator, slidesCount) => {
         wordTranslate: currentCard.getAttribute('data-translate'),
         wordImage: currentCard.getAttribute('data-img'),
       };
-      if (localStorage.getItem('typeOfGame' === 'new')) {
+      if (localStorage.getItem('typeOfGame') === 'new') {
         addToUserWords(dataWord, 'false');
       }
 

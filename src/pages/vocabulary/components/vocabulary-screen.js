@@ -3,7 +3,7 @@ import { learnWordsAPIService } from '../../../services/learnWordsAPIService';
 
 const vocabularyComponent = () => {
 
-  const template = `<div class = "main-div-vocabulary"><h2 class = "vocabulary-heading">Словарь</h2><table class="table vocabulary-table table-hover">
+  const template = `<div class = "main-div-vocabulary"><table class="table vocabulary-table table-hover">
   <thead class = "thead-dark">
     <tr>
       <th scope="col">Изучаемые слова</th>
@@ -39,20 +39,19 @@ export const addWordsToVocabulary = async () => {
     let tr = `<tr>`;
     
     if(learnedWords[i] !== undefined) {
-      tr += `<td style = "color: green">${learnedWords[i].optional.word.word}</td>`;
+      tr += `<td class = "learned-words" style = "color: green">${learnedWords[i].optional.word.word} | ${learnedWords[i].optional.word.transcription}<button style = "visibility: hidden" type="button" class="btn btn-outline-warning learned-button" wordId = "${learnedWords[i].optional.word.id}">Удалить из изученных</button></td>`;
     } else {
       tr += `<td></td>`
     }
   
     if(complexWords[i] !== undefined) {
-      debugger
-      tr += `<td style = "color: orange">${complexWords[i].optional.word.word}</td>`
+      tr += `<td class = "hard-words" style = "color: orange">${complexWords[i].optional.word.word} | ${complexWords[i].optional.word.transcription}<button style = "visibility: hidden" type="button" class="btn btn-outline-success easy-button" wordId = "${complexWords[i].optional.word.id}">Перевести в легкие</button></td>`;
     } else {
       tr += `<td></td>`
     }
     
     if(deletedWords[i] !== undefined) {
-      tr += `<td style = "color: red">${deletedWords[i].optional.word.word}</td>`
+      tr += `<td class = "deleted-words" style = "color: red">${deletedWords[i].optional.word.word} | ${deletedWords[i].optional.word.transcription}<button style = "visibility: hidden" type="button" class="btn btn-outline-danger delete-button" wordId = "${deletedWords[i].optional.word.id}">Восстановить</button></td>`
     } else {
       tr += `<td></td>`
     }
@@ -61,6 +60,68 @@ export const addWordsToVocabulary = async () => {
   }
   tableBody.innerHTML = fullTrs;
 
+  document.querySelectorAll('.deleted-words').forEach((el) => {
+    el.addEventListener('mouseover', () => {
+      el.querySelector('.delete-button').removeAttribute('style');
+    })
+  })
+
+  document.querySelectorAll('.deleted-words').forEach((el) => {
+    el.addEventListener('mouseout', () => {
+      el.querySelector('.delete-button').setAttribute('style', 'visibility: hidden');
+    })
+  })
+
+  document.querySelectorAll('.hard-words').forEach((el) => {
+    el.addEventListener('mouseover', () => {
+      el.querySelector('.easy-button').removeAttribute('style');
+    })
+  })
+
+  document.querySelectorAll('.hard-words').forEach((el) => {
+    el.addEventListener('mouseout', () => {
+      el.querySelector('.easy-button').setAttribute('style', 'visibility: hidden');
+    })
+  })
+
+  document.querySelectorAll('.learned-words').forEach((el) => {
+    el.addEventListener('mouseover', () => {
+      el.querySelector('.learned-button').removeAttribute('style');
+    })
+  })
+
+  document.querySelectorAll('.learned-words').forEach((el) => {
+    el.addEventListener('mouseout', () => {
+      el.querySelector('.learned-button').setAttribute('style', 'visibility: hidden');
+    })
+  })
+
+  document.querySelectorAll('.delete-button').forEach((el) => {
+    el.addEventListener('click', async () => {
+      const wordId = el.getAttribute('wordid');
+      const word = await learnWordsAPIService.getUserWordById(localStorage.getItem('userId'), `${wordId}`, localStorage.getItem('token'));
+      word.optional.isDeleted = 'false';
+      await learnWordsAPIService.updateUserWord(localStorage.getItem('userId'), `${wordId}`, localStorage.getItem('token'), 'false', word.optional);
+      addWordsToVocabulary();
+    })
+  })
+
+  document.querySelectorAll('.learned-button').forEach((el) => {
+    el.addEventListener('click', async () => {
+      const wordId = el.getAttribute('wordid');
+      await learnWordsAPIService.deleteUserWord(localStorage.getItem('userId'), `${wordId}`, localStorage.getItem('token'));
+      addWordsToVocabulary();
+    })
+  })
+
+  document.querySelectorAll('.easy-button').forEach((el) => {
+    el.addEventListener('click', async () => {
+      const wordId = el.getAttribute('wordid');
+      const word = await learnWordsAPIService.getUserWordById(localStorage.getItem('userId'), `${wordId}`, localStorage.getItem('token'));
+      await learnWordsAPIService.updateUserWord(localStorage.getItem('userId'), `${wordId}`, localStorage.getItem('token'), 'false', word.optional);
+      addWordsToVocabulary();
+    })
+  })
 }
 
 export default vocabularyComponent;

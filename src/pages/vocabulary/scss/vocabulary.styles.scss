@@ -5,11 +5,6 @@
   color: #007bff;
 }
 
-
-.vocabulary-table {
-  margin-top: 20px;
-}
-
 #root {
   width: 100%;
 }
@@ -17,3 +12,10 @@
 th, td {
   text-align: center;
 }
+
+.delete-button,
+.easy-button,
+.learned-button {
+  margin-left: 20px;
+}
+

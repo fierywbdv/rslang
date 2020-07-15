@@ -1,6 +1,6 @@
 export default function makePage() {
   const pageWiew = document.querySelector('#root');
-  pageWiew.innerHTML += `
+  pageWiew.innerHTML += ` 
     <div class="body-speakit overflow-hidden">
         <div class="speakit-wrapper hidden">
           <div class="speakit-wrapper-header">

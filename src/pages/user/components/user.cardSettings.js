@@ -20,7 +20,7 @@ const getCardSettings = () => {
   cardSettingsLabel.append(labelDiv);
 
   const cardBoxDiv = document.createElement('div');
-  cardBoxDiv.className = 'col-xl-7 col-lg-8';
+  cardBoxDiv.className = 'col-8 col-lg-7';
 
   const cardOneDiv = getCheckbox('user-set-translate', 'перевод слова', localStorage.getItem('userSetTranslate') === 'true', 'check-required');
   const cardTwoDiv = getCheckbox('user-set-explanation', 'предложение с объяснением значения слова', localStorage.getItem('userSetExplanation') === 'true', 'check-required');

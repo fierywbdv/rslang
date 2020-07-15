@@ -6,7 +6,7 @@ const getCardHeader = () => {
   headerDiv.className = 'card-header-area';
 
   const headerText = document.createElement('h5');
-  headerText.className = 'user-card-header col-10';
+  headerText.className = 'user-card-header col-12 col-sm-10';
   headerText.innerText = 'Настройка профиля';
 
   const headerIcon = document.createElement('i');

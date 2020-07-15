@@ -17,7 +17,7 @@ const notationActionHandler = () => {
     learningBTN.addEventListener('click', () => {
       overlay.parentNode.removeChild(overlay);
       notation.parentNode.removeChild(notation);
-      window.location.href = '#main';
+      window.location.reload();
     });
   }
 

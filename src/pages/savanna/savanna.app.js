@@ -36,14 +36,14 @@ function drawPage() {
           </div>
 
           <div class="savanna-top-word">
-            <span class="savanna-lvl__text savanna-current-word" id="savanna-falling-word">words</span>
+            <span class="savanna-lvl__text savanna-current-word" id="savanna-falling-word"></span>
           </div>
 
           <div class="savanna-word-wrapper">
-            <button class="savanna-word-button savanna-answer-1">первое</button>
-            <button class="savanna-word-button savanna-answer-2">второе</button>
-            <button class="savanna-word-button savanna-answer-3">третье</button>
-            <button class="savanna-word-button savanna-answer-4">четвертое</button>
+            <button class="savanna-word-button savanna-answer-1"></button>
+            <button class="savanna-word-button savanna-answer-2"></button>
+            <button class="savanna-word-button savanna-answer-3"></button>
+            <button class="savanna-word-button savanna-answer-4"></button>
           </div>
 
           <div class="savanna-spinner-diamond">
@@ -51,7 +51,7 @@ function drawPage() {
           </div>
         </div>
     
-        <div class="savanna-results hidden">
+        <div class="savanna-results hidden" id="savanna-results-page">
           <div class="savanna-results-correct">
               <span class="savanna-name savanna-right-answers">Правильно:
               </span>
@@ -90,7 +90,7 @@ const shuffleArr = (arr) => {
 function startNextAnimation() {
   const savannaFallingWord = document.getElementById('savanna-falling-word');
   const savannaAnswers = document.querySelectorAll('.savanna-word-button');
-
+  
   savannaFallingWord.innerText = `${words[savannaWordCounter].word}`;
   let translations = words.slice().filter((word) => word.id !== words[savannaWordCounter].id);
   translations = shuffleArr(translations);
@@ -110,7 +110,7 @@ function startNextAnimation() {
 function gameOver() {
   const savannaStartButton = document.querySelector('.savanna-start__button');
   const savannaSecondPage = document.querySelector('.savanna-second-page');
-  const savannaResults = document.querySelector('.savanna-result');
+  const savannaResults = document.getElementById("savanna-results-page");
 
   savannaStartButton.parentNode.classList.add('hidden');
   savannaSecondPage.classList.add('hidden');
@@ -125,8 +125,8 @@ function animationReset() {
   savannaFallingWord.classList.remove('savanna-animated');
   if (savannaHeartsCounter == 5 || savannaWordCounter == 10) {
       gameOver();
-      break;
-    }
+  }
+
   for (let i=0; i < savannaHearts.length && !savannaHearts[i].classList.contains("savanna-grey-heart"); i++) {
     savannaHearts[i].classList.add('savanna-grey-heart');
     savannaHeartsCounter = savannaHeartsCounter + 1;
@@ -195,6 +195,7 @@ if ((window.location.href.split('#'))[1] === 'savanna') {
     translations = shuffleArr(translations);
     savannaAnswers.forEach((element, i) => element.innerText = translations[i].wordTranslate);
 
+    window.onclick = animationReset;
     savannaFallingWord.addEventListener("transitionend", animationReset, false);
   }
 }

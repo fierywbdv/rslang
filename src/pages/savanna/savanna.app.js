@@ -92,19 +92,18 @@ function startNextAnimation() {
   const savannaAnswers = document.querySelectorAll('.savanna-word-button');
 
   savannaFallingWord.innerText = `${words[savannaWordCounter].word}`;
-    let translations = words.slice().filter((word) => word.id !== words[savannaWordCounter].id);
-    translations = shuffleArr(translations);
-    translations = translations.slice(0,3);
-    translations.push(words[savannaWordCounter]);
-    translations = shuffleArr(translations);
-    savannaAnswers.forEach((element, i) => element.innerText = translations[i].wordTranslate);
+  let translations = words.slice().filter((word) => word.id !== words[savannaWordCounter].id);
+  translations = shuffleArr(translations);
+  translations = translations.slice(0,3);
+  translations.push(words[savannaWordCounter]);
+  translations = shuffleArr(translations);
+  savannaAnswers.forEach((element, i) => element.innerText = translations[i].wordTranslate);
   
   setTimeout(() =>{
     savannaFallingWord.classList.add('savanna-animated');
   },300);
   
   savannaFallingWord.className.replace(" active", " hidden");
-
 
 }
 
@@ -116,6 +115,7 @@ function gameOver() {
   savannaStartButton.parentNode.classList.add('hidden');
   savannaSecondPage.classList.add('hidden');
   savannaResults.classList.remove('hidden');
+  console.log(savannaWordCounter);
 }
 
 function animationReset() {
@@ -123,12 +123,13 @@ function animationReset() {
   const savannaHearts = document.querySelectorAll('.savanna-one-heart');
 
   savannaFallingWord.classList.remove('savanna-animated');
+  if (savannaHeartsCounter == 5 || savannaWordCounter == 10) {
+      gameOver();
+      break;
+    }
   for (let i=0; i < savannaHearts.length && !savannaHearts[i].classList.contains("savanna-grey-heart"); i++) {
     savannaHearts[i].classList.add('savanna-grey-heart');
     savannaHeartsCounter = savannaHeartsCounter + 1;
-    if (savannaHeartsCounter == 5 || savannaWordCounter == 10) {
-      gameOver();
-    }
     break;
   }
 

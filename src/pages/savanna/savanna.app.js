@@ -212,11 +212,9 @@ async function addLernedWords() {
   const learnedWords = await learnWordsAPIService.getAllUserWords(localStorage.getItem('userId'), localStorage.getItem('token'));
   const filteredWords = learnedWords.filter((word) => !!word.optional);
   let shuffledWords = shuffleArr(filteredWords);
-  if (shuffledWords.length < 10) {
-    shuffledWords = getWordsForPageAndGroup();
-  }
-  const words = await shuffledWords.map((i) => i.optional.word);
-  console.log(words);
+ 
+  const words = (shuffledWords.length < 10) ? await getWordsForPageAndGroup() : shuffledWords.map((i) => i.optional.word);
+
   return words;
 }
 

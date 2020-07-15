@@ -575,6 +575,7 @@ const validateAnswer = (event, iterator, slidesCount) => {
 
       let wrongWords = Number(mainDailyStatistic.wrongWords) || 0;
       wrongWords += 1;
+      console.log('wrongWords', wrongWords);
       mainDailyStatistic.wrongWords = wrongWords;
       let currentGuessedRow = Number(mainDailyStatistic.currentGuessedRow) || 0;
       currentGuessedRow = 0;

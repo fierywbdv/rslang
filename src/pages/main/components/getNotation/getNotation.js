@@ -4,7 +4,7 @@ import notationActionHandler from './notationHandler';
 const getNotation = () => {
   const mainDailyStatistic = JSON.parse(localStorage.getItem('mainDailyStatistic')) || {};
   const {
-    learnedWords, guessedWords, maxGuessedRow, wrongWords,
+    learnedWords = 0, guessedWords = 0, maxGuessedRow = 0, wrongWords = 0,
   } = mainDailyStatistic;
 
   const overlay = getDOMElement('div', 'main-screen-overlay');
@@ -14,7 +14,7 @@ const getNotation = () => {
   const notationCol = getDOMElement('div', 'main-screen-popup col-11 col-sm-10 col-md-8 col-lg-7 col-xl-6');
   const notationHeader = getDOMElement('div', 'notation-header');
 
-  const notationHeaderLogo = getDOMElement('div', 'notation-header_logo col-md-3 col-sm-4 col-5');
+  const notationHeaderLogo = getDOMElement('div', 'notation-header_logo col-md-3 col-sm-4 col-2');
   const headerLogo = getDOMElement('img', '');
   headerLogo.src = './assets/img/logo_light.png';
   headerLogo.setAttribute('width', '30');
@@ -25,7 +25,7 @@ const getNotation = () => {
   const logoContent = '<span>RS</span><span class="colored">Lang</span>';
   logoText.innerHTML = logoContent;
 
-  const notationHeaderH4 = getDOMElement('h4', 'notation-header-h4 col-md-8 col-sm-6 col-8');
+  const notationHeaderH4 = getDOMElement('h4', 'notation-header-h4 col-md-8 col-sm-6 col-10');
   notationHeaderH4.textContent = 'Поздравляем!';
 
   notationHeaderLogo.append(headerLogo, logoText);
@@ -53,7 +53,7 @@ const getNotation = () => {
   const guessedCountDescPercent = getDOMElement('div', 'statistic-count-text col-7');
   guessedCountDescPercent.textContent = 'Слов верно отгадано, %:';
   const guessedCountPercentCount = getDOMElement('div', 'statistic-guessed-percent');
-  const guessedPercent = Math.floor((guessedWords / learnedWords) * 100);
+  const guessedPercent = Math.floor((guessedWords / learnedWords) * 100) || 0;
   guessedCountPercentCount.textContent = `${guessedPercent}%`;
   guessedCountPercent.append(guessedCountDescPercent, guessedCountPercentCount);
 

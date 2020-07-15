@@ -1,8 +1,6 @@
-// import Router from '../../../router/Router';
 import { learnWordsAPIService } from '../../../services/learnWordsAPIService';
 import getNotation from '../components/getNotation/getNotation';
 import { mass } from '../components/card/generateCards';
-import mainHelper from '../../../common/common.helper';
 
 const baseUrl = 'https://raw.githubusercontent.com/irinainina/rslang-data/master/';
 
@@ -21,45 +19,41 @@ export const setSidebarItem = () => {
 export const sidebarListener = () => {
   const sidebar = document.querySelector('.side-navbar');
   const toggleBTN = document.querySelector('.menu-btn');
-  // const url = window.location.hash;
+  const containerMain = document.querySelector('.main-swiper.swiper-container');
+  const containerUser = document.querySelector('.container-fluid.user-container');
+  const containerSelect = document.querySelector('.select-screen-card.container-fluid');
 
-  // sidebar.classList.add('side-navbar-main-user');
-
-  // window.addEventListener('hashchange', () => {
-  //   sidebar.classList.remove('side-navbar-main-user');
-  // });
-
-  // if (url === '#main' || url === '#user' || url === '' || url === 'team') {
-  //   sidebar.classList.add('side-navbar-main-user');
-  // } else {
-  //   sidebar.classList.remove('side-navbar-main-user');
-  // }
+  if (sidebar.classList.contains('shrinked')) {
+    if (containerMain) { containerMain.classList.add('container-shrinked'); }
+    if (containerUser) { containerUser.classList.add('container-shrinked'); }
+    if (containerSelect) { containerSelect.classList.add('container-shrinked'); }
+  }
 
   toggleBTN.addEventListener('click', () => {
-    const containerMain = document.querySelector('.main-swiper.swiper-container');
-    const containerUser = document.querySelector('.container-fluid.user-container');
-    const containerSelect = document.querySelector('.select-screen-card.container-fluid');
+    const containerMainDiv = document.querySelector('.main-swiper.swiper-container');
+    const containerUserDiv = document.querySelector('.container-fluid.user-container');
+    const containerSelectDiv = document.querySelector('.select-screen-card.container-fluid');
     const url = window.location.hash;
 
     if (url === '#main') {
       if (sidebar.classList.contains('shrinked')) {
-        containerMain.classList.add('container-shrinked');
+        containerMainDiv.classList.add('container-shrinked');
       } else {
-        containerMain.classList.remove('container-shrinked');
+        containerMainDiv.classList.remove('container-shrinked');
       }
     }
     if (url === '#user') {
       if (sidebar.classList.contains('shrinked')) {
-        containerUser.classList.add('container-shrinked');
+        containerUserDiv.classList.add('container-shrinked');
       } else {
-        containerUser.classList.remove('container-shrinked');
+        containerUserDiv.classList.remove('container-shrinked');
       }
     }
     if (url === '') {
       if (sidebar.classList.contains('shrinked')) {
-        containerSelect.classList.add('container-shrinked');
+        containerSelectDiv.classList.add('container-shrinked');
       } else {
-        containerSelect.classList.remove('container-shrinked');
+        containerSelectDiv.classList.remove('container-shrinked');
       }
     }
   });
@@ -212,6 +206,7 @@ const eyeSpeakerHandler = () => {
       const nextArrow = document.querySelector(`#main-arrow-${current}`);
       const explanationTranslate = document.querySelector(`#explanation-translate-${current}`);
       const exampleTranslate = document.querySelector(`#example-translate-${current}`);
+      const footerTranslate = document.querySelector(`#footer-translate-${current}`);
 
       let currentInput;
       let exampleInput;
@@ -239,7 +234,6 @@ const eyeSpeakerHandler = () => {
       speaker.addEventListener('click', () => {
         if (!speaker.classList.contains('eye-disabled')) {
           learnedCards += 1;
-          console.log('learnedCards ', learnedCards);
           mainDailyStatistic.learnedCards = learnedCards;
           localStorage.setItem('mainDailyStatistic', JSON.stringify(mainDailyStatistic));
 
@@ -253,6 +247,7 @@ const eyeSpeakerHandler = () => {
           if (exampleInput) { exampleInput.classList.add('show'); }
           if (explanationTranslate) { explanationTranslate.classList.add('show'); }
           if (exampleTranslate) { exampleTranslate.classList.add('show'); }
+          if (footerTranslate) { footerTranslate.classList.add('show'); }
           currentCard.setAttribute('guessed', 'true');
 
           if (!soundIcon.classList.contains('sound-off')) {
@@ -280,7 +275,6 @@ const eyeSpeakerHandler = () => {
 
 const getUserWord = async (wordID) => {
   const newWord = await learnWordsAPIService.getUserWordById(localStorage.getItem('userId'), wordID, localStorage.getItem('token'));
-  console.log('newWord', newWord);
   if (newWord === undefined) {
     return 'false';
   }
@@ -318,14 +312,11 @@ export const updateUserWords = async (dataWord, isDeleted) => {
   mass.shift();
 
   const wordIsStudied = await getUserWord(dataWord.wordId);
-  console.log('wordIsStudied', wordIsStudied);
 
   if (wordIsStudied === 'true') {
-    console.log('пробую перезаписать');
     learnWordsAPIService.updateUserWord(...data);
   }
   if (wordIsStudied === 'false') {
-    console.log('пробую создать');
     learnWordsAPIService.createUserWord(...data);
   }
 };
@@ -345,13 +336,10 @@ export const updateMixUserWords = async (dataWord, isDeleted) => {
   mass.shift();
 
   const wordIsStudied = await getUserWord(dataWord.wordId);
-  console.log('wordIsStudied', wordIsStudied);
   if (wordIsStudied === 'true') {
-    console.log('пробую перезаписать');
     learnWordsAPIService.updateUserWord(...data);
   }
   if (wordIsStudied === 'false') {
-    console.log('пробую создать');
     learnWordsAPIService.createUserWord(...data);
   }
 };
@@ -580,7 +568,6 @@ const validateAnswer = (event, iterator, slidesCount) => {
       mainDailyStatistic.wrongWords = wrongWords;
       let currentGuessedRow = Number(mainDailyStatistic.currentGuessedRow) || 0;
       currentGuessedRow = 0;
-      console.log('currentGuessedRow', currentGuessedRow);
       mainDailyStatistic.currentGuessedRow = currentGuessedRow;
       localStorage.setItem('mainDailyStatistic', JSON.stringify(mainDailyStatistic));
 
@@ -720,14 +707,9 @@ export const setWordsForCards = async () => {
   const newWords = await getWords();
   const typeOfGame = localStorage.getItem('typeOfGame');
 
-  console.log('userWords ', userWords);
-
   const onlyNewWords = newWords.filter((newWord) => userWords.every((userWord) => userWord.wordId !== newWord.id));
-  console.log('onlyNewWords', onlyNewWords);
   const notDeletedWords = userWords.filter((word) => word.optional.isDeleted !== 'true');
   const onlyRepeatWords = notDeletedWords.map((word) => word.optional.word);
-
-  console.log('onlyRepeatWords', onlyRepeatWords);
 
   const mixWords = shuffleArr([...onlyRepeatWords, ...onlyNewWords]);
 
@@ -747,7 +729,6 @@ export const setWordsForCards = async () => {
       break;
   }
 
-  console.log('wordsForCards', wordsForCards);
   return wordsForCards;
 };
 

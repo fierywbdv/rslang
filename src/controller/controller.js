@@ -10,7 +10,7 @@ import helper from '../pages/audiocall/common/audiocall.helper';
 import startScreenComponent from '../pages/audiocall/components/start-screen';
 import startScreenOurGameComponent from '../pages/ourgame/components/start-screen';
 import teamScreenComponent from '../pages/team/components/team-screen';
-import statisticComponent, { setStatisticToTable } from '../pages/statistic/components/statistic-screen'
+import statisticComponent, { setStatisticToTable } from '../pages/statistic/components/statistic-screen';
 import vocabularyComponent, { addWordsToVocabulary } from '../pages/vocabulary/components/vocabulary-screen';
 
 const controller = {
@@ -104,7 +104,7 @@ const controller = {
   actionVocabulary() {
     helper.render('#root', vocabularyComponent());
     addWordsToVocabulary();
-  }
+  },
 };
 
 export default controller;

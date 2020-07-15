@@ -15,7 +15,7 @@ const getUser = () => {
 const getUserCard = () => {
   const user = getUser();
   const userCard = document.createElement('div');
-  userCard.className = 'card settings-card col-xl-7 col-sm-8 col-lg-8 col-md-8 col-11';
+  userCard.className = 'card settings-card col-xl-7 col-sm-10 col-lg-8 col-md-9 col-11';
 
   const userCardHeader = getCardHeader();
   const userCardBody = getCardBody(user);

@@ -5,7 +5,7 @@ import getCardFooter from './getCardFooter';
 
 const getCard = (currentWord = {}, iterator) => {
   const {
-    audio, image, textMeaning, transcription, wordTranslate,
+    image, wordTranslate,
   } = currentWord;
   const card = getDOMElement('div', 'main-screen-card card unselectable');
   card.setAttribute('id', `main-card-${iterator}`);

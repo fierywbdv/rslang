@@ -16,8 +16,6 @@ class LearnWordsAPIService {
       position: 'right',
       gravity: 'top',
     }).showToast();
-
-    console.error(error);
   }
 
   sucsessRefreshToken(message) {
@@ -229,7 +227,7 @@ class LearnWordsAPIService {
         return this.getUserWordById(localStorage.getItem('userId'), wordId, localStorage.getItem('token'));
       }
       if (error.message === 'User word not found!') {
-        console.log('Слово не найдено');
+
       }
     }
   }
@@ -309,7 +307,6 @@ class LearnWordsAPIService {
           Accept: '*/*',
         },
       });
-      console.log(response);
 
       if (response.status === 401) {
         throw new Error('Access token is missing or invalid!');

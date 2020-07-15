@@ -36,7 +36,7 @@ const getCardHeader = (iterator, currentWordImageURL) => {
   const cardHeaderControls = getDOMElement('div', 'd-flex card-header-controls');
 
   const controlDiffIcon = getDOMElement('i', 'main-i far fa-life-ring main-difficult-icon');
-  controlDiffIcon.setAttribute('id', `main-difficult-${iterator}`);
+  controlDiffIcon.setAttribute('id', iterator);
 
   const controlDiffIconText = getDOMElement('span', 'main-difficult-text');
   controlDiffIconText.textContent = 'добавить в сложные слова';

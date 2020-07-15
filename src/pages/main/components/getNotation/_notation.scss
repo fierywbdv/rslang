@@ -44,13 +44,46 @@
         margin-left: 5px;
       }
     }
-    & .notation-text {
-      text-align: center;
-      padding: 20px 30px;
-      color: $main-text-color;
-      font-size: 1.2em;
-      line-height: 1.8em;
+    & .notation-body {
+      display: flex;
+      flex-direction: column;
+      padding-top: 10px;
+      & .statistic-text {
+        margin-top: 20px;
+        margin: 0 auto;
+        color: $main-text-color;
+        & .statistic-card-count {
+          display: flex;
+          align-items: center;
+          & .statistic-count-text{
+            padding-right: 20px;
+            text-align: end;
+
+          }
+          & .statistic-count-count, .statistic-word-count {
+            font-size: 1.3em;
+            color: $main-eng-text-color;
+          }
+          & .statistic-guessed-count, .statistic-guessed-percent {
+            font-size: 1.3em;
+            color: $main-green-color;
+          }
+          & .statistic-wrong-count, .statistic-wrong-percent {
+            font-size: 1.3em;
+            color: $main-pink-color;
+          }
+        }
+      }
+
+      & .notation-text {
+        text-align: center;
+        padding: 20px 30px;
+        color: $main-eng-text-color;
+        font-size: 1em;
+        line-height: 1em;
+      }
     }
+
     & .notation-footer {
       display: flex;
       width: 100%;

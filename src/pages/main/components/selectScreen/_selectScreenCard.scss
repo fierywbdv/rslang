@@ -2,11 +2,7 @@
 
 .select-screen-card.container-fluid {
   min-height: calc(100vh - 76px);
-  width: calc(100vw - 200px);
   justify-content: center;
-  &.container-shrinked {
-    width: calc(100vw - 100px);
-  }
   & .select-screen-card.row {
     width: 100%;
     justify-content: center;
@@ -96,11 +92,8 @@
 }
 
 @media (max-width: 575px ) {
-  .select-screen-card.container-fluid {
-    width: 100vw;
-    &.container-shrinked {
-      width: calc(100vw - 100px);
-    }
+  .select-screen-card.card-header {
+    justify-content: center;
   }
   & .select-header_logo {
     display: none;
@@ -109,9 +102,16 @@
     margin-left: 0 !important;
   }
 }
-@media (max-width: 450px ) {
+
+@media (max-width: 500px ) {
   .select-header-h4 {
     font-size: 1.2em;
+  }
+}
+
+@media (max-width: 450px ) {
+  .select-header-h4 {
+    font-size: 1em;
   }
 }
 @media (max-width: 400px ) {

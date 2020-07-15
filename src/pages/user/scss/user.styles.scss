@@ -5,11 +5,7 @@
 
 
 .container-fluid.user-container {
-  width: calc(100vw - 200px);
   font-size: .9em;
-  &.container-shrinked {
-    width: calc(100vw - 100px);
-  }
 }
 nav.side-navbar.side-navbar-main-user {
   height: auto;
@@ -206,12 +202,26 @@ input.form-check-input {
   #edit-user-name-form i,  #edit-user-mail-form i, #edit-user-pass-form i, .card-header-area i {
     padding-left: 0;
     margin-left: 0;
+    font-size: 1em;
+  }
+  #user-words-count i, #user-cards-count i, #user-level i {
+    padding-left: 0;
+    margin-left: 0;
+    font-size: 1em;
+  }
+  .form-group.card-settings i, .form-group.card-controls i  {
+    padding-left: 0;
+    margin-left: 0;
+    font-size: 1em;
   }
 }
 
 @media (max-width: 500px) {
   .user-container .card-header-area i {
     display: none;
+  }
+  .user-container .card-header-area {
+    text-align: center;
   }
   .user-container .card.card-settings .card-body label {
     font-size: .9em !important;
@@ -221,5 +231,14 @@ input.form-check-input {
   }
   .user-card-header {
     padding-right: 0;
+  }
+}
+
+@media (max-width: 576px) {
+  .card-body .form-group.card-settings {
+    flex-direction: column;
+  }
+  .card-body .form-group.card-controls {
+    flex-direction: column;
   }
 }

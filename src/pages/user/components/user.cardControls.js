@@ -14,7 +14,7 @@ const getCardControls = () => {
 
   cardControlsLabel.append(labelDiv);
 
-  const cardBoxDiv = getDOMElement('div', 'control-card-checkboxes col-8 col-lg-7');
+  const cardBoxDiv = getDOMElement('div', 'control-card-checkboxes col-12 col-sm-7');
 
   const cardOneDiv = getCheckbox('user-set-difficult', 'добавлять в "сложные слова"', localStorage.getItem('userAddDifficult') === 'true');
   const cardTwoDiv = getCheckbox('user-set-deleted', 'добавлять в "удаленные слова"', localStorage.getItem('userAddDeleted') === 'true');

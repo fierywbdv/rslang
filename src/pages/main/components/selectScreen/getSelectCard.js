@@ -6,7 +6,7 @@ const getSelectCard = () => {
   const userName = localStorage.getItem('userName');
   const container = getDOMElement('div', 'select-screen-card  d-flex container-fluid');
   const row = getDOMElement('div', 'select-screen-card row');
-  const col = getDOMElement('div', 'col-12 col-xl-6 col-lg-9 col-sm-12 col-md-12');
+  const col = getDOMElement('div', 'col-12 col-xl-7 col-lg-9 col-sm-12 col-md-12');
   const card = getDOMElement('div', 'select-screen-card card');
   const cardHeader = getDOMElement('div', 'select-screen-card card-header d-flex');
   const cardBody = getDOMElement('div', 'select-screen-card card-body');

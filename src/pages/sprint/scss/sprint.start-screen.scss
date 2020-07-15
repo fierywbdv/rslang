@@ -16,9 +16,11 @@
 }
 
 .sprint-body {
-  nav.side-navbar {
-    height: auto;
-    min-height: 100vh;
+  .d-flex {
+    nav.side-navbar {
+      height: auto;
+      min-height: 100vh;
+    }
   }
 }
 

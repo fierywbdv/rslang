@@ -24,6 +24,7 @@
       margin-right: 5px;
     }
     & .card-header-controls {
+      align-items: center;
       & i {
         font-size: 1.5em;
         margin-left: 10px;
@@ -47,6 +48,14 @@
             transform: translateX(20px);
             transition: all .5s ease;
           }
+          &.difficult-disabled {
+            color: rgba(0, 0, 0, 0.1);
+            cursor: auto;
+            &:hover>.main-difficult-text {
+              opacity: 0;
+              visibility: hidden;
+            }
+          }
         }
         &.main-delete-icon {
           &:hover>.main-delete-text {
@@ -54,6 +63,14 @@
             visibility: visible;
             transform: translateX(20px);
             transition: all .5s ease;
+          }
+          &.delete-disabled {
+            color: rgba(0, 0, 0, 0.1);
+            cursor: auto;
+            &:hover>.main-delete-text {
+              opacity: 0;
+              visibility: hidden;
+            }
           }
         }
       }
@@ -201,6 +218,28 @@ i.main-i .far .fa-life-ring .main-difficult-icon:hover  {
     opacity: 1;
     transition: .5s;
     text-decoration: line-through;
+  }
+}
+.to-write.difficulty {
+  &::-webkit-input-placeholder {
+    color: #ff7b00;
+    opacity: 1;
+    transition: .5s;
+  }
+  &::-moz-placeholder {
+    color: #ff7b00;
+    opacity: 1;
+    transition: .5s;
+  }
+  &:-moz-placeholder {
+    color: #ff6600;
+    opacity: 1;
+    transition: .5s;
+  }
+  &:-ms-input-placeholder {
+    color: #ff6600;
+    opacity: 1;
+    transition: .5s;
   }
 }
 .to-write.show {
@@ -510,4 +549,66 @@ content: "";
 		-moz-transform: perspective(245px) rotateY(180deg);
 		opacity: 0;
 	}
+}
+
+@media (max-width: 1000px ) {
+  .main-screen-card .card-header-area {
+    flex-direction: column;
+    & .card-header-controls {
+      justify-content: flex-end;
+      border-top: 1px solid rgba(0, 0, 0, 0.1);
+      padding-top: 5px;
+    }
+  }
+  .card-body .phrase-explanation, .card-body .phrase-example {
+    font-size: 1.3em;
+  }
+
+}
+
+@media (max-width: 800px ) {
+  .main-screen-card .card-footer-area {
+    flex-direction: column !important;
+    & .main-icon-area {
+      justify-content: flex-end;
+      & i {
+        & .main-speaker-text, .main-answer-text, .main-arrow-text {
+          right: 140px;
+          bottom: 0;
+        }
+        &.main-speaker {
+          &:hover>.main-speaker-text {
+            transform: translateX(20px);
+          }
+        }
+        &.main-eye {
+          &:hover>.main-answer-text {
+            transform: translateX(20px);
+          }
+        }
+        &.main-arrow {
+          &:hover>.main-arrow-text {
+            transform: translateX(20px);
+          }
+        }
+      }
+
+    }
+  }
+}
+
+@media (max-width: 600px ) {
+  .card-body .phrase-explanation, .card-body .phrase-example {
+    font-size: 1.1em;
+  }
+  .card-body .explanation-translate, .card-body .example-translate {
+    font-size: .9em;
+  }
+  .main-screen-card .card-footer-translate {
+    font-size: .9em;
+  }
+  .main-difficult-text, .main-delete-text {
+    padding: 0;
+  }
+
 }

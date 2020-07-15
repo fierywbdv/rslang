@@ -2,6 +2,11 @@ import { getDOMElement } from '../../common/main.helper';
 import notationActionHandler from './notationHandler';
 
 const getNotation = () => {
+  const mainDailyStatistic = JSON.parse(localStorage.getItem('mainDailyStatistic')) || {};
+  const {
+    learnedWords, guessedWords, maxGuessedRow, wrongWords,
+  } = mainDailyStatistic;
+
   const overlay = getDOMElement('div', 'main-screen-overlay');
   overlay.setAttribute('id', 'notation-overlay');
   const notationRow = getDOMElement('div', 'notation-row justify-content-center');
@@ -25,6 +30,48 @@ const getNotation = () => {
 
   notationHeaderLogo.append(headerLogo, logoText);
   notationHeader.append(notationHeaderLogo, notationHeaderH4);
+
+  const cardBody = getDOMElement('div', 'notation-body');
+
+  const statisticText = getDOMElement('div', 'statistic-text col-11 justify-content-center');
+
+  const wordCount = getDOMElement('div', 'statistic-card-count');
+  const wordCountDesc = getDOMElement('div', 'statistic-count-text col-7');
+  wordCountDesc.textContent = 'Слов изучено:';
+  const wordCountCount = getDOMElement('div', 'statistic-word-count');
+  wordCountCount.textContent = learnedWords;
+  wordCount.append(wordCountDesc, wordCountCount);
+
+  const guessedCount = getDOMElement('div', 'statistic-card-count');
+  const guessedCountDesc = getDOMElement('div', 'statistic-count-text col-7');
+  guessedCountDesc.textContent = 'Слов верно отгадано:';
+  const guessedCountCount = getDOMElement('div', 'statistic-guessed-count');
+  guessedCountCount.textContent = guessedWords;
+  guessedCount.append(guessedCountDesc, guessedCountCount);
+
+  const guessedCountPercent = getDOMElement('div', 'statistic-card-count');
+  const guessedCountDescPercent = getDOMElement('div', 'statistic-count-text col-7');
+  guessedCountDescPercent.textContent = 'Слов верно отгадано, %:';
+  const guessedCountPercentCount = getDOMElement('div', 'statistic-guessed-percent');
+  const guessedPercent = Math.floor((guessedWords / learnedWords) * 100);
+  guessedCountPercentCount.textContent = `${guessedPercent}%`;
+  guessedCountPercent.append(guessedCountDescPercent, guessedCountPercentCount);
+
+  const wrongCount = getDOMElement('div', 'statistic-card-count');
+  const wrongCountDesc = getDOMElement('div', 'statistic-count-text col-7');
+  wrongCountDesc.textContent = 'Слов не верно отгадано:';
+  const wrongCountCount = getDOMElement('div', 'statistic-wrong-count');
+  wrongCountCount.textContent = wrongWords;
+  wrongCount.append(wrongCountDesc, wrongCountCount);
+
+  const longGuessedRow = getDOMElement('div', 'statistic-card-count');
+  const maxGuessedRowDesc = getDOMElement('div', 'statistic-count-text col-7');
+  maxGuessedRowDesc.textContent = 'Самая длинная серия ответов:';
+  const maxGuessedRowCount = getDOMElement('div', 'statistic-word-count');
+  maxGuessedRowCount.textContent = maxGuessedRow;
+  longGuessedRow.append(maxGuessedRowDesc, maxGuessedRowCount);
+
+  statisticText.append(wordCount, guessedCount, guessedCountPercent, wrongCount, longGuessedRow);
 
   const notationText = getDOMElement('div', 'notation-text');
   notationText.textContent = `Вы выполнили свою дневную норму по количеству карточек!
@@ -62,8 +109,9 @@ const getNotation = () => {
 
   notationBTNContinue.append(continueBTNIcon);
 
+  cardBody.append(statisticText, notationText);
   notationFooter.append(notationBTNSettings, notationBTNSelect, notationBTNContinue);
-  notationCol.append(notationHeader, notationText, notationFooter);
+  notationCol.append(notationHeader, cardBody, notationFooter);
 
   notationRow.append(notationCol);
   const root = document.querySelector('.header');

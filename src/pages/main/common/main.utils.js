@@ -21,7 +21,19 @@ export const setSidebarItem = () => {
 export const sidebarListener = () => {
   const sidebar = document.querySelector('.side-navbar');
   const toggleBTN = document.querySelector('.menu-btn');
-  sidebar.classList.add('side-navbar-main-user');
+  // const url = window.location.hash;
+
+  // sidebar.classList.add('side-navbar-main-user');
+
+  // window.addEventListener('hashchange', () => {
+  //   sidebar.classList.remove('side-navbar-main-user');
+  // });
+
+  // if (url === '#main' || url === '#user' || url === '' || url === 'team') {
+  //   sidebar.classList.add('side-navbar-main-user');
+  // } else {
+  //   sidebar.classList.remove('side-navbar-main-user');
+  // }
 
   toggleBTN.addEventListener('click', () => {
     const containerMain = document.querySelector('.main-swiper.swiper-container');
@@ -70,10 +82,6 @@ export const getPhraseMeaning = (wordObj, needInput = 'true') => {
   } = wordObj;
   const wordSize = word.length;
 
-  // let inputLength = (word.match(/[lij]/g)) ? wordSize - 1 : wordSize;
-  // inputLength = (word.match(/[ft]/g)) ? inputLength - 1 : inputLength;
-  // inputLength = (word.match(/[mw]/g)) ? inputLength + 1 : inputLength;
-
   const input = `<input id = "to-write-${iterator}" class="to-write" size = ${wordSize}
    placeholder = ${word} spellcheck = "false" data = ${id} data-audio-example = ${audioExample}
    data-audio = ${audio} data-audio-explanation = ${audioMeaning}>`;
@@ -99,9 +107,6 @@ export const getPhraseExample = (wordObj, needInput = 'false') => {
   } = wordObj;
   const wordSize = word.length;
 
-  // let inputLength = (word.match(/[lijft]/g)) ? wordSize - 1 : wordSize;
-  // inputLength = (word.match(/[mw]/g)) ? inputLength + 1 : inputLength;
-
   const input = `<input id = "to-write-example-${iterator}" data = ${id} class="to-write" size = ${wordSize}
    placeholder = ${word} spellcheck = "false" data-audio = ${audio} data-audio-explanation = ${audioExample}>`;
 
@@ -126,9 +131,6 @@ export const getWordInput = (wordObj) => {
     iterator, word, id, audioExample, audio, audioMeaning,
   } = wordObj;
   const wordSize = word.length;
-
-  // let inputLength = (word.match(/[lijft]/g)) ? wordSize - 1 : wordSize;
-  // inputLength = (word.match(/[mw]/g)) ? inputLength + 1 : inputLength;
 
   const input = `<input id = "to-write-word-${iterator}" class="to-write" size = ${wordSize}
    placeholder = ${word} spellcheck = "false" data = ${id} data-audio-example = ${audioExample}
@@ -231,8 +233,16 @@ const eyeSpeakerHandler = () => {
 
       const urlAudio = speaker.getAttribute('data-audio');
 
+      const mainDailyStatistic = JSON.parse(localStorage.getItem('mainDailyStatistic')) || {};
+      let learnedCards = Number(mainDailyStatistic.learnedWords) || 0;
+
       speaker.addEventListener('click', () => {
         if (!speaker.classList.contains('eye-disabled')) {
+          learnedCards += 1;
+          console.log('learnedCards ', learnedCards);
+          mainDailyStatistic.learnedCards = learnedCards;
+          localStorage.setItem('mainDailyStatistic', JSON.stringify(mainDailyStatistic));
+
           speaker.classList.add('eye-disabled');
           nextArrow.classList.add('main-arrow-disabled');
           const currentID = Number(speaker.getAttribute('data_id'));
@@ -268,6 +278,15 @@ const eyeSpeakerHandler = () => {
   }
 };
 
+const getUserWord = async (wordID) => {
+  const newWord = await learnWordsAPIService.getUserWordById(localStorage.getItem('userId'), wordID, localStorage.getItem('token'));
+  console.log('newWord', newWord);
+  if (newWord === undefined) {
+    return 'false';
+  }
+  return 'true';
+};
+
 export const addToUserWords = async (dataWord, isDeleted) => {
   const data = [
     localStorage.getItem('userId'),
@@ -297,7 +316,18 @@ export const updateUserWords = async (dataWord, isDeleted) => {
   ];
 
   mass.shift();
-  learnWordsAPIService.updateUserWord(...data);
+
+  const wordIsStudied = await getUserWord(dataWord.wordId);
+  console.log('wordIsStudied', wordIsStudied);
+
+  if (wordIsStudied === 'true') {
+    console.log('пробую перезаписать');
+    learnWordsAPIService.updateUserWord(...data);
+  }
+  if (wordIsStudied === 'false') {
+    console.log('пробую создать');
+    learnWordsAPIService.createUserWord(...data);
+  }
 };
 
 export const updateMixUserWords = async (dataWord, isDeleted) => {
@@ -314,7 +344,16 @@ export const updateMixUserWords = async (dataWord, isDeleted) => {
 
   mass.shift();
 
-  learnWordsAPIService.createUserWord(...data);
+  const wordIsStudied = await getUserWord(dataWord.wordId);
+  console.log('wordIsStudied', wordIsStudied);
+  if (wordIsStudied === 'true') {
+    console.log('пробую перезаписать');
+    learnWordsAPIService.updateUserWord(...data);
+  }
+  if (wordIsStudied === 'false') {
+    console.log('пробую создать');
+    learnWordsAPIService.createUserWord(...data);
+  }
 };
 
 const validateAnswer = (event, iterator, slidesCount) => {
@@ -348,12 +387,33 @@ const validateAnswer = (event, iterator, slidesCount) => {
   currentInput.focus();
 
   if (event.keyCode === 13 || event.type === 'enterClick') {
+    const mainDailyStatistic = JSON.parse(localStorage.getItem('mainDailyStatistic')) || {};
+    let learnedWords = Number(mainDailyStatistic.learnedWords) || 0;
+    learnedWords += 1;
+    mainDailyStatistic.learnedWords = learnedWords;
+    let learnedCards = Number(mainDailyStatistic.learnedWords) || 0;
+    learnedCards += 1;
+    mainDailyStatistic.learnedCards = learnedCards;
+
+    localStorage.setItem('mainDailyStatistic', JSON.stringify(mainDailyStatistic));
+
     if (currentInput.value === currentInput.placeholder) {
-      speaker.classList.add('eye-disabled');
+      if (speaker) { speaker.classList.add('eye-disabled'); }
       nextArrow.classList.add('main-arrow-disabled');
       if (explanationTranslate) { explanationTranslate.classList.add('show'); }
       if (exampleTranslate) { exampleTranslate.classList.add('show'); }
       if (wordTranslate) { wordTranslate.classList.add('show'); }
+
+      let guessedWords = Number(mainDailyStatistic.guessedWords) || 0;
+      guessedWords += 1;
+      mainDailyStatistic.guessedWords = guessedWords;
+      let currentGuessedRow = Number(mainDailyStatistic.currentGuessedRow) || 0;
+      currentGuessedRow += 1;
+      mainDailyStatistic.currentGuessedRow = currentGuessedRow;
+      let maxGuessedRow = Number(mainDailyStatistic.maxGuessedRow) || 0;
+      maxGuessedRow = currentGuessedRow > maxGuessedRow ? currentGuessedRow : maxGuessedRow;
+      mainDailyStatistic.maxGuessedRow = maxGuessedRow;
+      localStorage.setItem('mainDailyStatistic', JSON.stringify(mainDailyStatistic));
 
       currentInput.style.color = '#34c716';
       currentInput.blur();
@@ -369,8 +429,15 @@ const validateAnswer = (event, iterator, slidesCount) => {
         wordTranslate: currentCard.getAttribute('data-translate'),
         wordImage: currentCard.getAttribute('data-img'),
       };
-      if (localStorage.getItem('typeOfGame' === 'new')) {
+
+      if (localStorage.getItem('typeOfGame') === 'new') {
         addToUserWords(dataWord, 'false');
+      }
+      if (localStorage.getItem('typeOfGame') === 'repeat') {
+        updateUserWords(dataWord, 'false');
+      }
+      if (localStorage.getItem('typeOfGame') === 'mix') {
+        updateMixUserWords(dataWord, 'false');
       }
 
       const urlAudio = currentInput.getAttribute('data-audio');
@@ -427,8 +494,10 @@ const validateAnswer = (event, iterator, slidesCount) => {
                   } else {
                     nextBTN.click();
                     changeProgressBar(iterator, slidesCount);
-                    speaker.classList.add('eye-disabled');
-                    speaker.classList.add('end');
+                    if (speaker) {
+                      speaker.classList.add('eye-disabled');
+                      speaker.classList.add('end');
+                    }
                     nextArrow.classList.add('main-arrow-disabled');
                     nextArrow.classList.add('end');
                   }
@@ -441,8 +510,10 @@ const validateAnswer = (event, iterator, slidesCount) => {
                 } else {
                   nextBTN.click();
                   changeProgressBar(iterator, slidesCount);
-                  speaker.classList.add('eye-disabled');
-                  speaker.classList.add('end');
+                  if (speaker) {
+                    speaker.classList.add('eye-disabled');
+                    speaker.classList.add('end');
+                  }
                   nextArrow.classList.add('main-arrow-disabled');
                   nextArrow.classList.add('end');
                 }
@@ -457,8 +528,10 @@ const validateAnswer = (event, iterator, slidesCount) => {
               } else {
                 nextBTN.click();
                 changeProgressBar(iterator, slidesCount);
-                speaker.classList.add('eye-disabled');
-                speaker.classList.add('end');
+                if (speaker) {
+                  speaker.classList.add('eye-disabled');
+                  speaker.classList.add('end');
+                }
                 nextArrow.classList.add('main-arrow-disabled');
                 nextArrow.classList.add('end');
               }
@@ -471,8 +544,10 @@ const validateAnswer = (event, iterator, slidesCount) => {
             } else {
               nextBTN.click();
               changeProgressBar(iterator, slidesCount);
-              speaker.classList.add('eye-disabled');
-              speaker.classList.add('end');
+              if (speaker) {
+                speaker.classList.add('eye-disabled');
+                speaker.classList.add('end');
+              }
               nextArrow.classList.add('main-arrow-disabled');
               nextArrow.classList.add('end');
             }
@@ -487,8 +562,10 @@ const validateAnswer = (event, iterator, slidesCount) => {
         setTimeout(() => {
           nextBTN.click();
           changeProgressBar(iterator, slidesCount);
-          speaker.classList.add('eye-disabled');
-          speaker.classList.add('end');
+          if (speaker) {
+            speaker.classList.add('eye-disabled');
+            speaker.classList.add('end');
+          }
           nextArrow.classList.add('main-arrow-disabled');
           nextArrow.classList.add('end');
         }, 1500);
@@ -497,7 +574,15 @@ const validateAnswer = (event, iterator, slidesCount) => {
       const soundIcon = document.querySelector(`#main-speaker-${iterator}`);
       localStorage.setItem('wordDifficulty', 'true');
       currentInput.classList.add('incorrect');
-      // mainHelper.checkSpell(currentInput.placeholder, currentInput.value, currentInput);
+
+      let wrongWords = Number(mainDailyStatistic.wrongWords) || 0;
+      wrongWords += 1;
+      mainDailyStatistic.wrongWords = wrongWords;
+      let currentGuessedRow = Number(mainDailyStatistic.currentGuessedRow) || 0;
+      currentGuessedRow = 0;
+      console.log('currentGuessedRow', currentGuessedRow);
+      mainDailyStatistic.currentGuessedRow = currentGuessedRow;
+      localStorage.setItem('mainDailyStatistic', JSON.stringify(mainDailyStatistic));
 
       if (!soundIcon.classList.contains('sound-off')) {
         new Audio('../../../assets/audio/error.mp3').play();
@@ -638,7 +723,7 @@ export const setWordsForCards = async () => {
   console.log('userWords ', userWords);
 
   const onlyNewWords = newWords.filter((newWord) => userWords.every((userWord) => userWord.wordId !== newWord.id));
-
+  console.log('onlyNewWords', onlyNewWords);
   const notDeletedWords = userWords.filter((word) => word.optional.isDeleted !== 'true');
   const onlyRepeatWords = notDeletedWords.map((word) => word.optional.word);
 

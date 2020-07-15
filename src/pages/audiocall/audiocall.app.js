@@ -178,6 +178,16 @@ class Audiocall {
     store.dispatch(setStatistic(this.statisticInfo));
   }
 
+  setFinalStatistic() {
+    const state = store.getState();
+    const { gameNumber, randomGameNumber, stat, kind } = state.audioCallReducer;
+    const { correct, mistake } = stat;
+    const number = kind === 'withRandomWords' ? randomGameNumber : gameNumber;
+    const { cor, miss } = helper.filterStatistic(correct, mistake, number - 1, kind);
+    const oldStat = localStorage.getItem('AudioCall');
+    localStorage.setItem('AudioCall', !oldStat ? '1' : +oldStat + 1);
+  }
+
   checkAnswer(id, questionNum) {
     const currentQuestion = document.querySelector('.result-word').getAttribute('data-word-id');
     if (id === currentQuestion) {
@@ -336,6 +346,7 @@ class Audiocall {
         });
         this.isLast = false;
         store.dispatch(setQuestionNumberAudioCall(0));
+        this.setFinalStatistic()
       } else {
         this.playGameQuestion();
       }

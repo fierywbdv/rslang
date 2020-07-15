@@ -44,42 +44,14 @@
     margin: 0;
 }
 
-.savanna-main-menu-button {
-    position: absolute;
-    top: 70%;
-    left: 40%;
-    transform: translate(-50%, 0);
-    color: #ffffff;
-    font-size: 1.3rem;
-    width: 15%;
-    height: 10%;
-    overflow: hidden;
-    background-color: rgba(168, 218, 224, 0.92);
-    border-radius: 5px;
-    text-align: center;
-    align-items: center;
-    &:focus,
-    &:hover {
-    color: #30c9d4;
-    letter-spacing: 1.1px;
-    box-shadow:
-        0 0 2px rgba(202,228,225,0.92),
-        0 0 10px rgba(202,228,225,0.34),
-        0 0 4px rgba(30,132,242,0.52),
-        0 0 7px rgba(30,132,242,0.92),
-        0 0 11px rgba(30,132,242,0.78),
-        0 0 16px rgba(30,132,242,0.92);
-    }
-}
-
 .savanna-new-game-button {
     position: absolute;
     top: 70%;
-    left: 60%;
+    left: 52%;
     transform: translate(-50%, 0);
     color: #ffffff;
     font-size: 1.3rem;
-    width: 15%;
+    width: 20%;
     height: 10%;
     overflow: hidden;
     background-color: rgba(168, 218, 224, 0.92);
@@ -302,7 +274,7 @@
 
 .savanna-animated {
     top: 85%;
-    transition: top 9s linear 1s;
+    transition: top 7s linear 1s;
 }
 
 .savanna-top-word {

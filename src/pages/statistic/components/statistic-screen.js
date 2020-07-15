@@ -122,9 +122,9 @@ export const setStatisticToTable = async () => {
 
   newGame.innerHTML = localStorage.getItem('OurGame') === null ? 0 : localStorage.getItem('OurGame');
   audiocall.innerHTML = localStorage.getItem('AudioCall') === null ? 0 : localStorage.getItem('AudioCall');
-  sprint.innerHTML = JSON.parse(localStorage.getItem('statistics')).length || 0;
-  speakit.innerHTML = JSON.parse(localStorage.getItem('result')).length || 0;
-  savanna.innerHTML = 0;
+  sprint.innerHTML = JSON.parse(localStorage.getItem('statistics')) === null ? 0 : JSON.parse(localStorage.getItem('statistics')).length;
+  speakit.innerHTML = JSON.parse(localStorage.getItem('result')) === null ? 0 : JSON.parse(localStorage.getItem('result')).length;
+  savanna.innerHTML = '0';
 }
 
 export default statisticComponent;

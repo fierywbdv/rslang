@@ -215,7 +215,7 @@ async function addLernedWords() {
   if (shuffledWords.length < 10) {
     shuffledWords = getWordsForPageAndGroup();
   }
-  const words = shuffledWords.map((i) => i.optional.word);
+  const words = await shuffledWords.map((i) => i.optional.word);
   console.log(words);
   return words;
 }

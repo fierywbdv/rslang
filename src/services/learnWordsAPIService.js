@@ -510,7 +510,7 @@ class LearnWordsAPIService {
         localStorage.setItem('userSetTranscription', null);
         localStorage.setItem('userSetTranslate', null);
         localStorage.setItem('refreshToken', null);
-
+        localStorage.setItem('mainDailyStatistic', null);
         store.dispatch(disAutorization());
 
         document.location.href = '/';

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="./assets/favicon/favicon.png" type="image/x-icon">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+    integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+  <script src="https://kit.fontawesome.com/51cea3a5c1.js" crossorigin="anonymous"></script>
+  <title>RS Lang</title>
+</head>
+
+<body>
+  <header class="header">
+    <nav class="navbar">
+      <div class="container-fluid">
+        <div class="navbar-holder d-flex align-items-center justify-content-between">
+          <div class="navbar-header">
+            <a id="toggle-btn" href="#" class="menu-btn">
+              <span></span><span></span><span></span>
+            </a>
+            <h1>
+              <a href="#main" class="navbar-brand d-inline-block">
+                <img src="./assets/img/logo_light.png" width="30" height="30" alt="logo" loading="lazy">
+                <div class="brand-text d-inline-block">
+                  <span>RS</span><span class="colored">Lang</span>
+                </div>
+              </a>
+            </h1>
+          </div>
+
+          <ul class="nav-menu list-unstyled d-flex flex-md-row align-items-md-center">
+            <li class="greeting-for-user"></li>
+            <li class="nav-item">
+              <a href="#login.index.html" class="nav-link logout">
+                <span class="d-none d-sm-inline" data-i18n="logout">Выйти</span><i id="main-i"
+                  class="fa fa-sign-out-alt"></i>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
+  <div class="d-flex align-items-stretch">
+    <nav class="side-navbar shrinked">
+      <ul class="list-unstyled">
+        <li><a href="/main.index.html" data-i18n="main"><i class="fas fa-graduation-cap"></i>Главная </a></li>
+        <li>
+          <a href="#gameDropdown" aria-expanded="false" data-toggle="collapse" aria-controls="collapseOne"
+            data-i18n="games">
+            <i class="fas fa-gamepad"></i>Игры</a>
+          <ul id="gameDropdown" class="collapse list-unstyled">
+            <li><a href="#speakit" target="_blank">SpeakIt</a></li>
+            <li><a href="#savanna" target="_blank">Savanna</a></li>
+            <li><a href="#audiocall" target="_blank">AudioCall</a></li>
+            <li><a href="#sprint" target="_blank">Sprint</a></li>
+            <li><a href="#ourgame" target="_blank">NewGame</a></li>
+          </ul>
+        </li>
+        <li><a href="#statistic" data-i18n="statistics"> <i class="fa fa-bar-chart"></i>Статистика </a></li>
+        <li><a href="#vocabulary" data-i18n="vocabulary"> <i class="fa fa-book"></i>Словарь </a></li>
+        <li><a href="#user" data-i18n="user"> <i class="far fa-user-circle"></i>Пользователь</a></li>
+        <hr>
+        <li><a href="#team" data-i18n="team"><i class="fas fa-users"></i>Команда</a></li>
+      </ul>
+    </nav>
+
+    <div id="root"></div>
+  </div>
+
+  <script src="./js/app.bundle.js"></script>
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+    integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+    crossorigin="anonymous"></script>
+</body>
+
+</html>

@@ -1,0 +1,123 @@
+.body-speakit {
+  background-image: url('../assets/img/main_bg.jpg');
+  background-size: cover;
+  width: calc(100vw - 100px);
+  height: 100%;
+}
+
+@media (max-width: 575px) {
+  .body-speakit {
+    width: calc(100vw - 100px);
+  }
+
+}
+
+.speakit-wrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 10px;
+  height: calc(100vh - 77px);
+}
+
+.hidden {
+  display: none;
+}
+
+.list {
+  padding: 0;
+  list-style: none;
+}
+
+.link {
+  text-decoration: none;
+}
+
+.overflow-hidden {
+  overflow: auto !important;
+}
+
+.color {
+background-color: white;
+}
+
+.speakit_active {
+  color: white;
+
+  background-color: lightcoral !important;
+}
+
+.disabled {
+  background-color: lightcoral;
+}
+
+.button-rounded1,
+.button-rounded {
+  font-family: Tenor-Sans, tahoma, sans-serif;
+  font-weight: 900;
+  text-decoration: none;
+  outline: none;
+  display: inline-block;
+  padding: 5px 10px;
+  border-radius: 10px;
+  box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.2), 0 8px 10px 0 rgba(0, 0, 0, 0.4),
+              0 0 40px 40px rgb(89, 209, 230) inset, 0 0 0 0 #00bf82;
+  font-family: Tenor-Sans, tahoma, sans-serif;
+  font-weight: bold;
+  color: white;
+  transition: .05s ease-in;
+
+  &:focus,
+  &:hover,
+  &:active {
+    box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.2), 0 8px 10px 0 rgba(0, 0, 0, 0.4),
+                0 0 10px 0 #335e97 inset, 0 0 10px 4px #335e97;
+    color: #335e97;
+  }
+}
+
+.button-rounded:focus {
+  outline: unset;
+}
+
+.button-rounded1:focus {
+  outline: unset;
+}
+
+.button {
+  text-decoration: none;
+  outline: none;
+  display: inline-block;
+  width: 140px;
+  height: 45px;
+  line-height: 45px;
+  border-radius: 45px;
+  margin: 10px 20px;
+  font-family: Tenor-Sans, tahoma, sans-serif;
+  font-size: 11px;
+  text-transform: uppercase;
+  text-align: center;
+  letter-spacing: 3px;
+  font-weight: 600;
+  color: #524f4e;
+  background: white;
+  box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.2), 0 8px 10px 0 rgba(0, 0, 0, 0.4);
+  transition: .3s;
+
+  &:focus,
+  &:hover,
+  &:active {
+    background: #2EE59D;
+    box-shadow: 0 15px 20px rgba(46,229,157,.4);
+    color: white;
+    transform: translateY(-7px);
+  }
+
+  &.disabled:focus,
+  &.disabled:hover,
+  &.disabled:active {
+    background: white;
+    box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.2), 0 8px 10px 0 rgba(0, 0, 0, 0.4);
+    color: #524f4e;
+    transform: none;
+  }
+}

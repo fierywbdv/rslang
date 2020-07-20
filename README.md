@@ -38,5 +38,5 @@ Project - https://github.com/GoldenkovVitali/rslang/projects/1
 
 9) An issue should be closed if everything is ok or bug is fixed.
 
-   **Also, don't forget to move cards on the project board**
-
+#             technologies involved in the development of the project
+### To achieve the goal of isolating various parts of the application, it was decided to implement Router. The introduction of the Router allowed each team member to implement their own functionality without the risk of affecting in any way the parts of the application developed by other team members. Also, the implementation of the Router allowed us to implement the principle of SPA (Single Page Application) in the application.

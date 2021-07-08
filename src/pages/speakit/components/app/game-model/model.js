@@ -1,5 +1,5 @@
 import { CLASS_NAMES, MAX_WORDS_COUNT } from '../game-line/helper';
-import { shuffleArray, translateWord } from '../game-line/utils';
+import { shuffleArray } from '../game-line/utils';
 
 export default class Model {
   constructor() {
@@ -28,10 +28,20 @@ export default class Model {
     });
     this.pageData = shuffledResponse;
 
-    shuffledResponse.forEach((cardData) => {
-      translateWord(cardData.word, (responseData) => {
-        this.translationsMap.set(cardData.word, responseData.text);
-      });
+    shuffledResponse.forEach(async (cardData) => {
+      const res = await fetch(
+        `https://translated-mymemory---translation-memory.p.rapidapi.com/api/get?q=${cardData.word}&langpair=en|ru`,
+        {
+          method: 'GET',
+          headers: {
+            'x-rapidapi-key': '8c7a62bd09msha0fcd2de5032f4ap1e9fbdjsncf7dd3c862f8',
+            'x-rapidapi-host':
+              'translated-mymemory---translation-memory.p.rapidapi.com',
+          },
+        },
+      );
+      const data = await res.json();
+      this.translationsMap.set(cardData.word, data.responseData.translatedText);
     });
   }
 
@@ -60,4 +70,3 @@ export default class Model {
     this.loadResults();
   }
 }
-

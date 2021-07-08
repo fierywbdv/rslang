@@ -87,15 +87,6 @@ export const loadCardsJSON = (difficult, addPageList) => {
   fetchDataLerned(url, addPageList);
 };
 
-const TRANSLATION_API = {
-  KEY: 'trnsl.1.1.20200501T172144Z.c784356c3f286594.5cbbf7226bde620d92ce5f3996d05cc59c7d6a7a',
-  URL: 'https://translate.yandex.net/api/v1.5/tr.json/translate?&lang=en-ru&text=',
-};
-
-export const translateWord = (word, callBack) => {
-  fetchDataLerned(`${TRANSLATION_API.URL}${word}&key=${TRANSLATION_API.KEY}`, callBack);
-};
-
 export const createStar = (starSrc) => {
   const starImg = document.createElement('img');
   starImg.alt = CLASS_NAMES.STAR;

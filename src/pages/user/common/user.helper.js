@@ -2,7 +2,6 @@ import { learnWordsAPIService } from '../../../services/learnWordsAPIService';
 
 export const settings = async () => {
   const userSettings = await learnWordsAPIService.getUserSettings(localStorage.getItem('userId'), localStorage.getItem('token'));
-  console.log(userSettings)
   localStorage.setItem('wordsPerDay', userSettings.wordsPerDay);
   localStorage.setItem('userCardsCount', userSettings.optional.userCardsCount);
   localStorage.setItem('userLevel', userSettings.optional.userLevel);
